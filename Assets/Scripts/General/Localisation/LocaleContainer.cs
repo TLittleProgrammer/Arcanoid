@@ -10,8 +10,9 @@ namespace General.Localisation
 
         public async UniTask AsyncInitialize(Dictionary<string, string> param)
         {
+            _localeContainer?.Clear();
             _localeContainer = param;
-            
+
             await UniTask.CompletedTask;
         }
 

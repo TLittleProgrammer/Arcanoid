@@ -1,11 +1,7 @@
 {
-    "name": "Localisation",
+    "name": "OdinPackageUnityExtensions",
     "rootNamespace": "",
-    "references": [
-        "Initialization",
-        "UniTask",
-        "OdinPackageUnityExtensions"
-    ],
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
