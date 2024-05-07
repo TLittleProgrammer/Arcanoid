@@ -1,7 +1,7 @@
 Font: Prosto One  Style: Regular
 Point Size: 100   SP/PD Ratio: 5,0%
 
-Characters included: 79/79
+Characters included: 131/131
 Missing characters: 0
 Excluded characters: 0
 
