@@ -4,7 +4,8 @@
     "references": [
         "Initialization",
         "UniTask",
-        "OdinPackageUnityExtensions"
+        "OdinPackageUnityExtensions",
+        "Unity.TextMeshPro"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
