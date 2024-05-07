@@ -11,7 +11,7 @@ namespace External.Popup.AssetManagment
         {
             ViewPopupMapping viewPopupMapping = (ViewPopupMapping)await Resources.LoadAsync<ViewPopupMapping>(ViewPopupMappingPath);
 
-            foreach (IViewPopupProvider provider in viewPopupMapping.ViewPopupProviderMapping)
+            foreach (ViewPopupProvider provider in viewPopupMapping.ViewPopupProviderMapping)
             {
                 if (provider is TPopupProvider)
                 {
