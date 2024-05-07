@@ -1,6 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 
-namespace General.Popup
+namespace External.Popup
 {
     public interface IPopupService
     {

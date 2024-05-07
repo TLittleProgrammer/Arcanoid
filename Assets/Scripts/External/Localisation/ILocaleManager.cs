@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace General.Localisation
+namespace External.Localisation
 {
     public interface ILocaleManager
     {

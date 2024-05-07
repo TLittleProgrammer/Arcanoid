@@ -1,4 +1,4 @@
-﻿namespace General.Localisation
+﻿namespace External.Localisation
 {
     public enum LocaleTypeId
     {

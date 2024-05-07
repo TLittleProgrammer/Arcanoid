@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using General.Odin;
+using External.Odin;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace General.Localisation.Configs
+namespace External.Localisation.Configs
 {
     [CreateAssetMenu(menuName = "Configs/LocaleMapping", fileName = "LocaleMapping")]
     public class LocaleMapping : SerializedScriptableObject

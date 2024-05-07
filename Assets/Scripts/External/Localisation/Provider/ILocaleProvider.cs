@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace General.Localisation.Provider
+namespace External.Localisation.Provider
 {
     public interface ILocaleProvider
     {
