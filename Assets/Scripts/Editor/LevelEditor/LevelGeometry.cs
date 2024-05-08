@@ -1,13 +1,10 @@
 ﻿using GameScene.Levels.AssetManagement;
-using GameScene.Levels.Entities;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
-using Sirenix.Utilities;
 using Sirenix.Utilities.Editor;
 using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Editor.LevelEditor
 {
@@ -45,7 +42,7 @@ namespace Editor.LevelEditor
 
         private EntityProvider DrawElement(Rect rect, EntityProvider value)
         {
-            if (Event.current.type == EventType.MouseDown && rect.Contains(Event.current.mousePosition))
+            if (Event.current.type == EventType.MouseDrag && rect.Contains(Event.current.mousePosition))
             {
                 GUI.changed = true;
                 Event.current.Use();
