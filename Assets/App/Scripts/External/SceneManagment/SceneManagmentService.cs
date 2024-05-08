@@ -9,7 +9,7 @@ namespace App.Scripts.External.SceneManagment
     {
         private float _sceneLoadingProgress;
         
-        public async UniTask LoadSceneAsync(string sceneName, Action sceneLoaded)
+        public async UniTask LoadSceneAsync(string sceneName)
         {
             _sceneLoadingProgress = 0f;
 
@@ -18,11 +18,8 @@ namespace App.Scripts.External.SceneManagment
             while (!asyncOperation.isDone)
             {
                 _sceneLoadingProgress = asyncOperation.progress;
+                await UniTask.Yield();
             }
-
-            sceneLoaded?.Invoke();
-
-            await UniTask.CompletedTask;
         }
 
         public float SceneLoadingProgress => _sceneLoadingProgress;

@@ -1,11 +1,10 @@
-﻿using System;
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 
 namespace App.Scripts.External.SceneManagment
 {
     public interface ISceneManagementService
     {
         float SceneLoadingProgress { get; }
-        UniTask LoadSceneAsync(string sceneName, Action sceneLoaded);
+        UniTask LoadSceneAsync(string sceneName);
     }
 }
