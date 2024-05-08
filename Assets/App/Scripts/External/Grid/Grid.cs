@@ -1,10 +1,12 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace External.Grid
 {
+    [Serializable]
     public class Grid<TValue>
     {
-        private  Vector2Int _size;
+        private Vector2Int _size;
         private TValue[][] _matrix;
 
         public Grid(Vector2Int size)

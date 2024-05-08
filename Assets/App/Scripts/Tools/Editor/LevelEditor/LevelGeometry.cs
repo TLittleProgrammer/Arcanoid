@@ -1,21 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using App.Scripts.External.Converters;
+using App.Scripts.Scenes.GameScene.Levels;
 using GameScene.Levels.AssetManagement;
 using GameScene.Levels.Entities;
 using Newtonsoft.Json;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
 using Sirenix.Utilities;
-using Sirenix.Utilities.Editor;
 using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEditor;
-using UnityEditor.Graphs;
 using UnityEngine;
-using UnityEngine.Rendering;
-using Graph = UnityEditor.Graphs.Graph;
-using Random = UnityEngine.Random;
 
 namespace Editor.LevelEditor
 {
@@ -40,6 +36,7 @@ namespace Editor.LevelEditor
 
         private PresetsData PresetsData;
         private EntityProvider EntitiesProvider;
+        private string _pathToDirectoryLevels = Path.Combine(Application.dataPath, "Resources/Levels/");
 
         private List<string> PresetNames => PresetsData.PresetItems.Select(x => x.Key).ToList();
 
@@ -121,6 +118,42 @@ namespace Editor.LevelEditor
                     CurrentEntityCellData.Sprite = entityStage.Sprite;
                     CurrentEntityCellData.HealthPoints = entityStage.HealthCounter;
                 }
+            }
+        }
+
+        [TabGroup("Editor", "Level Parameters", SdfIconType.Magic, TextColor = "orange")]
+        [Button("Save Level")]
+        private void SaveLevel()
+        {
+            string path = EditorUtility.SaveFilePanel("Save Level", _pathToDirectoryLevels, "level.json", "json");
+
+            if (path.Length != 0)
+            {
+                LevelData levelData = new();
+                levelData.GridSize = GridSize;
+                levelData.Grid = Grid;
+                
+                var json = JsonConvert.SerializeObject(levelData, Formatting.Indented, new Int2Converter());
+                
+                File.WriteAllText(path, json);
+            }
+        }
+        
+        [TabGroup("Editor", "Level Parameters", SdfIconType.Magic, TextColor = "orange")]
+        [Button("Load Level")]
+        private void LoadLevel()
+        {
+            var path = EditorUtility.OpenFilePanel("Open Level", _pathToDirectoryLevels, "json");
+            if (path.Length != 0)
+            {
+                var json = File.ReadAllText(path);
+
+                var data = JsonConvert.DeserializeObject<LevelData>(json);
+
+                GridSize = data.GridSize;
+                CreateGrid();
+
+                Grid = data.Grid;
             }
         }
     }

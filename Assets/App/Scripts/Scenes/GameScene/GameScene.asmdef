@@ -2,7 +2,8 @@
     "name": "Game",
     "rootNamespace": "",
     "references": [
-        "Unity.Mathematics"
+        "Unity.Mathematics",
+        "Grid"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
