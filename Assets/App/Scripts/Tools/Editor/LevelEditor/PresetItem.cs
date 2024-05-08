@@ -1,7 +1,7 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace Editor.LevelEditor
+namespace App.Scripts.Tools.Editor.LevelEditor
 {
     [Serializable]
     public class PresetItem

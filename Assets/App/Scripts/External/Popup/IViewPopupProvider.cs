@@ -1,7 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace External.Popup
+namespace App.Scripts.External.Popup
 {
     public interface IViewPopupProvider
     {

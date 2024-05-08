@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace External.Localisation
+namespace App.Scripts.External.Localisation
 {
     public interface ILocaleManager
     {

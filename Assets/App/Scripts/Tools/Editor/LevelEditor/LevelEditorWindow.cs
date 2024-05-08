@@ -1,7 +1,7 @@
 ﻿using Sirenix.OdinInspector.Editor;
 using UnityEditor;
 
-namespace Editor.LevelEditor
+namespace App.Scripts.Tools.Editor.LevelEditor
 {
     public class LevelEditorWindow : OdinMenuEditorWindow
     {

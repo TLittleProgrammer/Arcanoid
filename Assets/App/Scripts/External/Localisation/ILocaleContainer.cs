@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using External.Initialization;
+using App.Scripts.External.Initialization;
 
-namespace External.Localisation
+namespace App.Scripts.External.Localisation
 {
     public interface ILocaleContainer : IAsyncInitializable<Dictionary<string, string>>
     {

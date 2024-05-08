@@ -2,7 +2,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace GameScene.Levels.AssetManagement
+namespace App.Scripts.Scenes.GameScene.Levels.AssetManagement
 {
     [CreateAssetMenu(menuName = "Configs/Level/EntityProvider", fileName = "EntityProvider")]
     public class EntityProvider : SerializedScriptableObject

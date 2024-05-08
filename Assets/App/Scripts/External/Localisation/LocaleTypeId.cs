@@ -1,4 +1,4 @@
-﻿namespace External.Localisation
+﻿namespace App.Scripts.External.Localisation
 {
     public enum LocaleTypeId
     {

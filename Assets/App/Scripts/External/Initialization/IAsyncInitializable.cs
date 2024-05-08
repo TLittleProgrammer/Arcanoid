@@ -1,6 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 
-namespace External.Initialization
+namespace App.Scripts.External.Initialization
 {
     public interface IAsyncInitializable
     {

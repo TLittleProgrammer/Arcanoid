@@ -3,8 +3,8 @@ using System.IO;
 using System.Linq;
 using App.Scripts.External.Converters;
 using App.Scripts.Scenes.GameScene.Levels;
-using GameScene.Levels.AssetManagement;
-using GameScene.Levels.Entities;
+using App.Scripts.Scenes.GameScene.Levels.AssetManagement;
+using App.Scripts.Scenes.GameScene.Levels.Entities;
 using Newtonsoft.Json;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
@@ -13,7 +13,7 @@ using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
 
-namespace Editor.LevelEditor
+namespace App.Scripts.Tools.Editor.LevelEditor
 {
     public class LevelGeometry : OdinEditorWindow
     {
@@ -33,10 +33,16 @@ namespace Editor.LevelEditor
         [TabGroup("Editor", "Level Parameters", SdfIconType.Magic, TextColor = "orange")]
         [OnValueChanged("CreateGrid")]
         public int2 GridSize = new(3, 5);
+        [TabGroup("Editor", "Level Parameters", SdfIconType.Magic, TextColor = "orange")]
+        public int2 OffsetBetweenCells = new(0, 0);
+        [TabGroup("Editor", "Level Parameters", SdfIconType.Magic, TextColor = "orange")]
+        public int HorizontalOffset = 0;
+        [TabGroup("Editor", "Level Parameters", SdfIconType.Magic, TextColor = "orange")]
+        public int TopOffset = 0;
 
         private PresetsData PresetsData;
         private EntityProvider EntitiesProvider;
-        private string _pathToDirectoryLevels = Path.Combine(Application.dataPath, "Resources/Levels/");
+        private string _pathToDirectoryLevels;
 
         private List<string> PresetNames => PresetsData.PresetItems.Select(x => x.Key).ToList();
 
@@ -49,6 +55,7 @@ namespace Editor.LevelEditor
         [OnInspectorInit]
         private void CreateGrid()
         {
+            _pathToDirectoryLevels = Path.Combine(Application.dataPath, "/Resources/Levels/");
             CurrentEntityCellData = new();
             PresetsData = GetPresets();
             BrushingPresetName = PresetsData.PresetItems.First().Key;

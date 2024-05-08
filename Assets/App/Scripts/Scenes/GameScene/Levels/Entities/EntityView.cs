@@ -1,7 +1,7 @@
 ﻿using Unity.Mathematics;
 using UnityEngine;
 
-namespace GameScene.Levels.Entities
+namespace App.Scripts.Scenes.GameScene.Levels.Entities
 {
     public class EntityView : MonoBehaviour, IEntity
     {

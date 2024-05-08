@@ -9,6 +9,12 @@ namespace App.Scripts.Scenes.GameScene.Levels
     {
         [JsonProperty("GridSize")]
         public int2 GridSize;
+        [JsonProperty("OffsetBetweenCells")]
+        public int2 OffsetBetweenCells;
+        [JsonProperty("HorizontalOffset")]
+        public int HorizontalOffset;
+        [JsonProperty("TopOffset")]
+        public int TopOffset;
         [JsonProperty("Grid")]
         public int[,] Grid;
     }

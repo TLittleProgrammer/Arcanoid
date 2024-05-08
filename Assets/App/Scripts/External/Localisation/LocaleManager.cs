@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using External.Localisation.Provider;
+using App.Scripts.External.Localisation.Provider;
 
-namespace External.Localisation
+namespace App.Scripts.External.Localisation
 {
     public sealed class LocaleManager : ILocaleManager
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Editor.LevelEditor
+namespace App.Scripts.Tools.Editor.LevelEditor
 {
     [Serializable]
     public class PresetsData

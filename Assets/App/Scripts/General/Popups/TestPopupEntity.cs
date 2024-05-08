@@ -1,6 +1,6 @@
-﻿using External.Popup;
+﻿using App.Scripts.External.Popup;
 
-namespace General.Popups
+namespace App.Scripts.General.Popups
 {
     public sealed class TestPopupEntity : ViewPopupProvider
     {

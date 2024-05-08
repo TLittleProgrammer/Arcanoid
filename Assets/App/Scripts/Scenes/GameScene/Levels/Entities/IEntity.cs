@@ -1,6 +1,6 @@
 ﻿using Unity.Mathematics;
 
-namespace GameScene.Levels.Entities
+namespace App.Scripts.Scenes.GameScene.Levels.Entities
 {
     public interface IEntity
     {

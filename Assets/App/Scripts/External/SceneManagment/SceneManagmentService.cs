@@ -3,7 +3,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace External.SceneManagment
+namespace App.Scripts.External.SceneManagment
 {
     public class SceneManagementService : ISceneManagementService
     {

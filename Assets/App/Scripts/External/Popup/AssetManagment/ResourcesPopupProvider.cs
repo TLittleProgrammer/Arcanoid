@@ -1,7 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace External.Popup.AssetManagment
+namespace App.Scripts.External.Popup.AssetManagment
 {
     public sealed class ResourcesPopupProvider : IPopupProvider
     {

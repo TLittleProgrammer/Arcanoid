@@ -1,7 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 
-namespace External.Localisation.MonoBehaviours
+namespace App.Scripts.External.Localisation.MonoBehaviours
 {
     [RequireComponent(typeof(TextMeshProUGUI))]
     public class UILocale : MonoBehaviour

@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace External.Grid
+namespace App.Scripts.External.Grid
 {
     [Serializable]
     public class Grid<TValue>

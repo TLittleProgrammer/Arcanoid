@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 
-namespace External.Localisation
+namespace App.Scripts.External.Localisation
 {
     public sealed class LocaleContainer : ILocaleContainer
     {

@@ -1,6 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 
-namespace External.Popup.AssetManagment
+namespace App.Scripts.External.Popup.AssetManagment
 {
     public interface IPopupProvider
     {

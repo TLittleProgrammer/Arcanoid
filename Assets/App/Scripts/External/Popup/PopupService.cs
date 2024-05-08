@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
+using App.Scripts.External.Popup.AssetManagment;
 using Cysharp.Threading.Tasks;
-using External.Popup.AssetManagment;
 
-namespace External.Popup
+namespace App.Scripts.External.Popup
 {
     public sealed class PopupService : IPopupService
     {

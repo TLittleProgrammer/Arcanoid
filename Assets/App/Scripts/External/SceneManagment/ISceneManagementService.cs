@@ -1,7 +1,7 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
 
-namespace External.SceneManagment
+namespace App.Scripts.External.SceneManagment
 {
     public interface ISceneManagementService
     {

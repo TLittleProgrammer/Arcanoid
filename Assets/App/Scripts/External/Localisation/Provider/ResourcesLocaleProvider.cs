@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using External.Localisation.Configs;
+using App.Scripts.External.Localisation.Configs;
 using UnityEngine;
 
-namespace External.Localisation.Provider
+namespace App.Scripts.External.Localisation.Provider
 {
     public sealed class ResourcesLocaleProvider : ILocaleProvider
     {
