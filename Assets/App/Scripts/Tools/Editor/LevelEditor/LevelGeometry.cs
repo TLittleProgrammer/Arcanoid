@@ -33,8 +33,7 @@ namespace Editor.LevelEditor
         public string BrushingPresetName;
         
         private Rect CurrentRectEntityCellData;
-
-        //Parameters
+        
         [TabGroup("Editor", "Level Parameters", SdfIconType.Magic, TextColor = "orange")]
         [OnValueChanged("CreateGrid")]
         public int2 GridSize = new(3, 5);
@@ -43,7 +42,6 @@ namespace Editor.LevelEditor
         private EntityProvider EntitiesProvider;
 
         private List<string> PresetNames => PresetsData.PresetItems.Select(x => x.Key).ToList();
-        private bool _brushIsEnabled = false;
 
         [MenuItem("Tools/Level Editor")]
         private static void OpenWindow()
@@ -64,7 +62,7 @@ namespace Editor.LevelEditor
 
         private PresetsData GetPresets()
         {
-            var path = "Assets/Scripts/Tools/Editor/LevelEditor/Presets.json";
+            var path = "Assets/App/Scripts/Tools/Editor/LevelEditor/Presets.json";
 
             var json = File.ReadAllText(path);
             
@@ -124,24 +122,6 @@ namespace Editor.LevelEditor
                     CurrentEntityCellData.HealthPoints = entityStage.HealthCounter;
                 }
             }
-        }
-
-        [TabGroup("Editor", "Level Parameters", SdfIconType.Magic, TextColor = "orange")]
-        [ShowIf("_brushIsEnabled")]
-        [HorizontalGroup("Editor/Split", 0.5f)]
-        [Button(SdfIconType.BrushFill, IconAlignment = IconAlignment.LeftOfText, Name = "Brush"), GUIColor(0.4f, 0.8f, 1)]
-        private void OnBrushButtonClickedEnabled()
-        {
-            _brushIsEnabled = false;
-        }
-        
-        [TabGroup("Editor", "Level Parameters", SdfIconType.Magic, TextColor = "orange")]
-        [HideIf("_brushIsEnabled")]
-        [HorizontalGroup("Editor/Split", 0.5f)]
-        [Button(SdfIconType.BrushFill, IconAlignment = IconAlignment.LeftOfText, Name = "Brush")]
-        private void OnBrushButtonClickedDisabled()
-        {
-            _brushIsEnabled = true;
         }
     }
 }
