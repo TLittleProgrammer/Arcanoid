@@ -64,7 +64,7 @@ namespace Editor.LevelEditor
 
         private PresetsData GetPresets()
         {
-            var path = "Assets/Scripts/Editor/LevelEditor/Presets.json";
+            var path = "Assets/Scripts/Tools/Editor/LevelEditor/Presets.json";
 
             var json = File.ReadAllText(path);
             
