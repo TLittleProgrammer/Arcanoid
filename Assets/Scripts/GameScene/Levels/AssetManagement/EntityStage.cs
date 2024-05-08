@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace GameScene.Levels.AssetManagement
 {
-    [Serializable]
-    public sealed class EntityStage
+    [CreateAssetMenu(menuName = "Configs/Level/EntityStage", fileName = "EntityStage")]
+    public sealed class EntityStage : ScriptableObject
     {
         [PreviewField(50),
         HorizontalGroup("MainParameters")]
