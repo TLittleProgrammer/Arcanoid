@@ -139,6 +139,9 @@ namespace App.Scripts.Tools.Editor.LevelEditor
                 LevelData levelData = new();
                 levelData.GridSize = GridSize;
                 levelData.Grid = Grid;
+                levelData.HorizontalOffset = HorizontalOffset;
+                levelData.TopOffset = TopOffset;
+                levelData.OffsetBetweenCells = OffsetBetweenCells;
                 
                 var json = JsonConvert.SerializeObject(levelData, Formatting.Indented, new Int2Converter());
                 

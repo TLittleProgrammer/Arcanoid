@@ -3,7 +3,10 @@
     "rootNamespace": "",
     "references": [
         "Unity.Mathematics",
-        "Grid"
+        "Grid",
+        "Zenject",
+        "UniTask",
+        "Initialization"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
