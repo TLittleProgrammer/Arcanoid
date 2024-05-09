@@ -1,13 +1,14 @@
 ﻿using App.Scripts.Scenes.GameScene.Camera;
+using App.Scripts.Scenes.GameScene.Entities;
 using App.Scripts.Scenes.GameScene.Grid;
 using App.Scripts.Scenes.GameScene.Input;
 using App.Scripts.Scenes.GameScene.LevelManager;
 using App.Scripts.Scenes.GameScene.Levels;
 using App.Scripts.Scenes.GameScene.Levels.Load;
 using App.Scripts.Scenes.GameScene.PlayerShape;
+using App.Scripts.Scenes.GameScene.PlayerShape.Move;
 using App.Scripts.Scenes.GameScene.ScreenInfo;
 using App.Scripts.Scenes.GameScene.Time;
-using log4net.Appender;
 using Newtonsoft.Json;
 using UnityEngine;
 using Zenject;
@@ -19,8 +20,10 @@ namespace App.Scripts.Scenes.GameScene.Installers
         [SerializeField] private UnityEngine.Camera _camera;
         [SerializeField] private RectTransform _header;
         [SerializeField] private TextAsset _levelData;
-        [SerializeField] private PlayerView _shapeTransformable;
+        [SerializeField] private PlayerView _playerShape;
         [SerializeField] private GameObject _blockPrefab;
+
+        //[Inject] private FactorySettings _factorySettings;
 
         public void Initialize()
         {
@@ -34,13 +37,19 @@ namespace App.Scripts.Scenes.GameScene.Installers
             Container.BindInterfacesAndSelfTo<GameSceneInstaller>().FromInstance(this).AsSingle();
 
             BindTimeProvider();
-            BindScreenInfoProvider();
             BindCameraService();
+            BindScreenInfoProvider();
             BindInput();
             BindGridPositionResolver();
             BindLoadLevelManager();
-            BindPlayerMover();
+            BindPlayerMoving();
             BindLevelLoader();
+            //BindFactories();
+        }
+
+        private void BindFactories()
+        {
+            Container.BindFactory<Object, EntityView, EntityView.Factory>().FromFactory<PrefabFactory<EntityView>>();
         }
 
         private void BindLevelLoader()
@@ -53,12 +62,13 @@ namespace App.Scripts.Scenes.GameScene.Installers
             Container.Bind<ITimeProvider>().To<TimeProvider>().AsSingle();
         }
 
-        private void BindPlayerMover()
+        private void BindPlayerMoving()
         {
             ShapeMoverSettings shapeMoverSettings = new();
             shapeMoverSettings.Speed = 5f;
-            
-            Container.BindInterfacesAndSelfTo<PlayerShapeMover>().AsSingle().WithArguments(_shapeTransformable, shapeMoverSettings);
+
+            Container.Bind<IPlayerPositionChecker>().To<PlayerPositionChecker>().AsSingle().WithArguments(_playerShape);
+            Container.BindInterfacesAndSelfTo<PlayerShapeMover>().AsSingle().WithArguments(_playerShape, shapeMoverSettings);
         }
 
         private void BindInput()
