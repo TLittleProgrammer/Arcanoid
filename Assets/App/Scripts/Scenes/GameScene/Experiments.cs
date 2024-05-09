@@ -15,7 +15,7 @@ namespace App.Scripts.Scenes.GameScene
         [Inject] private IGridPositionResolver GridPositionResolver;
         
         [Button]
-        public void ChangeSize()
+        public void SpawnGrid()
         {
             LevelData LevelData = JsonConvert.DeserializeObject<LevelData>(LevelDataText.text);
 
