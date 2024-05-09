@@ -1,4 +1,6 @@
 ﻿using App.Scripts.External.Extensions.ZenjectExtensions;
+using App.Scripts.Scenes.GameScene.Ball;
+using App.Scripts.Scenes.GameScene.Ball.Movement;
 using App.Scripts.Scenes.GameScene.Camera;
 using App.Scripts.Scenes.GameScene.Entities;
 using App.Scripts.Scenes.GameScene.Factories.EntityFactory;
@@ -25,12 +27,14 @@ namespace App.Scripts.Scenes.GameScene.Installers
         [SerializeField] private RectTransform _header;
         [SerializeField] private TextAsset _levelData;
         [SerializeField] private PlayerView _playerShape;
+        [SerializeField] private BallView _ballView;
 
         [Inject] private FactorySettings _factorySettings;
 
         public void Initialize()
         {
             Container.Resolve<IGridPositionResolver>().AsyncInitialize(JsonConvert.DeserializeObject<LevelData>(_levelData.text));
+            Container.Resolve<IBallMovementService>().AsyncInitialize();
             
             LoadLevel();
         }
@@ -50,6 +54,12 @@ namespace App.Scripts.Scenes.GameScene.Installers
             BindLoadLevelManager();
             BindPlayerMoving();
             BindLevelLoader();
+            BindBallMovement();
+        }
+
+        private void BindBallMovement()
+        {
+            Container.BindInterfacesAndSelfTo<BallMovementService>().AsSingle().WithArguments(_ballView, _playerShape);
         }
 
         private void BindFactories()
