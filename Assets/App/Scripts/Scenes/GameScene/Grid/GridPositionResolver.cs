@@ -38,10 +38,6 @@ namespace App.Scripts.Scenes.GameScene.Grid
             _cellSize          = CalculateCellSize(_availableSpace, levelData.GridSize.x);
             _leftPosition      = CalculateLeftPosition(levelData.HorizontalOffset);
 
-            Debug.Log(_availableSpace);
-            Debug.Log(_cellSize);
-            Debug.Log(_worldCameraSize);
-            
             _levelData = levelData;
             _curretGridPosition = 0;
 

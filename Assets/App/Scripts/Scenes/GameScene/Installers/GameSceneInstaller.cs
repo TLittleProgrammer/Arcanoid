@@ -1,11 +1,11 @@
-﻿using App.Scripts.External.Initialization;
-using App.Scripts.Scenes.GameScene.Camera;
+﻿using App.Scripts.Scenes.GameScene.Camera;
 using App.Scripts.Scenes.GameScene.Grid;
 using App.Scripts.Scenes.GameScene.Input;
 using App.Scripts.Scenes.GameScene.LevelManager;
 using App.Scripts.Scenes.GameScene.Levels;
+using App.Scripts.Scenes.GameScene.PlayerShape;
 using App.Scripts.Scenes.GameScene.ScreenInfo;
-using Cysharp.Threading.Tasks;
+using App.Scripts.Scenes.GameScene.Time;
 using Newtonsoft.Json;
 using UnityEngine;
 using Zenject;
@@ -17,16 +17,32 @@ namespace App.Scripts.Scenes.GameScene.Installers
         [SerializeField] private UnityEngine.Camera _camera;
         [SerializeField] private RectTransform _header;
         [SerializeField] private TextAsset _levelData;
+        [SerializeField] private PlayerView _shapeTransformable;
 
         public override void InstallBindings()
         {
             Container.BindInterfacesAndSelfTo<GameSceneInstaller>().FromInstance(this).AsSingle();
 
+            BindTimeProvider();
             BindScreenInfoProvider();
             BindCameraService();
             BindInput();
             BindGridPositionResolver();
             BindLoadLevelManager();
+            BindPlayerMover();
+        }
+
+        private void BindTimeProvider()
+        {
+            Container.Bind<ITimeProvider>().To<TimeProvider>().AsSingle();
+        }
+
+        private void BindPlayerMover()
+        {
+            ShapeMoverSettings shapeMoverSettings = new();
+            shapeMoverSettings.Speed = 5f;
+            
+            Container.BindInterfacesAndSelfTo<PlayerShapeMover>().AsSingle().WithArguments(_shapeTransformable, shapeMoverSettings);
         }
 
         private void BindInput()
