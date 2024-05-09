@@ -1,6 +1,7 @@
 ﻿using App.Scripts.External.Initialization;
 using App.Scripts.Scenes.GameScene.Camera;
 using App.Scripts.Scenes.GameScene.Grid;
+using App.Scripts.Scenes.GameScene.Input;
 using App.Scripts.Scenes.GameScene.LevelManager;
 using App.Scripts.Scenes.GameScene.Levels;
 using App.Scripts.Scenes.GameScene.ScreenInfo;
@@ -20,11 +21,18 @@ namespace App.Scripts.Scenes.GameScene.Installers
         public override void InstallBindings()
         {
             Container.BindInterfacesAndSelfTo<GameSceneInstaller>().FromInstance(this).AsSingle();
-            
+
             BindScreenInfoProvider();
             BindCameraService();
+            BindInput();
             BindGridPositionResolver();
             BindLoadLevelManager();
+        }
+
+        private void BindInput()
+        {
+            Container.BindInterfacesAndSelfTo<ClickDetector>().AsSingle();
+            Container.BindInterfacesAndSelfTo<InputService>().AsSingle();
         }
 
         public void Initialize()
