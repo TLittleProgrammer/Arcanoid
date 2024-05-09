@@ -3,9 +3,11 @@ using App.Scripts.Scenes.GameScene.Grid;
 using App.Scripts.Scenes.GameScene.Input;
 using App.Scripts.Scenes.GameScene.LevelManager;
 using App.Scripts.Scenes.GameScene.Levels;
+using App.Scripts.Scenes.GameScene.Levels.Load;
 using App.Scripts.Scenes.GameScene.PlayerShape;
 using App.Scripts.Scenes.GameScene.ScreenInfo;
 using App.Scripts.Scenes.GameScene.Time;
+using log4net.Appender;
 using Newtonsoft.Json;
 using UnityEngine;
 using Zenject;
@@ -18,6 +20,14 @@ namespace App.Scripts.Scenes.GameScene.Installers
         [SerializeField] private RectTransform _header;
         [SerializeField] private TextAsset _levelData;
         [SerializeField] private PlayerView _shapeTransformable;
+        [SerializeField] private GameObject _blockPrefab;
+
+        public void Initialize()
+        {
+            Container.Resolve<IGridPositionResolver>().AsyncInitialize(JsonConvert.DeserializeObject<LevelData>(_levelData.text));
+            
+            LoadLevel();
+        }
 
         public override void InstallBindings()
         {
@@ -30,6 +40,12 @@ namespace App.Scripts.Scenes.GameScene.Installers
             BindGridPositionResolver();
             BindLoadLevelManager();
             BindPlayerMover();
+            BindLevelLoader();
+        }
+
+        private void BindLevelLoader()
+        {
+            Container.Bind<ILevelLoader>().To<LevelLoader>().AsSingle().WithArguments(_blockPrefab);
         }
 
         private void BindTimeProvider()
@@ -51,9 +67,12 @@ namespace App.Scripts.Scenes.GameScene.Installers
             Container.BindInterfacesAndSelfTo<InputService>().AsSingle();
         }
 
-        public void Initialize()
+        private void LoadLevel()
         {
-            Container.Resolve<IGridPositionResolver>().AsyncInitialize(JsonConvert.DeserializeObject<LevelData>(_levelData.text));
+            if (_levelData is not null)
+            {
+                Container.Resolve<ILevelLoader>().LoadLevel(JsonConvert.DeserializeObject<LevelData>(_levelData.text));
+            }
         }
 
         private void BindGridPositionResolver()
