@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using App.Scripts.External.Converters;
+using App.Scripts.External.Extensions.MathExtensions;
 using App.Scripts.Scenes.GameScene.Levels;
 using App.Scripts.Scenes.GameScene.Levels.AssetManagement;
 using App.Scripts.Scenes.GameScene.Levels.Entities;
@@ -61,7 +62,7 @@ namespace App.Scripts.Tools.Editor.LevelEditor
             BrushingPresetName = PresetsData.PresetItems.First().Key;
             EntitiesProvider = Resources.Load<EntityProvider>($"Configs/Entities/EntitiesProvider");
 
-            Grid = new int[GridSize.x, GridSize.y];
+            Grid = Grid.CopyWithNewSize(GridSize.x, GridSize.y);
         }
 
         private PresetsData GetPresets()
@@ -162,6 +163,10 @@ namespace App.Scripts.Tools.Editor.LevelEditor
 
                 GridSize = data.GridSize;
                 CreateGrid();
+                
+                OffsetBetweenCells = data.OffsetBetweenCells;
+                HorizontalOffset   = data.HorizontalOffset;
+                TopOffset          = data.TopOffset;
 
                 Grid = data.Grid;
             }
