@@ -10,11 +10,13 @@ namespace App.Scripts.Scenes.GameScene.Installers
     {
         public FactorySettings FactorySettings;
         public EntityProvider EntityProvider;
+        public BallFlyingSettings BallFlyingSettings;
 
         public override void InstallBindings()
         {
             Container.Bind<FactorySettings>().FromInstance(FactorySettings).IfNotBound();
             Container.Bind<EntityProvider>().FromInstance(EntityProvider).IfNotBound();
+            Container.Bind<BallFlyingSettings>().FromInstance(BallFlyingSettings).IfNotBound();
         }
     }
 }

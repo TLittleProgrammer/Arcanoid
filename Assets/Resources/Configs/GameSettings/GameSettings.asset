@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FactorySettings: {fileID: 11400000, guid: 87cea2c65db92f84288cb48247d4f798, type: 2}
   EntityProvider: {fileID: 11400000, guid: 34b56c953e608404d9bb91a660edf061, type: 2}
+  BallFlyingSettings: {fileID: 11400000, guid: 5ed73460dc08cca4dbd0771663bee6bb, type: 2}
