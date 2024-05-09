@@ -1,4 +1,4 @@
-﻿using App.Scripts.Scenes.GameScene.Interfaces;
+﻿using App.Scripts.Scenes.GameScene.Components;
 using App.Scripts.Scenes.GameScene.ScreenInfo;
 using UnityEngine;
 

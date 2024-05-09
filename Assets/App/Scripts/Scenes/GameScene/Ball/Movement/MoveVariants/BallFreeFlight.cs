@@ -1,4 +1,4 @@
-﻿using App.Scripts.Scenes.GameScene.Interfaces;
+﻿using App.Scripts.Scenes.GameScene.Components;
 using App.Scripts.Scenes.GameScene.Settings;
 using App.Scripts.Scenes.GameScene.Time;
 using UnityEngine;

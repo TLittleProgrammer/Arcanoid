@@ -1,6 +1,6 @@
 ﻿using App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants;
+using App.Scripts.Scenes.GameScene.Components;
 using App.Scripts.Scenes.GameScene.Input;
-using App.Scripts.Scenes.GameScene.Interfaces;
 using App.Scripts.Scenes.GameScene.Settings;
 using App.Scripts.Scenes.GameScene.Time;
 using Cysharp.Threading.Tasks;
