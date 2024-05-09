@@ -1,14 +1,8 @@
 {
-    "name": "Game",
+    "name": "ZenjectExtensions",
     "rootNamespace": "",
     "references": [
-        "Unity.Mathematics",
-        "Grid",
-        "Zenject",
-        "UniTask",
-        "Initialization",
-        "ZenjectExtensions",
-        "ListExtensions"
+        "Zenject"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

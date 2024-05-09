@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e8708079ad64275a5e6a4a88f2c2b6c, type: 3}
   m_Name: RedStage_02
   m_EditorClassIdentifier: 
+  EntityTypeId: 0
   Sprite: {fileID: 21300000, guid: d7b525ac21070b34ea05ae83b41ec312, type: 3}
   HealthCounter: 2
+  ICanGetDamage: 1
+  NextStage: {fileID: 11400000, guid: 09f59e582db06704c815cf20b8cbc25b, type: 2}
   AvailableSpritesOnMainSprite: []

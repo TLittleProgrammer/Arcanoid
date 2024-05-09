@@ -1,5 +1,7 @@
-﻿using App.Scripts.Scenes.GameScene.Camera;
+﻿using App.Scripts.External.Extensions.ZenjectExtensions;
+using App.Scripts.Scenes.GameScene.Camera;
 using App.Scripts.Scenes.GameScene.Entities;
+using App.Scripts.Scenes.GameScene.Factories.EntityFactory;
 using App.Scripts.Scenes.GameScene.Grid;
 using App.Scripts.Scenes.GameScene.Input;
 using App.Scripts.Scenes.GameScene.LevelManager;
@@ -7,7 +9,9 @@ using App.Scripts.Scenes.GameScene.Levels;
 using App.Scripts.Scenes.GameScene.Levels.Load;
 using App.Scripts.Scenes.GameScene.PlayerShape;
 using App.Scripts.Scenes.GameScene.PlayerShape.Move;
+using App.Scripts.Scenes.GameScene.Pools;
 using App.Scripts.Scenes.GameScene.ScreenInfo;
+using App.Scripts.Scenes.GameScene.Settings;
 using App.Scripts.Scenes.GameScene.Time;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -21,9 +25,8 @@ namespace App.Scripts.Scenes.GameScene.Installers
         [SerializeField] private RectTransform _header;
         [SerializeField] private TextAsset _levelData;
         [SerializeField] private PlayerView _playerShape;
-        [SerializeField] private GameObject _blockPrefab;
 
-        //[Inject] private FactorySettings _factorySettings;
+        [Inject] private FactorySettings _factorySettings;
 
         public void Initialize()
         {
@@ -36,6 +39,9 @@ namespace App.Scripts.Scenes.GameScene.Installers
         {
             Container.BindInterfacesAndSelfTo<GameSceneInstaller>().FromInstance(this).AsSingle();
 
+            BindPools();
+            BindPoolContainer();
+            BindFactories();
             BindTimeProvider();
             BindCameraService();
             BindScreenInfoProvider();
@@ -44,17 +50,26 @@ namespace App.Scripts.Scenes.GameScene.Installers
             BindLoadLevelManager();
             BindPlayerMoving();
             BindLevelLoader();
-            //BindFactories();
         }
 
         private void BindFactories()
         {
-            Container.BindFactory<Object, EntityView, EntityView.Factory>().FromFactory<PrefabFactory<EntityView>>();
+            Container.BindFactory<string, IEntityView, IEntityView.Factory>().FromFactory<EntityFactory>();
+        }
+
+        private void BindPoolContainer()
+        {
+            Container.Bind<IPoolContainer>().To<PoolContainer>().AsSingle();
+        }
+
+        private void BindPools()
+        {
+            Container.BindPool<EntityView, EntityView.Pool>(_factorySettings.InitialSize, (EntityView)_factorySettings.EntityView, _factorySettings.ParentName);
         }
 
         private void BindLevelLoader()
         {
-            Container.Bind<ILevelLoader>().To<LevelLoader>().AsSingle().WithArguments(_blockPrefab);
+            Container.Bind<ILevelLoader>().To<LevelLoader>().AsSingle();
         }
 
         private void BindTimeProvider()

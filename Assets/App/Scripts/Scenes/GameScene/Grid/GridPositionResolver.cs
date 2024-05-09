@@ -63,7 +63,7 @@ namespace App.Scripts.Scenes.GameScene.Grid
 
         private Vector2 CalculateWorldCameraSize()
         {
-            Vector2 topRightPoint = _cameraService.ScreenToWorldPoint(new Vector2(_screenInfoProvider.Width, _screenInfoProvider.Height));
+            Vector2 topRightPoint = _cameraService.ScreenToWorldPoint(new Vector2(_screenInfoProvider.WidthInPixels, _screenInfoProvider.HeightInPixels));
             topRightPoint *= 2;
 
             return topRightPoint;
@@ -110,7 +110,7 @@ namespace App.Scripts.Scenes.GameScene.Grid
         {
             Vector2 bottomLeftCorner = new Vector2(_header.rect.xMin, _header.rect.yMin);
             Vector3 worldBottomLeftCorner = _header.TransformPoint(bottomLeftCorner);
-            float positionInPixels = _screenInfoProvider.Height - _screenInfoProvider.Height * (topOffset / 100f);
+            float positionInPixels = _screenInfoProvider.HeightInPixels - _screenInfoProvider.HeightInPixels * (topOffset / 100f);
             
             return worldBottomLeftCorner.y - (_worldCameraSize.y / 2f - _cameraService.ScreenToWorldPoint(new(0f, positionInPixels)).y) - _cellSize.y / 2f;
         }

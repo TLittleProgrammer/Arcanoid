@@ -2,7 +2,9 @@
 {
     public interface IScreenInfoProvider
     {
-        float Width { get; }
-        float Height { get; }
+        float WidthInPixels { get; }
+        float HeightInPixels { get; }
+        float WidthInWorld { get; }
+        float HeightInWorld { get; }
     }
 }

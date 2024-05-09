@@ -1,0 +1,40 @@
+﻿using UnityEngine;
+using Zenject;
+
+namespace App.Scripts.Scenes.GameScene.Entities
+{
+    public class EntityView : MonoBehaviour, IEntityView
+    {
+        [SerializeField] private SpriteRenderer _mainSpriteRenderer;
+        [SerializeField] private SpriteRenderer _onTopSpriteRenderer;
+
+        public Sprite MainSprite
+        {
+            get => _mainSpriteRenderer.sprite;
+            set => _mainSpriteRenderer.sprite = value;
+        }
+
+        public Sprite OnTopSprite 
+        {
+            get => _onTopSpriteRenderer.sprite;
+            set => _onTopSpriteRenderer.sprite = value;
+        }
+
+        public Vector3 Position
+        {
+            get => transform.position;
+            set => transform.position = value;
+        }
+        
+        public Vector3 Scale
+        {
+            get => transform.localScale;
+            set => transform.localScale = value;
+        }
+        
+        public class Pool : MonoMemoryPool<EntityView>
+        {
+            
+        }
+    }
+}

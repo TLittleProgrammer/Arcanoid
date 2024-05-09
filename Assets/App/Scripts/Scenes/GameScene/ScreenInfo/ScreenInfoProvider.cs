@@ -1,16 +1,28 @@
-﻿using UnityEngine;
+﻿using App.Scripts.Scenes.GameScene.Camera;
+using Codice.Client.ChangeTrackerService;
+using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.ScreenInfo
 {
     public class ScreenInfoProvider : IScreenInfoProvider
     {
-        public float Width { get; }
-        public float Height { get; }
+        public float WidthInPixels { get; }
+        public float HeightInPixels { get; }
+        public float WidthInWorld  { get; private set; }
+        public float HeightInWorld { get; private set; }
 
-        public ScreenInfoProvider()
+        public ScreenInfoProvider(ICameraService cameraService)
         {
-            Width  = Screen.width;
-            Height = Screen.height;
+            WidthInPixels  = Screen.width;
+            HeightInPixels = Screen.height;
+
+            CalculateWorldSize(cameraService);
+        }
+
+        private void CalculateWorldSize(ICameraService cameraService)
+        {
+            WidthInWorld = cameraService.ScreenToWorldPoint(new Vector2(WidthInPixels, 0f)).x * 2;
+            HeightInWorld = cameraService.ScreenToWorldPoint(new Vector2(0f, HeightInPixels)).y * 2;
         }
     }
 }
