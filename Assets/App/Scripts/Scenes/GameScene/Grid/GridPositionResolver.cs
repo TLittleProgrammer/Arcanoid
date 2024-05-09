@@ -32,10 +32,10 @@ namespace App.Scripts.Scenes.GameScene.Grid
         public async UniTask AsyncInitialize(LevelData levelData)
         {
             _worldCameraSize   = CalculateWorldCameraSize();
-            _topPosition       = CalculateTopPosition(levelData.TopOffset);
             _availableSpace    = CalculateAvailableSpace(levelData.HorizontalOffset, levelData.GridSize.x, levelData.OffsetBetweenCells.x);
             _spaceBetweenCells = CalculateSpaceBetweenCells(levelData.OffsetBetweenCells);
             _cellSize          = CalculateCellSize(_availableSpace, levelData.GridSize.x);
+            _topPosition       = CalculateTopPosition(levelData.TopOffset);
             _leftPosition      = CalculateLeftPosition(levelData.HorizontalOffset);
 
             _levelData = levelData;
@@ -88,6 +88,7 @@ namespace App.Scripts.Scenes.GameScene.Grid
             Vector2 size = Vector2.one;
 
             size.x = availableSpace / gridSizeX;
+            size.y = size.x;
                 
             return size;
         }
@@ -109,10 +110,9 @@ namespace App.Scripts.Scenes.GameScene.Grid
         {
             Vector2 bottomLeftCorner = new Vector2(_header.rect.xMin, _header.rect.yMin);
             Vector3 worldBottomLeftCorner = _header.TransformPoint(bottomLeftCorner);
-            
             float positionInPixels = _screenInfoProvider.Height - _screenInfoProvider.Height * (topOffset / 100f);
             
-            return worldBottomLeftCorner.y - (_worldCameraSize.y / 2f - _cameraService.ScreenToWorldPoint(new(0f, positionInPixels)).y);
+            return worldBottomLeftCorner.y - (_worldCameraSize.y / 2f - _cameraService.ScreenToWorldPoint(new(0f, positionInPixels)).y) - _cellSize.y / 2f;
         }
     }
 }
