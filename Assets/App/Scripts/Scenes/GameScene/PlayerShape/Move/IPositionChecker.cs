@@ -2,7 +2,7 @@
 
 namespace App.Scripts.Scenes.GameScene.PlayerShape.Move
 {
-    public interface IPlayerPositionChecker
+    public interface IPositionChecker
     {
         bool CanChangePositionTo(Vector2 targetPosition);
     }

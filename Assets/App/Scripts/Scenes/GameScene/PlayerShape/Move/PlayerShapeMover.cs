@@ -11,7 +11,7 @@ namespace App.Scripts.Scenes.GameScene.PlayerShape.Move
         private readonly ITransformable _playerTransformable;
         private readonly ITimeProvider _timeProvider;
         private readonly IInputService _inputService;
-        private readonly IPlayerPositionChecker _positionChecker;
+        private readonly IPositionChecker _positionChecker;
 
         private ShapeMoverSettings _shapeMoverSettings;
 
@@ -19,7 +19,7 @@ namespace App.Scripts.Scenes.GameScene.PlayerShape.Move
             ITransformable playerTransformable,
             ITimeProvider timeProvider,
             IInputService inputService,
-            IPlayerPositionChecker positionChecker,
+            [Inject(Id = "PlayerPositionChecker")] IPositionChecker positionChecker,
             ShapeMoverSettings shapeMoverSettings)
         {
             _playerTransformable = playerTransformable;

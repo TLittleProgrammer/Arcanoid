@@ -1,9 +1,8 @@
-﻿using App.Scripts.External.Initialization;
-using Zenject;
+﻿using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.Ball.Movement
 {
-    public interface IBallMovementService : ITickable, IAsyncInitializable
+    public interface IBallMovementService : ITickable
     {
         
     }

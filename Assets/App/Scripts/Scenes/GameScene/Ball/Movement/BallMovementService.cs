@@ -1,46 +1,32 @@
 ﻿using App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants;
 using App.Scripts.Scenes.GameScene.Components;
 using App.Scripts.Scenes.GameScene.Input;
-using App.Scripts.Scenes.GameScene.Settings;
-using App.Scripts.Scenes.GameScene.Time;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Ball.Movement
 {
     public sealed class BallMovementService : IBallMovementService
     {
+        private readonly IBallFreeFlightMover _ballFreeFlightMover;
         private readonly ITransformable _ballTransformable;
-        private readonly ITransformable _targetTransformable;
         private readonly IClickDetector _clickDetector;
-        private readonly ITimeProvider _timeProvider;
-        private readonly BallFlyingSettings _ballFlyingSettings;
 
         private IBallMover _ballMover;
         private Vector2 _previousBallPosition;
         
         public BallMovementService(
-            ITransformable ballTransformable,
-            ITransformable targetTransformable,
             IClickDetector clickDetector,
-            ITimeProvider timeProvider,
-            BallFlyingSettings ballFlyingSettings
+            IBallFollowMover ballFollowMover,
+            IBallFreeFlightMover ballFreeFlightMover,
+            ITransformable ballTransformable
         )
         {
-            _ballTransformable = ballTransformable;
-            _targetTransformable = targetTransformable;
             _clickDetector = clickDetector;
-            _timeProvider = timeProvider;
-            _ballFlyingSettings = ballFlyingSettings;
-        }
-
-        public async UniTask AsyncInitialize()
-        {
-            _ballMover = new BallFollowMover(_ballTransformable, _targetTransformable);
+            _ballMover = ballFollowMover;
+            _ballFreeFlightMover = ballFreeFlightMover;
+            _ballTransformable = ballTransformable;
 
             _clickDetector.MouseUp += OnMouseUp;
-
-            await UniTask.CompletedTask;
         }
 
         public void Tick()
@@ -57,8 +43,9 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement
             _clickDetector.MouseUp -= OnMouseUp;
 
             Vector2 direction = GetDirection();
-            
-            _ballMover = new BallFreeFlight(_ballTransformable, direction, _ballFlyingSettings, _timeProvider);
+
+            _ballFreeFlightMover.AsyncInitialize(direction);
+            _ballMover = _ballFreeFlightMover;
         }
 
         private Vector2 GetDirection()

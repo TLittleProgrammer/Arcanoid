@@ -1,6 +1,7 @@
 ﻿using App.Scripts.External.Extensions.ZenjectExtensions;
 using App.Scripts.Scenes.GameScene.Ball;
 using App.Scripts.Scenes.GameScene.Ball.Movement;
+using App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants;
 using App.Scripts.Scenes.GameScene.Camera;
 using App.Scripts.Scenes.GameScene.Entities;
 using App.Scripts.Scenes.GameScene.Factories.EntityFactory;
@@ -34,8 +35,7 @@ namespace App.Scripts.Scenes.GameScene.Installers
         public void Initialize()
         {
             Container.Resolve<IGridPositionResolver>().AsyncInitialize(JsonConvert.DeserializeObject<LevelData>(_levelData.text));
-            Container.Resolve<IBallMovementService>().AsyncInitialize();
-            
+
             LoadLevel();
         }
 
@@ -52,14 +52,57 @@ namespace App.Scripts.Scenes.GameScene.Installers
             BindInput();
             BindGridPositionResolver();
             BindLoadLevelManager();
+            BindPositionCheckers();
             BindPlayerMoving();
             BindLevelLoader();
+            BindBallMovers();
             BindBallMovement();
+        }
+
+        private void BindBallMovers()
+        {
+            Container
+                .Bind<IBallFollowMover>()
+                .To<BallFollowMover>()
+                .AsSingle()
+                .WithArguments(_ballView, _playerShape);
+            
+            Container
+                .Bind<IBallFreeFlightMover>()
+                .To<BallFreeFlight>()
+                .AsSingle()
+                .WithArguments(_ballView);
+        }
+
+        private void BindPositionCheckers()
+        {
+            Container
+                .Bind<IPositionChecker>()
+                .WithId("PlayerPositionChecker")
+                .To<PositionChecker>()
+                .AsTransient()
+                .WithArguments(_playerShape);
+            
+            Container
+                .Bind<IPositionChecker>()
+                .WithId("BallPositionChecker")
+                .To<PositionChecker>()
+                .AsTransient()
+                .WithArguments(_ballView);
+        }
+
+        private void BindPlayerMoving()
+        {
+            ShapeMoverSettings shapeMoverSettings = new();
+            shapeMoverSettings.Speed = 5f;
+
+            
+            Container.BindInterfacesAndSelfTo<PlayerShapeMover>().AsSingle().WithArguments(_playerShape, shapeMoverSettings);
         }
 
         private void BindBallMovement()
         {
-            Container.BindInterfacesAndSelfTo<BallMovementService>().AsSingle().WithArguments(_ballView, _playerShape);
+            Container.BindInterfacesAndSelfTo<BallMovementService>().AsSingle().WithArguments(_ballView);
         }
 
         private void BindFactories()
@@ -85,15 +128,6 @@ namespace App.Scripts.Scenes.GameScene.Installers
         private void BindTimeProvider()
         {
             Container.Bind<ITimeProvider>().To<TimeProvider>().AsSingle();
-        }
-
-        private void BindPlayerMoving()
-        {
-            ShapeMoverSettings shapeMoverSettings = new();
-            shapeMoverSettings.Speed = 5f;
-
-            Container.Bind<IPlayerPositionChecker>().To<PlayerPositionChecker>().AsSingle().WithArguments(_playerShape);
-            Container.BindInterfacesAndSelfTo<PlayerShapeMover>().AsSingle().WithArguments(_playerShape, shapeMoverSettings);
         }
 
         private void BindInput()
