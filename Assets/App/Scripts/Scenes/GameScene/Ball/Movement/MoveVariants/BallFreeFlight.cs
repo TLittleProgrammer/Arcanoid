@@ -1,10 +1,13 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.InteropServices;
 using App.Scripts.Scenes.GameScene.Components;
 using App.Scripts.Scenes.GameScene.PlayerShape.Move;
+using App.Scripts.Scenes.GameScene.PositionChecker;
 using App.Scripts.Scenes.GameScene.Settings;
 using App.Scripts.Scenes.GameScene.Time;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.UIElements;
 using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
@@ -13,7 +16,7 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
     {
         private readonly BallFlyingSettings _settings;
         private readonly ITimeProvider _timeProvider;
-        private readonly IPositionChecker _positionChecker;
+        private readonly IBallPositionChecker _positionChecker;
         private readonly ITransformable _ballTransformable;
         
         private Vector3 _direction;
@@ -22,7 +25,7 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
             ITransformable ballTransformable,
             BallFlyingSettings settings,
             ITimeProvider timeProvider,
-            [Inject(Id = "BallPositionChecker")] IPositionChecker positionChecker)
+            IBallPositionChecker positionChecker)
         {
             _ballTransformable = ballTransformable;
             _settings = settings;
@@ -46,6 +49,21 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
             {
                 _ballTransformable.Position = targetPosition;
             }
+            else
+            {
+                ChangeDirection();
+            }
+        }
+
+        private void ChangeDirection()
+        {
+            _direction = _positionChecker.CollisionTypeId switch
+            {
+                CollisionTypeId.HorizontalSide => new Vector2(-_direction.x, _direction.y),
+                CollisionTypeId.VerticalSide   => new Vector2(_direction.x, -_direction.y),
+                
+                _ => throw new ArgumentException($"Для типа коллизии {_positionChecker.CollisionTypeId} не определено поведение!")
+            };
         }
     }
 }

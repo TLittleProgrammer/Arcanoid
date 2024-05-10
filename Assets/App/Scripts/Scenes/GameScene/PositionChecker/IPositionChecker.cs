@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace App.Scripts.Scenes.GameScene.PlayerShape.Move
+namespace App.Scripts.Scenes.GameScene.PositionChecker
 {
     public interface IPositionChecker
     {

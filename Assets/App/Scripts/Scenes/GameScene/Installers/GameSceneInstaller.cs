@@ -13,6 +13,7 @@ using App.Scripts.Scenes.GameScene.Levels.Load;
 using App.Scripts.Scenes.GameScene.PlayerShape;
 using App.Scripts.Scenes.GameScene.PlayerShape.Move;
 using App.Scripts.Scenes.GameScene.Pools;
+using App.Scripts.Scenes.GameScene.PositionChecker;
 using App.Scripts.Scenes.GameScene.ScreenInfo;
 using App.Scripts.Scenes.GameScene.Settings;
 using App.Scripts.Scenes.GameScene.Time;
@@ -77,16 +78,14 @@ namespace App.Scripts.Scenes.GameScene.Installers
         private void BindPositionCheckers()
         {
             Container
-                .Bind<IPositionChecker>()
-                .WithId("PlayerPositionChecker")
-                .To<PositionChecker>()
+                .Bind<IShapePositionChecker>()
+                .To<PlayerShapePositionChecker>()
                 .AsTransient()
                 .WithArguments(_playerShape);
             
             Container
-                .Bind<IPositionChecker>()
-                .WithId("BallPositionChecker")
-                .To<PositionChecker>()
+                .Bind<IBallPositionChecker>()
+                .To<BallPositionChecker>()
                 .AsTransient()
                 .WithArguments(_ballView);
         }

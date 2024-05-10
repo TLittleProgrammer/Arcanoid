@@ -2,14 +2,14 @@
 using App.Scripts.Scenes.GameScene.ScreenInfo;
 using UnityEngine;
 
-namespace App.Scripts.Scenes.GameScene.PlayerShape.Move
+namespace App.Scripts.Scenes.GameScene.PositionChecker
 {
-    public sealed class PositionChecker : IPositionChecker
+    public sealed class PlayerShapePositionChecker : IShapePositionChecker
     {
         private readonly float _minXPosition;
         private readonly float _maxXPosition;
-        
-        public PositionChecker(ISpriteRenderable spriteRenderable, IScreenInfoProvider screenInfoProvider)
+
+        public PlayerShapePositionChecker(ISpriteRenderable spriteRenderable, IScreenInfoProvider screenInfoProvider)
         {
             float spriteSize = spriteRenderable.SpriteRenderer.bounds.size.x / 2f;
 

@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using App.Scripts.Scenes.GameScene.Components;
+﻿using App.Scripts.Scenes.GameScene.Components;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 

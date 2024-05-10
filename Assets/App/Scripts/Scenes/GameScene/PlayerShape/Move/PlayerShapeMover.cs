@@ -1,5 +1,6 @@
 ﻿using App.Scripts.Scenes.GameScene.Components;
 using App.Scripts.Scenes.GameScene.Input;
+using App.Scripts.Scenes.GameScene.PositionChecker;
 using App.Scripts.Scenes.GameScene.Time;
 using UnityEngine;
 using Zenject;
@@ -19,7 +20,7 @@ namespace App.Scripts.Scenes.GameScene.PlayerShape.Move
             ITransformable playerTransformable,
             ITimeProvider timeProvider,
             IInputService inputService,
-            [Inject(Id = "PlayerPositionChecker")] IPositionChecker positionChecker,
+            IShapePositionChecker positionChecker,
             ShapeMoverSettings shapeMoverSettings)
         {
             _playerTransformable = playerTransformable;
