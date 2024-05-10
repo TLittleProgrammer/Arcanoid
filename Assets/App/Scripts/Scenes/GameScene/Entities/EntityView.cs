@@ -7,6 +7,7 @@ namespace App.Scripts.Scenes.GameScene.Entities
     {
         [SerializeField] private SpriteRenderer _mainSpriteRenderer;
         [SerializeField] private SpriteRenderer _onTopSpriteRenderer;
+        [SerializeField] private BoxCollider2D _collider2D;
 
         public Sprite MainSprite
         {
@@ -25,13 +26,18 @@ namespace App.Scripts.Scenes.GameScene.Entities
             get => transform.position;
             set => transform.position = value;
         }
-        
+
         public Vector3 Scale
         {
             get => transform.localScale;
             set => transform.localScale = value;
         }
-        
+
+        public BoxCollider2D BoxCollider2D
+        {
+            get => _collider2D;
+        }
+
         public class Pool : MonoMemoryPool<EntityView>
         {
             

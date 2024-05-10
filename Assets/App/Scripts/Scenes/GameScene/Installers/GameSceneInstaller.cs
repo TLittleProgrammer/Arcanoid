@@ -3,6 +3,8 @@ using App.Scripts.Scenes.GameScene.Ball;
 using App.Scripts.Scenes.GameScene.Ball.Movement;
 using App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants;
 using App.Scripts.Scenes.GameScene.Camera;
+using App.Scripts.Scenes.GameScene.Components;
+using App.Scripts.Scenes.GameScene.Containers;
 using App.Scripts.Scenes.GameScene.Entities;
 using App.Scripts.Scenes.GameScene.Factories.EntityFactory;
 using App.Scripts.Scenes.GameScene.Grid;
@@ -36,7 +38,8 @@ namespace App.Scripts.Scenes.GameScene.Installers
         public void Initialize()
         {
             Container.Resolve<IGridPositionResolver>().AsyncInitialize(JsonConvert.DeserializeObject<LevelData>(_levelData.text));
-
+            Container.Resolve<IContainer<IBoxColliderable2D>>().AddItem(_playerShape);
+            
             LoadLevel();
         }
 
@@ -52,12 +55,18 @@ namespace App.Scripts.Scenes.GameScene.Installers
             BindScreenInfoProvider();
             BindInput();
             BindGridPositionResolver();
+            BindContainers();
             BindLoadLevelManager();
             BindPositionCheckers();
             BindPlayerMoving();
             BindLevelLoader();
             BindBallMovers();
             BindBallMovement();
+        }
+
+        private void BindContainers()
+        {
+            Container.Bind<IContainer<IBoxColliderable2D>>().To<EntityColliderContainer>().AsSingle();
         }
 
         private void BindBallMovers()

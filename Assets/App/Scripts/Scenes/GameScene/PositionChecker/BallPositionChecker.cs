@@ -1,4 +1,5 @@
 ﻿using App.Scripts.Scenes.GameScene.Components;
+using App.Scripts.Scenes.GameScene.Containers;
 using App.Scripts.Scenes.GameScene.ScreenInfo;
 using UnityEngine;
 
@@ -6,34 +7,83 @@ namespace App.Scripts.Scenes.GameScene.PositionChecker
 {
     public sealed class BallPositionChecker : IBallPositionChecker
     {
+        private readonly IContainer<IBoxColliderable2D> _collidersContainer;
         private readonly float _minXPosition;
         private readonly float _maxXPosition;
         private readonly float _minYPosition;
         private readonly float _maxYPosition;
+        private readonly float _ballRadius;
 
-        public BallPositionChecker(ISpriteRenderable spriteRenderable, IScreenInfoProvider screenInfoProvider)
+        public BallPositionChecker(ISpriteRenderable ballRenderable, IScreenInfoProvider screenInfoProvider, IContainer<IBoxColliderable2D> collidersContainer)
         {
-            float spriteSize = spriteRenderable.SpriteRenderer.bounds.size.x / 2f;
-
-            _minXPosition = -screenInfoProvider.WidthInWorld / 2f + spriteSize;
-            _maxXPosition = screenInfoProvider.WidthInWorld / 2f - spriteSize;
-            _minYPosition = -screenInfoProvider.HeightInWorld / 2f + spriteSize;
-            _maxYPosition = screenInfoProvider.HeightInWorld / 2f - spriteSize;
+            _collidersContainer = collidersContainer;
+            
+            _ballRadius = ballRenderable.SpriteRenderer.bounds.size.x / 2f;
+            
+            _minXPosition = -screenInfoProvider.WidthInWorld / 2f + _ballRadius;
+            _maxXPosition = screenInfoProvider.WidthInWorld / 2f - _ballRadius;
+            _minYPosition = -screenInfoProvider.HeightInWorld / 2f + _ballRadius;
+            _maxYPosition = screenInfoProvider.HeightInWorld / 2f - _ballRadius;
         }
 
-        public CollisionTypeId CollisionTypeId { get; private set; }
+        public CollisionTypeId CurrentCollisionTypeId { get; private set; }
 
         public bool CanChangePositionTo(Vector2 targetPosition)
         {
-            if (targetPosition.x < _minXPosition || targetPosition.x > _maxXPosition)
-            {
-                CollisionTypeId = CollisionTypeId.HorizontalSide;
-                return false;
-            }
+            if (!CheckHorizontalSides(targetPosition)) return false;
+            if (!CheckVerticalSides(targetPosition)) return false;
+            if (!CheckCollisionTriggers(targetPosition)) return false;
             
+
+            return true;
+        }
+
+        private bool CheckCollisionTriggers(Vector2 targetPosition)
+        {
+            foreach (IBoxColliderable2D boxColliderable in _collidersContainer.GetItems())
+            {
+                if (IsTriggered(boxColliderable.BoxCollider2D, targetPosition))
+                {
+                    Bounds bounds = boxColliderable.BoxCollider2D.bounds;
+
+                    if (targetPosition.y >= bounds.min.y && targetPosition.y <= bounds.max.y)
+                    {
+                        CurrentCollisionTypeId = CollisionTypeId.HorizontalSide;
+                        return false;
+                    }
+
+                    CurrentCollisionTypeId = CollisionTypeId.VerticalSide;
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private bool IsTriggered(BoxCollider2D boxColliderableBoxCollider2D, Vector2 targetPosition)
+        {
+            return boxColliderableBoxCollider2D.OverlapPoint(targetPosition + new Vector2(_ballRadius, _ballRadius)) ||
+                   boxColliderableBoxCollider2D.OverlapPoint(targetPosition + new Vector2(-_ballRadius, _ballRadius)) ||
+                   boxColliderableBoxCollider2D.OverlapPoint(targetPosition + new Vector2(-_ballRadius, -_ballRadius)) ||
+                   boxColliderableBoxCollider2D.OverlapPoint(targetPosition + new Vector2(_ballRadius, -_ballRadius));
+        }
+
+        private bool CheckVerticalSides(Vector2 targetPosition)
+        {
             if (targetPosition.y < _minYPosition || targetPosition.y > _maxYPosition)
             {
-                CollisionTypeId = CollisionTypeId.VerticalSide;
+                CurrentCollisionTypeId = CollisionTypeId.VerticalSide;
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool CheckHorizontalSides(Vector2 targetPosition)
+        {
+            if (targetPosition.x < _minXPosition || targetPosition.x > _maxXPosition)
+            {
+                CurrentCollisionTypeId = CollisionTypeId.HorizontalSide;
                 return false;
             }
 

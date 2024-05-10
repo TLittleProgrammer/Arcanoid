@@ -185,6 +185,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mainSpriteRenderer: {fileID: 4619515636115599831}
   _onTopSpriteRenderer: {fileID: 9136885530907549597}
+  _collider2D: {fileID: 2048383294204212312}
 --- !u!61 &2048383294204212312
 BoxCollider2D:
   m_ObjectHideFlags: 0

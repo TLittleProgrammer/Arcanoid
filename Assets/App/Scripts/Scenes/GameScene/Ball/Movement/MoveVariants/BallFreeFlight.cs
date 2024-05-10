@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using App.Scripts.Scenes.GameScene.Components;
-using App.Scripts.Scenes.GameScene.PlayerShape.Move;
 using App.Scripts.Scenes.GameScene.PositionChecker;
 using App.Scripts.Scenes.GameScene.Settings;
 using App.Scripts.Scenes.GameScene.Time;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.UIElements;
-using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
 {
@@ -33,7 +29,6 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
             _positionChecker = positionChecker;
         }
 
-
         public async UniTask AsyncInitialize(Vector2 param)
         {
             _direction = param.normalized;
@@ -57,12 +52,12 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
 
         private void ChangeDirection()
         {
-            _direction = _positionChecker.CollisionTypeId switch
+            _direction = _positionChecker.CurrentCollisionTypeId switch
             {
                 CollisionTypeId.HorizontalSide => new Vector2(-_direction.x, _direction.y),
                 CollisionTypeId.VerticalSide   => new Vector2(_direction.x, -_direction.y),
                 
-                _ => throw new ArgumentException($"Для типа коллизии {_positionChecker.CollisionTypeId} не определено поведение!")
+                _ => throw new ArgumentException($"Для типа коллизии {_positionChecker.CurrentCollisionTypeId} не определено поведение!")
             };
         }
     }

@@ -2,6 +2,6 @@
 {
     public interface IBallPositionChecker : IPositionChecker
     {
-        public CollisionTypeId CollisionTypeId { get; }
+        public CollisionTypeId CurrentCollisionTypeId { get; }
     }
 }

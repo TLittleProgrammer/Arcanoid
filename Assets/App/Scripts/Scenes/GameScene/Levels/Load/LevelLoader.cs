@@ -1,4 +1,6 @@
-﻿using App.Scripts.Scenes.GameScene.Entities;
+﻿using App.Scripts.Scenes.GameScene.Components;
+using App.Scripts.Scenes.GameScene.Containers;
+using App.Scripts.Scenes.GameScene.Entities;
 using App.Scripts.Scenes.GameScene.Grid;
 using UnityEngine;
 
@@ -8,12 +10,14 @@ namespace App.Scripts.Scenes.GameScene.Levels.Load
     {
         private readonly IGridPositionResolver _gridPositionResolver;
         private readonly IEntityView.Factory _entityFactory;
+        private readonly IContainer<IBoxColliderable2D> _entityViewContainer;
         private LevelData _levelData;
 
-        public LevelLoader(IGridPositionResolver gridPositionResolver, IEntityView.Factory entityFactory)
+        public LevelLoader(IGridPositionResolver gridPositionResolver, IEntityView.Factory entityFactory, IContainer<IBoxColliderable2D> entityViewContainer)
         {
             _gridPositionResolver = gridPositionResolver;
             _entityFactory = entityFactory;
+            _entityViewContainer = entityViewContainer;
         }
 
         public void LoadLevel(LevelData levelData)
@@ -30,6 +34,8 @@ namespace App.Scripts.Scenes.GameScene.Levels.Load
                 
                     spawnedBlock.Position = targetPosition;
                     spawnedBlock.Scale = _gridPositionResolver.GetCellSize();
+                    
+                    _entityViewContainer.AddItem(spawnedBlock);
                 }
             }
         }
