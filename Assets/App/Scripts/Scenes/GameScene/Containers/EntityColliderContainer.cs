@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using App.Scripts.Scenes.GameScene.Components;
-using App.Scripts.Scenes.GameScene.Entities;
 
 namespace App.Scripts.Scenes.GameScene.Containers
 {
