@@ -465,6 +465,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7867892122998834732}
+  - component: {fileID: 7663323947058073807}
   m_Layer: 5
   m_Name: LevelItem
   m_TagString: Untagged
@@ -492,11 +493,31 @@ RectTransform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 368.76645, y: -1236.384}
-  m_SizeDelta: {x: 620.2561, y: 141.2319}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 620.2561, y: 141.23193}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &7663323947058073807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3432648746662243100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3efadbbb9e942d3ba56e52380870016, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GalacticPassedLevels: {fileID: 3649652570482975099}
+  GalacticPassedLevelsBackground: {fileID: 6564671503142304355}
+  BigBackground: {fileID: 1888201304354672766}
+  _galacticName: {fileID: 810659617903657215}
+  Glow: {fileID: 8338547113466398844}
+  LeftImageHalf: {fileID: 6253685423042449384}
+  GalacticIcon: {fileID: 1808107324211109455}
+  MaskableImage: {fileID: 1323146309413770297}
 --- !u!1 &5710360225323309148
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,9 +8,9 @@
 
             if (sourceArray is not null)
             {
-                for (int i = 0; i < sourceArray.GetLength(1) && i < x; i++)
+                for (int i = 0; i < sourceArray.GetLength(1) && i < y; i++)
                 {
-                    for (int j = 0; j < sourceArray.GetLength(0) && j < y; j++)
+                    for (int j = 0; j < sourceArray.GetLength(0) && j < x; j++)
                     {
                         resultArray[j, i] = sourceArray[j, i];
                     }
