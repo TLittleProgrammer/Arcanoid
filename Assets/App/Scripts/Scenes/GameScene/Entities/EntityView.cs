@@ -9,6 +9,10 @@ namespace App.Scripts.Scenes.GameScene.Entities
         [SerializeField] private SpriteRenderer _onTopSpriteRenderer;
         [SerializeField] private BoxCollider2D _collider2D;
 
+        public int GridPositionX { get; set; }
+        public int GridPositionY { get; set; }
+        public GameObject GameObject => gameObject;
+
         public Sprite MainSprite
         {
             get => _mainSpriteRenderer.sprite;
@@ -37,6 +41,7 @@ namespace App.Scripts.Scenes.GameScene.Entities
         {
             get => _collider2D;
         }
+
 
         public class Pool : MonoMemoryPool<EntityView>
         {

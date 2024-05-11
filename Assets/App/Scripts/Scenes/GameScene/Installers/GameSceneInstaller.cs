@@ -9,9 +9,9 @@ using App.Scripts.Scenes.GameScene.Entities;
 using App.Scripts.Scenes.GameScene.Factories.EntityFactory;
 using App.Scripts.Scenes.GameScene.Grid;
 using App.Scripts.Scenes.GameScene.Input;
-using App.Scripts.Scenes.GameScene.LevelManager;
 using App.Scripts.Scenes.GameScene.Levels;
 using App.Scripts.Scenes.GameScene.Levels.Load;
+using App.Scripts.Scenes.GameScene.Levels.View;
 using App.Scripts.Scenes.GameScene.PlayerShape;
 using App.Scripts.Scenes.GameScene.PlayerShape.Move;
 using App.Scripts.Scenes.GameScene.Pools;
@@ -56,7 +56,6 @@ namespace App.Scripts.Scenes.GameScene.Installers
             BindInput();
             BindGridPositionResolver();
             BindContainers();
-            BindLoadLevelManager();
             BindPositionCheckers();
             BindPlayerMoving();
             BindLevelLoader();
@@ -130,6 +129,7 @@ namespace App.Scripts.Scenes.GameScene.Installers
 
         private void BindLevelLoader()
         {
+            Container.Bind<ILevelViewUpdater>().To<LevelViewUpdater>().AsSingle();
             Container.Bind<ILevelLoader>().To<LevelLoader>().AsSingle();
         }
 
@@ -160,11 +160,6 @@ namespace App.Scripts.Scenes.GameScene.Installers
         private void BindCameraService()
         {
             Container.Bind<ICameraService>().To<CameraService>().AsSingle().WithArguments(_camera);
-        }
-
-        private void BindLoadLevelManager()
-        {
-            Container.Bind<ILevelWorldBuilder>().To<LevelWorldBuilder>().AsSingle();
         }
 
         private void BindScreenInfoProvider()

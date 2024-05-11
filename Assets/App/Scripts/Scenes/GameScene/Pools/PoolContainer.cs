@@ -23,5 +23,13 @@ namespace App.Scripts.Scenes.GameScene.Pools
 
             return item;
         }
+
+        public void RemoveItem<TItem>(PoolTypeId poolTypeId, TItem item) where TItem : MonoBehaviour
+        {
+            switch (poolTypeId)
+            {
+                case PoolTypeId.EntityView: _entityViewPool.Despawn(item as EntityView); break;
+            }
+        }
     }
 }

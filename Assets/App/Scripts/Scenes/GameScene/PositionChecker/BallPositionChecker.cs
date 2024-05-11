@@ -1,5 +1,7 @@
 ﻿using App.Scripts.Scenes.GameScene.Components;
 using App.Scripts.Scenes.GameScene.Containers;
+using App.Scripts.Scenes.GameScene.Entities;
+using App.Scripts.Scenes.GameScene.Levels.View;
 using App.Scripts.Scenes.GameScene.ScreenInfo;
 using UnityEngine;
 
@@ -8,16 +10,22 @@ namespace App.Scripts.Scenes.GameScene.PositionChecker
     public sealed class BallPositionChecker : IBallPositionChecker
     {
         private readonly IContainer<IBoxColliderable2D> _collidersContainer;
+        private readonly ILevelViewUpdater _levelViewUpdater;
         private readonly float _minXPosition;
         private readonly float _maxXPosition;
         private readonly float _minYPosition;
         private readonly float _maxYPosition;
         private readonly float _ballRadius;
 
-        public BallPositionChecker(ISpriteRenderable ballRenderable, IScreenInfoProvider screenInfoProvider, IContainer<IBoxColliderable2D> collidersContainer)
+        public BallPositionChecker(
+            ISpriteRenderable ballRenderable,
+            IScreenInfoProvider screenInfoProvider,
+            IContainer<IBoxColliderable2D> collidersContainer,
+            ILevelViewUpdater levelViewUpdater)
         {
             _collidersContainer = collidersContainer;
-            
+            _levelViewUpdater = levelViewUpdater;
+
             _ballRadius = ballRenderable.SpriteRenderer.bounds.size.x / 2f;
             
             _minXPosition = -screenInfoProvider.WidthInWorld / 2f + _ballRadius;
@@ -44,6 +52,8 @@ namespace App.Scripts.Scenes.GameScene.PositionChecker
             {
                 if (IsTriggered(boxColliderable.BoxCollider2D, targetPosition))
                 {
+                    UpdateView(boxColliderable);
+                    
                     Bounds bounds = boxColliderable.BoxCollider2D.bounds;
 
                     if (targetPosition.y >= bounds.min.y && targetPosition.y <= bounds.max.y)
@@ -58,6 +68,14 @@ namespace App.Scripts.Scenes.GameScene.PositionChecker
             }
 
             return true;
+        }
+
+        private void UpdateView(IBoxColliderable2D boxColliderableBoxCollider2D)
+        {
+            if (boxColliderableBoxCollider2D is EntityView entityView)
+            {
+                _levelViewUpdater.UpdateVisual(entityView);
+            }
         }
 
         private bool IsTriggered(BoxCollider2D boxColliderableBoxCollider2D, Vector2 targetPosition)
