@@ -53,9 +53,7 @@ namespace App.Scripts.Scenes.GameScene.Levels.View
                     entityView.MainSprite  = nextStage.Sprite;
                     entityView.OnTopSprite = nextStage.AvailableSpritesOnMainSprite.GetRandomValue();
 
-                    Debug.Log($"GridPosition1: {entityView.GridPositionX}; {entityView.GridPositionY}. Value = {_levelGrid[entityView.GridPositionX, entityView.GridPositionY]}");
                     _levelGrid[entityView.GridPositionX, entityView.GridPositionY] = GetIndexByStage(nextStage);
-                    Debug.Log($"GridPosition2: {entityView.GridPositionX}; {entityView.GridPositionY}, Value = {_levelGrid[entityView.GridPositionX, entityView.GridPositionY]}");
                 }
             }
         }
