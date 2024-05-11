@@ -1,9 +1,7 @@
-using UnityEngine;
-
 namespace App.Scripts.Scenes.GameScene.Components
 {
-    public interface IScalable : IComponent
+    public interface IScalable<TScale> : IComponent
     {
-        Vector3 Scale { get; set; }
+        TScale Scale { get; set; }
     }
 }

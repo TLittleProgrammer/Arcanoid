@@ -1,4 +1,5 @@
-﻿using App.Scripts.Scenes.GameScene.Entities;
+﻿using App.Scripts.Scenes.GameScene.Effects;
+using App.Scripts.Scenes.GameScene.Entities;
 using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Pools
@@ -6,9 +7,11 @@ namespace App.Scripts.Scenes.GameScene.Pools
     public sealed class PoolContainer : IPoolContainer
     {
         private readonly EntityView.Pool _entityViewPool;
+        private readonly IEffect<CircleEffect>.Pool _circleEffect;
 
-        public PoolContainer(EntityView.Pool entityViewPool)
+        public PoolContainer(EntityView.Pool entityViewPool, IEffect<CircleEffect>.Pool circleEffect)
         {
+            _circleEffect = circleEffect;
             _entityViewPool = entityViewPool;
         }
 
@@ -16,7 +19,8 @@ namespace App.Scripts.Scenes.GameScene.Pools
         {
             TItem item = poolTypeId switch
             {
-                PoolTypeId.EntityView => _entityViewPool.Spawn().GetComponent<TItem>(),
+                PoolTypeId.EntityView   => _entityViewPool.Spawn().GetComponent<TItem>(),
+                PoolTypeId.CircleEffect => _circleEffect.Spawn().GetComponent<TItem>(),
                 
                 _ => null
             };
@@ -28,7 +32,8 @@ namespace App.Scripts.Scenes.GameScene.Pools
         {
             switch (poolTypeId)
             {
-                case PoolTypeId.EntityView: _entityViewPool.Despawn(item as EntityView); break;
+                case PoolTypeId.EntityView:   _entityViewPool.Despawn(item as EntityView); break;
+                case PoolTypeId.CircleEffect: _circleEffect.Despawn(item as CircleEffect); break;
             }
         }
     }

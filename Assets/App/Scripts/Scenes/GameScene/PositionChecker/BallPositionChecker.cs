@@ -1,4 +1,5 @@
-﻿using App.Scripts.Scenes.GameScene.Components;
+﻿using App.Scripts.Scenes.GameScene.Collisions;
+using App.Scripts.Scenes.GameScene.Components;
 using App.Scripts.Scenes.GameScene.Containers;
 using App.Scripts.Scenes.GameScene.Entities;
 using App.Scripts.Scenes.GameScene.Levels.View;
@@ -10,7 +11,7 @@ namespace App.Scripts.Scenes.GameScene.PositionChecker
     public sealed class BallPositionChecker : IBallPositionChecker
     {
         private readonly IContainer<IBoxColliderable2D> _collidersContainer;
-        private readonly ILevelViewUpdater _levelViewUpdater;
+        private readonly ICollisionService<EntityView> _collisionService;
         private readonly float _minXPosition;
         private readonly float _maxXPosition;
         private readonly float _minYPosition;
@@ -21,10 +22,10 @@ namespace App.Scripts.Scenes.GameScene.PositionChecker
             ISpriteRenderable ballRenderable,
             IScreenInfoProvider screenInfoProvider,
             IContainer<IBoxColliderable2D> collidersContainer,
-            ILevelViewUpdater levelViewUpdater)
+            ICollisionService<EntityView> collisionService)
         {
             _collidersContainer = collidersContainer;
-            _levelViewUpdater = levelViewUpdater;
+            _collisionService = collisionService;
 
             _ballRadius = ballRenderable.SpriteRenderer.bounds.size.x / 2f;
             
@@ -74,7 +75,7 @@ namespace App.Scripts.Scenes.GameScene.PositionChecker
         {
             if (boxColliderableBoxCollider2D is EntityView entityView)
             {
-                _levelViewUpdater.UpdateVisual(entityView);
+                _collisionService.Collide(entityView);
             }
         }
 

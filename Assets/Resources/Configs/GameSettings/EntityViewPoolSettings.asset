@@ -10,20 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: aa9086dfe285404f8e8cf1315e799713, type: 3}
-  m_Name: FactorySettings
+  m_Name: EntityViewPoolSettings
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 8599060146014154672, guid: 0b0ee6d32cf9330479a8c84e210669f0, type: 3}
+    ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes:
-    - Name: EntityView
-      Entry: 10
-      Data: 0
+    SerializationNodes: []
+  View: {fileID: 8599060146014154672, guid: 0b0ee6d32cf9330479a8c84e210669f0, type: 3}
   InitialSize: 30
   ParentName: EntityViews

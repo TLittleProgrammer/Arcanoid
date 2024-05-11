@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6f444df96034304848077a0c1e11dfa, type: 3}
   m_Name: GameSettings
   m_EditorClassIdentifier: 
-  FactorySettings: {fileID: 11400000, guid: 87cea2c65db92f84288cb48247d4f798, type: 2}
+  PoolProviders: {fileID: 11400000, guid: ef5f027af8b19f84d95882b289b4cc8e, type: 2}
   EntityProvider: {fileID: 11400000, guid: 34b56c953e608404d9bb91a660edf061, type: 2}
   BallFlyingSettings: {fileID: 11400000, guid: 5ed73460dc08cca4dbd0771663bee6bb, type: 2}

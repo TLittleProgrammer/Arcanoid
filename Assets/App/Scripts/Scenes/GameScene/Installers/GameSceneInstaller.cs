@@ -3,8 +3,10 @@ using App.Scripts.Scenes.GameScene.Ball;
 using App.Scripts.Scenes.GameScene.Ball.Movement;
 using App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants;
 using App.Scripts.Scenes.GameScene.Camera;
+using App.Scripts.Scenes.GameScene.Collisions;
 using App.Scripts.Scenes.GameScene.Components;
 using App.Scripts.Scenes.GameScene.Containers;
+using App.Scripts.Scenes.GameScene.Effects;
 using App.Scripts.Scenes.GameScene.Entities;
 using App.Scripts.Scenes.GameScene.Factories.EntityFactory;
 using App.Scripts.Scenes.GameScene.Grid;
@@ -33,7 +35,7 @@ namespace App.Scripts.Scenes.GameScene.Installers
         [SerializeField] private PlayerView _playerShape;
         [SerializeField] private BallView _ballView;
 
-        [Inject] private FactorySettings _factorySettings;
+        [Inject] private PoolProviders _poolProviders;
 
         public void Initialize()
         {
@@ -56,11 +58,17 @@ namespace App.Scripts.Scenes.GameScene.Installers
             BindInput();
             BindGridPositionResolver();
             BindContainers();
+            BindLevelLoader();
+            BindCollisionService();
             BindPositionCheckers();
             BindPlayerMoving();
-            BindLevelLoader();
             BindBallMovers();
             BindBallMovement();
+        }
+
+        private void BindCollisionService()
+        {
+            Container.Bind<ICollisionService<EntityView>>().To<EntityCollisionService>().AsSingle();
         }
 
         private void BindContainers()
@@ -124,7 +132,13 @@ namespace App.Scripts.Scenes.GameScene.Installers
 
         private void BindPools()
         {
-            Container.BindPool<EntityView, EntityView.Pool>(_factorySettings.InitialSize, (EntityView)_factorySettings.EntityView, _factorySettings.ParentName);
+            BindPool<EntityView, EntityView.Pool>(PoolTypeId.EntityView);
+            BindPool<CircleEffect, IEffect<CircleEffect>.Pool>(PoolTypeId.CircleEffect);
+        }
+
+        private void BindPool<TInstance, TPool>(PoolTypeId poolType) where TPool : IMemoryPool where TInstance : MonoBehaviour 
+        {
+            Container.BindPool<TInstance, TPool>(_poolProviders.Pools[poolType].InitialSize, (TInstance)_poolProviders.Pools[poolType].View, _poolProviders.Pools[poolType].ParentName);
         }
 
         private void BindLevelLoader()
