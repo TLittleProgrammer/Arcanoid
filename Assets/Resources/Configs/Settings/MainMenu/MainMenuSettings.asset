@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b8431474f874004a05a042db89d898e, type: 3}
+  m_Name: MainMenuSettings
+  m_EditorClassIdentifier: 
+  LevelPackProvider: {fileID: 11400000, guid: efb5007b3d476144eb1e75085b4284d3, type: 2}
+  LevelItemViewByTypeProvider: {fileID: 11400000, guid: 8964ef10891f61544bc9a66a4314abe4, type: 2}

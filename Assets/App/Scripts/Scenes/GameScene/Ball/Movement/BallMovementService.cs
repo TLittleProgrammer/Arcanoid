@@ -8,7 +8,7 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement
     public sealed class BallMovementService : IBallMovementService
     {
         private readonly IBallFreeFlightMover _ballFreeFlightMover;
-        private readonly ITransformable _ballTransformable;
+        private readonly IPositionable _ballPositionable;
         private readonly IClickDetector _clickDetector;
 
         private IBallMover _ballMover;
@@ -18,13 +18,13 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement
             IClickDetector clickDetector,
             IBallFollowMover ballFollowMover,
             IBallFreeFlightMover ballFreeFlightMover,
-            ITransformable ballTransformable
+            IPositionable ballPositionable
         )
         {
             _clickDetector = clickDetector;
             _ballMover = ballFollowMover;
             _ballFreeFlightMover = ballFreeFlightMover;
-            _ballTransformable = ballTransformable;
+            _ballPositionable = ballPositionable;
 
             _clickDetector.MouseUp += OnMouseUp;
         }
@@ -34,7 +34,7 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement
             if (_ballMover is null)
                 return;
 
-            _previousBallPosition = _ballTransformable.Position;
+            _previousBallPosition = _ballPositionable.Position;
             _ballMover.Tick();
         }
 
@@ -50,7 +50,7 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement
 
         private Vector2 GetDirection()
         {
-            return _ballTransformable.Position.x > _previousBallPosition.x
+            return _ballPositionable.Position.x > _previousBallPosition.x
                 ? new Vector2(0.5f, 0.5f)
                 : new Vector2(-0.5f, 0.5f);
         }

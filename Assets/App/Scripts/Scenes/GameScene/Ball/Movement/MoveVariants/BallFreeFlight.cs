@@ -13,17 +13,17 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
         private readonly BallFlyingSettings _settings;
         private readonly ITimeProvider _timeProvider;
         private readonly IBallPositionChecker _positionChecker;
-        private readonly ITransformable _ballTransformable;
+        private readonly IPositionable _ballPositionable;
         
         private Vector3 _direction;
 
         public BallFreeFlight(
-            ITransformable ballTransformable,
+            IPositionable ballPositionable,
             BallFlyingSettings settings,
             ITimeProvider timeProvider,
             IBallPositionChecker positionChecker)
         {
-            _ballTransformable = ballTransformable;
+            _ballPositionable = ballPositionable;
             _settings = settings;
             _timeProvider = timeProvider;
             _positionChecker = positionChecker;
@@ -38,11 +38,11 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
 
         public void Tick()
         {
-            Vector2 targetPosition = _ballTransformable.Position + _direction * _settings.Speed * _timeProvider.DeltaTime;
+            Vector2 targetPosition = _ballPositionable.Position + _direction * _settings.Speed * _timeProvider.DeltaTime;
             
             if (_positionChecker.CanChangePositionTo(targetPosition))
             {
-                _ballTransformable.Position = targetPosition;
+                _ballPositionable.Position = targetPosition;
             }
             else
             {

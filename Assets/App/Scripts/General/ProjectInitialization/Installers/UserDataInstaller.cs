@@ -1,21 +1,22 @@
 ﻿using App.Scripts.General.UserData;
 using App.Scripts.General.UserData.Data;
 using App.Scripts.General.UserData.SaveLoad;
-using UnityEngine;
 using Zenject;
 
 namespace App.Scripts.General.ProjectInitialization.Installers
 {
-    public class UserDataInstaller : MonoInstaller, IInitializable
+    public class UserDataInstaller : MonoInstaller
     {
         public override void InstallBindings()
         {
             Container.BindInterfacesAndSelfTo<UserDataInstaller>().FromInstance(this).AsSingle();
             Container.Bind<ISaveLoadService>().To<SaveLoadService>().AsSingle();
             Container.Bind<IUserDataContainer>().To<UserDataContainer>().AsSingle();
+            
+            Initialize();
         }
 
-        public void Initialize()
+        private void Initialize()
         {
             var saveLoad = Container.Resolve<ISaveLoadService>();
             var userDataContainer = Container.Resolve<IUserDataContainer>();

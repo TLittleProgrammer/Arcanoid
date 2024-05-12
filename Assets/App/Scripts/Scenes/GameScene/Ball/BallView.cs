@@ -4,7 +4,7 @@ using UnityEngine;
 namespace App.Scripts.Scenes.GameScene.Ball
 {
     [RequireComponent(typeof(SpriteRenderer))]
-    public class BallView : MonoBehaviour, ITransformable, ISpriteRenderable
+    public class BallView : MonoBehaviour, IPositionable, ISpriteRenderable
     {
         private SpriteRenderer _spriteRenderer;
 

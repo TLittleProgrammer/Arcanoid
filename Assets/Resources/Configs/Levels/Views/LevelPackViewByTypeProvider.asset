@@ -1,0 +1,168 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25f39b433cb140f88e450c05faf8cfac, type: 3}
+  m_Name: LevelPackViewByTypeProvider
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 21300000, guid: 87b904f538e40e341a12e4ddb0c61c16, type: 3}
+    - {fileID: 21300000, guid: 6a1bf71e9f9229a4aaa73b1a4fdfec81, type: 3}
+    - {fileID: 21300000, guid: e14890b1c10f7584ca89b3121a731b5d, type: 3}
+    - {fileID: 21300000, guid: 56bed0b89b754974e9106e8ce07673f3, type: 3}
+    - {fileID: 21300000, guid: 1f455e2e436086f4ba75484a45ca839b, type: 3}
+    - {fileID: 21300000, guid: a0073f1d5fa586c49a28f3c7827fc15a, type: 3}
+    - {fileID: 21300000, guid: 46103a485fd4eb24692c339f5f606e11, type: 3}
+    - {fileID: 21300000, guid: 58aea0790e8bf254a9dfe0ec284f2714, type: 3}
+    - {fileID: 21300000, guid: 9bb033bc3d5f2ee40ae51e9aca7e2947, type: 3}
+    - {fileID: 21300000, guid: e5972d46f03f4664f96b2057878853b5, type: 3}
+    - {fileID: 21300000, guid: 1a14a10e8acaf0e4e8862794dffa5acf, type: 3}
+    - {fileID: 21300000, guid: e287150016cc4144d9511d6bc275d991, type: 3}
+    - {fileID: 21300000, guid: 7c18571f69938b345a8158806727abd4, type: 3}
+    - {fileID: 21300000, guid: abb20df8471a7ff49848c469b105669b, type: 3}
+    - {fileID: 21300000, guid: de088725a3bc3c24ea2c6ca4ba0e3e83, type: 3}
+    - {fileID: 21300000, guid: 959202feeac4aff409361e4d5b7f894e, type: 3}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: Views
+      Entry: 7
+      Data: 0|System.Collections.Generic.Dictionary`2[[App.Scripts.Scenes.MainMenuScene.LevelPacks.LevelItemTypeId,
+        MainMenu],[App.Scripts.Scenes.MainMenuScene.LevelPacks.Configs.LevelItemViewData,
+        MainMenu]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[App.Scripts.Scenes.MainMenuScene.LevelPacks.LevelItemTypeId,
+        MainMenu]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 2
+    - Name: $v
+      Entry: 7
+      Data: 2|App.Scripts.Scenes.MainMenuScene.LevelPacks.Configs.LevelItemViewData,
+        MainMenu
+    - Name: GalacticPassedLevelsBackground
+      Entry: 10
+      Data: 0
+    - Name: BigBackground
+      Entry: 10
+      Data: 1
+    - Name: Glow
+      Entry: 10
+      Data: 2
+    - Name: LeftImageHalf
+      Entry: 10
+      Data: 3
+    - Name: GalacticIcon
+      Entry: 10
+      Data: 4
+    - Name: MaskableImage
+      Entry: 10
+      Data: 5
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 0
+    - Name: $v
+      Entry: 7
+      Data: 3|App.Scripts.Scenes.MainMenuScene.LevelPacks.Configs.LevelItemViewData,
+        MainMenu
+    - Name: GalacticPassedLevelsBackground
+      Entry: 10
+      Data: 6
+    - Name: BigBackground
+      Entry: 10
+      Data: 7
+    - Name: Glow
+      Entry: 10
+      Data: 8
+    - Name: LeftImageHalf
+      Entry: 10
+      Data: 9
+    - Name: GalacticIcon
+      Entry: 6
+      Data: 
+    - Name: MaskableImage
+      Entry: 10
+      Data: 10
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 1
+    - Name: $v
+      Entry: 7
+      Data: 4|App.Scripts.Scenes.MainMenuScene.LevelPacks.Configs.LevelItemViewData,
+        MainMenu
+    - Name: GalacticPassedLevelsBackground
+      Entry: 10
+      Data: 11
+    - Name: BigBackground
+      Entry: 10
+      Data: 12
+    - Name: Glow
+      Entry: 10
+      Data: 13
+    - Name: LeftImageHalf
+      Entry: 10
+      Data: 14
+    - Name: GalacticIcon
+      Entry: 6
+      Data: 
+    - Name: MaskableImage
+      Entry: 10
+      Data: 15
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 

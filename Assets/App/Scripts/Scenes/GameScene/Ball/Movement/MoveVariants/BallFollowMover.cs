@@ -6,13 +6,13 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
 {
     public sealed class BallFollowMover : IBallFollowMover
     {
-        private readonly ITransformable _ballTransformable;
-        private readonly ITransformable _targetTransformable;
+        private readonly IPositionable _ballPositionable;
+        private readonly IPositionable _targetPositionable;
 
-        public BallFollowMover(ITransformable ballTransformable, ITransformable targetTransformable)
+        public BallFollowMover(IPositionable ballPositionable, IPositionable targetPositionable)
         {
-            _ballTransformable = ballTransformable;
-            _targetTransformable = targetTransformable;
+            _ballPositionable = ballPositionable;
+            _targetPositionable = targetPositionable;
         }
 
         public async UniTask AsyncInitialize()
@@ -22,11 +22,11 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
 
         public void Tick()
         {
-            _ballTransformable.Position =
+            _ballPositionable.Position =
                 new Vector3
                 (
-                    _targetTransformable.Position.x,
-                    _ballTransformable.Position.y,
+                    _targetPositionable.Position.x,
+                    _ballPositionable.Position.y,
                     0f
                 );
         }

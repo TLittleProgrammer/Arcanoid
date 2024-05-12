@@ -4,7 +4,7 @@ using UnityEngine;
 namespace App.Scripts.Scenes.GameScene.PlayerShape
 {
     [RequireComponent(typeof(SpriteRenderer), typeof(BoxCollider2D))]
-    public sealed class PlayerView : MonoBehaviour, ITransformable, ISpriteRenderable, IBoxColliderable2D
+    public sealed class PlayerView : MonoBehaviour, IPositionable, ISpriteRenderable, IBoxColliderable2D
     {
         private SpriteRenderer _spriteRenderer;
         private BoxCollider2D _collider2D;

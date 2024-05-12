@@ -2,7 +2,7 @@
 
 namespace App.Scripts.Scenes.GameScene.Components
 {
-    public interface ITransformable : IComponent
+    public interface IPositionable : IComponent
     {
         Vector3 Position { get; set; }
     }

@@ -9,7 +9,7 @@ namespace App.Scripts.Scenes.GameScene.PlayerShape.Move
 {
     public sealed class PlayerShapeMover : ITickable
     {
-        private readonly ITransformable _playerTransformable;
+        private readonly IPositionable _playerPositionable;
         private readonly ITimeProvider _timeProvider;
         private readonly IInputService _inputService;
         private readonly IPositionChecker _positionChecker;
@@ -17,13 +17,13 @@ namespace App.Scripts.Scenes.GameScene.PlayerShape.Move
         private ShapeMoverSettings _shapeMoverSettings;
 
         public PlayerShapeMover(
-            ITransformable playerTransformable,
+            IPositionable playerPositionable,
             ITimeProvider timeProvider,
             IInputService inputService,
             IShapePositionChecker positionChecker,
             ShapeMoverSettings shapeMoverSettings)
         {
-            _playerTransformable = playerTransformable;
+            _playerPositionable = playerPositionable;
             _timeProvider = timeProvider;
             _inputService = inputService;
             _positionChecker = positionChecker;
@@ -44,7 +44,7 @@ namespace App.Scripts.Scenes.GameScene.PlayerShape.Move
         {
             if (_positionChecker.CanChangePositionTo(targetPosition))
             {
-                _playerTransformable.Position = targetPosition;
+                _playerPositionable.Position = targetPosition;
             }
         }
 
@@ -52,8 +52,8 @@ namespace App.Scripts.Scenes.GameScene.PlayerShape.Move
         {
             return Vector2.Lerp
             (
-                _playerTransformable.Position,
-                new(_inputService.CurrentMousePosition.x, _playerTransformable.Position.y),
+                _playerPositionable.Position,
+                new(_inputService.CurrentMousePosition.x, _playerPositionable.Position.y),
                 _timeProvider.DeltaTime * _shapeMoverSettings.Speed
             );
         }

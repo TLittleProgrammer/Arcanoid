@@ -2,7 +2,11 @@
     "name": "MainMenu",
     "rootNamespace": "",
     "references": [
-        "Unity.TextMeshPro"
+        "Unity.TextMeshPro",
+        "Zenject",
+        "Components",
+        "GeneralBetweenScenes",
+        "Localisation"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

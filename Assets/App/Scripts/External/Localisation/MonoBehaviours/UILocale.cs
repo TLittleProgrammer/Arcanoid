@@ -15,6 +15,11 @@ namespace App.Scripts.External.Localisation.MonoBehaviours
             _text = GetComponent<TextMeshProUGUI>();
         }
 
+        public void SetToken(string token)
+        {
+            LocaleKey = token;
+        }
+
         public void SetText(string text)
         {
             _text.text = text;
