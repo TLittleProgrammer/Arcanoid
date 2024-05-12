@@ -1,8 +1,6 @@
 using App.Scripts.General.LoadingScreen.Settings;
 using Cysharp.Threading.Tasks;
-using Cysharp.Threading.Tasks.Triggers;
 using DG.Tweening;
-using UnityEditorInternal;
 using UnityEngine;
 using Zenject;
 

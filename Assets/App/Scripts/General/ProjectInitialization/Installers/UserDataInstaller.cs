@@ -1,6 +1,6 @@
-﻿using App.Scripts.General.UserData;
+﻿using App.Scripts.External.UserData;
+using App.Scripts.External.UserData.SaveLoad;
 using App.Scripts.General.UserData.Data;
-using App.Scripts.General.UserData.SaveLoad;
 using Zenject;
 
 namespace App.Scripts.General.ProjectInitialization.Installers

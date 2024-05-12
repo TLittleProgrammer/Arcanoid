@@ -1,4 +1,4 @@
-﻿namespace App.Scripts.General.UserData.SaveLoad
+﻿namespace App.Scripts.External.UserData.SaveLoad
 {
     public interface ISaveLoadService
     {

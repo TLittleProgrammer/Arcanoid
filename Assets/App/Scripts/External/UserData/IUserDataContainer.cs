@@ -1,6 +1,6 @@
-﻿using App.Scripts.General.UserData.SaveLoad;
+﻿using App.Scripts.External.UserData.SaveLoad;
 
-namespace App.Scripts.General.UserData
+namespace App.Scripts.External.UserData
 {
     public interface IUserDataContainer
     {

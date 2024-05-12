@@ -1,4 +1,5 @@
-﻿using App.Scripts.General.UserData.Data;
+﻿using App.Scripts.External.UserData;
+using App.Scripts.General.UserData.Data;
 
 namespace App.Scripts.General.UserData.Services
 {

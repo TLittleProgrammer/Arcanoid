@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using App.Scripts.General.UserData.SaveLoad;
+using App.Scripts.External.UserData.SaveLoad;
 
-namespace App.Scripts.General.UserData
+namespace App.Scripts.External.UserData
 {
     public class UserDataContainer : IUserDataContainer
     {

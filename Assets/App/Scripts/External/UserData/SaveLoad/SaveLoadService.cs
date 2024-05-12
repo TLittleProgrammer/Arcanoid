@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using UnityEngine;
 using Path = System.IO.Path;
 
-namespace App.Scripts.General.UserData.SaveLoad
+namespace App.Scripts.External.UserData.SaveLoad
 {
     public class SaveLoadService : ISaveLoadService
     {

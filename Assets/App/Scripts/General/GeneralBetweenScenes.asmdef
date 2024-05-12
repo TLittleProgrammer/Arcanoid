@@ -9,7 +9,9 @@
         "Zenject",
         "Components",
         "GameStateMachine",
-        "OdinPackageUnityExtensions"
+        "OdinPackageUnityExtensions",
+        "UserData",
+        "DotweenContainerService"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
