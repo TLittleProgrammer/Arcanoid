@@ -40,10 +40,24 @@ namespace App.Scripts.Scenes.GameScene.Installers
 
         public void Initialize()
         {
-            Container.Resolve<IGridPositionResolver>().AsyncInitialize(JsonConvert.DeserializeObject<LevelData>(_levelData.text));
+            LevelData levelData = ChooseLevelData();
+            
+            Container.Resolve<IGridPositionResolver>().AsyncInitialize(levelData);
             Container.Resolve<IContainer<IBoxColliderable2D>>().AddItem(_playerShape);
             
-            LoadLevel();
+            LoadLevel(levelData);
+        }
+
+        private LevelData ChooseLevelData()
+        {
+            var transferData = Container.Resolve<ILevelPackTransferData>();
+            
+            if (transferData.NeedLoadLevel)
+            {
+                return JsonConvert.DeserializeObject<LevelData>(transferData.LevelPack.Levels[transferData.LevelIndex].text);
+            }
+
+            return JsonConvert.DeserializeObject<LevelData>(_levelData.text);
         }
 
         public override void InstallBindings()
@@ -159,22 +173,10 @@ namespace App.Scripts.Scenes.GameScene.Installers
             Container.BindInterfacesAndSelfTo<InputService>().AsSingle();
         }
 
-        private void LoadLevel()
+        private void LoadLevel(LevelData levelData)
         {
-            var transferData = Container.Resolve<ILevelPackTransferData>();
             var levelLoader  = Container.Resolve<ILevelLoader>();
-            
-            LevelData levelData;
-            
-            if (transferData.NeedLoadLevel)
-            {
-                levelData = JsonConvert.DeserializeObject<LevelData>(transferData.LevelPack.Levels[transferData.LevelIndex].text);
-            }
-            else
-            {
-                levelData = JsonConvert.DeserializeObject<LevelData>(_levelData.text);
-            }
-            
+
             levelLoader.LoadLevel(levelData);
         }
 
