@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b6a85a197504a16ad5f23d1786e202f, type: 3}
+  m_Name: ProjectSettings
+  m_EditorClassIdentifier: 
+  ApplicationSettings: {fileID: 11400000, guid: 78c8bbdcf50656c4f941330860676375, type: 2}
+  LoadingScreenSettings: {fileID: 11400000, guid: 6b89b2f1280328143af7fe79df31e5b3, type: 2}

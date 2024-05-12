@@ -1,0 +1,30 @@
+{
+    "name": "GeneralBetweenScenes",
+    "rootNamespace": "",
+    "references": [
+        "Popups",
+        "SceneManagment",
+        "UniTask",
+        "UniTask.DOTween",
+        "Zenject",
+        "Components",
+        "GameStateMachine",
+        "OdinPackageUnityExtensions"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "DOTween.dll",
+        "Zenject-usage.dll",
+        "Sirenix.OdinInspector.Attributes.dll",
+        "Sirenix.Serialization.Config.dll",
+        "Sirenix.Serialization.dll",
+        "Sirenix.Utilities.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
