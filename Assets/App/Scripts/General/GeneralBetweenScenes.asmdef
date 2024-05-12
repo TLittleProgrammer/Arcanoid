@@ -21,7 +21,8 @@
         "Sirenix.OdinInspector.Attributes.dll",
         "Sirenix.Serialization.Config.dll",
         "Sirenix.Serialization.dll",
-        "Sirenix.Utilities.dll"
+        "Sirenix.Utilities.dll",
+        "Newtonsoft.Json.dll"
     ],
     "autoReferenced": true,
     "defineConstraints": [],

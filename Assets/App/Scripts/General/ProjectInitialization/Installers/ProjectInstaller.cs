@@ -5,6 +5,8 @@ using App.Scripts.General.AnimatableButtons.Settings;
 using App.Scripts.General.DotweenContainerService;
 using App.Scripts.General.LoadingScreen;
 using App.Scripts.General.ProjectInitialization.Settings;
+using App.Scripts.General.UserData.SaveLoad;
+using App.Scripts.General.UserData.Services;
 using App.Scripts.Scenes.Bootstrap.States;
 using UnityEngine;
 using Zenject;
@@ -23,6 +25,7 @@ namespace App.Scripts.General.ProjectInitialization.Installers
             Container.BindInterfacesAndSelfTo<ProjectInstaller>().FromInstance(this).AsSingle();
             Container.Bind<ISceneManagementService>().To<SceneManagementService>().AsSingle();
             Container.Bind<IDotweenContainerService>().To<DotweenContainerService.DotweenContainerService>().AsSingle();
+            Container.Bind<LevelProgressDataService>().AsSingle();
             
             CreateRootUI();
         }
