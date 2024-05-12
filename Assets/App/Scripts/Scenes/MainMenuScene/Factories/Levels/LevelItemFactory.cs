@@ -1,6 +1,5 @@
 ﻿using App.Scripts.General.Components;
 using App.Scripts.General.UserData.Data;
-using App.Scripts.General.UserData.Services;
 using App.Scripts.Scenes.MainMenuScene.LevelPacks;
 using App.Scripts.Scenes.MainMenuScene.LevelPacks.Configs;
 using Zenject;
@@ -34,8 +33,7 @@ namespace App.Scripts.Scenes.MainMenuScene.Factories.Levels
             ILevelItemView levelItemView = _diContainer.InstantiatePrefabForComponent<LevelItemView>(_prefab.GameObject, _prefabParent.Transform);
 
             ChangeVisual(packIndex, levelItemView, levelPack);
-            
-            
+
             return levelItemView;
         }
 
@@ -54,13 +52,16 @@ namespace App.Scripts.Scenes.MainMenuScene.Factories.Levels
             
             if (visualType is LevelItemTypeId.NotOpened)
             {
-                levelItemView.GalacticIcon.sprite = levelItemViewData.GalacticIcon;
                 levelItemView.GalacticPassedLevels.text = $"0/{levelPack.Levels.Count}";
+                levelItemView.GalacticIcon.gameObject.SetActive(false);
+                levelItemView.LockIcon.gameObject.SetActive(true);
             }
             else
             {
                 levelItemView.GalacticIcon.sprite = levelPack.GalacticIcon;
                 levelItemView.GalacticPassedLevels.text = $"{_levelPackProgressDictionary[packIndex].PassedLevels}/{levelPack.Levels.Count}";
+                levelItemView.GalacticIcon.gameObject.SetActive(true);
+                levelItemView.LockIcon.gameObject.SetActive(false);
             }
         }
 

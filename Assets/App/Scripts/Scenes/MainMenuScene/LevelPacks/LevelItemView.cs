@@ -23,6 +23,8 @@ namespace App.Scripts.Scenes.MainMenuScene.LevelPacks
         [BoxGroup("Left"), SerializeField]
         private Image _galacticIcon;
         [BoxGroup("Left"), SerializeField]
+        private Image _lockIcon;
+        [BoxGroup("Left"), SerializeField]
         private Image _maskableImage;
 
         public TMP_Text GalacticPassedLevels => _galacticPassedLevels;
@@ -32,6 +34,7 @@ namespace App.Scripts.Scenes.MainMenuScene.LevelPacks
         public Image Glow => _glow;
         public Image LeftImageHalf => _leftImageHalf;
         public Image GalacticIcon => _galacticIcon;
+        public Image LockIcon => _lockIcon;
         public Image MaskableImage => _maskableImage;
 
         public GameObject GameObject => gameObject;
