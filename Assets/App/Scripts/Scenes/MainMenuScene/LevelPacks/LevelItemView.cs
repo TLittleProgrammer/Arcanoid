@@ -1,7 +1,9 @@
-﻿using App.Scripts.External.Localisation.MonoBehaviours;
+﻿using System;
+using App.Scripts.External.Localisation.MonoBehaviours;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace App.Scripts.Scenes.MainMenuScene.LevelPacks
@@ -24,8 +26,11 @@ namespace App.Scripts.Scenes.MainMenuScene.LevelPacks
         private Image _galacticIcon;
         [BoxGroup("Left"), SerializeField]
         private Image _lockIcon;
+
         [BoxGroup("Left"), SerializeField]
         private Image _maskableImage;
+
+        public event Action Clicked;
 
         public TMP_Text GalacticPassedLevels => _galacticPassedLevels;
         public Image GalacticPassedLevelsBackground => _galacticPassedLevelsBackground;
@@ -36,7 +41,11 @@ namespace App.Scripts.Scenes.MainMenuScene.LevelPacks
         public Image GalacticIcon => _galacticIcon;
         public Image LockIcon => _lockIcon;
         public Image MaskableImage => _maskableImage;
-
         public GameObject GameObject => gameObject;
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            Clicked?.Invoke();
+        }
     }
 }

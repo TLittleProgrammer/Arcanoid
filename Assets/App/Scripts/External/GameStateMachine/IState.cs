@@ -9,4 +9,8 @@
     {
         void Enter(TParam param);
     }
+    public interface IState<TParam, TSecondParam> : IExitableState
+    {
+        void Enter(TParam param, TSecondParam secondParam);
+    }
 }

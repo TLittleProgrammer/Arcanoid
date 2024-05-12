@@ -1,4 +1,5 @@
 ﻿using App.Scripts.External.Extensions.ZenjectExtensions;
+using App.Scripts.General.Levels;
 using App.Scripts.Scenes.GameScene.Ball;
 using App.Scripts.Scenes.GameScene.Ball.Movement;
 using App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants;
@@ -160,10 +161,21 @@ namespace App.Scripts.Scenes.GameScene.Installers
 
         private void LoadLevel()
         {
-            if (_levelData is not null)
+            var transferData = Container.Resolve<ILevelPackTransferData>();
+            var levelLoader  = Container.Resolve<ILevelLoader>();
+            
+            LevelData levelData;
+            
+            if (transferData.NeedLoadLevel)
             {
-                Container.Resolve<ILevelLoader>().LoadLevel(JsonConvert.DeserializeObject<LevelData>(_levelData.text));
+                levelData = JsonConvert.DeserializeObject<LevelData>(transferData.LevelPack.Levels[transferData.LevelIndex].text);
             }
+            else
+            {
+                levelData = JsonConvert.DeserializeObject<LevelData>(_levelData.text);
+            }
+            
+            levelLoader.LoadLevel(levelData);
         }
 
         private void BindGridPositionResolver()

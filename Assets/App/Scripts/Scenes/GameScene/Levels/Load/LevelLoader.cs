@@ -40,6 +40,12 @@ namespace App.Scripts.Scenes.GameScene.Levels.Load
                     Vector2 targetPosition = _gridPositionResolver.GetCurrentGridPosition();
 
                     int index = levelData.Grid[j, i];
+
+                    if (index == 0)
+                    {
+                        continue;
+                    }
+                    
                     levelGrid[j, i] = index;
 
                     IEntityView spawnedBlock = _entityFactory.Create(index.ToString());

@@ -6,7 +6,8 @@
         "Zenject",
         "Components",
         "GeneralBetweenScenes",
-        "Localisation"
+        "Localisation",
+        "GameStateMachine"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

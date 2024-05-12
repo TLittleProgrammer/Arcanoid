@@ -9,7 +9,8 @@
         "Initialization",
         "ZenjectExtensions",
         "ListExtensions",
-        "Components"
+        "Components",
+        "GeneralBetweenScenes"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

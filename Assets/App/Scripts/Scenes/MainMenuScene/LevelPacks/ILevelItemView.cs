@@ -1,11 +1,12 @@
 ﻿using App.Scripts.External.Localisation.MonoBehaviours;
+using App.Scripts.General.Components;
 using App.Scripts.Scenes.GameScene.Components;
 using TMPro;
 using UnityEngine.UI;
 
 namespace App.Scripts.Scenes.MainMenuScene.LevelPacks
 {
-    public interface ILevelItemView : IGameObjectable
+    public interface ILevelItemView : IGameObjectable, IClickable
     {
         TMP_Text GalacticPassedLevels { get; }
         Image GalacticPassedLevelsBackground { get; }

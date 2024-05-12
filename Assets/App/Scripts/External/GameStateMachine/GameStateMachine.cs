@@ -15,7 +15,9 @@ namespace App.Scripts.External.GameStateMachine
             _states = states
                 .ToDictionary(x => x.GetType(), x => x);
         }
-        
+
+        public IState CurrentState => _activeState as IState;
+
         public void Enter<TState>() where TState : class, IState
         {
             TState state = ChangeState<TState>();
@@ -28,6 +30,13 @@ namespace App.Scripts.External.GameStateMachine
             TState state = ChangeState<TState>();
             
             state.Enter(param);
+        }
+
+        public void Enter<TState, TParam, TSecondParam>(TParam param, TSecondParam secondParam) where TState : class, IState<TParam, TSecondParam>
+        {
+            TState state = ChangeState<TState>();
+            
+            state.Enter(param, secondParam);
         }
 
         private TState ChangeState<TState>() where TState : class, IExitableState

@@ -4,7 +4,7 @@ using App.Scripts.General.LoadingScreen;
 
 namespace App.Scripts.Scenes.Bootstrap.States
 {
-    public class LoadingSceneState : IState<string>
+    public class LoadingSceneState : IState<string, bool>
     {
         private readonly ILoadingScreen _loadingScreen;
         private readonly ISceneManagementService _sceneManagementService;
@@ -16,9 +16,9 @@ namespace App.Scripts.Scenes.Bootstrap.States
             _sceneManagementService = sceneManagementService;
         }
 
-        public async void Enter(string sceneName)
+        public async void Enter(string sceneName, bool showQuickly)
         {
-            await _loadingScreen.Show(true);
+            await _loadingScreen.Show(showQuickly);
             await _sceneManagementService.LoadSceneAsync(sceneName);
             await _loadingScreen.Hide();
         }

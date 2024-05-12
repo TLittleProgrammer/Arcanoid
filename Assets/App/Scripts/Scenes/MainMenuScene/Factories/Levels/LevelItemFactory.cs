@@ -1,5 +1,9 @@
-﻿using App.Scripts.General.Components;
+﻿using App.Scripts.External.GameStateMachine;
+using App.Scripts.General.Components;
+using App.Scripts.General.Levels;
 using App.Scripts.General.UserData.Data;
+using App.Scripts.Scenes.Bootstrap.States;
+using App.Scripts.Scenes.GameScene.Components;
 using App.Scripts.Scenes.MainMenuScene.LevelPacks;
 using App.Scripts.Scenes.MainMenuScene.LevelPacks.Configs;
 using Zenject;
@@ -13,19 +17,25 @@ namespace App.Scripts.Scenes.MainMenuScene.Factories.Levels
         private readonly DiContainer _diContainer;
         private readonly LevelPackProgressDictionary _levelPackProgressDictionary;
         private readonly LevelItemViewByTypeProvider _levelItemViewByTypeProvider;
+        private readonly ILevelPackTransferData _levelPackTransferData;
+        private readonly IGameStateMachine _gameStateMachine;
 
         public LevelItemFactory(
             ILevelItemView prefab,
             ITransformable prefabParent,
             DiContainer diContainer,
             LevelPackProgressDictionary levelPackProgressDictionary,
-            LevelItemViewByTypeProvider levelItemViewByTypeProvider)
+            LevelItemViewByTypeProvider levelItemViewByTypeProvider,
+            ILevelPackTransferData levelPackTransferData,
+            IGameStateMachine gameStateMachine)
         {
             _prefab = prefab;
             _prefabParent = prefabParent;
             _diContainer = diContainer;
             _levelPackProgressDictionary = levelPackProgressDictionary;
             _levelItemViewByTypeProvider = levelItemViewByTypeProvider;
+            _levelPackTransferData = levelPackTransferData;
+            _gameStateMachine = gameStateMachine;
         }
         
         public ILevelItemView Create(int packIndex, LevelPack levelPack)
@@ -62,6 +72,15 @@ namespace App.Scripts.Scenes.MainMenuScene.Factories.Levels
                 levelItemView.GalacticPassedLevels.text = $"{_levelPackProgressDictionary[packIndex].PassedLevels}/{levelPack.Levels.Count}";
                 levelItemView.GalacticIcon.gameObject.SetActive(true);
                 levelItemView.LockIcon.gameObject.SetActive(false);
+
+                levelItemView.Clicked += () =>
+                {
+                    _levelPackTransferData.NeedLoadLevel = true;
+                    _levelPackTransferData.LevelIndex = _levelPackProgressDictionary[packIndex].PassedLevels;
+                    _levelPackTransferData.LevelPack = levelPack;
+                    
+                    _gameStateMachine.Enter<LoadingSceneState, string, bool>("2.Game", false);
+                };
             }
         }
 
