@@ -1,5 +1,7 @@
-﻿using App.Scripts.Scenes.GameScene.Collisions;
+﻿using System;
+using App.Scripts.Scenes.GameScene.Collisions;
 using App.Scripts.Scenes.GameScene.Components;
+using App.Scripts.Scenes.GameScene.Constants;
 using App.Scripts.Scenes.GameScene.Containers;
 using App.Scripts.Scenes.GameScene.Entities;
 using App.Scripts.Scenes.GameScene.Levels.View;
@@ -57,7 +59,13 @@ namespace App.Scripts.Scenes.GameScene.PositionChecker
                     
                     Bounds bounds = boxColliderable.BoxCollider2D.bounds;
 
-                    if (targetPosition.y >= bounds.min.y && targetPosition.y <= bounds.max.y)
+                    if (Mathf.Abs(targetPosition.y - bounds.center.y) >= bounds.extents.y - Mathf.Epsilon)
+                    {
+                        CurrentCollisionTypeId = CollisionTypeId.VerticalSide;
+                        return false;
+                    }
+                    
+                    if (Mathf.Abs(bounds.center.x - targetPosition.x) >= bounds.extents.x - MathfConstants.Epsilon)
                     {
                         CurrentCollisionTypeId = CollisionTypeId.HorizontalSide;
                         return false;
