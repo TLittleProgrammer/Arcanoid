@@ -59,7 +59,7 @@ namespace App.Scripts.Scenes.GameScene.PlayerShape.Move
 
         private Vector2 CalculateTargetPosition()
         {
-            return Vector2.Lerp
+            return Vector2.MoveTowards
             (
                 _playerPositionable.Position,
                 new(_inputService.CurrentMousePosition.x, _playerPositionable.Position.y),
