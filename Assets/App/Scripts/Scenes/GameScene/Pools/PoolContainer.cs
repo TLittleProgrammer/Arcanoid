@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using App.Scripts.General.Popup;
 using App.Scripts.Scenes.GameScene.Effects;
 using App.Scripts.Scenes.GameScene.Entities;
 using UnityEngine;
+using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.Pools
 {
@@ -29,6 +31,8 @@ namespace App.Scripts.Scenes.GameScene.Pools
                 _ => null
             };
 
+            AddItemToList(item, poolTypeId);
+
             return item;
         }
 
@@ -36,8 +40,26 @@ namespace App.Scripts.Scenes.GameScene.Pools
         {
             switch (poolTypeId)
             {
-                case PoolTypeId.EntityView:   _entityViewPool.Despawn(item as EntityView); break;
-                case PoolTypeId.CircleEffect: _circleEffect.Despawn(item as CircleEffect); break;
+                case PoolTypeId.EntityView:
+                {
+                    _entityViewPool.Despawn(item as EntityView);
+                    _entitySpawned.Remove(item);
+                    
+                } break;
+                case PoolTypeId.CircleEffect:
+                {
+                    _circleEffect.Despawn(item as CircleEffect);
+                    _circleEffectSpawned.Remove(item);
+                } break;
+            }
+        }
+
+        private void AddItemToList<TItem>(TItem item, PoolTypeId poolTypeId) where TItem : MonoBehaviour
+        {
+            switch (poolTypeId)
+            {
+                case PoolTypeId.EntityView: _entitySpawned.Add(item); break;
+                case PoolTypeId.CircleEffect: _circleEffectSpawned.Add(item); break;
             }
         }
 
@@ -52,6 +74,9 @@ namespace App.Scripts.Scenes.GameScene.Pools
             {
                 _circleEffect.Despawn(circle as CircleEffect);
             }
+            
+            _entitySpawned.Clear();
+            _circleEffectSpawned.Clear();
         }
     }
 }

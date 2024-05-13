@@ -80,6 +80,8 @@ namespace App.Scripts.General.Popup
             {
                 Object.Destroy(viewPopupProvider.GameObject);
             }
+            
+            _popupsList.Clear();
         }
     }
 }

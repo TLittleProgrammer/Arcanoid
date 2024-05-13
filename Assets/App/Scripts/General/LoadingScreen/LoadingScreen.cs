@@ -40,7 +40,7 @@ namespace App.Scripts.General.LoadingScreen
         public async UniTask Hide()
         {
             await RunDotweenMachine(1f, 0f);
-            _rootUiViewProvider.LoadingCanvasGroup.blocksRaycasts = true;
+            _rootUiViewProvider.LoadingCanvasGroup.blocksRaycasts = false;
         }
 
         private UniTask RunDotweenMachine(float from, float to)

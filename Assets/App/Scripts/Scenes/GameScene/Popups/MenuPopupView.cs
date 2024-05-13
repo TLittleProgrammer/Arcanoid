@@ -49,17 +49,20 @@ namespace App.Scripts.Scenes.GameScene.Popups
 
         private void Restart()
         {
+            LockButtons();
             _gameStateMachine.Enter<RestartState>();
         }
 
         private void Back()
         {
+            LockButtons();
             Close().Forget();
             _projectStateMachine.Enter<LoadingSceneState, string, bool>("1.MainMenu", false);
         }
 
         private async void Continue()
         {
+            LockButtons();
             await _popupService.Close<MenuPopupView>();
             _gameStateMachine.Enter<GameLoopState>();
         }
@@ -90,7 +93,9 @@ namespace App.Scripts.Scenes.GameScene.Popups
 
         public override void LockButtons()
         {
-            
+            _restartButton.interactable = false;
+            _continueButton.interactable = false;
+            _backButton.interactable = false;
         }
 
         public override void UnlockButtons()
