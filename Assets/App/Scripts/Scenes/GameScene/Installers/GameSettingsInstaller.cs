@@ -11,12 +11,14 @@ namespace App.Scripts.Scenes.GameScene.Installers
         public PoolProviders PoolProviders;
         public EntityProvider EntityProvider;
         public BallFlyingSettings BallFlyingSettings;
+        public ScoreAnimationSettings ScoreAnimationSettings;
 
         public override void InstallBindings()
         {
             Container.Bind<PoolProviders>().FromInstance(PoolProviders).IfNotBound();
             Container.Bind<EntityProvider>().FromInstance(EntityProvider).IfNotBound();
             Container.Bind<BallFlyingSettings>().FromInstance(BallFlyingSettings).IfNotBound();
+            Container.Bind<ScoreAnimationSettings>().FromInstance(ScoreAnimationSettings).IfNotBound();
         }
     }
 }

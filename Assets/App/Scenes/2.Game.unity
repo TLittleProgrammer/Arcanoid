@@ -365,6 +365,28 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4236106618442135563, guid: 47e573d43d2df6846b43223a3844087e, type: 3}
   m_PrefabInstance: {fileID: 333490952}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &333490955 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2057623717480150286, guid: 47e573d43d2df6846b43223a3844087e, type: 3}
+  m_PrefabInstance: {fileID: 333490952}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8ea7eedf53b4777809d3a9bd79dfb77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &333490956 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9104565432305100690, guid: 47e573d43d2df6846b43223a3844087e, type: 3}
+  m_PrefabInstance: {fileID: 333490952}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 949d40703a7b4bea8fe7809d2da9232e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -684,6 +706,8 @@ MonoBehaviour:
   _levelData: {fileID: 4900000, guid: 06b32051799e3224ca9756ff3dbffe22, type: 3}
   _playerShape: {fileID: 206752683}
   _ballView: {fileID: 4526333472807322575}
+  _levelPackInfoView: {fileID: 333490955}
+  _levelPackBackground: {fileID: 333490956}
 --- !u!1 &1955233297
 GameObject:
   m_ObjectHideFlags: 0

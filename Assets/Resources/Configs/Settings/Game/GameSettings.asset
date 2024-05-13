@@ -15,3 +15,4 @@ MonoBehaviour:
   PoolProviders: {fileID: 11400000, guid: ef5f027af8b19f84d95882b289b4cc8e, type: 2}
   EntityProvider: {fileID: 11400000, guid: 34b56c953e608404d9bb91a660edf061, type: 2}
   BallFlyingSettings: {fileID: 11400000, guid: 5ed73460dc08cca4dbd0771663bee6bb, type: 2}
+  ScoreAnimationSettings: {fileID: 11400000, guid: 3d61f4481e59d92438ad610e9842639b, type: 2}

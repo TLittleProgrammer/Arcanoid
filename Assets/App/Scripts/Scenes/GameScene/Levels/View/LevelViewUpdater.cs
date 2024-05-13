@@ -4,9 +4,9 @@ using App.Scripts.External.Grid;
 using App.Scripts.Scenes.GameScene.Components;
 using App.Scripts.Scenes.GameScene.Containers;
 using App.Scripts.Scenes.GameScene.Entities;
+using App.Scripts.Scenes.GameScene.LevelProgress;
 using App.Scripts.Scenes.GameScene.Levels.AssetManagement;
 using App.Scripts.Scenes.GameScene.Pools;
-using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Levels.View
 {
@@ -15,17 +15,20 @@ namespace App.Scripts.Scenes.GameScene.Levels.View
         private readonly EntityProvider _entityProvider;
         private readonly IContainer<IBoxColliderable2D> _boxColliderContainer;
         private readonly IPoolContainer _poolContainer;
+        private readonly ILevelProgressService _levelProgressService;
 
         private Grid<int> _levelGrid;
 
         public LevelViewUpdater(
             EntityProvider entityProvider,
             IContainer<IBoxColliderable2D> boxColliderContainer,
-            IPoolContainer poolContainer)
+            IPoolContainer poolContainer,
+            ILevelProgressService levelProgressService)
         {
             _entityProvider = entityProvider;
             _boxColliderContainer = boxColliderContainer;
             _poolContainer = poolContainer;
+            _levelProgressService = levelProgressService;
         } 
 
         public void SetGrid(Grid<int> grid)
@@ -43,6 +46,7 @@ namespace App.Scripts.Scenes.GameScene.Levels.View
             {
                 if (entityStage.HealthCounter - 1 <= 0)
                 {
+                    _levelProgressService.TakeOneStep();
                     _boxColliderContainer.RemoveItem(entityView);
                     _poolContainer.RemoveItem(PoolTypeId.EntityView, entityView as EntityView);
                 }

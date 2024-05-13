@@ -18,4 +18,5 @@ namespace App.Scripts.Scenes.Bootstrap.Installers
             _stateMachine.Enter<LoadingSceneState, string, bool>("1.MainMenu", true);
         }
     }
+    
 }

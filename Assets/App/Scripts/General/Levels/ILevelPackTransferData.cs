@@ -4,6 +4,7 @@
     {
         bool NeedLoadLevel { get; set; }
         int LevelIndex { get; set; }
+        float LevelPackProgress { get; set; }
         LevelPack LevelPack { get; set; }
     }
 }

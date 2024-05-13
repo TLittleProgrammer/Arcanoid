@@ -223,6 +223,7 @@ GameObject:
   - component: {fileID: 1376574120769152760}
   - component: {fileID: 1376574120769152762}
   - component: {fileID: 1376574120769152761}
+  - component: {fileID: 9104565432305100690}
   m_Layer: 5
   m_Name: Galactic
   m_TagString: Untagged
@@ -288,6 +289,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &9104565432305100690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1376574120769152767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 949d40703a7b4bea8fe7809d2da9232e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _background: {fileID: 1376574120769152761}
 --- !u!1 &1376574120967130573
 GameObject:
   m_ObjectHideFlags: 0
@@ -641,6 +655,7 @@ GameObject:
   - component: {fileID: 1292457040537372290}
   - component: {fileID: 9111520632732467055}
   - component: {fileID: 8753887257635868015}
+  - component: {fileID: 2057623717480150286}
   m_Layer: 5
   m_Name: CentralImageBack
   m_TagString: Untagged
@@ -709,6 +724,21 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2057623717480150286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3791401283484161811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8ea7eedf53b4777809d3a9bd79dfb77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _passedLevel: {fileID: 7981141434157041564}
+  _levelPassProgress: {fileID: 2823875730737019706}
+  _image: {fileID: 8479892073589046321}
 --- !u!1 &4357133196673697183
 GameObject:
   m_ObjectHideFlags: 0

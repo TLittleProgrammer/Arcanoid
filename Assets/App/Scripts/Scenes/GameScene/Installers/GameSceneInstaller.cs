@@ -7,6 +7,7 @@ using App.Scripts.General.Levels;
 using App.Scripts.General.Popup;
 using App.Scripts.General.Popup.AssetManagment;
 using App.Scripts.General.Popup.Factory;
+using App.Scripts.General.UserData.Data;
 using App.Scripts.Scenes.GameScene.Ball;
 using App.Scripts.Scenes.GameScene.Ball.Movement;
 using App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants;
@@ -21,13 +22,16 @@ using App.Scripts.Scenes.GameScene.Factories.EntityFactory;
 using App.Scripts.Scenes.GameScene.Grid;
 using App.Scripts.Scenes.GameScene.Infrastructure;
 using App.Scripts.Scenes.GameScene.Input;
+using App.Scripts.Scenes.GameScene.LevelProgress;
 using App.Scripts.Scenes.GameScene.Levels;
 using App.Scripts.Scenes.GameScene.Levels.Load;
 using App.Scripts.Scenes.GameScene.Levels.View;
+using App.Scripts.Scenes.GameScene.LevelView;
 using App.Scripts.Scenes.GameScene.PlayerShape;
 using App.Scripts.Scenes.GameScene.PlayerShape.Move;
 using App.Scripts.Scenes.GameScene.Pools;
 using App.Scripts.Scenes.GameScene.PositionChecker;
+using App.Scripts.Scenes.GameScene.ScoreAnimation;
 using App.Scripts.Scenes.GameScene.ScreenInfo;
 using App.Scripts.Scenes.GameScene.Settings;
 using App.Scripts.Scenes.GameScene.States;
@@ -45,6 +49,8 @@ namespace App.Scripts.Scenes.GameScene.Installers
         [SerializeField] private TextAsset _levelData;
         [SerializeField] private PlayerView _playerShape;
         [SerializeField] private BallView _ballView;
+        [SerializeField] private LevelPackInfoView _levelPackInfoView;
+        [SerializeField] private LevelPackBackgroundView _levelPackBackground;
 
         [Inject] private PoolProviders _poolProviders;
         [Inject] private IStateMachine _projectStateMachine;
@@ -67,9 +73,11 @@ namespace App.Scripts.Scenes.GameScene.Installers
         {
             Container.BindInterfacesAndSelfTo<GameSceneInstaller>().FromInstance(this).AsSingle();
 
+            BindScoreAnimationService();
             BindPools();
             BindPoolContainer();
             BindFactories();
+            BindLevelProgressService();
             BindTimeProvider();
             BindCameraService();
             BindScreenInfoProvider();
@@ -84,6 +92,21 @@ namespace App.Scripts.Scenes.GameScene.Installers
             BindBallMovement();
             
             BindGameStateMachine();
+        }
+
+        private void BindScoreAnimationService()
+        { 
+            Container.Bind<IScoreAnimationService>().To<ScoreAnimationService>().AsSingle();
+        }
+
+        private void BindLevelProgressService()
+        {
+            Container
+                .BindInterfacesAndSelfTo<LevelProgressService>()
+                .AsSingle()
+                .WithArguments(_levelPackInfoView, _levelPackBackground);
+            
+            _restartables.Add(Container.Resolve<ILevelProgressService>());
         }
 
         private void BindGameStateMachine()
@@ -234,6 +257,7 @@ namespace App.Scripts.Scenes.GameScene.Installers
             var levelLoader  = Container.Resolve<ILevelLoader>();
 
             levelLoader.LoadLevel(levelData);
+            Container.Resolve<ILevelProgressService>().CalculateStepByLevelData(levelData);
         }
 
         private void BindGridPositionResolver()
