@@ -1,16 +1,25 @@
-﻿using App.Scripts.External.Extensions.ZenjectExtensions;
+﻿using System.Collections.Generic;
+using App.Scripts.External.Extensions.ZenjectExtensions;
+using App.Scripts.External.GameStateMachine;
+using App.Scripts.General.Components;
+using App.Scripts.General.Constants;
 using App.Scripts.General.Levels;
+using App.Scripts.General.Popup;
+using App.Scripts.General.Popup.AssetManagment;
+using App.Scripts.General.Popup.Factory;
 using App.Scripts.Scenes.GameScene.Ball;
 using App.Scripts.Scenes.GameScene.Ball.Movement;
 using App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants;
 using App.Scripts.Scenes.GameScene.Camera;
 using App.Scripts.Scenes.GameScene.Collisions;
 using App.Scripts.Scenes.GameScene.Components;
+using App.Scripts.Scenes.GameScene.Constants;
 using App.Scripts.Scenes.GameScene.Containers;
 using App.Scripts.Scenes.GameScene.Effects;
 using App.Scripts.Scenes.GameScene.Entities;
 using App.Scripts.Scenes.GameScene.Factories.EntityFactory;
 using App.Scripts.Scenes.GameScene.Grid;
+using App.Scripts.Scenes.GameScene.Infrastructure;
 using App.Scripts.Scenes.GameScene.Input;
 using App.Scripts.Scenes.GameScene.Levels;
 using App.Scripts.Scenes.GameScene.Levels.Load;
@@ -21,6 +30,7 @@ using App.Scripts.Scenes.GameScene.Pools;
 using App.Scripts.Scenes.GameScene.PositionChecker;
 using App.Scripts.Scenes.GameScene.ScreenInfo;
 using App.Scripts.Scenes.GameScene.Settings;
+using App.Scripts.Scenes.GameScene.States;
 using App.Scripts.Scenes.GameScene.Time;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -37,27 +47,20 @@ namespace App.Scripts.Scenes.GameScene.Installers
         [SerializeField] private BallView _ballView;
 
         [Inject] private PoolProviders _poolProviders;
+        [Inject] private IStateMachine _projectStateMachine;
 
-        public void Initialize()
+        private List<IRestartable> _restartables = new();
+        private IStateMachine _stateMachine = new StateMachine();
+
+        public async void Initialize()
         {
             LevelData levelData = ChooseLevelData();
             
             Container.Resolve<IGridPositionResolver>().AsyncInitialize(levelData);
             Container.Resolve<IContainer<IBoxColliderable2D>>().AddItem(_playerShape);
-            
+
             LoadLevel(levelData);
-        }
-
-        private LevelData ChooseLevelData()
-        {
-            var transferData = Container.Resolve<ILevelPackTransferData>();
-            
-            if (transferData.NeedLoadLevel)
-            {
-                return JsonConvert.DeserializeObject<LevelData>(transferData.LevelPack.Levels[transferData.LevelIndex].text);
-            }
-
-            return JsonConvert.DeserializeObject<LevelData>(_levelData.text);
+            await Container.Resolve<IPopupProvider>().AsyncInitialize(Pathes.PathToPopups);
         }
 
         public override void InstallBindings()
@@ -79,6 +82,42 @@ namespace App.Scripts.Scenes.GameScene.Installers
             BindPlayerMoving();
             BindBallMovers();
             BindBallMovement();
+            
+            BindGameStateMachine();
+        }
+
+        private void BindGameStateMachine()
+        {
+            GameLoopState gameLoopState = Container.Instantiate<GameLoopState>();
+            PopupState popupState = Container.Instantiate<PopupState>();
+            RestartState restartState = Container.Instantiate<RestartState>(new object[] {_restartables, _stateMachine});
+            
+            _stateMachine.AsyncInitialize(new IState[] { gameLoopState, popupState, restartState });
+            _stateMachine.Enter<GameLoopState>();
+            
+            Container.Bind<IStateMachine>()
+                .WithId(BindingConstants.GameStateMachine)
+                .FromInstance(_stateMachine)
+                .AsCached()
+                .NonLazy();
+
+            Container.Bind<IStateMachine>()
+                .WithId(BindingConstants.ProjectStateMachine)
+                .FromInstance(_projectStateMachine)
+                .AsCached()
+                .NonLazy();
+        }
+
+        private LevelData ChooseLevelData()
+        {
+            var transferData = Container.Resolve<ILevelPackTransferData>();
+            
+            if (transferData.NeedLoadLevel)
+            {
+                return JsonConvert.DeserializeObject<LevelData>(transferData.LevelPack.Levels[transferData.LevelIndex].text);
+            }
+
+            return JsonConvert.DeserializeObject<LevelData>(_levelData.text);
         }
 
         private void BindCollisionService()
@@ -103,7 +142,7 @@ namespace App.Scripts.Scenes.GameScene.Installers
                 .Bind<IBallFreeFlightMover>()
                 .To<BallFreeFlight>()
                 .AsSingle()
-                .WithArguments(_ballView);
+                .WithArguments(_ballView, _stateMachine);
         }
 
         private void BindPositionCheckers()
@@ -127,22 +166,37 @@ namespace App.Scripts.Scenes.GameScene.Installers
             shapeMoverSettings.Speed = 5f;
 
             
-            Container.BindInterfacesAndSelfTo<PlayerShapeMover>().AsSingle().WithArguments(_playerShape, shapeMoverSettings);
+            Container.BindInterfacesAndSelfTo<PlayerShapeMover>().AsSingle().WithArguments(_playerShape, shapeMoverSettings, _stateMachine);
+            
+            _restartables.Add(Container.Resolve<PlayerShapeMover>());
         }
 
         private void BindBallMovement()
         {
             Container.BindInterfacesAndSelfTo<BallMovementService>().AsSingle().WithArguments(_ballView);
+            
+            _restartables.Add(Container.Resolve<BallMovementService>());
         }
 
         private void BindFactories()
         {
             Container.BindFactory<string, IEntityView, IEntityView.Factory>().FromFactory<EntityFactory>();
+            
+            Container.Bind<IPopupProvider>().To<ResourcesPopupProvider>().AsSingle();
+            Container
+                .BindFactory<PopupTypeId, ITransformable, IViewPopupProvider, IViewPopupProvider.Factory>()
+                .FromFactory<PopupFactory>();
+
+            Container.Bind<IPopupService>().To<PopupService>().AsSingle();
+            
+            _restartables.Add(Container.Resolve<IPopupService>() as IRestartable);
         }
 
         private void BindPoolContainer()
         {
             Container.Bind<IPoolContainer>().To<PoolContainer>().AsSingle();
+            
+            _restartables.Add(Container.Resolve<IPoolContainer>());
         }
 
         private void BindPools()
@@ -160,6 +214,8 @@ namespace App.Scripts.Scenes.GameScene.Installers
         {
             Container.Bind<ILevelViewUpdater>().To<LevelViewUpdater>().AsSingle();
             Container.Bind<ILevelLoader>().To<LevelLoader>().AsSingle();
+            
+            _restartables.Add(Container.Resolve<ILevelLoader>());
         }
 
         private void BindTimeProvider()
@@ -183,6 +239,8 @@ namespace App.Scripts.Scenes.GameScene.Installers
         private void BindGridPositionResolver()
         {
             Container.Bind<IGridPositionResolver>().To<GridPositionResolver>().AsSingle().WithArguments(_header);
+            
+            _restartables.Add(Container.Resolve<IGridPositionResolver>());
         }
 
         private void BindCameraService()

@@ -1,4 +1,5 @@
-﻿using App.Scripts.Scenes.GameScene.Effects;
+﻿using System.Collections.Generic;
+using App.Scripts.Scenes.GameScene.Effects;
 using App.Scripts.Scenes.GameScene.Entities;
 using UnityEngine;
 
@@ -8,6 +9,9 @@ namespace App.Scripts.Scenes.GameScene.Pools
     {
         private readonly EntityView.Pool _entityViewPool;
         private readonly IEffect<CircleEffect>.Pool _circleEffect;
+
+        private List<MonoBehaviour> _entitySpawned = new();
+        private List<MonoBehaviour> _circleEffectSpawned = new();
 
         public PoolContainer(EntityView.Pool entityViewPool, IEffect<CircleEffect>.Pool circleEffect)
         {
@@ -34,6 +38,19 @@ namespace App.Scripts.Scenes.GameScene.Pools
             {
                 case PoolTypeId.EntityView:   _entityViewPool.Despawn(item as EntityView); break;
                 case PoolTypeId.CircleEffect: _circleEffect.Despawn(item as CircleEffect); break;
+            }
+        }
+
+        public void Restart()
+        {
+            foreach (MonoBehaviour entity in _entitySpawned)
+            {
+                _entityViewPool.Despawn(entity as EntityView);
+            }
+            
+            foreach (MonoBehaviour circle in _circleEffectSpawned)
+            {
+                _circleEffect.Despawn(circle as CircleEffect);
             }
         }
     }

@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using App.Scripts.Scenes.GameScene.Components;
+using App.Scripts.Scenes.GameScene.PlayerShape;
+using App.Scripts.Scenes.GameScene.PlayerShape.Move;
 
 namespace App.Scripts.Scenes.GameScene.Containers
 {
@@ -25,6 +28,13 @@ namespace App.Scripts.Scenes.GameScene.Containers
         public IEnumerable<IBoxColliderable2D> GetItems()
         {
             return _entityViews;
+        }
+
+        public void Dispose()
+        {
+            var playerView = _entityViews.First(x => x is PlayerView);
+            _entityViews.Clear();
+            _entityViews.Add(playerView);
         }
     }
 }

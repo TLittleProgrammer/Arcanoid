@@ -1,5 +1,4 @@
 ﻿using App.Scripts.External.UserData;
-using App.Scripts.External.UserData.SaveLoad;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
@@ -11,9 +10,9 @@ namespace App.Scripts.General
         private IUserDataContainer _userDataContainer;
 
         [Inject]
-        private void Construct(ISaveLoadService saveLoadService, IUserDataContainer userDataContainer)
+        private void Construct()
         {
-            _userDataContainer = userDataContainer;
+            
         }
         
         [Button]

@@ -13,7 +13,8 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement
 
         private IBallMover _ballMover;
         private Vector2 _previousBallPosition;
-        
+        private IBallFollowMover _ballFollowMover;
+
         public BallMovementService(
             IClickDetector clickDetector,
             IBallFollowMover ballFollowMover,
@@ -21,6 +22,7 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement
             IPositionable ballPositionable
         )
         {
+            _ballFollowMover = ballFollowMover;
             _clickDetector = clickDetector;
             _ballMover = ballFollowMover;
             _ballFreeFlightMover = ballFreeFlightMover;
@@ -53,6 +55,13 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement
             return _ballPositionable.Position.x > _previousBallPosition.x
                 ? new Vector2(0.5f, 0.5f)
                 : new Vector2(-0.5f, 0.5f);
+        }
+
+        public void Restart()
+        {
+            _ballFollowMover.AsyncInitialize();
+            _ballMover = _ballFollowMover;
+            _clickDetector.MouseUp += OnMouseUp;
         }
     }
 }

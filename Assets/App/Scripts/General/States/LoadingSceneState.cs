@@ -2,7 +2,7 @@
 using App.Scripts.External.SceneManagment;
 using App.Scripts.General.LoadingScreen;
 
-namespace App.Scripts.Scenes.Bootstrap.States
+namespace App.Scripts.General.States
 {
     public class LoadingSceneState : IState<string, bool>
     {

@@ -11,7 +11,8 @@
         "GameStateMachine",
         "OdinPackageUnityExtensions",
         "UserData",
-        "DotweenContainerService"
+        "DotweenContainerService",
+        "Initialization"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

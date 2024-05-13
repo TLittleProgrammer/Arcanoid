@@ -1,12 +1,12 @@
 ﻿using App.Scripts.External.GameStateMachine;
-using App.Scripts.Scenes.Bootstrap.States;
+using App.Scripts.General.States;
 using Zenject;
 
 namespace App.Scripts.Scenes.Bootstrap.Installers
 {
     public class LoadingSceneInstaller : MonoInstaller, IInitializable
     {
-        [Inject] private IGameStateMachine _gameStateMachine;
+        [Inject] private IStateMachine _stateMachine;
         
         public override void InstallBindings()
         {
@@ -15,7 +15,7 @@ namespace App.Scripts.Scenes.Bootstrap.Installers
 
         public void Initialize()
         {
-            _gameStateMachine.Enter<LoadingSceneState, string, bool>("1.MainMenu", true);
+            _stateMachine.Enter<LoadingSceneState, string, bool>("1.MainMenu", true);
         }
     }
 }

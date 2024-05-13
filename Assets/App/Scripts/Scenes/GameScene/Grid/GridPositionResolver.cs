@@ -114,5 +114,11 @@ namespace App.Scripts.Scenes.GameScene.Grid
             
             return worldBottomLeftCorner.y - (_worldCameraSize.y / 2f - _cameraService.ScreenToWorldPoint(new(0f, positionInPixels)).y) - _cellSize.y / 2f;
         }
+
+        public void Restart()
+        {
+            _curretGridPosition.x = 0;
+            _curretGridPosition.y = 0;
+        }
     }
 }

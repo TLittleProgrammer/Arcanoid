@@ -1,4 +1,5 @@
 using App.Scripts.General.LoadingScreen.Settings;
+using App.Scripts.General.RootUI;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
@@ -11,12 +12,12 @@ namespace App.Scripts.General.LoadingScreen
         [SerializeField] private RectTransform _rectTransform;
         
         private LoadingScreenSettings _loadingScreenSettings;
-        private CanvasGroup _canvasGroup;
+        private RootUIViewProvider _rootUiViewProvider;
 
         [Inject]
-        private void Construct(CanvasGroup canvasGroup, LoadingScreenSettings loadingScreenSettings)
+        private void Construct(RootUIViewProvider rootUIViewProvider, LoadingScreenSettings loadingScreenSettings)
         {
-            _canvasGroup = canvasGroup;
+            _rootUiViewProvider = rootUIViewProvider;
             _loadingScreenSettings = loadingScreenSettings;
         }
 
@@ -24,11 +25,12 @@ namespace App.Scripts.General.LoadingScreen
 
         public UniTask Show(bool showQuickly)
         {
-            _canvasGroup.gameObject.SetActive(true);
+            _rootUiViewProvider.LoadingCanvasGroup.blocksRaycasts = true;
+            _rootUiViewProvider.gameObject.SetActive(true);
 
             if (showQuickly)
             {
-                _canvasGroup.alpha = 1f;
+                _rootUiViewProvider.LoadingCanvasGroup.alpha = 1f;
                 return UniTask.CompletedTask;
             }
             
@@ -38,7 +40,7 @@ namespace App.Scripts.General.LoadingScreen
         public async UniTask Hide()
         {
             await RunDotweenMachine(1f, 0f);
-            _canvasGroup.gameObject.SetActive(false);
+            _rootUiViewProvider.LoadingCanvasGroup.blocksRaycasts = true;
         }
 
         private UniTask RunDotweenMachine(float from, float to)
@@ -48,7 +50,7 @@ namespace App.Scripts.General.LoadingScreen
 
         private void ChangeAlpha(float value)
         {
-            _canvasGroup.alpha = value;
+            _rootUiViewProvider.LoadingCanvasGroup.alpha = value;
         }
     }
 }

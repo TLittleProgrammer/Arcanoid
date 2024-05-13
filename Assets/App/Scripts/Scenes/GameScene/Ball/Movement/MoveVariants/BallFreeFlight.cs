@@ -1,10 +1,14 @@
 ﻿using System;
+using App.Scripts.External.GameStateMachine;
 using App.Scripts.Scenes.GameScene.Components;
+using App.Scripts.Scenes.GameScene.Constants;
 using App.Scripts.Scenes.GameScene.PositionChecker;
 using App.Scripts.Scenes.GameScene.Settings;
+using App.Scripts.Scenes.GameScene.States;
 using App.Scripts.Scenes.GameScene.Time;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
 {
@@ -13,6 +17,7 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
         private readonly BallFlyingSettings _settings;
         private readonly ITimeProvider _timeProvider;
         private readonly IBallPositionChecker _positionChecker;
+        private readonly IStateMachine _stateMachine;
         private readonly IPositionable _ballPositionable;
         
         private Vector3 _direction;
@@ -21,12 +26,14 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
             IPositionable ballPositionable,
             BallFlyingSettings settings,
             ITimeProvider timeProvider,
-            IBallPositionChecker positionChecker)
+            IBallPositionChecker positionChecker,
+            [Inject(Id = BindingConstants.GameStateMachine)] IStateMachine stateMachine)
         {
             _ballPositionable = ballPositionable;
             _settings = settings;
             _timeProvider = timeProvider;
             _positionChecker = positionChecker;
+            _stateMachine = stateMachine;
         }
 
         public async UniTask AsyncInitialize(Vector2 param)
@@ -38,6 +45,9 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
 
         public void Tick()
         {
+            if (_stateMachine.CurrentState is not GameLoopState)
+                return;
+            
             Vector2 targetPosition = _ballPositionable.Position + _direction * _settings.Speed * _timeProvider.DeltaTime;
             
             if (_positionChecker.CanChangePositionTo(targetPosition))

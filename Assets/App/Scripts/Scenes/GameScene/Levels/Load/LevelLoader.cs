@@ -15,7 +15,7 @@ namespace App.Scripts.Scenes.GameScene.Levels.Load
         private readonly IContainer<IBoxColliderable2D> _entityViewContainer;
         private readonly ILevelViewUpdater _levelViewUpdater;
         
-        private LevelData _levelData;
+        private LevelData _previousLevelData;
 
         public LevelLoader(
             IGridPositionResolver gridPositionResolver,
@@ -32,6 +32,7 @@ namespace App.Scripts.Scenes.GameScene.Levels.Load
         public void LoadLevel(LevelData levelData)
         {
             Grid<int> levelGrid = new Grid<int>(new(levelData.GridSize.x, levelData.GridSize.y));
+            _previousLevelData = levelData;
             
             for (int i = 0; i < levelData.Grid.GetLength(1); i++)
             {
@@ -60,6 +61,13 @@ namespace App.Scripts.Scenes.GameScene.Levels.Load
             }
 
             _levelViewUpdater.SetGrid(levelGrid);
+        }
+
+        public void Restart()
+        {
+            _entityViewContainer.Dispose();
+            
+            LoadLevel(_previousLevelData);
         }
     }
 }

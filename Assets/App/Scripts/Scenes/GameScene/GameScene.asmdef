@@ -10,7 +10,9 @@
         "ZenjectExtensions",
         "ListExtensions",
         "Components",
-        "GeneralBetweenScenes"
+        "GeneralBetweenScenes",
+        "GameStateMachine",
+        "UniTask.DOTween"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

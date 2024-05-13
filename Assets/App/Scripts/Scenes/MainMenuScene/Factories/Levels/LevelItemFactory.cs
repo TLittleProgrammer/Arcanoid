@@ -1,8 +1,8 @@
 ﻿using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Components;
 using App.Scripts.General.Levels;
+using App.Scripts.General.States;
 using App.Scripts.General.UserData.Data;
-using App.Scripts.Scenes.Bootstrap.States;
 using App.Scripts.Scenes.GameScene.Components;
 using App.Scripts.Scenes.MainMenuScene.LevelPacks;
 using App.Scripts.Scenes.MainMenuScene.LevelPacks.Configs;
@@ -18,7 +18,7 @@ namespace App.Scripts.Scenes.MainMenuScene.Factories.Levels
         private readonly LevelPackProgressDictionary _levelPackProgressDictionary;
         private readonly LevelItemViewByTypeProvider _levelItemViewByTypeProvider;
         private readonly ILevelPackTransferData _levelPackTransferData;
-        private readonly IGameStateMachine _gameStateMachine;
+        private readonly IStateMachine _stateMachine;
 
         public LevelItemFactory(
             ILevelItemView prefab,
@@ -27,7 +27,7 @@ namespace App.Scripts.Scenes.MainMenuScene.Factories.Levels
             LevelPackProgressDictionary levelPackProgressDictionary,
             LevelItemViewByTypeProvider levelItemViewByTypeProvider,
             ILevelPackTransferData levelPackTransferData,
-            IGameStateMachine gameStateMachine)
+            IStateMachine stateMachine)
         {
             _prefab = prefab;
             _prefabParent = prefabParent;
@@ -35,7 +35,7 @@ namespace App.Scripts.Scenes.MainMenuScene.Factories.Levels
             _levelPackProgressDictionary = levelPackProgressDictionary;
             _levelItemViewByTypeProvider = levelItemViewByTypeProvider;
             _levelPackTransferData = levelPackTransferData;
-            _gameStateMachine = gameStateMachine;
+            _stateMachine = stateMachine;
         }
         
         public ILevelItemView Create(int packIndex, LevelPack levelPack)
@@ -79,7 +79,7 @@ namespace App.Scripts.Scenes.MainMenuScene.Factories.Levels
                     _levelPackTransferData.LevelIndex = _levelPackProgressDictionary[packIndex].PassedLevels;
                     _levelPackTransferData.LevelPack = levelPack;
                     
-                    _gameStateMachine.Enter<LoadingSceneState, string, bool>("2.Game", false);
+                    _stateMachine.Enter<LoadingSceneState, string, bool>("2.Game", false);
                 };
             }
         }

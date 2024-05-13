@@ -1,7 +1,7 @@
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.AnimatableButtons.Settings;
 using App.Scripts.General.DotweenContainerService;
-using App.Scripts.Scenes.Bootstrap.States;
+using App.Scripts.General.States;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -16,18 +16,18 @@ namespace App.Scripts.General.AnimatableButtons
         
         private IDotweenContainerService _dotweenContainerService;
         private Sequence _sequence;
-        private IGameStateMachine _gameStateMachine;
+        private IStateMachine _stateMachine;
 
         [Inject]
-        private void Construct(IDotweenContainerService dotweenContainerService, IGameStateMachine gameStateMachine)
+        private void Construct(IDotweenContainerService dotweenContainerService, IStateMachine stateMachine)
         {
-            _gameStateMachine = gameStateMachine;
+            _stateMachine = stateMachine;
             _dotweenContainerService = dotweenContainerService;
         }
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            if (_gameStateMachine.CurrentState is not LoadingSceneState)
+            if (_stateMachine.CurrentState is not LoadingSceneState)
             {
                 Play(_animationSettings.TargetScale);
             }
@@ -35,7 +35,7 @@ namespace App.Scripts.General.AnimatableButtons
 
         public void OnPointerUp(PointerEventData eventData)
         {
-            if (_gameStateMachine.CurrentState is not LoadingSceneState)
+            if (_stateMachine.CurrentState is not LoadingSceneState)
             {
                 Stop();
                 Play(Vector3.one);

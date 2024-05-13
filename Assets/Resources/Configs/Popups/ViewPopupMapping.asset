@@ -21,4 +21,5 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  ViewPopupProviderMapping: []
+  ViewPopupProviderMapping:
+  - {fileID: 3880589750455945527, guid: 78291e32f27fdb44c9d604143c755f37, type: 3}
