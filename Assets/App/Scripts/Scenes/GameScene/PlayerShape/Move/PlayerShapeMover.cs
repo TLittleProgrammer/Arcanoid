@@ -15,7 +15,7 @@ namespace App.Scripts.Scenes.GameScene.PlayerShape.Move
         private readonly IPositionable _playerPositionable;
         private readonly ITimeProvider _timeProvider;
         private readonly IInputService _inputService;
-        private readonly IPositionChecker _positionChecker;
+        private readonly IShapePositionChecker _positionChecker;
 
         private ShapeMoverSettings _shapeMoverSettings;
         private readonly IRectMousePositionChecker _rectMousePositionChecker;

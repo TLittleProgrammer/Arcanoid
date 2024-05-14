@@ -57,7 +57,7 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
             
             Vector2 targetPosition = _ballPositionable.Position + _direction * _speed * _timeProvider.DeltaTime;
             
-            if (_positionChecker.CanChangePositionTo(targetPosition))
+            if (_positionChecker.CanChangePositionTo(targetPosition, ref _direction))
             {
                 _ballPositionable.Position = targetPosition;
             }
@@ -66,26 +66,13 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
                 if (_positionChecker.CurrentCollisionTypeId is CollisionTypeId.BottomVerticalSide)
                 {
                     _healthContainer.UpdateHealth(-1);
-                     return;
                 }
-                ChangeDirection();
             }
         }
 
         public void UpdateSpeed(float addValue)
         {
             _speed += addValue;
-        }
-
-        private void ChangeDirection()
-        {
-            _direction = _positionChecker.CurrentCollisionTypeId switch
-            {
-                CollisionTypeId.HorizontalSide => new Vector2(-_direction.x, _direction.y),
-                CollisionTypeId.VerticalSide   => new Vector2(_direction.x, -_direction.y),
-
-                _ => throw new ArgumentException($"Для типа коллизии {_positionChecker.CurrentCollisionTypeId} не определено поведение!")
-            };
         }
 
         public void Restart()

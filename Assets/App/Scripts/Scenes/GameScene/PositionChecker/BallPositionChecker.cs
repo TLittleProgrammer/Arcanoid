@@ -1,6 +1,6 @@
-﻿using App.Scripts.Scenes.GameScene.Collisions;
+﻿using System;
+using App.Scripts.Scenes.GameScene.Collisions;
 using App.Scripts.Scenes.GameScene.Components;
-using App.Scripts.Scenes.GameScene.Constants;
 using App.Scripts.Scenes.GameScene.Containers;
 using App.Scripts.Scenes.GameScene.Entities;
 using App.Scripts.Scenes.GameScene.ScreenInfo;
@@ -37,44 +37,53 @@ namespace App.Scripts.Scenes.GameScene.PositionChecker
 
         public CollisionTypeId CurrentCollisionTypeId { get; private set; }
 
-        public bool CanChangePositionTo(Vector2 targetPosition)
+        public bool CanChangePositionTo(Vector2 targetPosition, ref Vector3 direction)
         {
-            if (!CheckHorizontalSides(targetPosition)) return false;
-            if (!CheckVerticalSides(targetPosition)) return false;
-            if (!CheckCollisionTriggers(targetPosition)) return false;
+            if (!CheckHorizontalSides(targetPosition, ref direction)) return false;
+            if (!CheckVerticalSides(targetPosition, ref direction)) return false;
+            if (!CheckCollisionTriggers(targetPosition, ref direction)) return false;
             
 
             return true;
         }
 
-        private bool CheckCollisionTriggers(Vector2 targetPosition)
+        private bool CheckCollisionTriggers(Vector2 targetPosition, ref Vector3 direction)
         {
             foreach (IBoxColliderable2D boxColliderable in _collidersContainer.GetItems())
             {
                 if (IsTriggered(boxColliderable.BoxCollider2D, targetPosition))
                 {
-                    UpdateView(boxColliderable);
-                    
-                    Bounds bounds = boxColliderable.BoxCollider2D.bounds;
-
-                    if (Mathf.Abs(targetPosition.y - bounds.center.y) >= bounds.extents.y - Mathf.Epsilon)
-                    {
-                        CurrentCollisionTypeId = CollisionTypeId.VerticalSide;
-                        return false;
-                    }
-                    
-                    if (Mathf.Abs(bounds.center.x - targetPosition.x) >= bounds.extents.x - MathfConstants.Epsilon)
-                    {
-                        CurrentCollisionTypeId = CollisionTypeId.HorizontalSide;
-                        return false;
-                    }
-
-                    CurrentCollisionTypeId = CollisionTypeId.VerticalSide;
-                    return false;
+                    return NewLogic(targetPosition, boxColliderable, ref direction);
                 }
             }
 
             return true;
+        }
+
+        private bool NewLogic(Vector2 targetPosition, IBoxColliderable2D boxColliderable, ref Vector3 direction)
+        {
+            UpdateView(boxColliderable);
+            
+            var delta = new Vector3(targetPosition.x, targetPosition.y, 0f) - boxColliderable.BoxCollider2D.transform.position;
+            delta.x /= 2f;
+
+            if (Mathf.Abs(delta.x) >= Mathf.Abs(delta.y))
+            {
+                if (Math.Abs(Mathf.Sign(-direction.x) - Mathf.Sign(delta.x)) < 0.001f)
+                {
+                    direction.x *= -1;
+                    CurrentCollisionTypeId = CollisionTypeId.HorizontalSide;
+                    return false;
+                }
+            }
+            
+            if (Math.Abs(Mathf.Sign(-direction.y) - Mathf.Sign(delta.y)) < 0.001f)
+            {
+                direction.y *= -1;
+            }
+            
+            CurrentCollisionTypeId = CollisionTypeId.VerticalSide;
+            return false;
         }
 
         private void UpdateView(IBoxColliderable2D boxColliderableBoxCollider2D)
@@ -93,11 +102,12 @@ namespace App.Scripts.Scenes.GameScene.PositionChecker
                    boxColliderableBoxCollider2D.OverlapPoint(targetPosition + new Vector2(_ballRadius, -_ballRadius));
         }
 
-        private bool CheckVerticalSides(Vector2 targetPosition)
+        private bool CheckVerticalSides(Vector2 targetPosition, ref Vector3 direction)
         {
             if (targetPosition.y > _maxYPosition)
             {
                 CurrentCollisionTypeId = CollisionTypeId.VerticalSide;
+                direction.y *= -1;
                 return false;
             }
 
@@ -110,11 +120,12 @@ namespace App.Scripts.Scenes.GameScene.PositionChecker
             return true;
         }
 
-        private bool CheckHorizontalSides(Vector2 targetPosition)
+        private bool CheckHorizontalSides(Vector2 targetPosition, ref Vector3 direction)
         {
             if (targetPosition.x < _minXPosition || targetPosition.x > _maxXPosition)
             {
                 CurrentCollisionTypeId = CollisionTypeId.HorizontalSide;
+                direction.x *= -1;
                 return false;
             }
 
