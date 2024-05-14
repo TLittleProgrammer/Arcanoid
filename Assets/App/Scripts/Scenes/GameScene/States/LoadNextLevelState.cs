@@ -3,6 +3,7 @@ using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Levels;
 using App.Scripts.General.LoadingScreen;
 using App.Scripts.General.Popup;
+using App.Scripts.Scenes.GameScene.Dotween;
 using App.Scripts.Scenes.GameScene.Grid;
 using App.Scripts.Scenes.GameScene.Infrastructure;
 using App.Scripts.Scenes.GameScene.LevelProgress;
@@ -28,6 +29,7 @@ namespace App.Scripts.Scenes.GameScene.States
         private readonly ITimeProvider _timeProvider;
         private readonly IGridPositionResolver _gridPositionResolver;
         private readonly ILevelProgressService _levelProgressService;
+        private readonly ITweenersLocator _tweenersLocator;
         private readonly ILevelViewUpdater _levelViewUpdater;
 
         public LoadNextLevelState(
@@ -40,7 +42,8 @@ namespace App.Scripts.Scenes.GameScene.States
             ILevelPackInfoView levelPackInfoView,
             ITimeProvider timeProvider,
             IGridPositionResolver gridPositionResolver,
-            ILevelProgressService levelProgressService)
+            ILevelProgressService levelProgressService,
+            ITweenersLocator tweenersLocator)
         {
             _loadingScreen = loadingScreen;
             _restartables = restartables;
@@ -52,12 +55,15 @@ namespace App.Scripts.Scenes.GameScene.States
             _timeProvider = timeProvider;
             _gridPositionResolver = gridPositionResolver;
             _levelProgressService = levelProgressService;
+            _tweenersLocator = tweenersLocator;
         }
 
         public async void Enter()
         {
-            _loadingScreen.Show(false);
+            await _loadingScreen.Show(false);
 
+            _tweenersLocator.RemoveAllTweeners();
+            
             foreach (IRestartable restartable in _restartables)
             {
                 restartable.Restart();

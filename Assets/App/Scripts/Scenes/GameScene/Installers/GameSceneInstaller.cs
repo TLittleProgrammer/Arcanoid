@@ -17,6 +17,7 @@ using App.Scripts.Scenes.GameScene.Collisions;
 using App.Scripts.Scenes.GameScene.Components;
 using App.Scripts.Scenes.GameScene.Constants;
 using App.Scripts.Scenes.GameScene.Containers;
+using App.Scripts.Scenes.GameScene.Dotween;
 using App.Scripts.Scenes.GameScene.Effects;
 using App.Scripts.Scenes.GameScene.Entities;
 using App.Scripts.Scenes.GameScene.Factories.EntityFactory;
@@ -65,7 +66,7 @@ namespace App.Scripts.Scenes.GameScene.Installers
         {
             LevelData levelData = ChooseLevelData();
             
-            Container.Resolve<IGridPositionResolver>().AsyncInitialize(levelData);
+            await Container.Resolve<IGridPositionResolver>().AsyncInitialize(levelData);
             Container.Resolve<IContainer<IBoxColliderable2D>>().AddItem(_playerShape);
 
             LoadLevel(levelData);
@@ -76,6 +77,7 @@ namespace App.Scripts.Scenes.GameScene.Installers
         {
             Container.BindInterfacesAndSelfTo<GameSceneInstaller>().FromInstance(this).AsSingle();
 
+            BindTweenersLocator();
             BindTimeProvider();
             BindScoreAnimationService();
             BindPools();
@@ -95,6 +97,11 @@ namespace App.Scripts.Scenes.GameScene.Installers
             BindBallMovement();
             
             BindGameStateMachine();
+        }
+
+        private void BindTweenersLocator()
+        {
+            Container.Bind<ITweenersLocator>().To<TweenersLocator>().AsSingle();
         }
 
         private void BindScoreAnimationService()
