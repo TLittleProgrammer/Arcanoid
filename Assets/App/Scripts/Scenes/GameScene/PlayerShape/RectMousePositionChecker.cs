@@ -29,7 +29,6 @@ namespace App.Scripts.Scenes.GameScene.PlayerShape
 
                 if (rect.RectTransform.rect.Contains(localPoint))
                 {
-                    Debug.Log("A");
                     return false;
                 }
             }
