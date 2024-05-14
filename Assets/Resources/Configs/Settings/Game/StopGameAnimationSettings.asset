@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31af63ae603540d9ade845b57f023da3, type: 3}
   m_Name: StopGameAnimationSettings
   m_EditorClassIdentifier: 
-  TimeScaleChangeDuration: 1
+  TimeScaleChangeDuration: 1.5

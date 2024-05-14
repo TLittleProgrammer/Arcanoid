@@ -86,6 +86,7 @@ namespace App.Scripts.Scenes.MainMenuScene.Factories.Levels
                     _levelPackTransferData.NeedLoadLevel = true;
                     _levelPackTransferData.LevelIndex = _levelPackProgressDictionary[packIndex].PassedLevels;
                     _levelPackTransferData.LevelPack = levelPack;
+                    _levelPackTransferData.LevelIndex = packIndex;
                     _levelPackTransferData.LevelPackProgress = 0f;
                     
                     _stateMachine.Enter<LoadingSceneState, string, bool>("2.Game", false);

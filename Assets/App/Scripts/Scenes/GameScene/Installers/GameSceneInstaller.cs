@@ -137,7 +137,8 @@ namespace App.Scripts.Scenes.GameScene.Installers
             Container
                 .Bind<IStopGameService>()
                 .To<StopGameService>()
-                .AsSingle();
+                .AsSingle()
+                .WithArguments(_stateMachine);
 
             _restartables.Add(Container.Resolve<ILevelProgressService>());
             _restartablesForLoadNewLevel.Add(Container.Resolve<IStopGameService>());
@@ -149,10 +150,11 @@ namespace App.Scripts.Scenes.GameScene.Installers
             GameLoopState gameLoopState = Container.Instantiate<GameLoopState>();
             PopupState popupState = Container.Instantiate<PopupState>();
             LooseState looseState = Container.Instantiate<LooseState>();
+            WinState winState = Container.Instantiate<WinState>();
             RestartState restartState = Container.Instantiate<RestartState>(new object[] {_restartables, _stateMachine});
             LoadNextLevelState loadNextLevelState = Container.Instantiate<LoadNextLevelState>(new object[] {_levelPackInfoView, _restartablesForLoadNewLevel, _stateMachine});
             
-            _stateMachine.AsyncInitialize(new IState[] { gameLoopState, popupState, restartState, loadNextLevelState, looseState });
+            _stateMachine.AsyncInitialize(new IState[] { gameLoopState, popupState, restartState, loadNextLevelState, looseState, winState });
             _stateMachine.Enter<GameLoopState>();
             
             Container.Bind<IStateMachine>()

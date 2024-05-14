@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
 using App.Scripts.External.GameStateMachine;
+using App.Scripts.External.UserData;
 using App.Scripts.General.Levels;
 using App.Scripts.General.LoadingScreen;
 using App.Scripts.General.Popup;
+using App.Scripts.General.UserData.Data;
+using App.Scripts.General.UserData.Services;
 using App.Scripts.Scenes.GameScene.Dotween;
 using App.Scripts.Scenes.GameScene.Grid;
 using App.Scripts.Scenes.GameScene.Infrastructure;
@@ -30,6 +33,8 @@ namespace App.Scripts.Scenes.GameScene.States
         private readonly IGridPositionResolver _gridPositionResolver;
         private readonly ILevelProgressService _levelProgressService;
         private readonly ITweenersLocator _tweenersLocator;
+        private readonly LevelProgressDataService _levelProgressDataService;
+        private readonly IUserDataContainer _userDataContainer;
         private readonly ILevelViewUpdater _levelViewUpdater;
 
         public LoadNextLevelState(
@@ -43,7 +48,9 @@ namespace App.Scripts.Scenes.GameScene.States
             ITimeProvider timeProvider,
             IGridPositionResolver gridPositionResolver,
             ILevelProgressService levelProgressService,
-            ITweenersLocator tweenersLocator)
+            ITweenersLocator tweenersLocator,
+            LevelProgressDataService levelProgressDataService,
+            IUserDataContainer userDataContainer)
         {
             _loadingScreen = loadingScreen;
             _restartables = restartables;
@@ -56,6 +63,8 @@ namespace App.Scripts.Scenes.GameScene.States
             _gridPositionResolver = gridPositionResolver;
             _levelProgressService = levelProgressService;
             _tweenersLocator = tweenersLocator;
+            _levelProgressDataService = levelProgressDataService;
+            _userDataContainer = userDataContainer;
         }
 
         public async void Enter()
@@ -72,6 +81,8 @@ namespace App.Scripts.Scenes.GameScene.States
             await _popupService.Close<WinPopupView>();
             _timeProvider.TimeScale = 1f;
 
+            UpdateUserData();
+
             _levelPackTransferData.LevelIndex++;
             LevelData levelData = JsonConvert.DeserializeObject<LevelData>(_levelPackTransferData.LevelPack.Levels[_levelPackTransferData.LevelIndex].text);
 
@@ -82,6 +93,12 @@ namespace App.Scripts.Scenes.GameScene.States
             _levelPackInfoView.UpdatePassedLevels(_levelPackTransferData.LevelIndex, _levelPackTransferData.LevelPack.Levels.Count);
 
             _gameStateMachine.Enter<GameLoopState>();
+        }
+
+        private void UpdateUserData()
+        { 
+            _levelProgressDataService.PassLevel(_levelPackTransferData.PackIndex);
+            _userDataContainer.SaveData<LevelPackProgressDictionary>();
         }
 
         public void Exit()

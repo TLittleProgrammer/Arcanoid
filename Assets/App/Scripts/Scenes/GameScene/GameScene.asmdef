@@ -13,7 +13,8 @@
         "GeneralBetweenScenes",
         "GameStateMachine",
         "UniTask.DOTween",
-        "Unity.TextMeshPro"
+        "Unity.TextMeshPro",
+        "UserData"
     ],
     "includePlatforms": [
         "Android",
