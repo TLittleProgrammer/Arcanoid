@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using App.Scripts.External.Extensions.ZenjectExtensions;
 using App.Scripts.External.GameStateMachine;
+using App.Scripts.External.Initialization;
 using App.Scripts.General.Components;
 using App.Scripts.General.Constants;
 using App.Scripts.General.Levels;
@@ -56,6 +57,8 @@ namespace App.Scripts.Scenes.GameScene.Installers
         [Inject] private IStateMachine _projectStateMachine;
 
         private List<IRestartable> _restartables = new();
+        private List<IRestartable> _restartablesForLoadNewLevel = new();
+        
         private IStateMachine _stateMachine = new StateMachine();
 
         public async void Initialize()
@@ -73,12 +76,12 @@ namespace App.Scripts.Scenes.GameScene.Installers
         {
             Container.BindInterfacesAndSelfTo<GameSceneInstaller>().FromInstance(this).AsSingle();
 
+            BindTimeProvider();
             BindScoreAnimationService();
             BindPools();
             BindPoolContainer();
             BindFactories();
             BindLevelProgressService();
-            BindTimeProvider();
             BindCameraService();
             BindScreenInfoProvider();
             BindInput();
@@ -106,7 +109,14 @@ namespace App.Scripts.Scenes.GameScene.Installers
                 .AsSingle()
                 .WithArguments(_levelPackInfoView, _levelPackBackground);
             
+            Container
+                .Bind<IStopGameService>()
+                .To<StopGameService>()
+                .AsSingle();
+
             _restartables.Add(Container.Resolve<ILevelProgressService>());
+            _restartablesForLoadNewLevel.Add(Container.Resolve<IStopGameService>());
+            _restartablesForLoadNewLevel.Add(Container.Resolve<ILevelProgressService>());
         }
 
         private void BindGameStateMachine()
@@ -114,8 +124,9 @@ namespace App.Scripts.Scenes.GameScene.Installers
             GameLoopState gameLoopState = Container.Instantiate<GameLoopState>();
             PopupState popupState = Container.Instantiate<PopupState>();
             RestartState restartState = Container.Instantiate<RestartState>(new object[] {_restartables, _stateMachine});
+            LoadNextLevelState loadNextLevelState = Container.Instantiate<LoadNextLevelState>(new object[] {_levelPackInfoView, _restartablesForLoadNewLevel, _stateMachine});
             
-            _stateMachine.AsyncInitialize(new IState[] { gameLoopState, popupState, restartState });
+            _stateMachine.AsyncInitialize(new IState[] { gameLoopState, popupState, restartState, loadNextLevelState });
             _stateMachine.Enter<GameLoopState>();
             
             Container.Bind<IStateMachine>()
@@ -192,6 +203,7 @@ namespace App.Scripts.Scenes.GameScene.Installers
             Container.BindInterfacesAndSelfTo<PlayerShapeMover>().AsSingle().WithArguments(_playerShape, shapeMoverSettings, _stateMachine);
             
             _restartables.Add(Container.Resolve<PlayerShapeMover>());
+            _restartablesForLoadNewLevel.Add(Container.Resolve<PlayerShapeMover>());
         }
 
         private void BindBallMovement()
@@ -199,6 +211,7 @@ namespace App.Scripts.Scenes.GameScene.Installers
             Container.BindInterfacesAndSelfTo<BallMovementService>().AsSingle().WithArguments(_ballView);
             
             _restartables.Add(Container.Resolve<BallMovementService>());
+            _restartablesForLoadNewLevel.Add(Container.Resolve<BallMovementService>());
         }
 
         private void BindFactories()
@@ -213,6 +226,7 @@ namespace App.Scripts.Scenes.GameScene.Installers
             Container.Bind<IPopupService>().To<PopupService>().AsSingle();
             
             _restartables.Add(Container.Resolve<IPopupService>() as IRestartable);
+            _restartablesForLoadNewLevel.Add(Container.Resolve<IPopupService>() as IRestartable);
         }
 
         private void BindPoolContainer()
@@ -220,6 +234,7 @@ namespace App.Scripts.Scenes.GameScene.Installers
             Container.Bind<IPoolContainer>().To<PoolContainer>().AsSingle();
             
             _restartables.Add(Container.Resolve<IPoolContainer>());
+            _restartablesForLoadNewLevel.Add(Container.Resolve<IPoolContainer>());
         }
 
         private void BindPools()

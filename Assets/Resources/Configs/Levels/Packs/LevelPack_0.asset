@@ -16,5 +16,5 @@ MonoBehaviour:
   GalacticIcon: {fileID: 21300000, guid: e031ce2d938a97441b3ea06d2091bc33, type: 3}
   GalacticBackground: {fileID: 21300000, guid: 55343f1e359ba7040b7d499986a6e8f3, type: 3}
   Levels:
+  - {fileID: 4900000, guid: 10267f2a39d6d8745845c4fcf8491a27, type: 3}
   - {fileID: 4900000, guid: 373a435cf99688543beae145057b7952, type: 3}
-  - {fileID: 4900000, guid: 06b32051799e3224ca9756ff3dbffe22, type: 3}

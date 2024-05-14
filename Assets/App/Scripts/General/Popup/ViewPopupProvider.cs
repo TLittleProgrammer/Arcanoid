@@ -5,7 +5,13 @@ namespace App.Scripts.General.Popup
 {
     public abstract class ViewPopupProvider : MonoBehaviour, IViewPopupProvider
     {
-        public PopupTypeId PopupTypeId { get; set; }
+        [SerializeField] private PopupTypeId _popupTypeId;
+        
+        public PopupTypeId PopupTypeId
+        {
+            get => _popupTypeId;
+            set => _popupTypeId = value;
+        }
 
         public virtual async UniTask Show()
         {

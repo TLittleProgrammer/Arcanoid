@@ -8,5 +8,7 @@ namespace App.Scripts.Scenes.GameScene.LevelView
         TMP_Text PassedLevels { get; }
         TMP_Text LevelPassProgress { get; }
         Image Image { get; }
+
+        void UpdatePassedLevels(int currentLevel, int allLevels);
     }
 }

@@ -13,5 +13,10 @@ namespace App.Scripts.Scenes.GameScene.LevelView
         public TMP_Text PassedLevels => _passedLevel;
         public TMP_Text LevelPassProgress => _levelPassProgress;
         public Image Image => _image;
+        
+        public void UpdatePassedLevels(int currentLevel, int allLevels)
+        {
+            _passedLevel.text = $"{currentLevel}/{allLevels}";
+        }
     }
 }

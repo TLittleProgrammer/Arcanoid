@@ -3,5 +3,6 @@
     public enum PopupTypeId
     {
         Menu = 0,
+        Win  = 1,
     }
 }

@@ -23,3 +23,4 @@ MonoBehaviour:
     SerializationNodes: []
   ViewPopupProviderMapping:
   - {fileID: 3880589750455945527, guid: 78291e32f27fdb44c9d604143c755f37, type: 3}
+  - {fileID: 9062256675419602016, guid: b2b401ce85576c74dbae380f402ea4c3, type: 3}

@@ -12,6 +12,8 @@ namespace App.Scripts.Scenes.GameScene.Installers
         public EntityProvider EntityProvider;
         public BallFlyingSettings BallFlyingSettings;
         public ScoreAnimationSettings ScoreAnimationSettings;
+        public CircleWinEffectSettings CircleWinEffectSettings;
+        public StopGameSettings StopGameSettings;
 
         public override void InstallBindings()
         {
@@ -19,6 +21,8 @@ namespace App.Scripts.Scenes.GameScene.Installers
             Container.Bind<EntityProvider>().FromInstance(EntityProvider).IfNotBound();
             Container.Bind<BallFlyingSettings>().FromInstance(BallFlyingSettings).IfNotBound();
             Container.Bind<ScoreAnimationSettings>().FromInstance(ScoreAnimationSettings).IfNotBound();
+            Container.Bind<CircleWinEffectSettings>().FromInstance(CircleWinEffectSettings).IfNotBound();
+            Container.Bind<StopGameSettings>().FromInstance(StopGameSettings).IfNotBound();
         }
     }
 }
