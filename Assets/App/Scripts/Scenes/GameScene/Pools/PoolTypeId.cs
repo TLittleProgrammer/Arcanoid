@@ -2,7 +2,8 @@
 {
     public enum PoolTypeId
     {
-        EntityView   = 0,
-        CircleEffect = 1,
+        EntityView      = 0,
+        CircleEffect    = 1,
+        HealthPointView = 2,
     }
 }

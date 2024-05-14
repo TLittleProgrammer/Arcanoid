@@ -5,5 +5,6 @@
         HorizontalSide = 0,
         VerticalSide   = 1,
         BlockSide      = 2,
+        BottomVerticalSide = 3,
     }
 }

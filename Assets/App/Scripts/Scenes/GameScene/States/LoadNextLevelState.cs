@@ -62,7 +62,7 @@ namespace App.Scripts.Scenes.GameScene.States
         {
             await _loadingScreen.Show(false);
 
-            _tweenersLocator.RemoveAllTweeners();
+            _tweenersLocator.RemoveAll();
             
             foreach (IRestartable restartable in _restartables)
             {

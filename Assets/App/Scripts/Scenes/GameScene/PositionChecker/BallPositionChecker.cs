@@ -1,10 +1,8 @@
-﻿using System;
-using App.Scripts.Scenes.GameScene.Collisions;
+﻿using App.Scripts.Scenes.GameScene.Collisions;
 using App.Scripts.Scenes.GameScene.Components;
 using App.Scripts.Scenes.GameScene.Constants;
 using App.Scripts.Scenes.GameScene.Containers;
 using App.Scripts.Scenes.GameScene.Entities;
-using App.Scripts.Scenes.GameScene.Levels.View;
 using App.Scripts.Scenes.GameScene.ScreenInfo;
 using UnityEngine;
 
@@ -97,9 +95,15 @@ namespace App.Scripts.Scenes.GameScene.PositionChecker
 
         private bool CheckVerticalSides(Vector2 targetPosition)
         {
-            if (targetPosition.y < _minYPosition || targetPosition.y > _maxYPosition)
+            if (targetPosition.y > _maxYPosition)
             {
                 CurrentCollisionTypeId = CollisionTypeId.VerticalSide;
+                return false;
+            }
+
+            if (targetPosition.y <= _minYPosition)
+            {
+                CurrentCollisionTypeId = CollisionTypeId.BottomVerticalSide;
                 return false;
             }
 

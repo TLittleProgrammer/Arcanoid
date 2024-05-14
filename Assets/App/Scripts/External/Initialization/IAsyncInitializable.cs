@@ -11,4 +11,9 @@ namespace App.Scripts.External.Initialization
     {
         UniTask AsyncInitialize(TFirstParam param);
     }
+    
+    public interface IAsyncInitializable<TFirstParam, TSecondParam>
+    {
+        UniTask AsyncInitialize(TFirstParam param, TSecondParam secondParam);
+    }
 }

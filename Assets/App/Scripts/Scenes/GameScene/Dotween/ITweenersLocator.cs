@@ -7,6 +7,6 @@ namespace App.Scripts.Scenes.GameScene.Dotween
         void AddTweener(Tweener tweener);
         void AddSequence(Sequence sequence);
         void RemoveTweener(Tweener tweener);
-        void RemoveAllTweeners();
+        void RemoveAll();
     }
 }

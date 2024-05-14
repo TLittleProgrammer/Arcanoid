@@ -1,7 +1,6 @@
 ﻿using App.Scripts.External.GameStateMachine;
 using App.Scripts.Scenes.GameScene.Components;
 using App.Scripts.Scenes.GameScene.Constants;
-using App.Scripts.Scenes.GameScene.Infrastructure;
 using App.Scripts.Scenes.GameScene.Input;
 using App.Scripts.Scenes.GameScene.PositionChecker;
 using App.Scripts.Scenes.GameScene.States;
@@ -11,7 +10,7 @@ using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.PlayerShape.Move
 {
-    public sealed class PlayerShapeMover : ITickable, IRestartable
+    public sealed class PlayerShapeMover : IPlayerShapeMover
     {
         private readonly IPositionable _playerPositionable;
         private readonly ITimeProvider _timeProvider;

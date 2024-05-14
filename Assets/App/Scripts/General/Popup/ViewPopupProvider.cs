@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using UnityEngine;
 
 namespace App.Scripts.General.Popup
@@ -16,6 +17,7 @@ namespace App.Scripts.General.Popup
         public virtual async UniTask Show()
         {
             gameObject.SetActive(true);
+            transform.DOScale(Vector3.one, 1f).From(Vector3.zero).ToUniTask().Forget();
             await UniTask.CompletedTask;
         }
 

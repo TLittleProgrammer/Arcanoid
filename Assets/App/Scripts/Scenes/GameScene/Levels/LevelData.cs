@@ -7,6 +7,8 @@ namespace App.Scripts.Scenes.GameScene.Levels
     [Serializable]
     public class LevelData
     {
+        [JsonProperty("HealthCount")]
+        public int HealthCount;
         [JsonProperty("GridSize")]
         public int2 GridSize;
         [JsonProperty("OffsetBetweenCells")]

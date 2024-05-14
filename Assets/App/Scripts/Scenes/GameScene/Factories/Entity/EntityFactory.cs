@@ -6,7 +6,7 @@ using App.Scripts.Scenes.GameScene.Pools;
 using UnityEngine;
 using Zenject;
 
-namespace App.Scripts.Scenes.GameScene.Factories.EntityFactory
+namespace App.Scripts.Scenes.GameScene.Factories.Entity
 {
     public class EntityFactory : IFactory<string, IEntityView>
     {

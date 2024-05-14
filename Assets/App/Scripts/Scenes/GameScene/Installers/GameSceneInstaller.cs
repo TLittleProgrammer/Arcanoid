@@ -1,14 +1,12 @@
 ﻿using System.Collections.Generic;
 using App.Scripts.External.Extensions.ZenjectExtensions;
 using App.Scripts.External.GameStateMachine;
-using App.Scripts.External.Initialization;
 using App.Scripts.General.Components;
 using App.Scripts.General.Constants;
 using App.Scripts.General.Levels;
 using App.Scripts.General.Popup;
 using App.Scripts.General.Popup.AssetManagment;
 using App.Scripts.General.Popup.Factory;
-using App.Scripts.General.UserData.Data;
 using App.Scripts.Scenes.GameScene.Ball;
 using App.Scripts.Scenes.GameScene.Ball.Movement;
 using App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants;
@@ -20,8 +18,11 @@ using App.Scripts.Scenes.GameScene.Containers;
 using App.Scripts.Scenes.GameScene.Dotween;
 using App.Scripts.Scenes.GameScene.Effects;
 using App.Scripts.Scenes.GameScene.Entities;
-using App.Scripts.Scenes.GameScene.Factories.EntityFactory;
+using App.Scripts.Scenes.GameScene.Factories.Entity;
+using App.Scripts.Scenes.GameScene.Factories.Health;
 using App.Scripts.Scenes.GameScene.Grid;
+using App.Scripts.Scenes.GameScene.Healthes;
+using App.Scripts.Scenes.GameScene.Healthes.View;
 using App.Scripts.Scenes.GameScene.Infrastructure;
 using App.Scripts.Scenes.GameScene.Input;
 using App.Scripts.Scenes.GameScene.LevelProgress;
@@ -53,6 +54,7 @@ namespace App.Scripts.Scenes.GameScene.Installers
         [SerializeField] private BallView _ballView;
         [SerializeField] private LevelPackInfoView _levelPackInfoView;
         [SerializeField] private LevelPackBackgroundView _levelPackBackground;
+        [SerializeField] private HealthPointViewParent _healthParent;
 
         [Inject] private PoolProviders _poolProviders;
         [Inject] private IStateMachine _projectStateMachine;
@@ -80,9 +82,12 @@ namespace App.Scripts.Scenes.GameScene.Installers
             BindTweenersLocator();
             BindTimeProvider();
             BindScoreAnimationService();
+            
             BindPools();
             BindPoolContainer();
+            
             BindFactories();
+            
             BindLevelProgressService();
             BindCameraService();
             BindScreenInfoProvider();
@@ -93,10 +98,17 @@ namespace App.Scripts.Scenes.GameScene.Installers
             BindCollisionService();
             BindPositionCheckers();
             BindPlayerMoving();
+            BindHealthPointService();
             BindBallMovers();
             BindBallMovement();
-            
+
             BindGameStateMachine();
+        }
+
+        private void BindHealthPointService()
+        {
+            Container.Bind<IHealthPointService>().To<HealthPointService>().AsSingle().WithArguments(_healthParent as ITransformable);
+            Container.Bind<IHealthContainer>().To<HealthContainer>().AsSingle().WithArguments(_stateMachine);
         }
 
         private void BindTweenersLocator()
@@ -130,10 +142,11 @@ namespace App.Scripts.Scenes.GameScene.Installers
         {
             GameLoopState gameLoopState = Container.Instantiate<GameLoopState>();
             PopupState popupState = Container.Instantiate<PopupState>();
+            LooseState looseState = Container.Instantiate<LooseState>();
             RestartState restartState = Container.Instantiate<RestartState>(new object[] {_restartables, _stateMachine});
             LoadNextLevelState loadNextLevelState = Container.Instantiate<LoadNextLevelState>(new object[] {_levelPackInfoView, _restartablesForLoadNewLevel, _stateMachine});
             
-            _stateMachine.AsyncInitialize(new IState[] { gameLoopState, popupState, restartState, loadNextLevelState });
+            _stateMachine.AsyncInitialize(new IState[] { gameLoopState, popupState, restartState, loadNextLevelState, looseState });
             _stateMachine.Enter<GameLoopState>();
             
             Container.Bind<IStateMachine>()
@@ -224,6 +237,7 @@ namespace App.Scripts.Scenes.GameScene.Installers
         private void BindFactories()
         {
             Container.BindFactory<string, IEntityView, IEntityView.Factory>().FromFactory<EntityFactory>();
+            Container.BindFactory<ITransformable, IHealthPointView, IHealthPointView.Factory>().FromFactory<HealthFactory>();
             
             Container.Bind<IPopupProvider>().To<ResourcesPopupProvider>().AsSingle();
             Container
@@ -248,11 +262,12 @@ namespace App.Scripts.Scenes.GameScene.Installers
         {
             BindPool<EntityView, EntityView.Pool>(PoolTypeId.EntityView);
             BindPool<CircleEffect, IEffect<CircleEffect>.Pool>(PoolTypeId.CircleEffect);
+            BindPool<HealthPointView, HealthPointView.Pool>(PoolTypeId.HealthPointView);
         }
 
         private void BindPool<TInstance, TPool>(PoolTypeId poolType) where TPool : IMemoryPool where TInstance : MonoBehaviour 
         {
-            Container.BindPool<TInstance, TPool>(_poolProviders.Pools[poolType].InitialSize, (TInstance)_poolProviders.Pools[poolType].View, _poolProviders.Pools[poolType].ParentName);
+            Container.BindPool<TInstance, TPool>(_poolProviders.Pools[poolType].InitialSize, _poolProviders.Pools[poolType].View.GetComponent<TInstance>(), _poolProviders.Pools[poolType].ParentName);
         }
 
         private void BindLevelLoader()
@@ -266,6 +281,7 @@ namespace App.Scripts.Scenes.GameScene.Installers
         private void BindTimeProvider()
         {
             Container.Bind<ITimeProvider>().To<TimeProvider>().AsSingle();
+            Container.Bind<ITimeScaleAnimator>().To<TimeScaleAnimator>().AsSingle();
         }
 
         private void BindInput()
@@ -274,12 +290,19 @@ namespace App.Scripts.Scenes.GameScene.Installers
             Container.BindInterfacesAndSelfTo<InputService>().AsSingle();
         }
 
-        private void LoadLevel(LevelData levelData)
+        private async void LoadLevel(LevelData levelData)
         {
             var levelLoader  = Container.Resolve<ILevelLoader>();
 
             levelLoader.LoadLevel(levelData);
             Container.Resolve<ILevelProgressService>().CalculateStepByLevelData(levelData);
+            await Container.Resolve<IHealthPointService>().AsyncInitialize(levelData);
+            await Container.Resolve<IHealthContainer>().AsyncInitialize(levelData, new IRestartable[] {Resolve<IBallMovementService>(), Resolve<IPlayerShapeMover>()});
+        }
+
+        private TResult Resolve<TResult>()
+        {
+            return Container.Resolve<TResult>();
         }
 
         private void BindGridPositionResolver()

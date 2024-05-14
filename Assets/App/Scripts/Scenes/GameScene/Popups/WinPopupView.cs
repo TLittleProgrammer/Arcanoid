@@ -7,7 +7,6 @@ using App.Scripts.Scenes.GameScene.States;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.UIElements;
 using Zenject;
 using Button = UnityEngine.UI.Button;
 

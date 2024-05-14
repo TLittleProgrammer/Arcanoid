@@ -2,6 +2,7 @@
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.Scenes.GameScene.Components;
 using App.Scripts.Scenes.GameScene.Constants;
+using App.Scripts.Scenes.GameScene.Healthes;
 using App.Scripts.Scenes.GameScene.PositionChecker;
 using App.Scripts.Scenes.GameScene.Settings;
 using App.Scripts.Scenes.GameScene.States;
@@ -18,6 +19,7 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
         private readonly ITimeProvider _timeProvider;
         private readonly IBallPositionChecker _positionChecker;
         private readonly IStateMachine _stateMachine;
+        private readonly IHealthContainer _healthContainer;
         private readonly IPositionable _ballPositionable;
         
         private Vector3 _direction;
@@ -27,13 +29,15 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
             BallFlyingSettings settings,
             ITimeProvider timeProvider,
             IBallPositionChecker positionChecker,
-            [Inject(Id = BindingConstants.GameStateMachine)] IStateMachine stateMachine)
+            [Inject(Id = BindingConstants.GameStateMachine)] IStateMachine stateMachine,
+            IHealthContainer healthContainer)
         {
             _ballPositionable = ballPositionable;
             _settings = settings;
             _timeProvider = timeProvider;
             _positionChecker = positionChecker;
             _stateMachine = stateMachine;
+            _healthContainer = healthContainer;
         }
 
         public async UniTask AsyncInitialize(Vector2 param)
@@ -56,6 +60,11 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
             }
             else
             {
+                if (_positionChecker.CurrentCollisionTypeId is CollisionTypeId.BottomVerticalSide)
+                {
+                    _healthContainer.UpdateHealth(-1);
+                     return;
+                }
                 ChangeDirection();
             }
         }
@@ -66,7 +75,7 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
             {
                 CollisionTypeId.HorizontalSide => new Vector2(-_direction.x, _direction.y),
                 CollisionTypeId.VerticalSide   => new Vector2(_direction.x, -_direction.y),
-                
+
                 _ => throw new ArgumentException($"Для типа коллизии {_positionChecker.CurrentCollisionTypeId} не определено поведение!")
             };
         }

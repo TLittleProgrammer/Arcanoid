@@ -24,7 +24,7 @@ namespace App.Scripts.Scenes.GameScene.Dotween
             _tweeners.Remove(tweener);
         }
 
-        public void RemoveAllTweeners()
+        public void RemoveAll()
         {
             foreach (Tweener tweener in _tweeners)
             {
