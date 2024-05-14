@@ -18,3 +18,4 @@ MonoBehaviour:
   ScoreAnimationSettings: {fileID: 11400000, guid: 3d61f4481e59d92438ad610e9842639b, type: 2}
   CircleWinEffectSettings: {fileID: 11400000, guid: 9c0a3cbd420cc8a41bc3f1913ead05ee, type: 2}
   StopGameSettings: {fileID: 11400000, guid: 3104198ab673b5c4382eb5d697fbbdbc, type: 2}
+  WinContinueButtonAnimationSettings: {fileID: 11400000, guid: 669589d265073104595911b427c4064d, type: 2}

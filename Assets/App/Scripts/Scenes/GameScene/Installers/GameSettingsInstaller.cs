@@ -14,6 +14,7 @@ namespace App.Scripts.Scenes.GameScene.Installers
         public ScoreAnimationSettings ScoreAnimationSettings;
         public CircleWinEffectSettings CircleWinEffectSettings;
         public StopGameSettings StopGameSettings;
+        public WinContinueButtonAnimationSettings WinContinueButtonAnimationSettings;
 
         public override void InstallBindings()
         {
@@ -23,6 +24,7 @@ namespace App.Scripts.Scenes.GameScene.Installers
             Container.Bind<ScoreAnimationSettings>().FromInstance(ScoreAnimationSettings).IfNotBound();
             Container.Bind<CircleWinEffectSettings>().FromInstance(CircleWinEffectSettings).IfNotBound();
             Container.Bind<StopGameSettings>().FromInstance(StopGameSettings).IfNotBound();
+            Container.Bind<WinContinueButtonAnimationSettings>().FromInstance(WinContinueButtonAnimationSettings).IfNotBound();
         }
     }
 }

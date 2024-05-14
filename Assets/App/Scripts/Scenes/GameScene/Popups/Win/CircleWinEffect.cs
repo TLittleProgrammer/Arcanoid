@@ -15,7 +15,8 @@ namespace App.Scripts.Scenes.GameScene.Popups.Win
         {
             tweenersLocator.AddTweener(_effect
                 .DORotate(new Vector3(0f, 0f, -360f), settings.Duration, RotateMode.LocalAxisAdd)
-                .SetLoops(-1, LoopType.Restart));
+                .SetLoops(-1, LoopType.Restart)
+                .SetEase(Ease.Linear));
         }
     }
 }

@@ -6,10 +6,16 @@ namespace App.Scripts.Scenes.GameScene.Dotween
     public class TweenersLocator : ITweenersLocator
     {
         private List<Tweener> _tweeners = new();
+        private List<Sequence> _sequences = new();
         
         public void AddTweener(Tweener tweener)
         {
             _tweeners.Add(tweener);
+        }
+
+        public void AddSequence(Sequence sequence)
+        {
+            _sequences.Add(sequence);
         }
 
         public void RemoveTweener(Tweener tweener)
@@ -24,7 +30,13 @@ namespace App.Scripts.Scenes.GameScene.Dotween
             {
                 tweener.Kill();
             }
+
+            foreach (Sequence sequence in _sequences)
+            {
+                sequence.Kill();
+            }
             
+            _sequences.Clear();
             _tweeners.Clear();
         }
     }
