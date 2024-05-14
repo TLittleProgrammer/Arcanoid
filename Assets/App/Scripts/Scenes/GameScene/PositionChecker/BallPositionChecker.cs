@@ -3,6 +3,7 @@ using App.Scripts.Scenes.GameScene.Collisions;
 using App.Scripts.Scenes.GameScene.Components;
 using App.Scripts.Scenes.GameScene.Containers;
 using App.Scripts.Scenes.GameScene.Entities;
+using App.Scripts.Scenes.GameScene.PlayerShape;
 using App.Scripts.Scenes.GameScene.ScreenInfo;
 using UnityEngine;
 
@@ -53,6 +54,15 @@ namespace App.Scripts.Scenes.GameScene.PositionChecker
             {
                 if (IsTriggered(boxColliderable.BoxCollider2D, targetPosition))
                 {
+                    if (boxColliderable is PlayerView playerView)
+                    {
+                        float newAngle = (-(targetPosition.x - playerView.transform.position.x) * 60f) + 90f;
+
+                        direction.x = direction.x * Mathf.Cos(newAngle) - direction.y * Mathf.Sin(newAngle);
+                        direction.y = direction.y * Mathf.Cos(newAngle) + direction.x * Mathf.Sin(newAngle);
+                        direction.Normalize();
+                    }
+                    
                     return NewLogic(targetPosition, boxColliderable, ref direction);
                 }
             }
