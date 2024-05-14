@@ -64,16 +64,18 @@ namespace App.Scripts.Scenes.GameScene.Installers
         private List<IRestartable> _restartablesForLoadNewLevel = new();
         
         private IStateMachine _stateMachine = new StateMachine();
+        private IBallSpeedUpdater _ballSpeedUpdater = new BallSpeedUpdater();
 
         public async void Initialize()
         {
             LevelData levelData = ChooseLevelData();
             
-            await Container.Resolve<IGridPositionResolver>().AsyncInitialize(levelData);
-            Container.Resolve<IContainer<IBoxColliderable2D>>().AddItem(_playerShape);
+            await Resolve<IGridPositionResolver>().AsyncInitialize(levelData);
+            Resolve<IContainer<IBoxColliderable2D>>().AddItem(_playerShape);
 
             LoadLevel(levelData);
-            await Container.Resolve<IPopupProvider>().AsyncInitialize(Pathes.PathToPopups);
+            await Resolve<IPopupProvider>().AsyncInitialize(Pathes.PathToPopups);
+            await Resolve<IBallSpeedUpdater>().AsyncInitialize(Resolve<IBallMovementService>());
         }
 
         public override void InstallBindings()
@@ -103,8 +105,14 @@ namespace App.Scripts.Scenes.GameScene.Installers
             BindHealthPointService();
             BindBallMovers();
             BindBallMovement();
+            BindBallSpeedUpdater();
 
             BindGameStateMachine();
+        }
+
+        private void BindBallSpeedUpdater()
+        {
+            Container.Bind<IBallSpeedUpdater>().FromInstance(_ballSpeedUpdater).AsSingle();
         }
 
         private void BindMousePositionChecker()
@@ -287,7 +295,7 @@ namespace App.Scripts.Scenes.GameScene.Installers
 
         private void BindLevelLoader()
         {
-            Container.Bind<ILevelViewUpdater>().To<LevelViewUpdater>().AsSingle();
+            Container.Bind<ILevelViewUpdater>().To<LevelViewUpdater>().AsSingle().WithArguments(_ballSpeedUpdater);
             Container.Bind<ILevelLoader>().To<LevelLoader>().AsSingle();
             
             _restartables.Add(Container.Resolve<ILevelLoader>());

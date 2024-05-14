@@ -23,6 +23,7 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
         private readonly IPositionable _ballPositionable;
         
         private Vector3 _direction;
+        private float _speed;
 
         public BallFreeFlight(
             IPositionable ballPositionable,
@@ -38,6 +39,8 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
             _positionChecker = positionChecker;
             _stateMachine = stateMachine;
             _healthContainer = healthContainer;
+
+            _speed = _settings.Speed;
         }
 
         public async UniTask AsyncInitialize(Vector2 param)
@@ -52,7 +55,7 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
             if (_stateMachine.CurrentState is not GameLoopState)
                 return;
             
-            Vector2 targetPosition = _ballPositionable.Position + _direction * _settings.Speed * _timeProvider.DeltaTime;
+            Vector2 targetPosition = _ballPositionable.Position + _direction * _speed * _timeProvider.DeltaTime;
             
             if (_positionChecker.CanChangePositionTo(targetPosition))
             {
@@ -69,6 +72,11 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
             }
         }
 
+        public void UpdateSpeed(float addValue)
+        {
+            _speed += addValue;
+        }
+
         private void ChangeDirection()
         {
             _direction = _positionChecker.CurrentCollisionTypeId switch
@@ -78,6 +86,11 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
 
                 _ => throw new ArgumentException($"Для типа коллизии {_positionChecker.CurrentCollisionTypeId} не определено поведение!")
             };
+        }
+
+        public void Restart()
+        {
+            _speed = _settings.Speed;
         }
     }
 }

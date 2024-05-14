@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using App.Scripts.External.Extensions.ListExtensions;
 using App.Scripts.External.Grid;
+using App.Scripts.Scenes.GameScene.Ball;
 using App.Scripts.Scenes.GameScene.Components;
 using App.Scripts.Scenes.GameScene.Containers;
 using App.Scripts.Scenes.GameScene.Entities;
@@ -16,6 +17,7 @@ namespace App.Scripts.Scenes.GameScene.Levels.View
         private readonly IContainer<IBoxColliderable2D> _boxColliderContainer;
         private readonly IPoolContainer _poolContainer;
         private readonly ILevelProgressService _levelProgressService;
+        private readonly IBallSpeedUpdater _ballSpeedUpdater;
 
         private Grid<int> _levelGrid;
 
@@ -23,12 +25,14 @@ namespace App.Scripts.Scenes.GameScene.Levels.View
             EntityProvider entityProvider,
             IContainer<IBoxColliderable2D> boxColliderContainer,
             IPoolContainer poolContainer,
-            ILevelProgressService levelProgressService)
+            ILevelProgressService levelProgressService,
+            IBallSpeedUpdater ballSpeedUpdater)
         {
             _entityProvider = entityProvider;
             _boxColliderContainer = boxColliderContainer;
             _poolContainer = poolContainer;
             _levelProgressService = levelProgressService;
+            _ballSpeedUpdater = ballSpeedUpdater;
         } 
 
         public void SetGrid(Grid<int> grid)
@@ -49,6 +53,7 @@ namespace App.Scripts.Scenes.GameScene.Levels.View
                     _levelProgressService.TakeOneStep();
                     _boxColliderContainer.RemoveItem(entityView);
                     _poolContainer.RemoveItem(PoolTypeId.EntityView, entityView as EntityView);
+                    _ballSpeedUpdater.UpdateSpeed();
                 }
                 else
                 {

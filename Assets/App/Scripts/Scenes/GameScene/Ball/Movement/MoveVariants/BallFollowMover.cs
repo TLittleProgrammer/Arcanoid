@@ -40,5 +40,15 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
                     0f
                 );
         }
+
+        public void UpdateSpeed(float addValue)
+        {
+            
+        }
+
+        public void Restart()
+        {
+            
+        }
     }
 }

@@ -59,9 +59,16 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement
 
         public void Restart()
         {
+            _ballFreeFlightMover.Restart();
+            
             _ballFollowMover.AsyncInitialize();
             _ballMover = _ballFollowMover;
             _clickDetector.MouseUp += OnMouseUp;
+        }
+
+        public void UpdateSpeed(float addValue)
+        {
+            _ballMover.UpdateSpeed(addValue);
         }
     }
 }
