@@ -590,6 +590,7 @@ MonoBehaviour:
   _galacticPassedLevels: {fileID: 3649652570482975099}
   _galacticPassedLevelsBackground: {fileID: 6564671503142304355}
   _bigBackground: {fileID: 1888201304354672766}
+  _galacticText: {fileID: 8508738659891542817}
   _galacticName: {fileID: 4055785090351469127}
   _glow: {fileID: 8338547113466398844}
   _leftImageHalf: {fileID: 6253685423042449384}
@@ -1239,12 +1240,27 @@ PrefabInstance:
       propertyPath: m_Name
       value: GalacticText
       objectReference: {fileID: 0}
+    - target: {fileID: 2875981765120574083, guid: 724f24a4b20b1ef498010f396ab47048, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6667574834146640482, guid: 724f24a4b20b1ef498010f396ab47048, type: 3}
       propertyPath: LocaleKey
       value: Galactic
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 724f24a4b20b1ef498010f396ab47048, type: 3}
+--- !u!114 &8508738659891542817 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1382179647439615166, guid: 724f24a4b20b1ef498010f396ab47048, type: 3}
+  m_PrefabInstance: {fileID: 7294531404902059935}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &8580195757925424439 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1308747860915458728, guid: 724f24a4b20b1ef498010f396ab47048, type: 3}

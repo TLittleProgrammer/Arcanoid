@@ -7,9 +7,6 @@ namespace App.Scripts.Scenes.MainMenuScene.LevelPacks.MonoBehaviours
 {
     public class LevelPackContainer : MonoBehaviour
     {
-        [SerializeField] private LevelItemView _levelItemViewPrefab;
-        [SerializeField] private LevelPackParent _levelPackParent;
-        
         [Inject]
         private void Construct(LevelPackProvider levelPackProvider, LevelItemFactory levelItemFactory)
         {

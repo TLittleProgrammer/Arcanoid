@@ -20,7 +20,6 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 6a1bf71e9f9229a4aaa73b1a4fdfec81, type: 3}
     - {fileID: 21300000, guid: e14890b1c10f7584ca89b3121a731b5d, type: 3}
     - {fileID: 21300000, guid: 56bed0b89b754974e9106e8ce07673f3, type: 3}
-    - {fileID: 21300000, guid: 1f455e2e436086f4ba75484a45ca839b, type: 3}
     - {fileID: 21300000, guid: a0073f1d5fa586c49a28f3c7827fc15a, type: 3}
     - {fileID: 21300000, guid: 46103a485fd4eb24692c339f5f606e11, type: 3}
     - {fileID: 21300000, guid: 58aea0790e8bf254a9dfe0ec284f2714, type: 3}
@@ -71,21 +70,54 @@ MonoBehaviour:
     - Name: GalacticPassedLevelsBackground
       Entry: 10
       Data: 0
+    - Name: PassedLevelsColor
+      Entry: 7
+      Data: UnityEngine.Color, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0.403921574
+    - Name: 
+      Entry: 4
+      Data: 0.0509803928
+    - Name: 
+      Entry: 4
+      Data: 0.1764706
+    - Name: 
+      Entry: 4
+      Data: 0.478431374
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: BigBackground
       Entry: 10
       Data: 1
     - Name: Glow
       Entry: 10
       Data: 2
+    - Name: InactiveColorForNaming
+      Entry: 7
+      Data: UnityEngine.Color, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0.8235294
+    - Name: 
+      Entry: 4
+      Data: 0.101960786
+    - Name: 
+      Entry: 4
+      Data: 0.360784322
+    - Name: 
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: LeftImageHalf
       Entry: 10
       Data: 3
-    - Name: GalacticIcon
-      Entry: 10
-      Data: 4
     - Name: MaskableImage
       Entry: 10
-      Data: 5
+      Data: 4
     - Name: 
       Entry: 8
       Data: 
@@ -104,22 +136,55 @@ MonoBehaviour:
         MainMenu
     - Name: GalacticPassedLevelsBackground
       Entry: 10
-      Data: 6
+      Data: 5
+    - Name: PassedLevelsColor
+      Entry: 7
+      Data: UnityEngine.Color, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: BigBackground
       Entry: 10
-      Data: 7
+      Data: 6
     - Name: Glow
       Entry: 10
-      Data: 8
+      Data: 7
+    - Name: InactiveColorForNaming
+      Entry: 7
+      Data: UnityEngine.Color, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: LeftImageHalf
       Entry: 10
-      Data: 9
-    - Name: GalacticIcon
-      Entry: 6
-      Data: 
+      Data: 8
     - Name: MaskableImage
       Entry: 10
-      Data: 10
+      Data: 9
     - Name: 
       Entry: 8
       Data: 
@@ -138,22 +203,55 @@ MonoBehaviour:
         MainMenu
     - Name: GalacticPassedLevelsBackground
       Entry: 10
-      Data: 11
+      Data: 10
+    - Name: PassedLevelsColor
+      Entry: 7
+      Data: UnityEngine.Color, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: BigBackground
       Entry: 10
-      Data: 12
+      Data: 11
     - Name: Glow
       Entry: 10
-      Data: 13
+      Data: 12
+    - Name: InactiveColorForNaming
+      Entry: 7
+      Data: UnityEngine.Color, UnityEngine.CoreModule
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: LeftImageHalf
       Entry: 10
-      Data: 14
-    - Name: GalacticIcon
-      Entry: 6
-      Data: 
+      Data: 13
     - Name: MaskableImage
       Entry: 10
-      Data: 15
+      Data: 14
     - Name: 
       Entry: 8
       Data: 

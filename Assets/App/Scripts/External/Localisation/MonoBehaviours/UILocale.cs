@@ -7,13 +7,9 @@ namespace App.Scripts.External.Localisation.MonoBehaviours
     public class UILocale : MonoBehaviour
     {
         [SerializeField] private string LocaleKey;
+        [SerializeField] private TMP_Text _text;
 
-        private TextMeshProUGUI _text;
-
-        private void Awake()
-        {
-            _text = GetComponent<TextMeshProUGUI>();
-        }
+        public TMP_Text Text => _text;
 
         public void SetToken(string token)
         {

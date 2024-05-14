@@ -6,6 +6,8 @@ using App.Scripts.General.UserData.Data;
 using App.Scripts.Scenes.GameScene.Components;
 using App.Scripts.Scenes.MainMenuScene.LevelPacks;
 using App.Scripts.Scenes.MainMenuScene.LevelPacks.Configs;
+using TMPro;
+using UnityEngine;
 using Zenject;
 
 namespace App.Scripts.Scenes.MainMenuScene.Factories.Levels
@@ -65,6 +67,12 @@ namespace App.Scripts.Scenes.MainMenuScene.Factories.Levels
                 levelItemView.GalacticPassedLevels.text = $"0/{levelPack.Levels.Count}";
                 levelItemView.GalacticIcon.gameObject.SetActive(false);
                 levelItemView.LockIcon.gameObject.SetActive(true);
+
+                levelItemView.GalacticName.Text.colorGradient = new VertexGradient(Color.white, Color.white, Color.white, Color.white);
+                levelItemView.GalacticText.colorGradient = new VertexGradient(Color.white, Color.white, Color.white, Color.white);
+                levelItemView.GalacticName.Text.color = levelItemViewData.InactiveColorForNaming;
+                levelItemView.GalacticText.color = levelItemViewData.InactiveColorForNaming;
+                levelItemView.GalacticPassedLevels.color = levelItemViewData.PassedLevelsColor;
             }
             else
             {

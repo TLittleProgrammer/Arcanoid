@@ -17,6 +17,8 @@ namespace App.Scripts.Scenes.MainMenuScene.LevelPacks
         [BoxGroup("General"), SerializeField]
         private Image _bigBackground;
         [BoxGroup("General"), SerializeField]
+        private TMP_Text _galacticText;
+        [BoxGroup("General"), SerializeField]
         private UILocale _galacticName;
         [BoxGroup("General"), SerializeField]
         private Image _glow;
@@ -35,6 +37,7 @@ namespace App.Scripts.Scenes.MainMenuScene.LevelPacks
         public TMP_Text GalacticPassedLevels => _galacticPassedLevels;
         public Image GalacticPassedLevelsBackground => _galacticPassedLevelsBackground;
         public Image BigBackground => _bigBackground;
+        public TMP_Text GalacticText => _galacticText;
         public UILocale GalacticName => _galacticName;
         public Image Glow => _glow;
         public Image LeftImageHalf => _leftImageHalf;

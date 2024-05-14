@@ -11,6 +11,7 @@ namespace App.Scripts.Scenes.MainMenuScene.LevelPacks
         TMP_Text GalacticPassedLevels { get; }
         Image GalacticPassedLevelsBackground { get; }
         Image BigBackground { get; }
+        TMP_Text GalacticText { get; }
         UILocale GalacticName { get; }
         Image Glow { get; }
         Image LeftImageHalf { get; }
