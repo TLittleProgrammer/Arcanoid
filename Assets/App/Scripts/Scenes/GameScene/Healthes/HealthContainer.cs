@@ -8,7 +8,6 @@ using App.Scripts.Scenes.GameScene.Levels;
 using App.Scripts.Scenes.GameScene.States;
 using App.Scripts.Scenes.GameScene.Time;
 using Cysharp.Threading.Tasks;
-using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.Healthes
 {
@@ -22,6 +21,7 @@ namespace App.Scripts.Scenes.GameScene.Healthes
 
         private IEnumerable<IRestartable> _restartables;
         private int _currentHealthCounter;
+        private int _maxHealthCounter;
 
         public HealthContainer(
             IHealthPointService healthPointService,
@@ -39,7 +39,7 @@ namespace App.Scripts.Scenes.GameScene.Healthes
 
         public async UniTask AsyncInitialize(LevelData param, IEnumerable<IRestartable> restartables)
         {
-            _currentHealthCounter = param.HealthCount == 0 ? GameConstants.DefaultHealthCount : param.HealthCount;
+            _currentHealthCounter = _maxHealthCounter = param.HealthCount == 0 ? GameConstants.DefaultHealthCount : param.HealthCount;
             _restartables = restartables;
             await UniTask.CompletedTask;
         }
@@ -69,6 +69,11 @@ namespace App.Scripts.Scenes.GameScene.Healthes
             {
                 _currentHealthCounter += healthCount;
             }
+        }
+
+        public void Restart()
+        {
+            _currentHealthCounter = _maxHealthCounter;
         }
     }
 }

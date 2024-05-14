@@ -109,6 +109,12 @@ namespace App.Scripts.Scenes.GameScene.Installers
         {
             Container.Bind<IHealthPointService>().To<HealthPointService>().AsSingle().WithArguments(_healthParent as ITransformable);
             Container.Bind<IHealthContainer>().To<HealthContainer>().AsSingle().WithArguments(_stateMachine);
+            
+            _restartables.Add(Resolve<IHealthPointService>());
+            _restartablesForLoadNewLevel.Add(Resolve<IHealthPointService>());
+            
+            _restartables.Add(Resolve<IHealthContainer>());
+            _restartablesForLoadNewLevel.Add(Resolve<IHealthContainer>());
         }
 
         private void BindTweenersLocator()
@@ -282,6 +288,9 @@ namespace App.Scripts.Scenes.GameScene.Installers
         {
             Container.Bind<ITimeProvider>().To<TimeProvider>().AsSingle();
             Container.Bind<ITimeScaleAnimator>().To<TimeScaleAnimator>().AsSingle();
+            
+            _restartables.Add(Container.Resolve<ITimeProvider>());
+            _restartablesForLoadNewLevel.Add(Container.Resolve<ITimeProvider>());
         }
 
         private void BindInput()

@@ -97,5 +97,11 @@ namespace App.Scripts.Scenes.GameScene.Healthes
 
             _currentHealthCount = _maxHealthCount - 1;
         }
+
+        public void Restart()
+        {
+            _healthPointViews.Clear();
+            InstallAllViews();
+        }
     }
 }

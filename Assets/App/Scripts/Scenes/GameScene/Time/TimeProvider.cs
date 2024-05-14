@@ -23,5 +23,10 @@ namespace App.Scripts.Scenes.GameScene.Time
                 TimeScaleChanged?.Invoke();
             }
         }
+
+        public void Restart()
+        {
+            TimeScale = 1f;
+        }
     }
 }

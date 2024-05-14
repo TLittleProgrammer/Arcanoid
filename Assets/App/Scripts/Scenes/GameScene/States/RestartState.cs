@@ -3,6 +3,7 @@ using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.LoadingScreen;
 using App.Scripts.Scenes.GameScene.Dotween;
 using App.Scripts.Scenes.GameScene.Infrastructure;
+using App.Scripts.Scenes.GameScene.Time;
 
 namespace App.Scripts.Scenes.GameScene.States
 {
@@ -18,7 +19,7 @@ namespace App.Scripts.Scenes.GameScene.States
             IEnumerable<IRestartable> restartables,
             IStateMachine gameStateMachine,
             ITweenersLocator tweenersLocator
-            )
+        )
         {
             _loadingScreen = loadingScreen;
             _restartables = restartables;
