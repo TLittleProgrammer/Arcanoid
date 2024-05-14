@@ -18,6 +18,7 @@ namespace App.Scripts.Scenes.GameScene.PlayerShape.Move
         private readonly IPositionChecker _positionChecker;
 
         private ShapeMoverSettings _shapeMoverSettings;
+        private readonly IRectMousePositionChecker _rectMousePositionChecker;
         private readonly IStateMachine _stateMachine;
         private Vector3 _initialPosition;
 
@@ -27,6 +28,7 @@ namespace App.Scripts.Scenes.GameScene.PlayerShape.Move
             IInputService inputService,
             IShapePositionChecker positionChecker,
             ShapeMoverSettings shapeMoverSettings,
+            IRectMousePositionChecker rectMousePositionChecker,
             [Inject(Id = BindingConstants.GameStateMachine)] IStateMachine stateMachine)
         {
             _playerPositionable = playerPositionable;
@@ -34,13 +36,14 @@ namespace App.Scripts.Scenes.GameScene.PlayerShape.Move
             _inputService = inputService;
             _positionChecker = positionChecker;
             _shapeMoverSettings = shapeMoverSettings;
+            _rectMousePositionChecker = rectMousePositionChecker;
             _stateMachine = stateMachine;
             _initialPosition = _playerPositionable.Position;
         }
         
         public void Tick()
         {
-            if (_stateMachine.CurrentState is GameLoopState && _inputService.UserClickDown)
+            if (_stateMachine.CurrentState is GameLoopState && _inputService.UserClickDown && _rectMousePositionChecker.MouseOnRect(_inputService.CurrentMousePosition))
             {
                 Vector2 targetPosition = CalculateTargetPosition();
 

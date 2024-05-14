@@ -55,6 +55,7 @@ namespace App.Scripts.Scenes.GameScene.Installers
         [SerializeField] private LevelPackInfoView _levelPackInfoView;
         [SerializeField] private LevelPackBackgroundView _levelPackBackground;
         [SerializeField] private HealthPointViewParent _healthParent;
+        [SerializeField] private List<RectTransformableView> _rectTransformableViews;
 
         [Inject] private PoolProviders _poolProviders;
         [Inject] private IStateMachine _projectStateMachine;
@@ -87,7 +88,8 @@ namespace App.Scripts.Scenes.GameScene.Installers
             BindPoolContainer();
             
             BindFactories();
-            
+
+            BindMousePositionChecker();
             BindLevelProgressService();
             BindCameraService();
             BindScreenInfoProvider();
@@ -103,6 +105,11 @@ namespace App.Scripts.Scenes.GameScene.Installers
             BindBallMovement();
 
             BindGameStateMachine();
+        }
+
+        private void BindMousePositionChecker()
+        {
+            Container.Bind<IRectMousePositionChecker>().To<RectMousePositionChecker>().AsSingle().WithArguments(_rectTransformableViews);
         }
 
         private void BindHealthPointService()
