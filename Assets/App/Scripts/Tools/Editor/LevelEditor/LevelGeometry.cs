@@ -47,7 +47,6 @@ namespace App.Scripts.Tools.Editor.LevelEditor
 
         private List<string> PresetNames => PresetsData.PresetItems.Select(x => x.Key).ToList();
 
-        [MenuItem("Tools/Level Editor")]
         private static void OpenWindow()
         {
             GetWindow<LevelGeometry>().Show();
