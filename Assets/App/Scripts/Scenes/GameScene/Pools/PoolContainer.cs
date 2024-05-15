@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using App.Scripts.General.Popup;
 using App.Scripts.Scenes.GameScene.Effects;
 using App.Scripts.Scenes.GameScene.Entities;
 using App.Scripts.Scenes.GameScene.Healthes.View;
@@ -11,18 +10,27 @@ namespace App.Scripts.Scenes.GameScene.Pools
     public sealed class PoolContainer : IPoolContainer
     {
         private readonly EntityView.Pool _entityViewPool;
-        private readonly IEffect<CircleEffect>.Pool _circleEffect;
+        private readonly IEffect<CircleEffect>.Pool _circleEffectPool;
         private readonly HealthPointView.Pool _healthPointPool;
 
         private List<MonoBehaviour> _entitySpawned = new();
         private List<MonoBehaviour> _circleEffectSpawned = new();
         private List<MonoBehaviour> _healthPointSpawned = new();
 
-        public PoolContainer(EntityView.Pool entityViewPool, IEffect<CircleEffect>.Pool circleEffect, HealthPointView.Pool healthPointPool)
+        private Dictionary<PoolTypeId, List<MonoBehaviour>> _spawnedItemDictionaryHelper;
+
+        public PoolContainer(EntityView.Pool entityViewPool, IEffect<CircleEffect>.Pool circleEffectPool, HealthPointView.Pool healthPointPool)
         {
-            _circleEffect = circleEffect;
+            _circleEffectPool = circleEffectPool;
             _healthPointPool = healthPointPool;
             _entityViewPool = entityViewPool;
+
+            _spawnedItemDictionaryHelper = new()
+            {
+                [PoolTypeId.EntityView]      = _entitySpawned,
+                [PoolTypeId.CircleEffect]    = _circleEffectSpawned,
+                [PoolTypeId.HealthPointView] = _healthPointSpawned,
+            };
         }
 
         public TItem GetItem<TItem>(PoolTypeId poolTypeId) where TItem : MonoBehaviour
@@ -30,13 +38,13 @@ namespace App.Scripts.Scenes.GameScene.Pools
             TItem item = poolTypeId switch
             {
                 PoolTypeId.EntityView      => _entityViewPool.Spawn().GetComponent<TItem>(),
-                PoolTypeId.CircleEffect    => _circleEffect.Spawn().GetComponent<TItem>(),
+                PoolTypeId.CircleEffect    => _circleEffectPool.Spawn().GetComponent<TItem>(),
                 PoolTypeId.HealthPointView => _healthPointPool.Spawn().GetComponent<TItem>(),
                 
                 _ => null
             };
 
-            AddItemToList(item, poolTypeId);
+            _spawnedItemDictionaryHelper[poolTypeId].Add(item);
 
             return item;
         }
@@ -45,55 +53,35 @@ namespace App.Scripts.Scenes.GameScene.Pools
         {
             switch (poolTypeId)
             {
-                case PoolTypeId.EntityView:
-                {
-                    _entityViewPool.Despawn(item as EntityView);
-                    _entitySpawned.Remove(item);
-                    
-                } break;
-                case PoolTypeId.CircleEffect:
-                {
-                    _circleEffect.Despawn(item as CircleEffect);
-                    _circleEffectSpawned.Remove(item);
-                } break;
-                case PoolTypeId.HealthPointView:
-                {
-                    _healthPointPool.Despawn(item as HealthPointView);
-                    _healthPointSpawned.Remove(item);
-                } break;
+                case PoolTypeId.EntityView: RemoveItemFromPool(item, _entityViewPool, _entitySpawned); break;
+                case PoolTypeId.CircleEffect: RemoveItemFromPool(item, _circleEffectPool, _circleEffectSpawned); break;
+                case PoolTypeId.HealthPointView: RemoveItemFromPool(item, _healthPointPool, _healthPointSpawned);break;
             }
         }
 
-        private void AddItemToList<TItem>(TItem item, PoolTypeId poolTypeId) where TItem : MonoBehaviour
+        private void RemoveItemFromPool<TItem, TMono>(TItem item, MemoryPoolBase<TMono> poolBase, List<MonoBehaviour> spawnedList)
+            where TMono : MonoBehaviour
+            where TItem : MonoBehaviour
         {
-            switch (poolTypeId)
-            {
-                case PoolTypeId.EntityView: _entitySpawned.Add(item); break;
-                case PoolTypeId.CircleEffect: _circleEffectSpawned.Add(item); break;
-                case PoolTypeId.HealthPointView: _healthPointSpawned.Add(item); break;
-            }
+            poolBase.Despawn(item as TMono);
+            spawnedList.Remove(item);
         }
 
         public void Restart()
         {
-            foreach (MonoBehaviour entity in _entitySpawned)
+            Clear<EntityView>(_entitySpawned, _entityViewPool);
+            Clear<CircleEffect>(_circleEffectSpawned, _circleEffectPool);
+            Clear<HealthPointView>(_healthPointSpawned, _healthPointPool);
+        }
+
+        private void Clear<TView>(List<MonoBehaviour> spawned, IMemoryPool memoryPool) where TView : MonoBehaviour
+        {
+            foreach (MonoBehaviour entity in spawned)
             {
-                _entityViewPool.Despawn(entity as EntityView);
+                memoryPool.Despawn(entity as TView);
             }
             
-            foreach (MonoBehaviour circle in _circleEffectSpawned)
-            {
-                _circleEffect.Despawn(circle as CircleEffect);
-            }
-            
-            foreach (MonoBehaviour healthPoint in _healthPointSpawned)
-            {
-                _healthPointPool.Despawn(healthPoint as HealthPointView);
-            }
-            
-            _entitySpawned.Clear();
-            _healthPointSpawned.Clear();
-            _circleEffectSpawned.Clear();
+            spawned.Clear();
         }
     }
 }
