@@ -1,29 +1,31 @@
 ﻿using System.Collections.Generic;
 using App.Scripts.General.Components;
+using App.Scripts.General.Popup.Factory;
 using App.Scripts.Scenes.GameScene.Infrastructure;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace App.Scripts.General.Popup
 {
     public sealed class PopupService : IPopupService, IRestartable
     {
-        private readonly IViewPopupProvider.Factory _factory;
+        private readonly IPopupFactory _factory;
         private readonly List<IViewPopupProvider> _popupsList;
 
-        public PopupService(IViewPopupProvider.Factory factory)
+        public PopupService(IPopupFactory factory)
         {
             _factory = factory;
             _popupsList = new();
         }
-        
-        public IViewPopupProvider Show(PopupTypeId popupTypeId, ITransformable parent = null)
+
+        public IViewPopupProvider Show<TViewPopupProvider>(ITransformable parent = null) where TViewPopupProvider : IViewPopupProvider
         {
-            IViewPopupProvider viewPopupProvider = _factory.Create(popupTypeId, parent);
+            IViewPopupProvider viewPopupProvider = _factory.Create<TViewPopupProvider>(parent);
 
             LockButtonsForLastPopup();
+            
             _popupsList.Add(viewPopupProvider);
-
             viewPopupProvider.Show();
             
             return viewPopupProvider;
@@ -36,6 +38,7 @@ namespace App.Scripts.General.Popup
             if (viewProvider is not null)
             {
                 await viewProvider.Close();
+                
                 _popupsList.Remove(viewProvider);
                 Object.Destroy(viewProvider.GameObject);
                 
@@ -49,7 +52,7 @@ namespace App.Scripts.General.Popup
         {
             if (_popupsList.Count > 1)
             {
-                _popupsList[^2].LockButtons();
+                UpdateInteractableForButtons(_popupsList[^2].Buttons.ToArray(), false);
             }
         }
         
@@ -57,7 +60,15 @@ namespace App.Scripts.General.Popup
         {
             if (_popupsList.Count != 0)
             {
-                _popupsList[^1].UnlockButtons();
+                UpdateInteractableForButtons(_popupsList[^1].Buttons.ToArray(), true);
+            }
+        }
+
+        private void UpdateInteractableForButtons(Button[] buttons, bool interactableValue)
+        {
+            foreach (Button button in buttons)
+            {
+                button.interactable = interactableValue;
             }
         }
 

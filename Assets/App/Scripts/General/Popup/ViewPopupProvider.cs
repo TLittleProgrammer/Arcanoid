@@ -1,18 +1,14 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace App.Scripts.General.Popup
 {
     public abstract class ViewPopupProvider : MonoBehaviour, IViewPopupProvider
     {
-        [SerializeField] private PopupTypeId _popupTypeId;
-        
-        public PopupTypeId PopupTypeId
-        {
-            get => _popupTypeId;
-            set => _popupTypeId = value;
-        }
+        public List<Button> Buttons { get; protected set; }
 
         public virtual async UniTask Show()
         {
@@ -26,9 +22,7 @@ namespace App.Scripts.General.Popup
             gameObject.SetActive(false);
             await UniTask.CompletedTask;
         }
-
-        public abstract void LockButtons();
-        public abstract void UnlockButtons();
+        
         public GameObject GameObject => gameObject;
     }
 }

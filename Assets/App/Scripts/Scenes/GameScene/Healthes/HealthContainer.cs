@@ -5,6 +5,7 @@ using App.Scripts.General.RootUI;
 using App.Scripts.Scenes.GameScene.Constants;
 using App.Scripts.Scenes.GameScene.Infrastructure;
 using App.Scripts.Scenes.GameScene.Levels;
+using App.Scripts.Scenes.GameScene.Popups;
 using App.Scripts.Scenes.GameScene.States;
 using App.Scripts.Scenes.GameScene.Time;
 using Cysharp.Threading.Tasks;
@@ -63,7 +64,7 @@ namespace App.Scripts.Scenes.GameScene.Healthes
                 _gameStateMachine.Enter<LooseState>();
                 await _timeScaleAnimator.Animate(0f);
                 
-                _popupService.Show(PopupTypeId.Loose, _rootUIViewProvider.PopupUpViewProvider);
+                _popupService.Show<LoosePopupView>(_rootUIViewProvider.PopupUpViewProvider);
             }
             else
             {

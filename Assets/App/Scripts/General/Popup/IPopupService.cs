@@ -5,7 +5,7 @@ namespace App.Scripts.General.Popup
 {
     public interface IPopupService
     {
-        IViewPopupProvider Show(PopupTypeId popupTypeId, ITransformable parent = null);
+        IViewPopupProvider Show<TViewPopupProvider>(ITransformable parent = null) where TViewPopupProvider : IViewPopupProvider;
         UniTask Close<TPopup>() where TPopup : IViewPopupProvider;
     }
 }

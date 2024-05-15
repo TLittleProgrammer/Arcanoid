@@ -263,9 +263,7 @@ namespace App.Scripts.Scenes.GameScene.Installers
             Container.BindFactory<ITransformable, IHealthPointView, IHealthPointView.Factory>().FromFactory<HealthFactory>();
             
             Container.Bind<IPopupProvider>().To<ResourcesPopupProvider>().AsSingle();
-            Container
-                .BindFactory<PopupTypeId, ITransformable, IViewPopupProvider, IViewPopupProvider.Factory>()
-                .FromFactory<PopupFactory>();
+            Container.Bind<IPopupFactory>().To<PopupFactory>().AsSingle();
 
             Container.Bind<IPopupService>().To<PopupService>().AsSingle();
             
