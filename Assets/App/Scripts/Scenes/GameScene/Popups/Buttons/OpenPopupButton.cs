@@ -12,8 +12,6 @@ namespace App.Scripts.Scenes.GameScene.Popups.Buttons
 {
     public abstract class OpenPopupButton : MonoBehaviour, IPointerClickHandler
     {
-        public PopupTypeId NeedOpenPopupType;
-        
         private RootUIViewProvider _rootUIViewProvider;
         private IPopupService _popupService;
         private IStateMachine _stateMachine;
@@ -33,7 +31,7 @@ namespace App.Scripts.Scenes.GameScene.Popups.Buttons
         {
             if (_stateMachine.CurrentState is GameLoopState)
             {
-                _popupService.Show(NeedOpenPopupType, _rootUIViewProvider.PopupUpViewProvider);
+                _popupService.Show<MenuPopupView>(_rootUIViewProvider.PopupUpViewProvider);
                 _stateMachine.Enter<PopupState>();
             }
         }

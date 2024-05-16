@@ -1,6 +1,7 @@
 ﻿using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Popup;
 using App.Scripts.General.RootUI;
+using App.Scripts.Scenes.GameScene.Popups;
 using App.Scripts.Scenes.GameScene.Time;
 
 namespace App.Scripts.Scenes.GameScene.States
@@ -25,7 +26,7 @@ namespace App.Scripts.Scenes.GameScene.States
         public async void Enter()
         {
             await _timeScaleAnimator.Animate(0f);
-            _popupService.Show(PopupTypeId.Win, _rootUIViewProvider.PopupUpViewProvider);
+            _popupService.Show<WinPopupView>(_rootUIViewProvider.PopupUpViewProvider);
         }
 
         public void Exit()

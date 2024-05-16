@@ -1,4 +1,5 @@
-﻿using App.Scripts.External.GameStateMachine;
+﻿using System.Collections.Generic;
+using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Popup;
 using App.Scripts.Scenes.GameScene.Constants;
 using App.Scripts.Scenes.GameScene.Dotween;
@@ -29,6 +30,11 @@ namespace App.Scripts.Scenes.GameScene.Popups
             _popupButtonAnimationSettings = winContinueButtonAnimationSettings;
             _tweenersLocator = tweenersLocator;
             _gameStateMachine = gameStateMachine;
+
+            Buttons = new List<Button>
+            {
+                _restartButton
+            };
         }
 
         private void OnEnable()
@@ -66,15 +72,6 @@ namespace App.Scripts.Scenes.GameScene.Popups
         private void Restart()
         {
             _gameStateMachine.Enter<RestartState>();
-        }
-
-        public override void LockButtons()
-        {
-            _restartButton.interactable = false;
-        }
-
-        public override void UnlockButtons()
-        {
         }
     }
 }

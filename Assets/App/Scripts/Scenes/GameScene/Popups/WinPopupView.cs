@@ -1,4 +1,5 @@
-﻿using App.Scripts.External.GameStateMachine;
+﻿using System.Collections.Generic;
+using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Popup;
 using App.Scripts.Scenes.GameScene.Constants;
 using App.Scripts.Scenes.GameScene.Dotween;
@@ -31,6 +32,11 @@ namespace App.Scripts.Scenes.GameScene.Popups
             _tweenersLocator = tweenersLocator;
             _winContinueButtonAnimationSettings = winContinueButtonAnimationSettings;
             _gameStateMachine = gameStateMachine;
+
+            Buttons = new()
+            {
+                _continueButton
+            };
         }
 
         private void OnEnable()
@@ -68,17 +74,7 @@ namespace App.Scripts.Scenes.GameScene.Popups
 
         private void Continue()
         {
-            LockButtons();
             _gameStateMachine.Enter<LoadNextLevelState>();
-        }
-
-        public override void LockButtons()
-        {
-            _continueButton.interactable = false;
-        }
-
-        public override void UnlockButtons()
-        {
         }
     }
 }

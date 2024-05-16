@@ -1,4 +1,5 @@
-﻿using App.Scripts.External.GameStateMachine;
+﻿using System.Collections.Generic;
+using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Popup;
 using App.Scripts.General.States;
 using App.Scripts.Scenes.GameScene.Constants;
@@ -31,6 +32,13 @@ namespace App.Scripts.Scenes.GameScene.Popups
             _projectStateMachine = projectStateMachine;
             _gameStateMachine = gameStateMachine;
             _popupService = popupService;
+
+            Buttons = new()
+            {
+                _restartButton,
+                _backButton,
+                _continueButton
+            };
         }
 
         private void OnEnable()
@@ -49,20 +57,17 @@ namespace App.Scripts.Scenes.GameScene.Popups
 
         private void Restart()
         {
-            LockButtons();
             _gameStateMachine.Enter<RestartState>();
         }
 
         private void Back()
         {
-            LockButtons();
             Close().Forget();
             _projectStateMachine.Enter<LoadingSceneState, string, bool>("1.MainMenu", false);
         }
 
         private async void Continue()
         {
-            LockButtons();
             await _popupService.Close<MenuPopupView>();
             _gameStateMachine.Enter<GameLoopState>();
         }
@@ -89,18 +94,6 @@ namespace App.Scripts.Scenes.GameScene.Popups
                 .Append(_backButton.transform.DOScale(Vector3.zero, 0.25f).From(Vector3.one).SetEase(Ease.OutBounce))
                 .Append(_restartButton.transform.DOScale(Vector3.zero, 0.25f).From(Vector3.one).SetEase(Ease.OutBounce))
                 .Append(transform.DOScale(Vector3.zero, 1f).From(Vector3.one)).ToUniTask();
-        }
-
-        public override void LockButtons()
-        {
-            _restartButton.interactable = false;
-            _continueButton.interactable = false;
-            _backButton.interactable = false;
-        }
-
-        public override void UnlockButtons()
-        {
-            
         }
     }
 }
