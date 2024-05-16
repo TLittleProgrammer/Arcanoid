@@ -32,14 +32,15 @@ namespace App.Scripts.General.ProjectInitialization.Installers
             Container.Bind<IDotweenContainerService>().To<DotweenContainerService.DotweenContainerService>().AsSingle();
             Container.Bind<LevelProgressDataService>().AsSingle();
             Container.Bind<ILevelPackTransferData>().To<LevelPackTransferDataService>().AsSingle();
+
+            CreateRootUI();
+            BindProjectStateMachine();
         }
-        
+
         public void Initialize()
         {
             Application.targetFrameRate = _applicationSettings.TargetFPS;
             QualitySettings.vSyncCount = _applicationSettings.VSyncCounter;
-            
-            CreateRootUI();
         }
 
         private void CreateRootUI()
@@ -56,17 +57,16 @@ namespace App.Scripts.General.ProjectInitialization.Installers
             loadingScreen.RectTransform.anchoredPosition3D = Vector3.zero;
             
             Container.Bind<ILoadingScreen>().FromInstance(loadingScreen).AsSingle();
-            CreateProjectStateMachine(loadingScreen);
         }
 
-        private void CreateProjectStateMachine(ILoadingScreen loadingScreen)
+        private void BindProjectStateMachine()
         {
-            LoadingSceneState loadingSceneState = Container.Instantiate<LoadingSceneState>(new[] { loadingScreen });
+            LoadingSceneState loadingSceneState = Container.Instantiate<LoadingSceneState>(new[] { Container.Resolve<ILoadingScreen>() });
             
             IEnumerable<IExitableState> enumerable = new[] { loadingSceneState };
             IStateMachine stateMachine = new StateMachine();
             stateMachine.AsyncInitialize(enumerable);
-
+            
             Container.Bind<IStateMachine>().FromInstance(stateMachine).AsSingle();
         }
     }
