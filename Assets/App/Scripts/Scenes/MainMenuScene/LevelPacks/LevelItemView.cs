@@ -49,10 +49,10 @@ namespace App.Scripts.Scenes.MainMenuScene.LevelPacks
 
         public GameObject GameObject => gameObject;
 
-        public void UpdateVisual(LevelItemViewData levelViewData, LevelPack levelPack, VisualTypeId visualTypeId, int passedLevels)
+        public void UpdateVisual(LevelModel levelModel)
         {
-            UpdateGeneralViews(levelViewData, levelPack);
-            UpdateByItemTypeId(levelViewData, levelPack, visualTypeId, passedLevels);
+            UpdateGeneralViews(levelModel.LevelViewData, levelModel.LevelPack);
+            UpdateByItemTypeId(levelModel.LevelViewData, levelModel.LevelPack,levelModel.VisualTypeId, levelModel.PassedLevels);
         }
 
         private void UpdateByItemTypeId(LevelItemViewData levelViewData, LevelPack levelPack, VisualTypeId visualType, int passedLevels)

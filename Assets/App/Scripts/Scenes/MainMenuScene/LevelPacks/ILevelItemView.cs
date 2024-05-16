@@ -2,7 +2,6 @@
 using App.Scripts.General.Components;
 using App.Scripts.General.Levels;
 using App.Scripts.Scenes.GameScene.Components;
-using App.Scripts.Scenes.MainMenuScene.LevelPacks.Configs;
 using TMPro;
 using UnityEngine.UI;
 using Zenject;
@@ -22,7 +21,7 @@ namespace App.Scripts.Scenes.MainMenuScene.LevelPacks
         Image LockIcon { get; }
         Image MaskableImage { get; }
 
-        void UpdateVisual(LevelItemViewData levelViewData, LevelPack levelPack, VisualTypeId visualTypeId, int passedLevels);
+        void UpdateVisual(LevelModel levelModel);
         
         public class Factory : PlaceholderFactory<int, LevelPack, ILevelItemView>
         {

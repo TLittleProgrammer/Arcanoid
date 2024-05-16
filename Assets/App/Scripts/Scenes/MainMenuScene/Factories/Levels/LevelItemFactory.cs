@@ -70,7 +70,13 @@ namespace App.Scripts.Scenes.MainMenuScene.Factories.Levels
             LevelItemViewData levelItemViewData = _levelItemViewByTypeProvider.Views[visualType];
             int passedLevels = _levelPackProgressDictionary.ContainsKey(packIndex) ? _levelPackProgressDictionary[packIndex].PassedLevels : 0;
                 
-            levelItemView.UpdateVisual(levelItemViewData, levelPack, visualType, passedLevels);
+            levelItemView.UpdateVisual(new()
+            {
+                LevelViewData = levelItemViewData,
+                LevelPack = levelPack,
+                VisualTypeId = visualType,
+                PassedLevels = passedLevels
+            });
         }
 
         private VisualTypeId GetVisualType(int packIndex, LevelPack levelPack)
