@@ -1,12 +1,8 @@
-﻿using App.Scripts.External.GameStateMachine;
-using App.Scripts.Scenes.GameScene.Components;
-using App.Scripts.Scenes.GameScene.Constants;
+﻿using App.Scripts.Scenes.GameScene.Components;
 using App.Scripts.Scenes.GameScene.Input;
 using App.Scripts.Scenes.GameScene.PositionChecker;
-using App.Scripts.Scenes.GameScene.States;
 using App.Scripts.Scenes.GameScene.Time;
 using UnityEngine;
-using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.PlayerShape.Move
 {
@@ -19,7 +15,6 @@ namespace App.Scripts.Scenes.GameScene.PlayerShape.Move
 
         private ShapeMoverSettings _shapeMoverSettings;
         private readonly IRectMousePositionChecker _rectMousePositionChecker;
-        private readonly IStateMachine _stateMachine;
         private Vector3 _initialPosition;
 
         public PlayerShapeMover(
@@ -28,8 +23,7 @@ namespace App.Scripts.Scenes.GameScene.PlayerShape.Move
             IInputService inputService,
             IShapePositionChecker positionChecker,
             ShapeMoverSettings shapeMoverSettings,
-            IRectMousePositionChecker rectMousePositionChecker,
-            [Inject(Id = BindingConstants.GameStateMachine)] IStateMachine stateMachine)
+            IRectMousePositionChecker rectMousePositionChecker)
         {
             _playerPositionable = playerPositionable;
             _timeProvider = timeProvider;
@@ -37,13 +31,12 @@ namespace App.Scripts.Scenes.GameScene.PlayerShape.Move
             _positionChecker = positionChecker;
             _shapeMoverSettings = shapeMoverSettings;
             _rectMousePositionChecker = rectMousePositionChecker;
-            _stateMachine = stateMachine;
             _initialPosition = _playerPositionable.Position;
         }
         
         public void Tick()
         {
-            if (_stateMachine.CurrentState is GameLoopState && _inputService.UserClickDown && _rectMousePositionChecker.MouseOnRect(_inputService.CurrentMousePosition))
+            if (_inputService.UserClickDown && _rectMousePositionChecker.MouseOnRect(_inputService.CurrentMousePosition))
             {
                 Vector2 targetPosition = CalculateTargetPosition();
 

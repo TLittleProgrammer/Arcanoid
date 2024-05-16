@@ -2,8 +2,6 @@
 using App.Scripts.External.Extensions.ZenjectExtensions;
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Components;
-using App.Scripts.General.Constants;
-using App.Scripts.General.Levels;
 using App.Scripts.General.Popup;
 using App.Scripts.General.Popup.AssetManagment;
 using App.Scripts.General.Popup.Factory;
@@ -26,7 +24,6 @@ using App.Scripts.Scenes.GameScene.Healthes.View;
 using App.Scripts.Scenes.GameScene.Infrastructure;
 using App.Scripts.Scenes.GameScene.Input;
 using App.Scripts.Scenes.GameScene.LevelProgress;
-using App.Scripts.Scenes.GameScene.Levels;
 using App.Scripts.Scenes.GameScene.Levels.Load;
 using App.Scripts.Scenes.GameScene.Levels.View;
 using App.Scripts.Scenes.GameScene.LevelView;
@@ -39,7 +36,6 @@ using App.Scripts.Scenes.GameScene.ScreenInfo;
 using App.Scripts.Scenes.GameScene.Settings;
 using App.Scripts.Scenes.GameScene.States;
 using App.Scripts.Scenes.GameScene.Time;
-using Newtonsoft.Json;
 using UnityEngine;
 using Zenject;
 
@@ -62,6 +58,7 @@ namespace App.Scripts.Scenes.GameScene.Installers
 
         private List<IRestartable> _restartables = new();
         private List<IRestartable> _restartablesForLoadNewLevel = new();
+        private List<ITickable> _gameLoopTickables = new();
         
         private IStateMachine _stateMachine = new StateMachine();
         private IBallSpeedUpdater _ballSpeedUpdater = new BallSpeedUpdater();
@@ -154,12 +151,15 @@ namespace App.Scripts.Scenes.GameScene.Installers
 
         private void BindGameStateMachine()
         {
-            GameLoopState gameLoopState = Container.Instantiate<GameLoopState>();
+            GameLoopState gameLoopState = Container.Instantiate<GameLoopState>(new[]{_gameLoopTickables});
             PopupState popupState = Container.Instantiate<PopupState>();
             LooseState looseState = Container.Instantiate<LooseState>();
             WinState winState = Container.Instantiate<WinState>();
             RestartState restartState = Container.Instantiate<RestartState>(new object[] {_restartables, _stateMachine});
             LoadNextLevelState loadNextLevelState = Container.Instantiate<LoadNextLevelState>(new object[] {_levelPackInfoView, _restartablesForLoadNewLevel, _stateMachine});
+
+            Container.BindInterfacesTo<GameLoopState>().FromInstance(gameLoopState);
+            
             
             _stateMachine.AsyncInitialize(new IState[] { gameLoopState, popupState, restartState, loadNextLevelState, looseState, winState });
             _stateMachine.Enter<GameLoopState>();
@@ -221,20 +221,22 @@ namespace App.Scripts.Scenes.GameScene.Installers
         {
             ShapeMoverSettings shapeMoverSettings = new();
             shapeMoverSettings.Speed = 5f;
+            
+            Container.Bind<IPlayerShapeMover>().To<PlayerShapeMover>().AsSingle().WithArguments(_playerShape, shapeMoverSettings);
 
-            
-            Container.BindInterfacesAndSelfTo<PlayerShapeMover>().AsSingle().WithArguments(_playerShape, shapeMoverSettings, _stateMachine);
-            
-            _restartables.Add(Container.Resolve<PlayerShapeMover>());
-            _restartablesForLoadNewLevel.Add(Container.Resolve<PlayerShapeMover>());
+            var mover = Resolve<IPlayerShapeMover>();
+            _restartables.Add(mover);
+            _restartablesForLoadNewLevel.Add(mover);
+            _gameLoopTickables.Add(mover);
         }
 
         private void BindBallMovement()
         {
-            Container.BindInterfacesAndSelfTo<BallMovementService>().AsSingle().WithArguments(_ballView);
+            Container.Bind<IBallMovementService>().To<BallMovementService>().AsSingle().WithArguments(_ballView);
             
-            _restartables.Add(Container.Resolve<BallMovementService>());
-            _restartablesForLoadNewLevel.Add(Container.Resolve<BallMovementService>());
+            _restartables.Add(Resolve<IBallMovementService>());
+            _restartablesForLoadNewLevel.Add(Resolve<IBallMovementService>());
+            _gameLoopTickables.Add(Resolve<IBallMovementService>());
         }
 
         private void BindFactories()
@@ -290,8 +292,11 @@ namespace App.Scripts.Scenes.GameScene.Installers
 
         private void BindInput()
         {
-            Container.BindInterfacesAndSelfTo<ClickDetector>().AsSingle();
-            Container.BindInterfacesAndSelfTo<InputService>().AsSingle();
+            Container.Bind<IClickDetector>().To<ClickDetector>().AsSingle();
+            Container.Bind<IInputService>().To<InputService>().AsSingle();
+            
+            _gameLoopTickables.Add(Resolve<IClickDetector>());
+            _gameLoopTickables.Add(Resolve<IInputService>());
         }
 
         private TResult Resolve<TResult>()

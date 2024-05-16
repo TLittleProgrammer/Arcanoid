@@ -1,7 +1,6 @@
 ﻿using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Popup;
 using App.Scripts.General.RootUI;
-using App.Scripts.Scenes.GameScene.Components;
 using App.Scripts.Scenes.GameScene.Constants;
 using App.Scripts.Scenes.GameScene.States;
 using UnityEngine;
@@ -31,7 +30,7 @@ namespace App.Scripts.Scenes.GameScene.Popups.Buttons
         {
             if (_stateMachine.CurrentState is GameLoopState)
             {
-                _popupService.Show<MenuPopupPopupPopupPopupView>(_rootUIViewProvider.PopupUpViewProvider);
+                _popupService.Show<MenuPopupView>(_rootUIViewProvider.PopupUpViewProvider);
                 _stateMachine.Enter<PopupState>();
             }
         }

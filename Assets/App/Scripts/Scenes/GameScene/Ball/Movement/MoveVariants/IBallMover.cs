@@ -1,10 +1,10 @@
 ﻿using App.Scripts.Scenes.GameScene.Infrastructure;
-using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
 {
-    public interface IBallMover : ITickable, IRestartable
+    public interface IBallMover : IRestartable
     {
         void UpdateSpeed(float addValue);
+        void Tick();
     }
 }

@@ -26,7 +26,7 @@ namespace App.Scripts.Scenes.GameScene.States
         public async void Enter()
         {
             await _timeScaleAnimator.Animate(0f);
-            _popupService.Show<WinPopupPopupPopupPopupView>(_rootUIViewProvider.PopupUpViewProvider);
+            _popupService.Show<WinPopupView>(_rootUIViewProvider.PopupUpViewProvider);
         }
 
         public void Exit()

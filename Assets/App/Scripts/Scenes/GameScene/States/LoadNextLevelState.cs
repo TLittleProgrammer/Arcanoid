@@ -78,7 +78,7 @@ namespace App.Scripts.Scenes.GameScene.States
                 restartable.Restart();
             }
 
-            await _popupService.Close<WinPopupPopupPopupPopupView>();
+            await _popupService.Close<WinPopupView>();
             _timeProvider.TimeScale = 1f;
 
             UpdateUserData();

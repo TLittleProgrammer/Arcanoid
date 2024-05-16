@@ -4,7 +4,7 @@ using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.Input
 {
-    public sealed class InputService : IInputService, ITickable
+    public sealed class InputService : IInputService
     {
         private readonly ICameraService _cameraService;
         

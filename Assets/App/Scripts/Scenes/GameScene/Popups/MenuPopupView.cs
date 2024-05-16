@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using App.Scripts.External.GameStateMachine;
+﻿using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Constants;
 using App.Scripts.General.Popup;
 using App.Scripts.General.States;
@@ -13,7 +12,7 @@ using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.Popups
 {
-    public class MenuPopupPopupPopupPopupView : PopupPopupView
+    public class MenuPopupView : PopupView
     {
         [SerializeField] private Button _restartButton;
         [SerializeField] private Button _backButton;
@@ -69,7 +68,7 @@ namespace App.Scripts.Scenes.GameScene.Popups
 
         private async void Continue()
         {
-            await _popupService.Close<MenuPopupPopupPopupPopupView>();
+            await _popupService.Close<MenuPopupView>();
             _gameStateMachine.Enter<GameLoopState>();
         }
 

@@ -1,8 +1,9 @@
 ﻿using System;
+using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.Input
 {
-    public interface IClickDetector
+    public interface IClickDetector : ITickable
     {
         event Action MouseDowned;
         event Action MouseUp;

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using App.Scripts.Scenes.GameScene.Settings;
 using DG.Tweening;
 using TMPro;
-using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.ScoreAnimation
 {

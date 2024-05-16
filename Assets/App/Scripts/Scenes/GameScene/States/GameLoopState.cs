@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using App.Scripts.External.GameStateMachine;
+using UnityEngine;
 using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.States
