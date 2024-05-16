@@ -4,6 +4,7 @@ using App.Scripts.Scenes.GameScene.Levels;
 using App.Scripts.Scenes.GameScene.Levels.AssetManagement;
 using App.Scripts.Scenes.GameScene.LevelView;
 using App.Scripts.Scenes.GameScene.ScoreAnimation;
+using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.LevelProgress
 {
@@ -59,6 +60,7 @@ namespace App.Scripts.Scenes.GameScene.LevelProgress
                 _progress = 1f;
                 _scoreAnimationService.Animate(_levelPackInfoView.LevelPassProgress, _targetScore, 100, UpdateProgressText);
 
+                Debug.Log("Кря");
                 LevelPassed?.Invoke();
                 
                 return;
@@ -78,7 +80,6 @@ namespace App.Scripts.Scenes.GameScene.LevelProgress
             {
                 if (index != 0)
                 {
-                    _allBlockCounter++;
                     if (_entitesProvider.EntityStages[index.ToString()].ICanGetDamage)
                     {
                         damagableCounter++;
@@ -86,6 +87,7 @@ namespace App.Scripts.Scenes.GameScene.LevelProgress
                 }
             }
 
+            _allBlockCounter = damagableCounter;
             _step = 1f / damagableCounter;
         }
 

@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using App.Scripts.External.GameStateMachine;
-using App.Scripts.General.Popup;
-using App.Scripts.General.RootUI;
 using App.Scripts.Scenes.GameScene.Constants;
 using App.Scripts.Scenes.GameScene.Infrastructure;
 using App.Scripts.Scenes.GameScene.Levels;
-using App.Scripts.Scenes.GameScene.Time;
 using Cysharp.Threading.Tasks;
 
 namespace App.Scripts.Scenes.GameScene.Healthes

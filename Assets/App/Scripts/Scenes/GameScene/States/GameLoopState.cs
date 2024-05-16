@@ -1,10 +1,14 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Popup;
 using App.Scripts.General.RootUI;
 using App.Scripts.Scenes.GameScene.Healthes;
+using App.Scripts.Scenes.GameScene.LevelProgress;
 using App.Scripts.Scenes.GameScene.Popups;
 using App.Scripts.Scenes.GameScene.Time;
+using Cysharp.Threading.Tasks;
+using UnityEngine;
 using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.States
@@ -16,6 +20,7 @@ namespace App.Scripts.Scenes.GameScene.States
         private readonly IPopupService _popupService;
         private readonly ITimeScaleAnimator _timeScaleAnimator;
         private readonly IStateMachine _stateMachine;
+        private readonly ILevelProgressService _levelProgressService;
         private readonly RootUIViewProvider _rootUIViewProvider;
 
         private bool _stateIsEntered = false;
@@ -26,6 +31,7 @@ namespace App.Scripts.Scenes.GameScene.States
             IPopupService popupService,
             ITimeScaleAnimator timeScaleAnimator,
             IStateMachine stateMachine,
+            ILevelProgressService levelProgressService,
             RootUIViewProvider rootUIViewProvider)
         {
             _tickables = tickables;
@@ -33,19 +39,22 @@ namespace App.Scripts.Scenes.GameScene.States
             _popupService = popupService;
             _timeScaleAnimator = timeScaleAnimator;
             _stateMachine = stateMachine;
+            _levelProgressService = levelProgressService;
             _rootUIViewProvider = rootUIViewProvider;
         }
         
         public void Enter()
         {
             _stateIsEntered = true;
-            _healthContainer.LivesAreWasted += OnLivesAreWasted;
+            _healthContainer.LivesAreWasted   += OnLivesAreWasted;
+            _levelProgressService.LevelPassed += OnLevelPassed;
         }
 
         public void Exit()
         {
             _stateIsEntered = false;
-            _healthContainer.LivesAreWasted -= OnLivesAreWasted;
+            _healthContainer.LivesAreWasted   -= OnLivesAreWasted;
+            _levelProgressService.LevelPassed -= OnLevelPassed;
         }
 
         public void Tick()
@@ -61,10 +70,23 @@ namespace App.Scripts.Scenes.GameScene.States
 
         private async void OnLivesAreWasted()
         {
-            await _timeScaleAnimator.Animate(0f);
+            await AnimateTimeScaleTo(0f);
+            
             _stateMachine.Enter<LooseState>();
-                
             _popupService.Show<LoosePopupView>(_rootUIViewProvider.PopupUpViewProvider);
+        }
+
+        private async void OnLevelPassed()
+        { 
+            Debug.Log("Пупупу");
+            await AnimateTimeScaleTo(0f);
+            
+            _stateMachine.Enter<WinState>();
+        }
+
+        private async UniTask AnimateTimeScaleTo(float to)
+        {
+            await _timeScaleAnimator.Animate(to);
         }
     }
 }

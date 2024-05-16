@@ -137,15 +137,8 @@ namespace App.Scripts.Scenes.GameScene.Installers
                 .BindInterfacesAndSelfTo<LevelProgressService>()
                 .AsSingle()
                 .WithArguments(_levelPackInfoView, _levelPackBackground);
-            
-            Container
-                .Bind<IStopGameService>()
-                .To<StopGameService>()
-                .AsSingle()
-                .WithArguments(_gameStateMachine);
 
             _restartables.Add(Container.Resolve<ILevelProgressService>());
-            _restartablesForLoadNewLevel.Add(Container.Resolve<IStopGameService>());
             _restartablesForLoadNewLevel.Add(Container.Resolve<ILevelProgressService>());
         }
 
