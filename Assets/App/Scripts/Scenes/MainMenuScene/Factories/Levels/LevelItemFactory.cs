@@ -1,5 +1,6 @@
 ﻿using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Components;
+using App.Scripts.General.Constants;
 using App.Scripts.General.Levels;
 using App.Scripts.General.States;
 using App.Scripts.General.UserData.Data;
@@ -89,7 +90,7 @@ namespace App.Scripts.Scenes.MainMenuScene.Factories.Levels
                     _levelPackTransferData.LevelIndex = packIndex;
                     _levelPackTransferData.LevelPackProgress = 0f;
                     
-                    _stateMachine.Enter<LoadingSceneState, string, bool>("2.Game", false);
+                    _stateMachine.Enter<LoadingSceneState, string, bool>(SceneNaming.Game, false);
                 };
             }
         }

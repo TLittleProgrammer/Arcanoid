@@ -1,4 +1,5 @@
 ﻿using App.Scripts.External.GameStateMachine;
+using App.Scripts.General.Constants;
 using App.Scripts.General.States;
 using Zenject;
 
@@ -15,7 +16,7 @@ namespace App.Scripts.Scenes.Bootstrap.Installers
 
         public void Initialize()
         {
-            _stateMachine.Enter<LoadingSceneState, string, bool>("1.MainMenu", true);
+            _stateMachine.Enter<LoadingSceneState, string, bool>(SceneNaming.MainMenu, true);
         }
     }
     
