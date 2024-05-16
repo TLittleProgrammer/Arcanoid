@@ -60,7 +60,7 @@ namespace App.Scripts.Scenes.GameScene.Installers
         private List<IRestartable> _restartablesForLoadNewLevel = new();
         private List<ITickable> _gameLoopTickables = new();
         
-        private IStateMachine _stateMachine = new StateMachine();
+        private IStateMachine _gameStateMachine = new StateMachine();
         private IBallSpeedUpdater _ballSpeedUpdater = new BallSpeedUpdater();
         
         public override void InstallBindings()
@@ -112,7 +112,7 @@ namespace App.Scripts.Scenes.GameScene.Installers
         private void BindHealthPointService()
         {
             Container.Bind<IHealthPointService>().To<HealthPointService>().AsSingle().WithArguments(_healthParent as ITransformable);
-            Container.Bind<IHealthContainer>().To<HealthContainer>().AsSingle().WithArguments(_stateMachine);
+            Container.Bind<IHealthContainer>().To<HealthContainer>().AsSingle();
             
             _restartables.Add(Resolve<IHealthPointService>());
             _restartablesForLoadNewLevel.Add(Resolve<IHealthPointService>());
@@ -142,7 +142,7 @@ namespace App.Scripts.Scenes.GameScene.Installers
                 .Bind<IStopGameService>()
                 .To<StopGameService>()
                 .AsSingle()
-                .WithArguments(_stateMachine);
+                .WithArguments(_gameStateMachine);
 
             _restartables.Add(Container.Resolve<ILevelProgressService>());
             _restartablesForLoadNewLevel.Add(Container.Resolve<IStopGameService>());
@@ -151,22 +151,22 @@ namespace App.Scripts.Scenes.GameScene.Installers
 
         private void BindGameStateMachine()
         {
-            GameLoopState gameLoopState = Container.Instantiate<GameLoopState>(new[]{_gameLoopTickables});
+            GameLoopState gameLoopState = Container.Instantiate<GameLoopState>(new object[]{_gameLoopTickables, _gameStateMachine});
             PopupState popupState = Container.Instantiate<PopupState>();
             LooseState looseState = Container.Instantiate<LooseState>();
             WinState winState = Container.Instantiate<WinState>();
-            RestartState restartState = Container.Instantiate<RestartState>(new object[] {_restartables, _stateMachine});
-            LoadNextLevelState loadNextLevelState = Container.Instantiate<LoadNextLevelState>(new object[] {_levelPackInfoView, _restartablesForLoadNewLevel, _stateMachine});
+            RestartState restartState = Container.Instantiate<RestartState>(new object[] {_restartables, _gameStateMachine});
+            LoadNextLevelState loadNextLevelState = Container.Instantiate<LoadNextLevelState>(new object[] {_levelPackInfoView, _restartablesForLoadNewLevel, _gameStateMachine});
 
             Container.BindInterfacesTo<GameLoopState>().FromInstance(gameLoopState);
             
             
-            _stateMachine.AsyncInitialize(new IState[] { gameLoopState, popupState, restartState, loadNextLevelState, looseState, winState });
-            _stateMachine.Enter<GameLoopState>();
+            _gameStateMachine.AsyncInitialize(new IState[] { gameLoopState, popupState, restartState, loadNextLevelState, looseState, winState });
+            _gameStateMachine.Enter<GameLoopState>();
             
             Container.Bind<IStateMachine>()
                 .WithId(BindingConstants.GameStateMachine)
-                .FromInstance(_stateMachine)
+                .FromInstance(_gameStateMachine)
                 .AsCached()
                 .NonLazy();
 
