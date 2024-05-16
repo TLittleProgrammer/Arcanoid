@@ -13,7 +13,7 @@ using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.Popups
 {
-    public class LoosePopupPopupPopupPopupView : PopupPopupView
+    public class LoosePopupView : PopupPopupView
     {
         [SerializeField] private Button _restartButton;
         

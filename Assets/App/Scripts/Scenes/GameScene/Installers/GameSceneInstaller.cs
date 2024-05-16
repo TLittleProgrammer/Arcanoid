@@ -45,7 +45,7 @@ using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.Installers
 {
-    public class GameSceneInstaller : MonoInstaller, IInitializable
+    public class GameSceneInstaller : MonoInstaller
     {
         [SerializeField] private UnityEngine.Camera _camera;
         [SerializeField] private RectTransform _header;
@@ -65,32 +65,16 @@ namespace App.Scripts.Scenes.GameScene.Installers
         
         private IStateMachine _stateMachine = new StateMachine();
         private IBallSpeedUpdater _ballSpeedUpdater = new BallSpeedUpdater();
-
-        public async void Initialize()
-        {
-            LevelData levelData = ChooseLevelData();
-            
-            await Resolve<IGridPositionResolver>().AsyncInitialize(levelData);
-            Resolve<IContainer<IBoxColliderable2D>>().AddItem(_playerShape);
-
-            LoadLevel(levelData);
-            await Resolve<IPopupProvider>().AsyncInitialize(Pathes.PathToPopups);
-            await Resolve<IBallSpeedUpdater>().AsyncInitialize(Resolve<IBallMovementService>());
-        }
-
+        
         public override void InstallBindings()
         {
-            Container.BindInterfacesAndSelfTo<GameSceneInstaller>().FromInstance(this).AsSingle();
-
+            BindInitializeDependencies();
             BindTweenersLocator();
             BindTimeProvider();
             BindScoreAnimationService();
-            
             BindPools();
             BindPoolContainer();
-            
             BindFactories();
-
             BindMousePositionChecker();
             BindLevelProgressService();
             BindCameraService();
@@ -108,6 +92,14 @@ namespace App.Scripts.Scenes.GameScene.Installers
             BindBallSpeedUpdater();
 
             BindGameStateMachine();
+            
+            Container.BindInterfacesTo<GameInitializer>().AsSingle();
+        }
+
+        private void BindInitializeDependencies()
+        {
+            Container.Bind<TextAsset>().FromInstance(_levelData).AsSingle();
+            Container.Bind<PlayerView>().FromInstance(_playerShape).AsSingle();
         }
 
         private void BindBallSpeedUpdater()
@@ -183,18 +175,6 @@ namespace App.Scripts.Scenes.GameScene.Installers
                 .FromInstance(_projectStateMachine)
                 .AsCached()
                 .NonLazy();
-        }
-
-        private LevelData ChooseLevelData()
-        {
-            var transferData = Container.Resolve<ILevelPackTransferData>();
-            
-            if (transferData.NeedLoadLevel)
-            {
-                return JsonConvert.DeserializeObject<LevelData>(transferData.LevelPack.Levels[transferData.LevelIndex].text);
-            }
-
-            return JsonConvert.DeserializeObject<LevelData>(_levelData.text);
         }
 
         private void BindCollisionService()
@@ -312,16 +292,6 @@ namespace App.Scripts.Scenes.GameScene.Installers
         {
             Container.BindInterfacesAndSelfTo<ClickDetector>().AsSingle();
             Container.BindInterfacesAndSelfTo<InputService>().AsSingle();
-        }
-
-        private async void LoadLevel(LevelData levelData)
-        {
-            var levelLoader  = Container.Resolve<ILevelLoader>();
-
-            levelLoader.LoadLevel(levelData);
-            Container.Resolve<ILevelProgressService>().CalculateStepByLevelData(levelData);
-            await Container.Resolve<IHealthPointService>().AsyncInitialize(levelData);
-            await Container.Resolve<IHealthContainer>().AsyncInitialize(levelData, new IRestartable[] {Resolve<IBallMovementService>(), Resolve<IPlayerShapeMover>()});
         }
 
         private TResult Resolve<TResult>()
