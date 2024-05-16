@@ -64,7 +64,7 @@ namespace App.Scripts.Scenes.GameScene.Healthes
                 _gameStateMachine.Enter<LooseState>();
                 await _timeScaleAnimator.Animate(0f);
                 
-                _popupService.Show<LoosePopupView>(_rootUIViewProvider.PopupUpViewProvider);
+                _popupService.Show<LoosePopupPopupPopupPopupView>(_rootUIViewProvider.PopupUpViewProvider);
             }
             else
             {

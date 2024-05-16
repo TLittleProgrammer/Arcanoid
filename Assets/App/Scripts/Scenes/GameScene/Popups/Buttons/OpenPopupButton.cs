@@ -31,7 +31,7 @@ namespace App.Scripts.Scenes.GameScene.Popups.Buttons
         {
             if (_stateMachine.CurrentState is GameLoopState)
             {
-                _popupService.Show<MenuPopupView>(_rootUIViewProvider.PopupUpViewProvider);
+                _popupService.Show<MenuPopupPopupPopupPopupView>(_rootUIViewProvider.PopupUpViewProvider);
                 _stateMachine.Enter<PopupState>();
             }
         }

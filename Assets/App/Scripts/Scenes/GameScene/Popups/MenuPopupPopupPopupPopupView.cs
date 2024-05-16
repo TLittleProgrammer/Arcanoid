@@ -12,7 +12,7 @@ using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.Popups
 {
-    public class MenuPopupView : ViewPopupProvider
+    public class MenuPopupPopupPopupPopupView : PopupPopupView
     {
         [SerializeField] private Button _restartButton;
         [SerializeField] private Button _backButton;
@@ -68,7 +68,7 @@ namespace App.Scripts.Scenes.GameScene.Popups
 
         private async void Continue()
         {
-            await _popupService.Close<MenuPopupView>();
+            await _popupService.Close<MenuPopupPopupPopupPopupView>();
             _gameStateMachine.Enter<GameLoopState>();
         }
 

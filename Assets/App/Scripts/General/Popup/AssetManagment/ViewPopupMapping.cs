@@ -7,6 +7,6 @@ namespace App.Scripts.General.Popup.AssetManagment
     [CreateAssetMenu(menuName = "Configs/ViewPopupMapping", fileName = "ViewPopupMapping")]
     public class ViewPopupMapping : SerializedScriptableObject
     {
-        public List<ViewPopupProvider> ViewPopupProviderMapping;
+        public List<PopupPopupView> ViewPopupProviderMapping;
     }
 }

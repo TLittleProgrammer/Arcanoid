@@ -24,11 +24,11 @@ namespace App.Scripts.General.Popup.Factory
             await UniTask.CompletedTask;
         }
 
-        public IViewPopupProvider Create<TViewPopupProvider>(ITransformable parent) where TViewPopupProvider : IViewPopupProvider
+        public IPopupView Create<TViewPopupProvider>(ITransformable parent) where TViewPopupProvider : IPopupView
         {
-            IViewPopupProvider prefab = _popupProvider.LoadPopup<TViewPopupProvider>();
+            IPopupView prefab = _popupProvider.LoadPopup<TViewPopupProvider>();
 
-            return _diContainer.InstantiatePrefabForComponent<IViewPopupProvider>(prefab.GameObject, parent.Transform);
+            return _diContainer.InstantiatePrefabForComponent<IPopupView>(prefab.GameObject, parent.Transform);
         }
     }
 }

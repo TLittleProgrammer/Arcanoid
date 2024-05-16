@@ -4,6 +4,6 @@ namespace App.Scripts.General.Popup.Factory
 {
     public interface IPopupFactory
     {
-        IViewPopupProvider Create<TViewPopupProvider>(ITransformable parent) where TViewPopupProvider : IViewPopupProvider;
+        IPopupView Create<TPopupView>(ITransformable parent) where TPopupView : IPopupView;
     }
 }

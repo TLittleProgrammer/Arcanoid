@@ -11,7 +11,7 @@ namespace App.Scripts.General.Popup
     public sealed class PopupService : IPopupService, IRestartable
     {
         private readonly IPopupFactory _factory;
-        private readonly List<IViewPopupProvider> _popupsList;
+        private readonly List<IPopupView> _popupsList;
 
         public PopupService(IPopupFactory factory)
         {
@@ -19,28 +19,28 @@ namespace App.Scripts.General.Popup
             _popupsList = new();
         }
 
-        public IViewPopupProvider Show<TViewPopupProvider>(ITransformable parent = null) where TViewPopupProvider : IViewPopupProvider
+        public IPopupView Show<TPopupView>(ITransformable parent = null) where TPopupView : IPopupView
         {
-            IViewPopupProvider viewPopupProvider = _factory.Create<TViewPopupProvider>(parent);
+            IPopupView popupView = _factory.Create<TPopupView>(parent);
 
             LockButtonsForLastPopup();
             
-            _popupsList.Add(viewPopupProvider);
-            viewPopupProvider.Show();
+            _popupsList.Add(popupView);
+            popupView.Show();
             
-            return viewPopupProvider;
+            return popupView;
         }
 
-        public async UniTask Close<TPopup>() where TPopup : IViewPopupProvider
+        public async UniTask Close<TPopup>() where TPopup : IPopupView
         {
-            IViewPopupProvider viewProvider = FindPopup<TPopup>();
+            IPopupView popupViewProvider = FindPopup<TPopup>();
 
-            if (viewProvider is not null)
+            if (popupViewProvider is not null)
             {
-                await viewProvider.Close();
+                await popupViewProvider.Close();
                 
-                _popupsList.Remove(viewProvider);
-                Object.Destroy(viewProvider.GameObject);
+                _popupsList.Remove(popupViewProvider);
+                Object.Destroy(popupViewProvider.GameObject);
                 
                 UnlockButtonsForLastViewProvider();
             }
@@ -72,9 +72,9 @@ namespace App.Scripts.General.Popup
             }
         }
 
-        private IViewPopupProvider FindPopup<TPopup>() where TPopup : IViewPopupProvider
+        private IPopupView FindPopup<TPopup>() where TPopup : IPopupView
         {
-            foreach (IViewPopupProvider provider in _popupsList)
+            foreach (IPopupView provider in _popupsList)
             {
                 if (provider is TPopup)
                 {
@@ -87,7 +87,7 @@ namespace App.Scripts.General.Popup
 
         public void Restart()
         {
-            foreach (IViewPopupProvider viewPopupProvider in _popupsList)
+            foreach (IPopupView viewPopupProvider in _popupsList)
             {
                 Object.Destroy(viewPopupProvider.GameObject);
             }

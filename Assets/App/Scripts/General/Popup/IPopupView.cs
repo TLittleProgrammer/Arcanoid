@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace App.Scripts.General.Popup
 {
-    public interface IViewPopupProvider : IGameObjectable
+    public interface IPopupView : IGameObjectable
     {
         List<Button> Buttons { get; }
         
