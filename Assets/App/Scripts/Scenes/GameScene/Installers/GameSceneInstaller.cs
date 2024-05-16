@@ -199,7 +199,7 @@ namespace App.Scripts.Scenes.GameScene.Installers
                 .Bind<IBallFreeFlightMover>()
                 .To<BallFreeFlight>()
                 .AsSingle()
-                .WithArguments(_ballView, _stateMachine);
+                .WithArguments(_ballView);
         }
 
         private void BindPositionCheckers()

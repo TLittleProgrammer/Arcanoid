@@ -57,12 +57,12 @@ namespace App.Scripts.Scenes.GameScene.Healthes
             
             _healthPointService.UpdateHealth(healthCount);
             
-            if (_currentHealthCounter + healthCount <= 0)
+            if (_currentHealthCounter + healthCount < 0)
             {
                 _currentHealthCounter = 0;
-
-                _gameStateMachine.Enter<LooseState>();
+                
                 await _timeScaleAnimator.Animate(0f);
+                _gameStateMachine.Enter<LooseState>();
                 
                 _popupService.Show<LoosePopupView>(_rootUIViewProvider.PopupUpViewProvider);
             }

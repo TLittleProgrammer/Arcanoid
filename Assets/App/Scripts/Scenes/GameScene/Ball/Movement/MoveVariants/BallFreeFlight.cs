@@ -18,7 +18,6 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
         private readonly BallFlyingSettings _settings;
         private readonly ITimeProvider _timeProvider;
         private readonly IBallPositionChecker _positionChecker;
-        private readonly IStateMachine _stateMachine;
         private readonly IHealthContainer _healthContainer;
         private readonly IPositionable _ballPositionable;
         
@@ -30,14 +29,12 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
             BallFlyingSettings settings,
             ITimeProvider timeProvider,
             IBallPositionChecker positionChecker,
-            [Inject(Id = BindingConstants.GameStateMachine)] IStateMachine stateMachine,
             IHealthContainer healthContainer)
         {
             _ballPositionable = ballPositionable;
             _settings = settings;
             _timeProvider = timeProvider;
             _positionChecker = positionChecker;
-            _stateMachine = stateMachine;
             _healthContainer = healthContainer;
 
             _speed = _settings.Speed;
@@ -52,9 +49,6 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
 
         public void Tick()
         {
-            if (_stateMachine.CurrentState is not GameLoopState)
-                return;
-            
             Vector2 targetPosition = _ballPositionable.Position + _direction * _speed * _timeProvider.DeltaTime;
             
             if (_positionChecker.CanChangePositionTo(targetPosition, ref _direction))

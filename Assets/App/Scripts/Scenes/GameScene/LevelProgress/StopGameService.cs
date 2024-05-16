@@ -15,16 +15,18 @@ namespace App.Scripts.Scenes.GameScene.LevelProgress
         private readonly RootUIViewProvider _rootUIViewProvider;
         private readonly ILevelProgressService _levelProgressService;
 
-        public StopGameService(IStateMachine stateMachine, ILevelProgressService levelProgressService)
+        public StopGameService(IStateMachine stateMachine, ILevelProgressService levelProgressService, ITimeScaleAnimator timeScaleAnimator)
         {
             _levelProgressService = levelProgressService;
+            _timeScaleAnimator = timeScaleAnimator;
             _stateMachine = stateMachine;
 
             _levelProgressService.LevelPassed += Stop;
         }
         
-        public void Stop()
+        public async void Stop()
         {
+            await _timeScaleAnimator.Animate(0f);
             _stateMachine.Enter<WinState>();
             _levelProgressService.LevelPassed -= Stop;
         }
