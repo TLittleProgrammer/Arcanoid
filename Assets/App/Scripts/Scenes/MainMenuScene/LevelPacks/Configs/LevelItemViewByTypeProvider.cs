@@ -7,6 +7,6 @@ namespace App.Scripts.Scenes.MainMenuScene.LevelPacks.Configs
     [CreateAssetMenu(menuName = "Configs/LevelPack/Level Pack View By Type Provider", fileName = "LevelPackViewByTypeProvider")]
     public class LevelItemViewByTypeProvider : SerializedScriptableObject
     {
-        public Dictionary<LevelItemTypeId, LevelItemViewData> Views;
+        public Dictionary<VisualTypeId, LevelItemViewData> Views;
     }
 }
