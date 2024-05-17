@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Ball
 {
-    [RequireComponent(typeof(SpriteRenderer))]
+    [RequireComponent(typeof(SpriteRenderer), typeof(Rigidbody2D))]
     public class BallView : MonoBehaviour, IRigidablebody, ISpriteRenderable
     {
         public event Action<Collider2D> Collidered;

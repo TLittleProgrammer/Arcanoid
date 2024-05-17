@@ -64,7 +64,6 @@ namespace App.Scripts.Scenes.GameScene.Installers
         private List<ITickable> _gameLoopTickables = new();
         
         private IStateMachine _gameStateMachine = new StateMachine();
-        private IBallSpeedUpdater _ballSpeedUpdater = new BallSpeedUpdater();
         
         public override void InstallBindings()
         {
@@ -81,13 +80,13 @@ namespace App.Scripts.Scenes.GameScene.Installers
             BindScreenInfoProvider();
             BindInput();
             BindGridPositionResolver();
+            BindBallSpeedUpdater();
             BindLevelLoader();
             BindPositionCheckers();
             BindPlayerMoving();
             BindHealthPointService();
             BindBallMovers();
             BindBallMovement();
-            BindBallSpeedUpdater();
             BindBallCollisionService();
             BindWallLoader();
 
@@ -119,7 +118,7 @@ namespace App.Scripts.Scenes.GameScene.Installers
 
         private void BindBallSpeedUpdater()
         {
-            Container.Bind<IBallSpeedUpdater>().FromInstance(_ballSpeedUpdater).AsSingle();
+            Container.Bind<IBallSpeedUpdater>().To<BallSpeedUpdater>().AsSingle();
         }
 
         private void BindMousePositionChecker()
@@ -272,7 +271,7 @@ namespace App.Scripts.Scenes.GameScene.Installers
 
         private void BindLevelLoader()
         {
-            Container.Bind<ILevelViewUpdater>().To<LevelViewUpdater>().AsSingle().WithArguments(_ballSpeedUpdater);
+            Container.Bind<ILevelViewUpdater>().To<LevelViewUpdater>().AsSingle();
             Container.Bind<ILevelLoader>().To<LevelLoader>().AsSingle();
             
             _restartables.Add(Container.Resolve<ILevelLoader>());

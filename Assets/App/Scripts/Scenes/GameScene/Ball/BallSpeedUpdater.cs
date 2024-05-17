@@ -1,11 +1,18 @@
 ﻿using App.Scripts.Scenes.GameScene.Ball.Movement;
+using App.Scripts.Scenes.GameScene.Settings;
 using Cysharp.Threading.Tasks;
 
 namespace App.Scripts.Scenes.GameScene.Ball
 {
     public sealed class BallSpeedUpdater : IBallSpeedUpdater
     {
+        private readonly BallFlyingSettings _ballFlyingSettings;
         private IBallMovementService _ballMovementService;
+
+        public BallSpeedUpdater(BallFlyingSettings ballFlyingSettings)
+        {
+            _ballFlyingSettings = ballFlyingSettings;
+        }
         
         public async UniTask AsyncInitialize(IBallMovementService param)
         {
@@ -16,8 +23,7 @@ namespace App.Scripts.Scenes.GameScene.Ball
 
         public void UpdateSpeed()
         {
-            //TODO перенести в настройки
-            _ballMovementService.UpdateSpeed(0.15f);
+            _ballMovementService.UpdateSpeed(_ballFlyingSettings.AddSpeedAfterBlockDestroying);
         }
     }
 }
