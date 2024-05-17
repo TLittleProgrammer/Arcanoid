@@ -19,6 +19,7 @@ namespace App.Scripts.Scenes.GameScene.Factories.CircleEffect
 
             effect.Position = entityView.Position;
             effect.Scale    = entityView.Scale.x;
+            effect.ScaleForSubParticles = effect.Scale / 10f;
 
             return effect;
         }
