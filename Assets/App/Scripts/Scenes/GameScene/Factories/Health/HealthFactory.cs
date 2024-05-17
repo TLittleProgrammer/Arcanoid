@@ -20,8 +20,10 @@ namespace App.Scripts.Scenes.GameScene.Factories.Health
             HealthPointView healthView = _poolContainer.GetItem<HealthPointView>(PoolTypeId.HealthPointView);
 
             healthView.Image.fillAmount = 1f;
-            healthView.transform.SetParent(parent.Transform, false);
-            healthView.transform.localScale = Vector3.one;
+            
+            Transform healthTransform = healthView.transform;
+            healthTransform.SetParent(parent.Transform, false);
+            healthTransform.localScale = Vector3.one;
 
             return healthView;
         }

@@ -18,7 +18,6 @@ namespace App.Scripts.Scenes.GameScene.Effects
         
         public float ScaleForSubParticles
         {
-            get => _subParticlesMainModule.startSize.constant;
             set => _subParticlesMainModule.startSize = value;
         }
         

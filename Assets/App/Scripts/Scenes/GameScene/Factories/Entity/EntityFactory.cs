@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using App.Scripts.External.Extensions.ListExtensions;
-using App.Scripts.Scenes.GameScene.Entities;
+﻿using App.Scripts.Scenes.GameScene.Entities;
 using App.Scripts.Scenes.GameScene.Levels.AssetManagement;
 using App.Scripts.Scenes.GameScene.Pools;
-using UnityEngine;
 using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.Factories.Entity
@@ -27,17 +24,11 @@ namespace App.Scripts.Scenes.GameScene.Factories.Entity
             }
 
             EntityStage entityStage = _entityProvider.EntityStages[key];
-            EntityView entityView = _poolContainer.GetItem<EntityView>(PoolTypeId.EntityView);
+            EntityView entityView   = _poolContainer.GetItem<EntityView>(PoolTypeId.EntityView);
 
-            entityView.MainSprite = entityStage.Sprite;
-            //entityView.OnTopSprite = GetOnTopSprite(entityStage.AddSpritesOnMainByHp.ToList());
-            
+            entityView.MainSprite   = entityStage.Sprite;
+
             return entityView;
-        }
-
-        private Sprite GetOnTopSprite(List<Sprite> availableSpritesOnMainSprite)
-        {
-            return availableSpritesOnMainSprite.Count == 0 ? null : availableSpritesOnMainSprite.GetRandomValue();
         }
     }
 }
