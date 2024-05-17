@@ -4,6 +4,7 @@ using App.Scripts.Scenes.GameScene.Levels;
 using App.Scripts.Scenes.GameScene.Levels.AssetManagement;
 using App.Scripts.Scenes.GameScene.LevelView;
 using App.Scripts.Scenes.GameScene.ScoreAnimation;
+using TMPro;
 
 namespace App.Scripts.Scenes.GameScene.LevelProgress
 {
@@ -42,11 +43,15 @@ namespace App.Scripts.Scenes.GameScene.LevelProgress
             if (_levelPackTransferData.NeedLoadLevel)
             {
                 _levelPackBackgroundView.Background.sprite = _levelPackTransferData.LevelPack.GalacticBackground;
-                _levelPackInfoView.Image.sprite = _levelPackTransferData.LevelPack.GalacticIcon;
-                _levelPackInfoView.PassedLevels.text = $"{_levelPackTransferData.LevelIndex}/{_levelPackTransferData.LevelPack.Levels.Count}";
 
                 _targetScore = 0;
-                UpdateProgressText(_targetScore);
+                _levelPackInfoView.Initialize(new()
+                {
+                    CurrentLevelIndex = _levelPackTransferData.LevelIndex,
+                    AllLevelsCountFromPack = _levelPackTransferData.LevelPack.Levels.Count,
+                    Sprite = _levelPackTransferData.LevelPack.GalacticIcon,
+                    TargetScore = _targetScore
+                });
             }
         }
 
@@ -57,8 +62,7 @@ namespace App.Scripts.Scenes.GameScene.LevelProgress
             if (_destroyedBlockCounter == _allBlockCounter)
             {
                 _progress = 1f;
-                _scoreAnimationService.Animate(_levelPackInfoView.LevelPassProgress, _targetScore, 100, UpdateProgressText);
-
+                AnimateScore(_levelPackInfoView.LevelPassProgress, _targetScore, 100, _levelPackInfoView.UpdateProgressText);
                 LevelPassed?.Invoke();
                 
                 return;
@@ -67,7 +71,7 @@ namespace App.Scripts.Scenes.GameScene.LevelProgress
             _progress += _step;
             _targetScore = (int)Math.Round(_progress * 100f);
             
-            _scoreAnimationService.Animate(_levelPackInfoView.LevelPassProgress, (int)((_progress - _step) * 100), _targetScore, UpdateProgressText);
+            AnimateScore(_levelPackInfoView.LevelPassProgress, (int)((_progress - _step) * 100), _targetScore, _levelPackInfoView.UpdateProgressText);
         }
 
         public void CalculateStepByLevelData(LevelData levelData)
@@ -95,12 +99,12 @@ namespace App.Scripts.Scenes.GameScene.LevelProgress
             _destroyedBlockCounter = 0;
             _targetScore = 0;
             
-            UpdateProgressText(_targetScore);
+            _levelPackInfoView.UpdateProgressText(_targetScore);
         }
 
-        private void UpdateProgressText(int value)
+        private void AnimateScore(TMP_Text text, int from, int to, Action<int> ticked)
         {
-            _levelPackInfoView.LevelPassProgress.text = $"{value}%";
+            _scoreAnimationService.Animate(text, from, to, ticked);
         }
     }
 }

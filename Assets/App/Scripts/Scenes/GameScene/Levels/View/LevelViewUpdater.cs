@@ -71,29 +71,40 @@ namespace App.Scripts.Scenes.GameScene.Levels.View
             GridItemData itemData = _levelGridItemData[entityView.GridPositionX, entityView.GridPositionY];
             itemData.CurrentHealth--;
 
+            if (ReturnIfCurrentHealthIsEqualsOrLessZero(entityView, itemData)) return;
+            TryAddOnTopSprite(entityView, entityStage, itemData);
+        }
+
+        private void TryAddOnTopSprite(IEntityView entityView, EntityStage entityStage, GridItemData itemData)
+        {
+            HealthSpriteData healthSpriteData = entityStage.AddSpritesOnMainByHp.FirstOrDefault(x => x.Healthes == itemData.CurrentHealth);
+
+            if (healthSpriteData is not null)
+            {
+                OnTopSprites topSprite = _spritesFactory.Create(entityView);
+                topSprite.SetSprite(healthSpriteData.Sprites.GetRandomValue());
+
+                itemData.Sprites.Add(topSprite);
+            }
+        }
+
+        private bool ReturnIfCurrentHealthIsEqualsOrLessZero(IEntityView entityView, GridItemData itemData)
+        {
             if (itemData.CurrentHealth <= 0)
             {
                 _levelProgressService.TakeOneStep();
-                
+
                 _poolContainer.RemoveItem(PoolTypeId.EntityView, entityView as EntityView);
                 foreach (OnTopSprites sprite in itemData.Sprites)
                 {
                     _poolContainer.RemoveItem(PoolTypeId.OnTopSprite, sprite);
                 }
-                
+
                 _ballSpeedUpdater.UpdateSpeed();
-                return;
+                return true;
             }
 
-            HealthSpriteData healthSpriteData = entityStage.AddSpritesOnMainByHp.FirstOrDefault(x => x.Healthes == itemData.CurrentHealth);
-            
-            if (healthSpriteData is not null)
-            {
-                OnTopSprites topSprite = _spritesFactory.Create(entityView);
-                topSprite.SetSprite(healthSpriteData.Sprites.GetRandomValue());
-                
-                itemData.Sprites.Add(topSprite);
-            }
+            return false;
         }
 
         private EntityStage GetEntityStage(IEntityView entityView)

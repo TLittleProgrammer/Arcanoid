@@ -37,7 +37,7 @@ namespace App.Scripts.Scenes.GameScene.Levels.Load
 
                     int index = levelData.Grid[j, i];
 
-                    if (index == 0)
+                    if (index <= 0)
                     {
                         continue;
                     }
