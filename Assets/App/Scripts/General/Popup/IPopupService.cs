@@ -1,4 +1,4 @@
-﻿using App.Scripts.General.Components;
+﻿using App.Scripts.External.Components;
 using Cysharp.Threading.Tasks;
 
 namespace App.Scripts.General.Popup

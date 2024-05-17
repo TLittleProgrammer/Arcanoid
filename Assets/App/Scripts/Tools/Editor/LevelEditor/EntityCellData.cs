@@ -2,7 +2,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace App.Scripts.Scenes.GameScene.Levels.Entities
+namespace App.Scripts.Tools.Editor.LevelEditor
 {
     [Serializable]
     public class EntityCellData

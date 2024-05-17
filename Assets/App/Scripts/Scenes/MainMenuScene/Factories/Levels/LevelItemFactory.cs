@@ -1,5 +1,5 @@
-﻿using App.Scripts.External.GameStateMachine;
-using App.Scripts.General.Components;
+﻿using App.Scripts.External.Components;
+using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Constants;
 using App.Scripts.General.Levels;
 using App.Scripts.General.States;

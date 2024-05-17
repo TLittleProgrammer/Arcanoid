@@ -1,4 +1,4 @@
-﻿using App.Scripts.General.Components;
+﻿using App.Scripts.External.Components;
 using App.Scripts.Scenes.GameScene.Healthes.View;
 using App.Scripts.Scenes.GameScene.Pools;
 using UnityEngine;

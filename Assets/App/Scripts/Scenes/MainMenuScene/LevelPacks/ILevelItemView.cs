@@ -1,7 +1,6 @@
-﻿using App.Scripts.External.Localisation.MonoBehaviours;
-using App.Scripts.General.Components;
+﻿using App.Scripts.External.Components;
+using App.Scripts.External.Localisation.MonoBehaviours;
 using App.Scripts.General.Levels;
-using App.Scripts.Scenes.GameScene.Components;
 using TMPro;
 using UnityEngine.UI;
 using Zenject;

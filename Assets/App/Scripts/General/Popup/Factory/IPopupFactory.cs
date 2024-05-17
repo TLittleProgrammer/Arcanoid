@@ -1,4 +1,4 @@
-﻿using App.Scripts.General.Components;
+﻿using App.Scripts.External.Components;
 
 namespace App.Scripts.General.Popup.Factory
 {

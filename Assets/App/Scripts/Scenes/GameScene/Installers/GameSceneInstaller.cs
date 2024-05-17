@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
+using App.Scripts.External.Components;
 using App.Scripts.External.Extensions.ZenjectExtensions;
 using App.Scripts.External.GameStateMachine;
-using App.Scripts.General.Components;
+using App.Scripts.General.Infrastructure;
 using App.Scripts.General.Popup;
 using App.Scripts.General.Popup.AssetManagment;
 using App.Scripts.General.Popup.Factory;
@@ -23,7 +24,6 @@ using App.Scripts.Scenes.GameScene.Factories.OnTopSprite;
 using App.Scripts.Scenes.GameScene.Grid;
 using App.Scripts.Scenes.GameScene.Healthes;
 using App.Scripts.Scenes.GameScene.Healthes.View;
-using App.Scripts.Scenes.GameScene.Infrastructure;
 using App.Scripts.Scenes.GameScene.Input;
 using App.Scripts.Scenes.GameScene.LevelProgress;
 using App.Scripts.Scenes.GameScene.Levels.Load;

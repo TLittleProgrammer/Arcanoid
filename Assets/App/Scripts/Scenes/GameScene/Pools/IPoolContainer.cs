@@ -1,4 +1,4 @@
-﻿using App.Scripts.Scenes.GameScene.Infrastructure;
+﻿using App.Scripts.General.Infrastructure;
 using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Pools

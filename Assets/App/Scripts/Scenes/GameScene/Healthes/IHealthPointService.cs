@@ -1,5 +1,5 @@
 ﻿using App.Scripts.External.Initialization;
-using App.Scripts.Scenes.GameScene.Infrastructure;
+using App.Scripts.General.Infrastructure;
 using App.Scripts.Scenes.GameScene.Levels;
 
 namespace App.Scripts.Scenes.GameScene.Healthes

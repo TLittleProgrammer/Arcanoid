@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using App.Scripts.General.Components;
+using App.Scripts.External.Components;
 using App.Scripts.Scenes.GameScene.Constants;
 using App.Scripts.Scenes.GameScene.Healthes.View;
 using App.Scripts.Scenes.GameScene.Levels;

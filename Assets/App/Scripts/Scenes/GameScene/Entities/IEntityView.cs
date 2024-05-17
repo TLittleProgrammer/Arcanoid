@@ -1,4 +1,5 @@
-﻿using App.Scripts.Scenes.GameScene.Components;
+﻿using App.Scripts.External.Components;
+using App.Scripts.Scenes.GameScene.Components;
 using UnityEngine;
 using Zenject;
 

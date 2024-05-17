@@ -1,4 +1,6 @@
-﻿namespace App.Scripts.Scenes.GameScene.Components
+﻿using App.Scripts.External.Components;
+
+namespace App.Scripts.Scenes.GameScene.Components
 {
     public interface IGridPositinable : IComponent
     {

@@ -5,7 +5,6 @@ using App.Scripts.External.Converters;
 using App.Scripts.External.Extensions.MathExtensions;
 using App.Scripts.Scenes.GameScene.Levels;
 using App.Scripts.Scenes.GameScene.Levels.AssetManagement;
-using App.Scripts.Scenes.GameScene.Levels.Entities;
 using Newtonsoft.Json;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;

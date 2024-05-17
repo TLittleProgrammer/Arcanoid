@@ -1,6 +1,6 @@
 ﻿using System;
+using App.Scripts.External.Components;
 using App.Scripts.External.Initialization;
-using App.Scripts.General.Components;
 using App.Scripts.General.Popup.AssetManagment;
 using Cysharp.Threading.Tasks;
 using Zenject;

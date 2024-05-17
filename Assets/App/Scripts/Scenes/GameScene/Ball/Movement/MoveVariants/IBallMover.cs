@@ -1,4 +1,4 @@
-﻿using App.Scripts.Scenes.GameScene.Infrastructure;
+﻿using App.Scripts.General.Infrastructure;
 
 namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
 {

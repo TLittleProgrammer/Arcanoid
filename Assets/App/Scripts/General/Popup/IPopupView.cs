@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using App.Scripts.Scenes.GameScene.Components;
+using App.Scripts.External.Components;
 using Cysharp.Threading.Tasks;
 using UnityEngine.UI;
 

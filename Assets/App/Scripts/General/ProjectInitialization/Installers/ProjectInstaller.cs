@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
+using App.Scripts.External.DotweenContainerService;
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.External.SceneManagment;
-using App.Scripts.General.Components;
 using App.Scripts.General.Constants;
-using App.Scripts.General.DotweenContainerService;
 using App.Scripts.General.Levels;
 using App.Scripts.General.LoadingScreen;
 using App.Scripts.General.Popup;
@@ -29,7 +28,7 @@ namespace App.Scripts.General.ProjectInitialization.Installers
         {
             Container.BindInterfacesAndSelfTo<ProjectInstaller>().FromInstance(this).AsSingle();
             Container.Bind<ISceneManagementService>().To<SceneManagementService>().AsSingle();
-            Container.Bind<IDotweenContainerService>().To<DotweenContainerService.DotweenContainerService>().AsSingle();
+            Container.Bind<IDotweenContainerService>().To<DotweenContainerService>().AsSingle();
             Container.Bind<LevelProgressDataService>().AsSingle();
             Container.Bind<ILevelPackTransferData>().To<LevelPackTransferDataService>().AsSingle();
 

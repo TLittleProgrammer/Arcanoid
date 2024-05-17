@@ -1,8 +1,7 @@
 ﻿using System;
-using App.Scripts.Scenes.GameScene.Components;
 using UnityEngine.EventSystems;
 
-namespace App.Scripts.General.Components
+namespace App.Scripts.External.Components
 {
     public interface IClickable : IComponent, IPointerClickHandler
     {

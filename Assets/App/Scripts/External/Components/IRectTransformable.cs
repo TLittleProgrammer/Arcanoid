@@ -1,7 +1,6 @@
-﻿using App.Scripts.Scenes.GameScene.Components;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace App.Scripts.General.Components
+namespace App.Scripts.External.Components
 {
     public interface IRectTransformable : IComponent
     {
