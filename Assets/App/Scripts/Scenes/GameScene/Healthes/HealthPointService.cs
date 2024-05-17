@@ -17,9 +17,9 @@ namespace App.Scripts.Scenes.GameScene.Healthes
 
         private int _maxHealthCount;
         private int _currentHealthCount;
-        private Queue<int> _queriesToChangeHealth;
         private bool _isAnimated;
-            
+        private Queue<int> _queriesToChangeHealth;
+
         public HealthPointService(ITransformable parent, IHealthPointView.Factory healthPointViewFactory)
         {
             _healthPointViewFactory = healthPointViewFactory;
@@ -62,16 +62,7 @@ namespace App.Scripts.Scenes.GameScene.Healthes
                 float from;
                 float to;
 
-                if (step < 0)
-                {
-                    from = 1f;
-                    to = 0f;
-                }
-                else
-                {
-                    from = 0f;
-                    to = 1f;
-                }
+                SetFromAndToByStep(step, out to, out from);
 
                 currentHealthOffset = Mathf.Abs(currentHealthOffset);
 
@@ -84,6 +75,20 @@ namespace App.Scripts.Scenes.GameScene.Healthes
             }
 
             _isAnimated = false;
+        }
+
+        private void SetFromAndToByStep(int step, out float to, out float from)
+        {
+            if (step < 0)
+            {
+                from = 1f;
+                to = 0f;
+            }
+            else
+            {
+                from = 0f;
+                to = 1f;
+            }
         }
 
         private void UpdateCurrentHealthImage(float value)
