@@ -1,5 +1,4 @@
 ﻿using App.Scripts.Scenes.GameScene.Camera;
-using Codice.Client.ChangeTrackerService;
 using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.ScreenInfo

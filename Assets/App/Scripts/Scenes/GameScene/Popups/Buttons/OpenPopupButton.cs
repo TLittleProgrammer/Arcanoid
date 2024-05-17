@@ -1,7 +1,6 @@
 ﻿using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Popup;
 using App.Scripts.General.RootUI;
-using App.Scripts.Scenes.GameScene.Components;
 using App.Scripts.Scenes.GameScene.Constants;
 using App.Scripts.Scenes.GameScene.States;
 using UnityEngine;

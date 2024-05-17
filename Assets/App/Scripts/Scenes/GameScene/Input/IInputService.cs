@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
+using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.Input
 {
-    public interface IInputService
+    public interface IInputService : ITickable
     {
         bool UserClickDown { get; }
         Vector2 CurrentMousePosition { get; }

@@ -1,6 +1,6 @@
 ﻿namespace App.Scripts.Scenes.MainMenuScene.LevelPacks
 {
-    public enum LevelItemTypeId
+    public enum VisualTypeId
     {
         Passed     = 0,
         InProgress = 1,

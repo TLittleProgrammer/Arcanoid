@@ -7,21 +7,21 @@ namespace App.Scripts.General.Popup.AssetManagment
 {
     public sealed class ResourcesPopupProvider : IPopupProvider
     {
-        private List<IViewPopupProvider> _mapping;
+        private List<IPopupView> _mapping;
 
         public async UniTask AsyncInitialize(string path)
         {
             _mapping =
-                new List<IViewPopupProvider>((
+                new List<IPopupView>((
                         (ViewPopupMapping)await Resources.LoadAsync<ViewPopupMapping>(path))
                         .ViewPopupProviderMapping
                         .ToList()
                     );
         }
 
-        public IViewPopupProvider LoadPopup<TViewPopupProvider>() where TViewPopupProvider : IViewPopupProvider
+        public IPopupView LoadPopup<TPopupView>() where TPopupView : IPopupView
         {
-            return _mapping.Find(x => x is TViewPopupProvider);
+            return _mapping.Find(x => x is TPopupView);
         }
     }
 }

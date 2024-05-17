@@ -1,8 +1,10 @@
 ﻿using App.Scripts.External.Localisation.MonoBehaviours;
 using App.Scripts.General.Components;
+using App.Scripts.General.Levels;
 using App.Scripts.Scenes.GameScene.Components;
 using TMPro;
 using UnityEngine.UI;
+using Zenject;
 
 namespace App.Scripts.Scenes.MainMenuScene.LevelPacks
 {
@@ -18,5 +20,12 @@ namespace App.Scripts.Scenes.MainMenuScene.LevelPacks
         Image GalacticIcon { get; }
         Image LockIcon { get; }
         Image MaskableImage { get; }
+
+        void UpdateVisual(LevelModel levelModel);
+        
+        public class Factory : PlaceholderFactory<int, LevelPack, ILevelItemView>
+        {
+            
+        }
     }
 }

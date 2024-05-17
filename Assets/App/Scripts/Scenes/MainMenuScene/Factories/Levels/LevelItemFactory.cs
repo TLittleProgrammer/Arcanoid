@@ -1,9 +1,9 @@
 ﻿using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Components;
+using App.Scripts.General.Constants;
 using App.Scripts.General.Levels;
 using App.Scripts.General.States;
 using App.Scripts.General.UserData.Data;
-using App.Scripts.Scenes.GameScene.Components;
 using App.Scripts.Scenes.MainMenuScene.LevelPacks;
 using App.Scripts.Scenes.MainMenuScene.LevelPacks.Configs;
 using TMPro;
@@ -12,11 +12,10 @@ using Zenject;
 
 namespace App.Scripts.Scenes.MainMenuScene.Factories.Levels
 {
-    public class LevelItemFactory
+    public class LevelItemFactory : IFactory<int, LevelPack, ILevelItemView>
     {
         private readonly ILevelItemView _prefab;
         private readonly ITransformable _prefabParent;
-        private readonly DiContainer _diContainer;
         private readonly LevelPackProgressDictionary _levelPackProgressDictionary;
         private readonly LevelItemViewByTypeProvider _levelItemViewByTypeProvider;
         private readonly ILevelPackTransferData _levelPackTransferData;
@@ -25,7 +24,6 @@ namespace App.Scripts.Scenes.MainMenuScene.Factories.Levels
         public LevelItemFactory(
             ILevelItemView prefab,
             ITransformable prefabParent,
-            DiContainer diContainer,
             LevelPackProgressDictionary levelPackProgressDictionary,
             LevelItemViewByTypeProvider levelItemViewByTypeProvider,
             ILevelPackTransferData levelPackTransferData,
@@ -33,7 +31,6 @@ namespace App.Scripts.Scenes.MainMenuScene.Factories.Levels
         {
             _prefab = prefab;
             _prefabParent = prefabParent;
-            _diContainer = diContainer;
             _levelPackProgressDictionary = levelPackProgressDictionary;
             _levelItemViewByTypeProvider = levelItemViewByTypeProvider;
             _levelPackTransferData = levelPackTransferData;
@@ -42,45 +39,19 @@ namespace App.Scripts.Scenes.MainMenuScene.Factories.Levels
         
         public ILevelItemView Create(int packIndex, LevelPack levelPack)
         {
-            ILevelItemView levelItemView = _diContainer.InstantiatePrefabForComponent<LevelItemView>(_prefab.GameObject, _prefabParent.Transform);
-
-            ChangeVisual(packIndex, levelItemView, levelPack);
-
+            ILevelItemView levelItemView = Object.Instantiate(_prefab.GameObject, _prefabParent.Transform).GetComponent<ILevelItemView>();
+            VisualTypeId visualType = GetVisualType(packIndex, levelPack);
+            
+            ChangeVisual(packIndex, levelItemView, levelPack, visualType);
+            SubsribeOnClickIfNeed(levelItemView, packIndex, levelPack, visualType);
+            
             return levelItemView;
         }
 
-        private void ChangeVisual(int packIndex, ILevelItemView levelItemView, LevelPack levelPack)
+        private void SubsribeOnClickIfNeed(ILevelItemView levelItemView, int packIndex, LevelPack levelPack, VisualTypeId visualType)
         {
-            LevelItemTypeId visualType = GetVisualType(packIndex, levelPack);
-
-            LevelItemViewData levelItemViewData = _levelItemViewByTypeProvider.Views[visualType];
-
-            levelItemView.Glow.sprite = levelItemViewData.Glow;
-            levelItemView.BigBackground.sprite = levelItemViewData.BigBackground;
-            levelItemView.MaskableImage.sprite = levelItemViewData.MaskableImage;
-            levelItemView.LeftImageHalf.sprite = levelItemViewData.LeftImageHalf;
-            levelItemView.GalacticPassedLevelsBackground.sprite = levelItemViewData.GalacticPassedLevelsBackground;
-            levelItemView.GalacticName.SetToken(levelPack.LocaleKey);
-            
-            if (visualType is LevelItemTypeId.NotOpened)
+            if (visualType is not VisualTypeId.NotOpened)
             {
-                levelItemView.GalacticPassedLevels.text = $"0/{levelPack.Levels.Count}";
-                levelItemView.GalacticIcon.gameObject.SetActive(false);
-                levelItemView.LockIcon.gameObject.SetActive(true);
-
-                levelItemView.GalacticName.Text.colorGradient = new VertexGradient(Color.white, Color.white, Color.white, Color.white);
-                levelItemView.GalacticText.colorGradient = new VertexGradient(Color.white, Color.white, Color.white, Color.white);
-                levelItemView.GalacticName.Text.color = levelItemViewData.InactiveColorForNaming;
-                levelItemView.GalacticText.color = levelItemViewData.InactiveColorForNaming;
-                levelItemView.GalacticPassedLevels.color = levelItemViewData.PassedLevelsColor;
-            }
-            else
-            {
-                levelItemView.GalacticIcon.sprite = levelPack.GalacticIcon;
-                levelItemView.GalacticPassedLevels.text = $"{_levelPackProgressDictionary[packIndex].PassedLevels}/{levelPack.Levels.Count}";
-                levelItemView.GalacticIcon.gameObject.SetActive(true);
-                levelItemView.LockIcon.gameObject.SetActive(false);
-
                 levelItemView.Clicked += () =>
                 {
                     _levelPackTransferData.NeedLoadLevel = true;
@@ -89,30 +60,49 @@ namespace App.Scripts.Scenes.MainMenuScene.Factories.Levels
                     _levelPackTransferData.LevelIndex = packIndex;
                     _levelPackTransferData.LevelPackProgress = 0f;
                     
-                    _stateMachine.Enter<LoadingSceneState, string, bool>("2.Game", false);
+                    _stateMachine.Enter<LoadingSceneState, string, bool>(SceneNaming.Game, false);
                 };
             }
         }
 
-        private LevelItemTypeId GetVisualType(int packIndex, LevelPack levelPack)
+        private void ChangeVisual(int packIndex, ILevelItemView levelItemView, LevelPack levelPack, VisualTypeId visualType)
+        {
+            LevelItemViewData levelItemViewData = _levelItemViewByTypeProvider.Views[visualType];
+            int passedLevels = _levelPackProgressDictionary.ContainsKey(packIndex) ? _levelPackProgressDictionary[packIndex].PassedLevels : 0;
+                
+            levelItemView.UpdateVisual(new()
+            {
+                LevelViewData = levelItemViewData,
+                LevelPack = levelPack,
+                VisualTypeId = visualType,
+                PassedLevels = passedLevels
+            });
+        }
+
+        private VisualTypeId GetVisualType(int packIndex, LevelPack levelPack)
         {
             if (packIndex == 0 && _levelPackProgressDictionary.Count == 0)
             {
                 _levelPackProgressDictionary.Add(0, new());
-                return LevelItemTypeId.InProgress;
+                return VisualTypeId.InProgress;
             }
             
             if (!_levelPackProgressDictionary.ContainsKey(packIndex))
             {
-                return LevelItemTypeId.NotOpened;
+                return VisualTypeId.NotOpened;
             }
 
             if (_levelPackProgressDictionary[packIndex].PassedLevels == levelPack.Levels.Count)
             {
-                return LevelItemTypeId.Passed;
+                return VisualTypeId.Passed;
             }
 
-            return LevelItemTypeId.InProgress;
+            return VisualTypeId.InProgress;
+        }
+
+        public ILevelItemView Create()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

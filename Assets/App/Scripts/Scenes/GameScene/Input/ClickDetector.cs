@@ -3,10 +3,11 @@ using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.Input
 {
-    public sealed class ClickDetector : IClickDetector, ITickable
+    public sealed class ClickDetector : IClickDetector
     {
         public event Action MouseDowned;
         public event Action MouseUp;
+        
         public void Tick()
         {
             if (UnityEngine.Input.GetMouseButtonDown(0))

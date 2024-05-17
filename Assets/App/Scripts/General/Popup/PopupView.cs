@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace App.Scripts.General.Popup
 {
-    public abstract class ViewPopupProvider : MonoBehaviour, IViewPopupProvider
+    public abstract class PopupView : MonoBehaviour, IPopupView
     {
         public List<Button> Buttons { get; protected set; }
 

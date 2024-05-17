@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: BallFlying
   m_EditorClassIdentifier: 
   MaxAngle: 75
-  MinAngle: 15
+  MinAngle: 45
   Speed: 5

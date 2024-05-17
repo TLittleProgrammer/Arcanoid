@@ -8,12 +8,12 @@ namespace App.Scripts.Scenes.MainMenuScene.LevelPacks.MonoBehaviours
     public class LevelPackContainer : MonoBehaviour
     {
         [Inject]
-        private void Construct(LevelPackProvider levelPackProvider, LevelItemFactory levelItemFactory)
+        private void Construct(LevelPackProvider levelPackProvider, ILevelItemView.Factory levelItemFactory)
         {
             CreateAllLevelPacks(levelPackProvider, levelItemFactory);
         }
 
-        private void CreateAllLevelPacks(LevelPackProvider levelPackProvider, LevelItemFactory levelItemFactory)
+        private void CreateAllLevelPacks(LevelPackProvider levelPackProvider, ILevelItemView.Factory levelItemFactory)
         {
             for (int i = 0; i < levelPackProvider.LevelPacks.Count; i++)
             {

@@ -2,12 +2,11 @@
 using App.Scripts.External.Extensions.ZenjectExtensions;
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Components;
-using App.Scripts.General.Constants;
-using App.Scripts.General.Levels;
 using App.Scripts.General.Popup;
 using App.Scripts.General.Popup.AssetManagment;
 using App.Scripts.General.Popup.Factory;
 using App.Scripts.Scenes.GameScene.Ball;
+using App.Scripts.Scenes.GameScene.Ball.Collision;
 using App.Scripts.Scenes.GameScene.Ball.Movement;
 using App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants;
 using App.Scripts.Scenes.GameScene.Camera;
@@ -26,7 +25,6 @@ using App.Scripts.Scenes.GameScene.Healthes.View;
 using App.Scripts.Scenes.GameScene.Infrastructure;
 using App.Scripts.Scenes.GameScene.Input;
 using App.Scripts.Scenes.GameScene.LevelProgress;
-using App.Scripts.Scenes.GameScene.Levels;
 using App.Scripts.Scenes.GameScene.Levels.Load;
 using App.Scripts.Scenes.GameScene.Levels.View;
 using App.Scripts.Scenes.GameScene.LevelView;
@@ -39,13 +37,13 @@ using App.Scripts.Scenes.GameScene.ScreenInfo;
 using App.Scripts.Scenes.GameScene.Settings;
 using App.Scripts.Scenes.GameScene.States;
 using App.Scripts.Scenes.GameScene.Time;
-using Newtonsoft.Json;
+using App.Scripts.Scenes.GameScene.Walls;
 using UnityEngine;
 using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.Installers
 {
-    public class GameSceneInstaller : MonoInstaller, IInitializable
+    public class GameSceneInstaller : MonoInstaller
     {
         [SerializeField] private UnityEngine.Camera _camera;
         [SerializeField] private RectTransform _header;
@@ -56,41 +54,27 @@ namespace App.Scripts.Scenes.GameScene.Installers
         [SerializeField] private LevelPackBackgroundView _levelPackBackground;
         [SerializeField] private HealthPointViewParent _healthParent;
         [SerializeField] private List<RectTransformableView> _rectTransformableViews;
+        [SerializeField] private WallView _wallPrefab;
 
         [Inject] private PoolProviders _poolProviders;
         [Inject] private IStateMachine _projectStateMachine;
 
         private List<IRestartable> _restartables = new();
         private List<IRestartable> _restartablesForLoadNewLevel = new();
+        private List<ITickable> _gameLoopTickables = new();
         
-        private IStateMachine _stateMachine = new StateMachine();
+        private IStateMachine _gameStateMachine = new StateMachine();
         private IBallSpeedUpdater _ballSpeedUpdater = new BallSpeedUpdater();
-
-        public async void Initialize()
-        {
-            LevelData levelData = ChooseLevelData();
-            
-            await Resolve<IGridPositionResolver>().AsyncInitialize(levelData);
-            Resolve<IContainer<IBoxColliderable2D>>().AddItem(_playerShape);
-
-            LoadLevel(levelData);
-            await Resolve<IPopupProvider>().AsyncInitialize(Pathes.PathToPopups);
-            await Resolve<IBallSpeedUpdater>().AsyncInitialize(Resolve<IBallMovementService>());
-        }
-
+        
         public override void InstallBindings()
         {
-            Container.BindInterfacesAndSelfTo<GameSceneInstaller>().FromInstance(this).AsSingle();
-
+            BindInitializeDependencies();
             BindTweenersLocator();
             BindTimeProvider();
             BindScoreAnimationService();
-            
             BindPools();
             BindPoolContainer();
-            
             BindFactories();
-
             BindMousePositionChecker();
             BindLevelProgressService();
             BindCameraService();
@@ -106,8 +90,33 @@ namespace App.Scripts.Scenes.GameScene.Installers
             BindBallMovers();
             BindBallMovement();
             BindBallSpeedUpdater();
+            BindBallCollisionService();
+            BindWallLoader();
 
             BindGameStateMachine();
+            
+            Container.BindInterfacesTo<GameInitializer>().AsSingle();
+        }
+
+        private void BindBallCollisionService()
+        {
+            Container
+                .Bind<IBallCollisionService>()
+                .To<BallCollisionService>()
+                .AsSingle()
+                .WithArguments(_ballView, _playerShape)
+                .NonLazy();
+        }
+
+        private void BindWallLoader()
+        {
+            Container.Bind<IWallLoader>().To<WallLoader>().AsSingle().WithArguments(_wallPrefab);
+        }
+
+        private void BindInitializeDependencies()
+        {
+            Container.Bind<TextAsset>().FromInstance(_levelData).AsSingle();
+            Container.Bind<PlayerView>().FromInstance(_playerShape).AsSingle();
         }
 
         private void BindBallSpeedUpdater()
@@ -123,7 +132,7 @@ namespace App.Scripts.Scenes.GameScene.Installers
         private void BindHealthPointService()
         {
             Container.Bind<IHealthPointService>().To<HealthPointService>().AsSingle().WithArguments(_healthParent as ITransformable);
-            Container.Bind<IHealthContainer>().To<HealthContainer>().AsSingle().WithArguments(_stateMachine);
+            Container.Bind<IHealthContainer>().To<HealthContainer>().AsSingle();
             
             _restartables.Add(Resolve<IHealthPointService>());
             _restartablesForLoadNewLevel.Add(Resolve<IHealthPointService>());
@@ -148,33 +157,29 @@ namespace App.Scripts.Scenes.GameScene.Installers
                 .BindInterfacesAndSelfTo<LevelProgressService>()
                 .AsSingle()
                 .WithArguments(_levelPackInfoView, _levelPackBackground);
-            
-            Container
-                .Bind<IStopGameService>()
-                .To<StopGameService>()
-                .AsSingle()
-                .WithArguments(_stateMachine);
 
             _restartables.Add(Container.Resolve<ILevelProgressService>());
-            _restartablesForLoadNewLevel.Add(Container.Resolve<IStopGameService>());
             _restartablesForLoadNewLevel.Add(Container.Resolve<ILevelProgressService>());
         }
 
         private void BindGameStateMachine()
         {
-            GameLoopState gameLoopState = Container.Instantiate<GameLoopState>();
+            GameLoopState gameLoopState = Container.Instantiate<GameLoopState>(new object[]{_gameLoopTickables, _gameStateMachine});
             PopupState popupState = Container.Instantiate<PopupState>();
             LooseState looseState = Container.Instantiate<LooseState>();
             WinState winState = Container.Instantiate<WinState>();
-            RestartState restartState = Container.Instantiate<RestartState>(new object[] {_restartables, _stateMachine});
-            LoadNextLevelState loadNextLevelState = Container.Instantiate<LoadNextLevelState>(new object[] {_levelPackInfoView, _restartablesForLoadNewLevel, _stateMachine});
+            RestartState restartState = Container.Instantiate<RestartState>(new object[] {_restartables, _gameStateMachine});
+            LoadNextLevelState loadNextLevelState = Container.Instantiate<LoadNextLevelState>(new object[] {_levelPackInfoView, _restartablesForLoadNewLevel, _gameStateMachine});
+
+            Container.BindInterfacesTo<GameLoopState>().FromInstance(gameLoopState);
             
-            _stateMachine.AsyncInitialize(new IState[] { gameLoopState, popupState, restartState, loadNextLevelState, looseState, winState });
-            _stateMachine.Enter<GameLoopState>();
+            
+            _gameStateMachine.AsyncInitialize(new IState[] { gameLoopState, popupState, restartState, loadNextLevelState, looseState, winState });
+            _gameStateMachine.Enter<GameLoopState>();
             
             Container.Bind<IStateMachine>()
                 .WithId(BindingConstants.GameStateMachine)
-                .FromInstance(_stateMachine)
+                .FromInstance(_gameStateMachine)
                 .AsCached()
                 .NonLazy();
 
@@ -183,18 +188,6 @@ namespace App.Scripts.Scenes.GameScene.Installers
                 .FromInstance(_projectStateMachine)
                 .AsCached()
                 .NonLazy();
-        }
-
-        private LevelData ChooseLevelData()
-        {
-            var transferData = Container.Resolve<ILevelPackTransferData>();
-            
-            if (transferData.NeedLoadLevel)
-            {
-                return JsonConvert.DeserializeObject<LevelData>(transferData.LevelPack.Levels[transferData.LevelIndex].text);
-            }
-
-            return JsonConvert.DeserializeObject<LevelData>(_levelData.text);
         }
 
         private void BindCollisionService()
@@ -219,7 +212,7 @@ namespace App.Scripts.Scenes.GameScene.Installers
                 .Bind<IBallFreeFlightMover>()
                 .To<BallFreeFlight>()
                 .AsSingle()
-                .WithArguments(_ballView, _stateMachine);
+                .WithArguments(_ballView);
         }
 
         private void BindPositionCheckers()
@@ -229,32 +222,28 @@ namespace App.Scripts.Scenes.GameScene.Installers
                 .To<PlayerShapePositionChecker>()
                 .AsTransient()
                 .WithArguments(_playerShape);
-            
-            Container
-                .Bind<IBallPositionChecker>()
-                .To<BallPositionChecker>()
-                .AsTransient()
-                .WithArguments(_ballView);
         }
 
         private void BindPlayerMoving()
         {
             ShapeMoverSettings shapeMoverSettings = new();
             shapeMoverSettings.Speed = 5f;
+            
+            Container.Bind<IPlayerShapeMover>().To<PlayerShapeMover>().AsSingle().WithArguments(_playerShape, shapeMoverSettings);
 
-            
-            Container.BindInterfacesAndSelfTo<PlayerShapeMover>().AsSingle().WithArguments(_playerShape, shapeMoverSettings, _stateMachine);
-            
-            _restartables.Add(Container.Resolve<PlayerShapeMover>());
-            _restartablesForLoadNewLevel.Add(Container.Resolve<PlayerShapeMover>());
+            var mover = Resolve<IPlayerShapeMover>();
+            _restartables.Add(mover);
+            _restartablesForLoadNewLevel.Add(mover);
+            _gameLoopTickables.Add(mover);
         }
 
         private void BindBallMovement()
         {
-            Container.BindInterfacesAndSelfTo<BallMovementService>().AsSingle().WithArguments(_ballView);
+            Container.Bind<IBallMovementService>().To<BallMovementService>().AsSingle().WithArguments(_ballView);
             
-            _restartables.Add(Container.Resolve<BallMovementService>());
-            _restartablesForLoadNewLevel.Add(Container.Resolve<BallMovementService>());
+            _restartables.Add(Resolve<IBallMovementService>());
+            _restartablesForLoadNewLevel.Add(Resolve<IBallMovementService>());
+            _gameLoopTickables.Add(Resolve<IBallMovementService>());
         }
 
         private void BindFactories()
@@ -310,18 +299,11 @@ namespace App.Scripts.Scenes.GameScene.Installers
 
         private void BindInput()
         {
-            Container.BindInterfacesAndSelfTo<ClickDetector>().AsSingle();
-            Container.BindInterfacesAndSelfTo<InputService>().AsSingle();
-        }
-
-        private async void LoadLevel(LevelData levelData)
-        {
-            var levelLoader  = Container.Resolve<ILevelLoader>();
-
-            levelLoader.LoadLevel(levelData);
-            Container.Resolve<ILevelProgressService>().CalculateStepByLevelData(levelData);
-            await Container.Resolve<IHealthPointService>().AsyncInitialize(levelData);
-            await Container.Resolve<IHealthContainer>().AsyncInitialize(levelData, new IRestartable[] {Resolve<IBallMovementService>(), Resolve<IPlayerShapeMover>()});
+            Container.Bind<IClickDetector>().To<ClickDetector>().AsSingle();
+            Container.Bind<IInputService>().To<InputService>().AsSingle();
+            
+            _gameLoopTickables.Add(Resolve<IClickDetector>());
+            _gameLoopTickables.Add(Resolve<IInputService>());
         }
 
         private TResult Resolve<TResult>()

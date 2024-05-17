@@ -33,14 +33,8 @@ namespace App.Scripts.General.ProjectInitialization.Installers
             Container.Bind<LevelProgressDataService>().AsSingle();
             Container.Bind<ILevelPackTransferData>().To<LevelPackTransferDataService>().AsSingle();
 
-            BindPopups();
-            
             CreateRootUI();
-        }
-
-        private void BindPopups()
-        {
-            
+            BindProjectStateMachine();
         }
 
         public void Initialize()
@@ -63,12 +57,11 @@ namespace App.Scripts.General.ProjectInitialization.Installers
             loadingScreen.RectTransform.anchoredPosition3D = Vector3.zero;
             
             Container.Bind<ILoadingScreen>().FromInstance(loadingScreen).AsSingle();
-            BindProjectStateMachine(loadingScreen);
         }
 
-        private void BindProjectStateMachine(ILoadingScreen loadingScreen)
+        private void BindProjectStateMachine()
         {
-            LoadingSceneState loadingSceneState = Container.Instantiate<LoadingSceneState>(new[] { loadingScreen });
+            LoadingSceneState loadingSceneState = Container.Instantiate<LoadingSceneState>(new[] { Container.Resolve<ILoadingScreen>() });
             
             IEnumerable<IExitableState> enumerable = new[] { loadingSceneState };
             IStateMachine stateMachine = new StateMachine();

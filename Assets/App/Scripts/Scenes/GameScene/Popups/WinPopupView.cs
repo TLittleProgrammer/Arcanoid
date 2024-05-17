@@ -13,7 +13,7 @@ using Button = UnityEngine.UI.Button;
 
 namespace App.Scripts.Scenes.GameScene.Popups
 {
-    public class WinPopupView : ViewPopupProvider
+    public class WinPopupView : PopupView
     {
         [SerializeField] private Button _continueButton;
         [SerializeField] private RectTransform _textFalling;

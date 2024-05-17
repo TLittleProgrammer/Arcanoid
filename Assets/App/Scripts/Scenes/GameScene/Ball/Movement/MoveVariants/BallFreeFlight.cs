@@ -1,73 +1,42 @@
-﻿using System;
-using App.Scripts.External.GameStateMachine;
-using App.Scripts.Scenes.GameScene.Components;
-using App.Scripts.Scenes.GameScene.Constants;
-using App.Scripts.Scenes.GameScene.Healthes;
-using App.Scripts.Scenes.GameScene.PositionChecker;
+﻿using App.Scripts.Scenes.GameScene.Components;
 using App.Scripts.Scenes.GameScene.Settings;
-using App.Scripts.Scenes.GameScene.States;
-using App.Scripts.Scenes.GameScene.Time;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
 {
     public class BallFreeFlight : IBallFreeFlightMover
     {
         private readonly BallFlyingSettings _settings;
-        private readonly ITimeProvider _timeProvider;
-        private readonly IBallPositionChecker _positionChecker;
-        private readonly IStateMachine _stateMachine;
-        private readonly IHealthContainer _healthContainer;
-        private readonly IPositionable _ballPositionable;
-        
+        private readonly IRigidablebody _ballRigidbody;
+        private readonly float _maxSecondAngle;
+        private readonly float _minSecondAngle;
+
         private Vector3 _direction;
         private float _speed;
 
-        public BallFreeFlight(
-            IPositionable ballPositionable,
-            BallFlyingSettings settings,
-            ITimeProvider timeProvider,
-            IBallPositionChecker positionChecker,
-            [Inject(Id = BindingConstants.GameStateMachine)] IStateMachine stateMachine,
-            IHealthContainer healthContainer)
+        public BallFreeFlight(IRigidablebody ballRigidbody, BallFlyingSettings settings)
         {
-            _ballPositionable = ballPositionable;
+            _ballRigidbody = ballRigidbody;
             _settings = settings;
-            _timeProvider = timeProvider;
-            _positionChecker = positionChecker;
-            _stateMachine = stateMachine;
-            _healthContainer = healthContainer;
+            _ballRigidbody.Collidered += OnCollidered;
 
             _speed = _settings.Speed;
+            _maxSecondAngle = (180f - _settings.MaxAngle);
+            _minSecondAngle = (180f - _settings.MinAngle);
+        }
+
+        private Vector2 Velocity
+        {
+            get => _ballRigidbody.Rigidbody2D.velocity;
+            set => _ballRigidbody.Rigidbody2D.velocity = value;
         }
 
         public async UniTask AsyncInitialize(Vector2 param)
         {
-            _direction = param.normalized;
+            Velocity = param.normalized * _speed;
 
             await UniTask.CompletedTask;
-        }
-
-        public void Tick()
-        {
-            if (_stateMachine.CurrentState is not GameLoopState)
-                return;
-            
-            Vector2 targetPosition = _ballPositionable.Position + _direction * _speed * _timeProvider.DeltaTime;
-            
-            if (_positionChecker.CanChangePositionTo(targetPosition, ref _direction))
-            {
-                _ballPositionable.Position = targetPosition;
-            }
-            else
-            {
-                if (_positionChecker.CurrentCollisionTypeId is CollisionTypeId.BottomVerticalSide)
-                {
-                    _healthContainer.UpdateHealth(-1);
-                }
-            }
         }
 
         public void UpdateSpeed(float addValue)
@@ -77,7 +46,43 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
 
         public void Restart()
         {
+            Velocity = Vector2.zero;
             _speed = _settings.Speed;
+        }
+
+        private async void OnCollidered(Collider2D collider)
+        {
+            await UniTask.WaitForFixedUpdate();
+            ChangeAngleForDirection();
+        }
+
+        private void ChangeAngleForDirection()
+        {
+            float currentAngle = Mathf.Atan2(Velocity.y, Velocity.x) * Mathf.Rad2Deg;
+            float absCurrentAngle = Mathf.Abs(currentAngle);
+
+            if (absCurrentAngle < _settings.MinAngle)
+            {
+                UpdateVelocity(currentAngle > 0 ? _settings.MinAngle : -_settings.MinAngle);
+            }
+            else if (absCurrentAngle > _settings.MaxAngle && _maxSecondAngle > absCurrentAngle)
+            {
+                UpdateVelocity(currentAngle > 0 ? _settings.MaxAngle : -_settings.MaxAngle);
+            }
+            else if (absCurrentAngle > _minSecondAngle)
+            {
+                UpdateVelocity(currentAngle > 0 ? _minSecondAngle : -_minSecondAngle);
+            }
+        }
+
+        private void UpdateVelocity(float targetAngle)
+        {
+            float speed = Velocity.magnitude;
+            Velocity = new Vector2()
+            {
+                x = speed * Mathf.Cos(targetAngle * Mathf.Deg2Rad),
+                y = speed * Mathf.Sin(targetAngle * Mathf.Deg2Rad)
+            };
         }
     }
 }

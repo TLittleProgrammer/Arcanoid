@@ -39,6 +39,9 @@ namespace App.Scripts.Scenes.GameScene.Healthes
 
         public void UpdateHealth(int healthCount)
         {
+            if (_currentHealthCount + healthCount < -1)
+                return;
+            
             _queriesToChangeHealth.Enqueue(healthCount);
             
             if (!_isAnimated)
