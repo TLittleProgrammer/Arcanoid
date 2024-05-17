@@ -1,6 +1,4 @@
 ﻿using App.Scripts.External.Grid;
-using App.Scripts.Scenes.GameScene.Components;
-using App.Scripts.Scenes.GameScene.Containers;
 using App.Scripts.Scenes.GameScene.Entities;
 using App.Scripts.Scenes.GameScene.Grid;
 using App.Scripts.Scenes.GameScene.Levels.View;
@@ -12,7 +10,6 @@ namespace App.Scripts.Scenes.GameScene.Levels.Load
     {
         private readonly IGridPositionResolver _gridPositionResolver;
         private readonly IEntityView.Factory _entityFactory;
-        private readonly IContainer<IBoxColliderable2D> _entityViewContainer;
         private readonly ILevelViewUpdater _levelViewUpdater;
         
         private LevelData _previousLevelData;
@@ -20,12 +17,10 @@ namespace App.Scripts.Scenes.GameScene.Levels.Load
         public LevelLoader(
             IGridPositionResolver gridPositionResolver,
             IEntityView.Factory entityFactory,
-            IContainer<IBoxColliderable2D> entityViewContainer,
             ILevelViewUpdater levelViewUpdater)
         {
             _gridPositionResolver = gridPositionResolver;
             _entityFactory = entityFactory;
-            _entityViewContainer = entityViewContainer;
             _levelViewUpdater = levelViewUpdater;
         }
 
@@ -55,8 +50,6 @@ namespace App.Scripts.Scenes.GameScene.Levels.Load
                     spawnedBlock.Scale = _gridPositionResolver.GetCellSize();
                     spawnedBlock.GridPositionX = j;
                     spawnedBlock.GridPositionY = i;
-                    
-                    _entityViewContainer.AddItem(spawnedBlock);
                 }
             }
 
@@ -65,8 +58,6 @@ namespace App.Scripts.Scenes.GameScene.Levels.Load
 
         public void Restart()
         {
-            _entityViewContainer.Dispose();
-            
             LoadLevel(_previousLevelData);
         }
     }

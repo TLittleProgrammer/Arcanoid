@@ -4,8 +4,6 @@ using App.Scripts.General.Levels;
 using App.Scripts.General.Popup.AssetManagment;
 using App.Scripts.Scenes.GameScene.Ball;
 using App.Scripts.Scenes.GameScene.Ball.Movement;
-using App.Scripts.Scenes.GameScene.Components;
-using App.Scripts.Scenes.GameScene.Containers;
 using App.Scripts.Scenes.GameScene.Grid;
 using App.Scripts.Scenes.GameScene.Healthes;
 using App.Scripts.Scenes.GameScene.LevelProgress;
@@ -23,7 +21,6 @@ namespace App.Scripts.Scenes.GameScene.Installers
     public class GameInitializer : IInitializable
     {
         private readonly IGridPositionResolver _gridPositionResolver;
-        private readonly IContainer<IBoxColliderable2D> _boxesContainer;
         private readonly IPopupProvider _popupProvider;
         private readonly IBallSpeedUpdater _ballSpeedUpdater;
         private readonly IBallMovementService _ballMovementService;
@@ -39,7 +36,6 @@ namespace App.Scripts.Scenes.GameScene.Installers
 
         public GameInitializer(
             IGridPositionResolver gridPositionResolver,
-            IContainer<IBoxColliderable2D> boxesContainer,
             IPopupProvider popupProvider,
             IBallSpeedUpdater ballSpeedUpdater,
             IBallMovementService ballMovementService,
@@ -54,7 +50,6 @@ namespace App.Scripts.Scenes.GameScene.Installers
             PlayerView playerView)
         {
             _gridPositionResolver = gridPositionResolver;
-            _boxesContainer = boxesContainer;
             _popupProvider = popupProvider;
             _ballSpeedUpdater = ballSpeedUpdater;
             _ballMovementService = ballMovementService;
@@ -74,7 +69,6 @@ namespace App.Scripts.Scenes.GameScene.Installers
             LevelData levelData = ChooseLevelData();
             
             await _gridPositionResolver.AsyncInitialize(levelData);
-            _boxesContainer.AddItem(_playerView);
 
             LoadLevel(levelData);
             await _wallLoader.AsyncInitialize();

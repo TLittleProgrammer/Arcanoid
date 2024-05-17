@@ -11,9 +11,7 @@ using App.Scripts.Scenes.GameScene.Ball.Collision;
 using App.Scripts.Scenes.GameScene.Ball.Movement;
 using App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants;
 using App.Scripts.Scenes.GameScene.Camera;
-using App.Scripts.Scenes.GameScene.Components;
 using App.Scripts.Scenes.GameScene.Constants;
-using App.Scripts.Scenes.GameScene.Containers;
 using App.Scripts.Scenes.GameScene.Dotween;
 using App.Scripts.Scenes.GameScene.Effects;
 using App.Scripts.Scenes.GameScene.Entities;
@@ -83,7 +81,6 @@ namespace App.Scripts.Scenes.GameScene.Installers
             BindScreenInfoProvider();
             BindInput();
             BindGridPositionResolver();
-            BindContainers();
             BindLevelLoader();
             BindPositionCheckers();
             BindPlayerMoving();
@@ -189,11 +186,6 @@ namespace App.Scripts.Scenes.GameScene.Installers
                 .FromInstance(_projectStateMachine)
                 .AsCached()
                 .NonLazy();
-        }
-        
-        private void BindContainers()
-        {
-            Container.Bind<IContainer<IBoxColliderable2D>>().To<EntityColliderContainer>().AsSingle();
         }
 
         private void BindBallMovers()

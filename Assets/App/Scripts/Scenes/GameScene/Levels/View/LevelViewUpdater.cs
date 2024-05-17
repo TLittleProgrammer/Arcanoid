@@ -2,8 +2,6 @@
 using App.Scripts.External.Extensions.ListExtensions;
 using App.Scripts.External.Grid;
 using App.Scripts.Scenes.GameScene.Ball;
-using App.Scripts.Scenes.GameScene.Components;
-using App.Scripts.Scenes.GameScene.Containers;
 using App.Scripts.Scenes.GameScene.Entities;
 using App.Scripts.Scenes.GameScene.LevelProgress;
 using App.Scripts.Scenes.GameScene.Levels.AssetManagement;
@@ -17,7 +15,6 @@ namespace App.Scripts.Scenes.GameScene.Levels.View
     public class LevelViewUpdater : ILevelViewUpdater
     {
         private readonly EntityProvider _entityProvider;
-        private readonly IContainer<IBoxColliderable2D> _boxColliderContainer;
         private readonly IPoolContainer _poolContainer;
         private readonly ILevelProgressService _levelProgressService;
         private readonly IBallSpeedUpdater _ballSpeedUpdater;
@@ -28,14 +25,12 @@ namespace App.Scripts.Scenes.GameScene.Levels.View
 
         public LevelViewUpdater(
             EntityProvider entityProvider,
-            IContainer<IBoxColliderable2D> boxColliderContainer,
             IPoolContainer poolContainer,
             ILevelProgressService levelProgressService,
             IBallSpeedUpdater ballSpeedUpdater,
             OnTopSprites.Factory spritesFactory)
         {
             _entityProvider = entityProvider;
-            _boxColliderContainer = boxColliderContainer;
             _poolContainer = poolContainer;
             _levelProgressService = levelProgressService;
             _ballSpeedUpdater = ballSpeedUpdater;
@@ -79,7 +74,6 @@ namespace App.Scripts.Scenes.GameScene.Levels.View
             if (itemData.CurrentHealth <= 0)
             {
                 _levelProgressService.TakeOneStep();
-                _boxColliderContainer.RemoveItem(entityView);
                 
                 _poolContainer.RemoveItem(PoolTypeId.EntityView, entityView as EntityView);
                 foreach (OnTopSprites sprite in itemData.Sprites)
@@ -108,11 +102,6 @@ namespace App.Scripts.Scenes.GameScene.Levels.View
 
             EntityStage entityStage = _entityProvider.EntityStages[index];
             return entityStage;
-        }
-
-        private int GetIndexByStage(EntityStage entityStage)
-        {
-            return int.Parse(_entityProvider.EntityStages.First(x => x.Value.Equals(entityStage)).Key);
         }
 
         private string GetIndexByEntityView(IEntityView entityView)
