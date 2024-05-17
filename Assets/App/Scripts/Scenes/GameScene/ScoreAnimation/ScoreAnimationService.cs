@@ -43,6 +43,7 @@ namespace App.Scripts.Scenes.GameScene.ScoreAnimation
             {
                 pair.Value.Kill();
             }
+            _sequences.Clear();
         }
 
         private void SetScore(TMP_Text text, int score)
