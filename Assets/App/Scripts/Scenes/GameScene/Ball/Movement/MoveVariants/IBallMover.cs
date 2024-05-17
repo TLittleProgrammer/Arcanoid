@@ -1,9 +1,6 @@
-﻿using App.Scripts.General.Infrastructure;
-
-namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
+﻿namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
 {
-    public interface IBallMover : IRestartable
+    public interface IBallMover
     {
-        void UpdateSpeed(float addValue);
     }
 }
