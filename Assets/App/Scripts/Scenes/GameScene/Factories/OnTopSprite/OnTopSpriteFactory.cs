@@ -1,7 +1,6 @@
 ﻿using App.Scripts.Scenes.GameScene.Entities;
 using App.Scripts.Scenes.GameScene.Pools;
 using App.Scripts.Scenes.GameScene.TopSprites;
-using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
 

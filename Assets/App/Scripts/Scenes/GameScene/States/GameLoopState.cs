@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Popup;
 using App.Scripts.General.RootUI;
@@ -8,7 +7,6 @@ using App.Scripts.Scenes.GameScene.LevelProgress;
 using App.Scripts.Scenes.GameScene.Popups;
 using App.Scripts.Scenes.GameScene.Time;
 using Cysharp.Threading.Tasks;
-using UnityEngine;
 using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.States

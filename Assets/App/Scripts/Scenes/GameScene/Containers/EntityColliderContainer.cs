@@ -2,7 +2,6 @@
 using System.Linq;
 using App.Scripts.Scenes.GameScene.Components;
 using App.Scripts.Scenes.GameScene.PlayerShape;
-using App.Scripts.Scenes.GameScene.PlayerShape.Move;
 
 namespace App.Scripts.Scenes.GameScene.Containers
 {

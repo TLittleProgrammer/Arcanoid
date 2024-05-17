@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.PlayerShape
 {

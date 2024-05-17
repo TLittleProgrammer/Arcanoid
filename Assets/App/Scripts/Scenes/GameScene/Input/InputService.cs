@@ -1,6 +1,5 @@
 ﻿using App.Scripts.Scenes.GameScene.Camera;
 using UnityEngine;
-using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.Input
 {

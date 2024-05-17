@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using App.Scripts.External.GameStateMachine;
+﻿using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Popup;
 using App.Scripts.Scenes.GameScene.Constants;
 using App.Scripts.Scenes.GameScene.Dotween;

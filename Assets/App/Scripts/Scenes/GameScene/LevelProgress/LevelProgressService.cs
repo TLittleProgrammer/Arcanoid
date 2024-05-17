@@ -4,7 +4,6 @@ using App.Scripts.Scenes.GameScene.Levels;
 using App.Scripts.Scenes.GameScene.Levels.AssetManagement;
 using App.Scripts.Scenes.GameScene.LevelView;
 using App.Scripts.Scenes.GameScene.ScoreAnimation;
-using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.LevelProgress
 {
