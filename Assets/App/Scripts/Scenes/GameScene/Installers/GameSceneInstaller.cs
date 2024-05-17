@@ -10,15 +10,16 @@ using App.Scripts.Scenes.GameScene.Ball.Collision;
 using App.Scripts.Scenes.GameScene.Ball.Movement;
 using App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants;
 using App.Scripts.Scenes.GameScene.Camera;
-using App.Scripts.Scenes.GameScene.Collisions;
 using App.Scripts.Scenes.GameScene.Components;
 using App.Scripts.Scenes.GameScene.Constants;
 using App.Scripts.Scenes.GameScene.Containers;
 using App.Scripts.Scenes.GameScene.Dotween;
 using App.Scripts.Scenes.GameScene.Effects;
 using App.Scripts.Scenes.GameScene.Entities;
+using App.Scripts.Scenes.GameScene.Factories.CircleEffect;
 using App.Scripts.Scenes.GameScene.Factories.Entity;
 using App.Scripts.Scenes.GameScene.Factories.Health;
+using App.Scripts.Scenes.GameScene.Factories.OnTopSprite;
 using App.Scripts.Scenes.GameScene.Grid;
 using App.Scripts.Scenes.GameScene.Healthes;
 using App.Scripts.Scenes.GameScene.Healthes.View;
@@ -37,6 +38,7 @@ using App.Scripts.Scenes.GameScene.ScreenInfo;
 using App.Scripts.Scenes.GameScene.Settings;
 using App.Scripts.Scenes.GameScene.States;
 using App.Scripts.Scenes.GameScene.Time;
+using App.Scripts.Scenes.GameScene.TopSprites;
 using App.Scripts.Scenes.GameScene.Walls;
 using UnityEngine;
 using Zenject;
@@ -83,7 +85,6 @@ namespace App.Scripts.Scenes.GameScene.Installers
             BindGridPositionResolver();
             BindContainers();
             BindLevelLoader();
-            BindCollisionService();
             BindPositionCheckers();
             BindPlayerMoving();
             BindHealthPointService();
@@ -189,12 +190,7 @@ namespace App.Scripts.Scenes.GameScene.Installers
                 .AsCached()
                 .NonLazy();
         }
-
-        private void BindCollisionService()
-        {
-            Container.Bind<ICollisionService<EntityView>>().To<EntityCollisionService>().AsSingle();
-        }
-
+        
         private void BindContainers()
         {
             Container.Bind<IContainer<IBoxColliderable2D>>().To<EntityColliderContainer>().AsSingle();
@@ -250,12 +246,13 @@ namespace App.Scripts.Scenes.GameScene.Installers
         {
             Container.BindFactory<string, IEntityView, IEntityView.Factory>().FromFactory<EntityFactory>();
             Container.BindFactory<ITransformable, IHealthPointView, IHealthPointView.Factory>().FromFactory<HealthFactory>();
+            Container.BindFactory<EntityView, CircleEffect, CircleEffect.Factory>().FromFactory<CircleEffectFactory>();
+            Container.BindFactory<IEntityView, OnTopSprites, OnTopSprites.Factory>().FromFactory<OnTopSpriteFactory>();
             
             Container.Bind<IPopupProvider>().To<ResourcesPopupProvider>().AsSingle();
             Container.Bind<IPopupFactory>().To<PopupFactory>().AsSingle();
-
             Container.Bind<IPopupService>().To<PopupService>().AsSingle();
-            
+
             _restartables.Add(Container.Resolve<IPopupService>() as IRestartable);
             _restartablesForLoadNewLevel.Add(Container.Resolve<IPopupService>() as IRestartable);
         }
@@ -273,6 +270,7 @@ namespace App.Scripts.Scenes.GameScene.Installers
             BindPool<EntityView, EntityView.Pool>(PoolTypeId.EntityView);
             BindPool<CircleEffect, IEffect<CircleEffect>.Pool>(PoolTypeId.CircleEffect);
             BindPool<HealthPointView, HealthPointView.Pool>(PoolTypeId.HealthPointView);
+            BindPool<OnTopSprites, OnTopSprites.Pool>(PoolTypeId.OnTopSprite);
         }
 
         private void BindPool<TInstance, TPool>(PoolTypeId poolType) where TPool : IMemoryPool where TInstance : MonoBehaviour 

@@ -5,5 +5,6 @@
         EntityView      = 0,
         CircleEffect    = 1,
         HealthPointView = 2,
+        OnTopSprite     = 3,
     }
 }

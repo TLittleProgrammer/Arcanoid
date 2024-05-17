@@ -125,7 +125,7 @@ namespace App.Scripts.Tools.Editor.LevelEditor
                     EntityStage entityStage = EntitiesProvider.EntityStages[key];
                     
                     CurrentEntityCellData.Sprite = entityStage.Sprite;
-                    CurrentEntityCellData.HealthPoints = entityStage.HealthCounter;
+                    CurrentEntityCellData.HealthPoints = entityStage.MaxHealthCounter;
                 }
             }
         }

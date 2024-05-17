@@ -60,7 +60,6 @@ namespace App.Scripts.Scenes.GameScene.LevelProgress
                 _progress = 1f;
                 _scoreAnimationService.Animate(_levelPackInfoView.LevelPassProgress, _targetScore, 100, UpdateProgressText);
 
-                Debug.Log("Кря");
                 LevelPassed?.Invoke();
                 
                 return;

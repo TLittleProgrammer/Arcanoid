@@ -68,7 +68,7 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement
 
         public void UpdateSpeed(float addValue)
         {
-            _ballFollowMover.UpdateSpeed(addValue);
+            _ballFreeFlightMover.UpdateSpeed(addValue);
         }
     }
 }

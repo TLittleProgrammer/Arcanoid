@@ -4,25 +4,13 @@
     {
       "blockKey": "1"
     },
-    "GreenBlock_02":
+    "RedBlock_01":
     {
       "blockKey": "2"
     },
-    "RedBlock_01":
-    {
-      "blockKey": "3"
-    },
-    "RedBlock_02":
-    {
-      "blockKey": "4"
-    },
     "YellowBlock_01":
     {
-      "blockKey": "5"
-    },
-    "YellowBlock_02":
-    {
-      "blockKey": "6"
+      "blockKey": "3"
     }
   }
 }

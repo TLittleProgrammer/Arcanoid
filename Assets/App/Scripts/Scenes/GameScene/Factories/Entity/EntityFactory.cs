@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using App.Scripts.External.Extensions.ListExtensions;
 using App.Scripts.Scenes.GameScene.Entities;
 using App.Scripts.Scenes.GameScene.Levels.AssetManagement;
@@ -30,7 +31,7 @@ namespace App.Scripts.Scenes.GameScene.Factories.Entity
             EntityView entityView = _poolContainer.GetItem<EntityView>(PoolTypeId.EntityView);
 
             entityView.MainSprite = entityStage.Sprite;
-            entityView.OnTopSprite = GetOnTopSprite(entityStage.AvailableSpritesOnMainSprite);
+            //entityView.OnTopSprite = GetOnTopSprite(entityStage.AddSpritesOnMainByHp.ToList());
             
             return entityView;
         }

@@ -77,8 +77,7 @@ namespace App.Scripts.Scenes.GameScene.States
         }
 
         private async void OnLevelPassed()
-        { 
-            Debug.Log("Пупупу");
+        {
             await AnimateTimeScaleTo(0f);
             
             _stateMachine.Enter<WinState>();

@@ -42,6 +42,7 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
         public void UpdateSpeed(float addValue)
         {
             _speed += addValue;
+            Velocity = Velocity.normalized * _speed;
         }
 
         public void Restart()
