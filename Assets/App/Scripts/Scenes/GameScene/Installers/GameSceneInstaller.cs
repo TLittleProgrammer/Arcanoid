@@ -6,6 +6,7 @@ using App.Scripts.General.Popup;
 using App.Scripts.General.Popup.AssetManagment;
 using App.Scripts.General.Popup.Factory;
 using App.Scripts.Scenes.GameScene.Ball;
+using App.Scripts.Scenes.GameScene.Ball.Collision;
 using App.Scripts.Scenes.GameScene.Ball.Movement;
 using App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants;
 using App.Scripts.Scenes.GameScene.Camera;
@@ -36,6 +37,7 @@ using App.Scripts.Scenes.GameScene.ScreenInfo;
 using App.Scripts.Scenes.GameScene.Settings;
 using App.Scripts.Scenes.GameScene.States;
 using App.Scripts.Scenes.GameScene.Time;
+using App.Scripts.Scenes.GameScene.Walls;
 using UnityEngine;
 using Zenject;
 
@@ -52,6 +54,7 @@ namespace App.Scripts.Scenes.GameScene.Installers
         [SerializeField] private LevelPackBackgroundView _levelPackBackground;
         [SerializeField] private HealthPointViewParent _healthParent;
         [SerializeField] private List<RectTransformableView> _rectTransformableViews;
+        [SerializeField] private WallView _wallPrefab;
 
         [Inject] private PoolProviders _poolProviders;
         [Inject] private IStateMachine _projectStateMachine;
@@ -87,10 +90,27 @@ namespace App.Scripts.Scenes.GameScene.Installers
             BindBallMovers();
             BindBallMovement();
             BindBallSpeedUpdater();
+            BindBallCollisionService();
+            BindWallLoader();
 
             BindGameStateMachine();
             
             Container.BindInterfacesTo<GameInitializer>().AsSingle();
+        }
+
+        private void BindBallCollisionService()
+        {
+            Container
+                .Bind<IBallCollisionService>()
+                .To<BallCollisionService>()
+                .AsSingle()
+                .WithArguments(_ballView, _playerShape)
+                .NonLazy();
+        }
+
+        private void BindWallLoader()
+        {
+            Container.Bind<IWallLoader>().To<WallLoader>().AsSingle().WithArguments(_wallPrefab);
         }
 
         private void BindInitializeDependencies()
@@ -202,12 +222,6 @@ namespace App.Scripts.Scenes.GameScene.Installers
                 .To<PlayerShapePositionChecker>()
                 .AsTransient()
                 .WithArguments(_playerShape);
-            
-            Container
-                .Bind<IBallPositionChecker>()
-                .To<BallPositionChecker>()
-                .AsTransient()
-                .WithArguments(_ballView);
         }
 
         private void BindPlayerMoving()

@@ -14,6 +14,7 @@ using App.Scripts.Scenes.GameScene.Levels;
 using App.Scripts.Scenes.GameScene.Levels.Load;
 using App.Scripts.Scenes.GameScene.PlayerShape;
 using App.Scripts.Scenes.GameScene.PlayerShape.Move;
+using App.Scripts.Scenes.GameScene.Walls;
 using Newtonsoft.Json;
 using UnityEngine;
 using Zenject;
@@ -33,6 +34,7 @@ namespace App.Scripts.Scenes.GameScene.Installers
         private readonly IHealthContainer _healthContainer;
         private readonly IHealthPointService _healthPointService;
         private readonly IPlayerShapeMover _playerShapeMover;
+        private readonly IWallLoader _wallLoader;
         private readonly TextAsset _levelData;
         private readonly PlayerView _playerView;
 
@@ -48,6 +50,7 @@ namespace App.Scripts.Scenes.GameScene.Installers
             IHealthContainer healthContainer,
             IHealthPointService healthPointService,
             IPlayerShapeMover playerShapeMover,
+            IWallLoader wallLoader,
             TextAsset levelData,
             PlayerView playerView)
         {
@@ -62,6 +65,7 @@ namespace App.Scripts.Scenes.GameScene.Installers
             _healthContainer = healthContainer;
             _healthPointService = healthPointService;
             _playerShapeMover = playerShapeMover;
+            _wallLoader = wallLoader;
             _levelData = levelData;
             _playerView = playerView;
         }
@@ -74,6 +78,7 @@ namespace App.Scripts.Scenes.GameScene.Installers
             _boxesContainer.AddItem(_playerView);
 
             LoadLevel(levelData);
+            await _wallLoader.AsyncInitialize();
             await _popupProvider.AsyncInitialize(Pathes.PathToPopups);
             await _ballSpeedUpdater.AsyncInitialize(_ballMovementService);
         }

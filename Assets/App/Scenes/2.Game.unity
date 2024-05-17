@@ -637,6 +637,7 @@ MonoBehaviour:
   _healthParent: {fileID: 333490957}
   _rectTransformableViews:
   - {fileID: 1393945888}
+  _wallPrefab: {fileID: 1968418909492920053, guid: f024fab09ac13594ab2eec836479ce53, type: 3}
 --- !u!1 &1955233297
 GameObject:
   m_ObjectHideFlags: 0
@@ -850,6 +851,26 @@ PrefabInstance:
     - target: {fileID: 4526333473040182195, guid: da9f09be41c91414ba6532d0675dd16e, type: 3}
       propertyPath: m_Name
       value: BallView
+      objectReference: {fileID: 0}
+    - target: {fileID: 7073774114340189019, guid: da9f09be41c91414ba6532d0675dd16e, type: 3}
+      propertyPath: m_BodyType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7073774114340189019, guid: da9f09be41c91414ba6532d0675dd16e, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 6200000, guid: 8407c45b3aa89284a944e987bca8d034, type: 2}
+    - target: {fileID: 7073774114340189019, guid: da9f09be41c91414ba6532d0675dd16e, type: 3}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7073774114340189019, guid: da9f09be41c91414ba6532d0675dd16e, type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7073774114340189019, guid: da9f09be41c91414ba6532d0675dd16e, type: 3}
+      propertyPath: m_GravityScale
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: da9f09be41c91414ba6532d0675dd16e, type: 3}

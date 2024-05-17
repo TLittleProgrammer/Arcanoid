@@ -11,20 +11,20 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement
         private readonly IPositionable _ballPositionable;
         private readonly IClickDetector _clickDetector;
 
-        private IBallMover _ballMover;
-        private Vector2 _previousBallPosition;
         private IBallFollowMover _ballFollowMover;
+        private Vector2 _previousBallPosition;
+        private IBallFollowMover _ballFollowFollowMover;
 
         public BallMovementService(
             IClickDetector clickDetector,
-            IBallFollowMover ballFollowMover,
+            IBallFollowMover ballFollowFollowMover,
             IBallFreeFlightMover ballFreeFlightMover,
             IPositionable ballPositionable
         )
         {
-            _ballFollowMover = ballFollowMover;
             _clickDetector = clickDetector;
-            _ballMover = ballFollowMover;
+            _ballFollowFollowMover = ballFollowFollowMover;
+            _ballFollowMover = _ballFollowFollowMover;
             _ballFreeFlightMover = ballFreeFlightMover;
             _ballPositionable = ballPositionable;
 
@@ -33,11 +33,11 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement
 
         public void Tick()
         {
-            if (_ballMover is null)
+            if (_ballFollowMover is null)
                 return;
 
             _previousBallPosition = _ballPositionable.Position;
-            _ballMover.Tick();
+            _ballFollowMover.Tick();
         }
 
         private void OnMouseUp()
@@ -47,7 +47,7 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement
             Vector2 direction = GetDirection();
 
             _ballFreeFlightMover.AsyncInitialize(direction);
-            _ballMover = _ballFreeFlightMover;
+            _ballFollowMover = null;
         }
 
         private Vector2 GetDirection()
@@ -60,15 +60,15 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement
         public void Restart()
         {
             _ballFreeFlightMover.Restart();
-            
+
+            _ballFollowMover = _ballFollowFollowMover;
             _ballFollowMover.AsyncInitialize();
-            _ballMover = _ballFollowMover;
             _clickDetector.MouseUp += OnMouseUp;
         }
 
         public void UpdateSpeed(float addValue)
         {
-            _ballMover.UpdateSpeed(addValue);
+            _ballFollowMover.UpdateSpeed(addValue);
         }
     }
 }
