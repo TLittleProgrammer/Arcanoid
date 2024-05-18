@@ -474,7 +474,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ed19154b73d445a9ea212627e0ddf6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _popupTypeId: 2
   _restartButton: {fileID: 6282152992467968057}
 --- !u!1 &6282152992986998686
 GameObject:
@@ -984,6 +983,10 @@ PrefabInstance:
       propertyPath: LocaleKey
       value: Restart
       objectReference: {fileID: 0}
+    - target: {fileID: 6667574834146640482, guid: 724f24a4b20b1ef498010f396ab47048, type: 3}
+      propertyPath: _localeKey
+      value: Restart
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 724f24a4b20b1ef498010f396ab47048, type: 3}
 --- !u!224 &4973992564286870004 stripped
@@ -1125,6 +1128,10 @@ PrefabInstance:
     - target: {fileID: 2875981765120574083, guid: 724f24a4b20b1ef498010f396ab47048, type: 3}
       propertyPath: m_Name
       value: LocalePrefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 6667574834146640482, guid: 724f24a4b20b1ef498010f396ab47048, type: 3}
+      propertyPath: _localeKey
+      value: You_are_loose
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 724f24a4b20b1ef498010f396ab47048, type: 3}

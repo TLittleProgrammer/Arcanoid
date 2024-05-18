@@ -597,6 +597,7 @@ MonoBehaviour:
   _galacticIcon: {fileID: 1808107324211109455}
   _lockIcon: {fileID: 1499410290598395445}
   _maskableImage: {fileID: 1323146309413770297}
+  _subTextLocale: {fileID: 4055785090351469127}
 --- !u!1 &5710360225323309148
 GameObject:
   m_ObjectHideFlags: 0
@@ -969,7 +970,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1382179647439615166, guid: 724f24a4b20b1ef498010f396ab47048, type: 3}
       propertyPath: m_enableWordWrapping
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1382179647439615166, guid: 724f24a4b20b1ef498010f396ab47048, type: 3}
       propertyPath: m_enableVertexGradient
@@ -1030,6 +1031,10 @@ PrefabInstance:
     - target: {fileID: 6667574834146640482, guid: 724f24a4b20b1ef498010f396ab47048, type: 3}
       propertyPath: LocaleKey
       value: Galactic
+      objectReference: {fileID: 0}
+    - target: {fileID: 6667574834146640482, guid: 724f24a4b20b1ef498010f396ab47048, type: 3}
+      propertyPath: _localeKey
+      value: Galactic_not_found
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 724f24a4b20b1ef498010f396ab47048, type: 3}
@@ -1246,6 +1251,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6667574834146640482, guid: 724f24a4b20b1ef498010f396ab47048, type: 3}
       propertyPath: LocaleKey
+      value: Galactic
+      objectReference: {fileID: 0}
+    - target: {fileID: 6667574834146640482, guid: 724f24a4b20b1ef498010f396ab47048, type: 3}
+      propertyPath: _localeKey
       value: Galactic
       objectReference: {fileID: 0}
     m_RemovedComponents: []

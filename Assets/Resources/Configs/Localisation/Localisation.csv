@@ -1,5 +1,6 @@
 key,ru,en
-Sigara_Galactic,Сигара,Sigara
+Galactic_Sigara,Сигара,Sigara
+Galactic_Sombrero,Сомбреро,Sombrero
 Menu,Меню,Menu
 Play,Играть,Play
 Continue,Продолжить,Continue
@@ -7,3 +8,8 @@ Galactic,Галактика,Galactic
 Settings,Настройки,Settings
 ru_itemView,Русский,Russian
 en_itemView,Английский,English
+Back,Назад,Back
+You_are_loose,Вы проиграли!,You are loose!
+Restart,Рестарт,Restart
+You_won,Вы победили!,You won!
+Galactic_not_found,Не обнаружена,Not found

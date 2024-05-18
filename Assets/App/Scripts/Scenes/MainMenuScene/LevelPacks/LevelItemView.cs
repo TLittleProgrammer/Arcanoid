@@ -34,6 +34,8 @@ namespace App.Scripts.Scenes.MainMenuScene.LevelPacks
         [BoxGroup("Left"), SerializeField]
         private Image _maskableImage;
 
+        [SerializeField] private UILocale _subTextLocale;
+
         public event Action Clicked;
 
         public TMP_Text GalacticPassedLevels => _galacticPassedLevels;
@@ -53,6 +55,8 @@ namespace App.Scripts.Scenes.MainMenuScene.LevelPacks
         {
             UpdateGeneralViews(levelModel.LevelViewData, levelModel.LevelPack);
             UpdateByItemTypeId(levelModel.LevelViewData, levelModel.LevelPack,levelModel.VisualTypeId, levelModel.PassedLevels);
+            
+            _subTextLocale.SetToken(levelModel.LocaleKey);
         }
 
         private void UpdateByItemTypeId(LevelItemViewData levelViewData, LevelPack levelPack, VisualTypeId visualType, int passedLevels)

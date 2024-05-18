@@ -213,6 +213,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -1980280356, guid: 1a1d8ed8e06d91a4f97aa2521cf5f462, type: 3}
+    - target: {fileID: 2311412409436705393, guid: 47e573d43d2df6846b43223a3844087e, type: 3}
+      propertyPath: _localeKey
+      value: Menu
+      objectReference: {fileID: 0}
     - target: {fileID: 4720390507677725376, guid: 47e573d43d2df6846b43223a3844087e, type: 3}
       propertyPath: m_Name
       value: GameScreen

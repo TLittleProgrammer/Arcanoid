@@ -42,6 +42,8 @@ namespace App.Scripts.External.Localisation.MonoBehaviours
         public void SetToken(string token)
         {
             _localeKey = token;
+            
+            SetText(_localeService.GetTextByToken(Token));
         }
 
         public void SetText(string text)
