@@ -9,7 +9,8 @@
         "Localisation",
         "GameStateMachine",
         "UserData",
-        "Initialization"
+        "Initialization",
+        "UniTask"
     ],
     "includePlatforms": [
         "Android",

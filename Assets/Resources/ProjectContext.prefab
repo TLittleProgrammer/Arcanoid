@@ -79,6 +79,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RootUIPrefab: {fileID: 3496932976297371856, guid: 031456b303a9a5649a1e3678dd4b093c, type: 3}
   LoadingScreenPrefab: {fileID: 1630630870487035976, guid: 4f4b85f0de5404945bfcce10e680d052, type: 3}
+  Localisation: {fileID: 4900000, guid: e6a040dd274819143940bf51d5e62796, type: 3}
 --- !u!114 &-1072723989868995469
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
-﻿using App.Scripts.General.LoadingScreen.Settings;
+﻿using App.Scripts.External.Localisation.Config;
+using App.Scripts.General.LoadingScreen.Settings;
 using App.Scripts.General.ProjectInitialization.Settings;
 using UnityEngine;
 using Zenject;
