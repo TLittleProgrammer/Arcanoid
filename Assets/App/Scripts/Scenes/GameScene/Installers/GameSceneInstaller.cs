@@ -165,24 +165,18 @@ namespace App.Scripts.Scenes.GameScene.Installers
             PopupState popupState = Container.Instantiate<PopupState>();
             LooseState looseState = Container.Instantiate<LooseState>();
             WinState winState = Container.Instantiate<WinState>();
+            LoadSceneFromMainMenuState loadSceneFromMainMenuState = Container.Instantiate<LoadSceneFromMainMenuState>(new[] { _projectStateMachine });
             RestartState restartState = Container.Instantiate<RestartState>(new object[] {_restartables, _gameStateMachine});
             LoadNextLevelState loadNextLevelState = Container.Instantiate<LoadNextLevelState>(new object[] {_levelPackInfoView, _restartablesForLoadNewLevel, _gameStateMachine});
 
             Container.BindInterfacesTo<GameLoopState>().FromInstance(gameLoopState);
             
             
-            _gameStateMachine.AsyncInitialize(new IState[] { gameLoopState, popupState, restartState, loadNextLevelState, looseState, winState });
+            _gameStateMachine.AsyncInitialize(new IExitableState[] { gameLoopState, popupState, restartState, loadNextLevelState, looseState, winState, loadSceneFromMainMenuState });
             _gameStateMachine.Enter<GameLoopState>();
             
             Container.Bind<IStateMachine>()
-                .WithId(BindingConstants.GameStateMachine)
                 .FromInstance(_gameStateMachine)
-                .AsCached()
-                .NonLazy();
-
-            Container.Bind<IStateMachine>()
-                .WithId(BindingConstants.ProjectStateMachine)
-                .FromInstance(_projectStateMachine)
                 .AsCached()
                 .NonLazy();
         }

@@ -19,7 +19,7 @@ namespace App.Scripts.Scenes.GameScene.Popups.Buttons
         private void Construct(
             RootUIViewProvider rootUIViewProvider,
             IPopupService popupService,
-            [Inject(Id = BindingConstants.GameStateMachine)] IStateMachine stateMachine)
+            IStateMachine stateMachine)
         {
             _stateMachine = stateMachine;
             _popupService = popupService;

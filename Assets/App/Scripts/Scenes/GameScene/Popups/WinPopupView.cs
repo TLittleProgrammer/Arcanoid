@@ -1,6 +1,5 @@
 ﻿using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Popup;
-using App.Scripts.Scenes.GameScene.Constants;
 using App.Scripts.Scenes.GameScene.Dotween;
 using App.Scripts.Scenes.GameScene.Settings;
 using App.Scripts.Scenes.GameScene.States;
@@ -24,7 +23,7 @@ namespace App.Scripts.Scenes.GameScene.Popups
 
         [Inject]
         private void Construct(
-            [Inject(Id = BindingConstants.GameStateMachine)] IStateMachine gameStateMachine,
+            IStateMachine gameStateMachine,
             WinContinueButtonAnimationSettings winContinueButtonAnimationSettings,
             ITweenersLocator tweenersLocator)
         {
