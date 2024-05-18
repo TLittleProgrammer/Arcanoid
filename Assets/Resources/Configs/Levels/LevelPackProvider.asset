@@ -15,12 +15,4 @@ MonoBehaviour:
   LevelPacks:
   - {fileID: 11400000, guid: f029f00259954994aa46eeaee92c7cde, type: 2}
   - {fileID: 11400000, guid: cac7d22fc4d460340a9474f9209e88c6, type: 2}
-  - {fileID: 11400000, guid: cac7d22fc4d460340a9474f9209e88c6, type: 2}
-  - {fileID: 11400000, guid: cac7d22fc4d460340a9474f9209e88c6, type: 2}
-  - {fileID: 11400000, guid: cac7d22fc4d460340a9474f9209e88c6, type: 2}
-  - {fileID: 11400000, guid: cac7d22fc4d460340a9474f9209e88c6, type: 2}
-  - {fileID: 11400000, guid: cac7d22fc4d460340a9474f9209e88c6, type: 2}
-  - {fileID: 11400000, guid: cac7d22fc4d460340a9474f9209e88c6, type: 2}
-  - {fileID: 11400000, guid: cac7d22fc4d460340a9474f9209e88c6, type: 2}
-  - {fileID: 11400000, guid: cac7d22fc4d460340a9474f9209e88c6, type: 2}
-  - {fileID: 11400000, guid: cac7d22fc4d460340a9474f9209e88c6, type: 2}
+  - {fileID: 11400000, guid: 35fa9bd3c31075d42b26600e30133106, type: 2}

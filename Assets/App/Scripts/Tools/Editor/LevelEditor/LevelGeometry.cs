@@ -56,7 +56,7 @@ namespace App.Scripts.Tools.Editor.LevelEditor
         [OnInspectorInit]
         private void CreateGrid()
         {
-            _pathToDirectoryLevels = Path.Combine(Application.dataPath, "/Resources/Levels/");
+            _pathToDirectoryLevels = Path.Combine(Application.dataPath, "Resources", "Levels");
             CurrentEntityCellData = new();
             PresetsData = GetPresets();
             BrushingPresetName = PresetsData.PresetItems.First().Key;
@@ -148,6 +148,7 @@ namespace App.Scripts.Tools.Editor.LevelEditor
                 var json = JsonConvert.SerializeObject(levelData, Formatting.Indented, new Int2Converter());
                 
                 File.WriteAllText(path, json);
+                AssetDatabase.ImportAsset("Assets" + path.Split("Assets")[0]);
             }
         }
         

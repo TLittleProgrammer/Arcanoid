@@ -1,4 +1,5 @@
-﻿using App.Scripts.External.Components;
+﻿using System.Linq;
+using App.Scripts.External.Components;
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.External.Localisation;
 using App.Scripts.General.Constants;
@@ -60,7 +61,7 @@ namespace App.Scripts.Scenes.MainMenuScene.Factories.Levels
                 levelItemView.Clicked += () =>
                 {
                     _levelPackTransferData.NeedLoadLevel = true;
-                    _levelPackTransferData.LevelIndex = _levelPackProgressDictionary[packIndex].PassedLevels;
+                    _levelPackTransferData.LevelIndex = _levelPackProgressDictionary.ContainsKey(packIndex) ? _levelPackProgressDictionary[packIndex].PassedLevels : 0;
                     _levelPackTransferData.LevelPack = levelPack;
                     _levelPackTransferData.LevelIndex = packIndex;
                     _levelPackTransferData.LevelPackProgress = 0f;
@@ -92,23 +93,26 @@ namespace App.Scripts.Scenes.MainMenuScene.Factories.Levels
                 _levelPackProgressDictionary.Add(0, new());
                 return VisualTypeId.InProgress;
             }
+
+            var lastOpenedPack = _levelPackProgressDictionary.Last();
+
+            if (packIndex == lastOpenedPack.Key + 1 &&
+                lastOpenedPack.Value.PassedLevels >= levelPack.Levels.Count)
+            {
+                return VisualTypeId.InProgress;
+            }
             
             if (!_levelPackProgressDictionary.ContainsKey(packIndex))
             {
                 return VisualTypeId.NotOpened;
             }
 
-            if (_levelPackProgressDictionary[packIndex].PassedLevels == levelPack.Levels.Count)
+            if (_levelPackProgressDictionary[packIndex].PassedLevels >= levelPack.Levels.Count)
             {
                 return VisualTypeId.Passed;
             }
 
             return VisualTypeId.InProgress;
-        }
-
-        public ILevelItemView Create()
-        {
-            throw new System.NotImplementedException();
         }
     }
 }
