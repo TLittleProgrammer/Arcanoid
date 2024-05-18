@@ -2,11 +2,13 @@
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Popup;
 using App.Scripts.General.RootUI;
+using App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants;
 using App.Scripts.Scenes.GameScene.Healthes;
 using App.Scripts.Scenes.GameScene.LevelProgress;
 using App.Scripts.Scenes.GameScene.Popups;
 using App.Scripts.Scenes.GameScene.Time;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.States
@@ -19,9 +21,11 @@ namespace App.Scripts.Scenes.GameScene.States
         private readonly ITimeScaleAnimator _timeScaleAnimator;
         private readonly IStateMachine _stateMachine;
         private readonly ILevelProgressService _levelProgressService;
+        private readonly IBallFreeFlightMover _ballFreeFlightMover;
         private readonly RootUIViewProvider _rootUIViewProvider;
 
         private bool _stateIsEntered = false;
+        private float _lastBallSpeed;
         
         public GameLoopState(
             IEnumerable<ITickable> tickables,
@@ -30,6 +34,7 @@ namespace App.Scripts.Scenes.GameScene.States
             ITimeScaleAnimator timeScaleAnimator,
             IStateMachine stateMachine,
             ILevelProgressService levelProgressService,
+            IBallFreeFlightMover ballFreeFlightMover,
             RootUIViewProvider rootUIViewProvider)
         {
             _tickables = tickables;
@@ -38,12 +43,14 @@ namespace App.Scripts.Scenes.GameScene.States
             _timeScaleAnimator = timeScaleAnimator;
             _stateMachine = stateMachine;
             _levelProgressService = levelProgressService;
+            _ballFreeFlightMover = ballFreeFlightMover;
             _rootUIViewProvider = rootUIViewProvider;
         }
         
         public void Enter()
         {
             _stateIsEntered = true;
+            _ballFreeFlightMover.UpdateSpeed(_lastBallSpeed);
             _healthContainer.LivesAreWasted   += OnLivesAreWasted;
             _levelProgressService.LevelPassed += OnLevelPassed;
         }
@@ -51,6 +58,8 @@ namespace App.Scripts.Scenes.GameScene.States
         public void Exit()
         {
             _stateIsEntered = false;
+            _lastBallSpeed = _ballFreeFlightMover.Speed;
+            _ballFreeFlightMover.UpdateSpeed(-_lastBallSpeed);
             _healthContainer.LivesAreWasted   -= OnLivesAreWasted;
             _levelProgressService.LevelPassed -= OnLevelPassed;
         }
@@ -59,7 +68,7 @@ namespace App.Scripts.Scenes.GameScene.States
         {
             if (_stateIsEntered is false)
                 return;
-            
+
             foreach (ITickable tickable in _tickables)
             {
                 tickable.Tick();

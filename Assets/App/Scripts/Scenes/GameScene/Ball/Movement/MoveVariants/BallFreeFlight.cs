@@ -34,7 +34,7 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
         public async UniTask AsyncInitialize(Vector2 param)
         {
             Velocity = param.normalized * _speed;
-
+            _direction = Velocity.normalized;
             await UniTask.CompletedTask;
         }
 
@@ -44,10 +44,13 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
             set => _ballRigidbody.Rigidbody2D.velocity = value;
         }
 
+        public float Speed => _ballRigidbody.Rigidbody2D.velocity.magnitude;
+
         public void UpdateSpeed(float addValue)
         {
             _speed += addValue;
-            Velocity = Velocity.normalized * _speed;
+            
+            Velocity = _direction * _speed;
         }
 
         public void Restart()
@@ -94,6 +97,8 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
                 x = speed * Mathf.Cos(targetAngle * Mathf.Deg2Rad),
                 y = speed * Mathf.Sin(targetAngle * Mathf.Deg2Rad)
             };
+
+            _direction = Velocity.normalized;
         }
     }
 }
