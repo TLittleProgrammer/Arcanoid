@@ -27,7 +27,7 @@ namespace App.Scripts.Scenes.GameScene.Factories.Entity
             EntityView entityView   = _poolContainer.GetItem<EntityView>(PoolTypeId.EntityView);
 
             entityView.MainSprite   = entityStage.Sprite;
-
+            
             return entityView;
         }
     }

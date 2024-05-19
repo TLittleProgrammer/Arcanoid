@@ -23,6 +23,7 @@ namespace App.Scripts.Scenes.MainMenuScene.Factories.Levels
         private readonly LevelItemViewByTypeProvider _levelItemViewByTypeProvider;
         private readonly ILevelPackTransferData _levelPackTransferData;
         private readonly IStateMachine _stateMachine;
+        private readonly LevelPackProvider _levelPackProvider;
         private readonly DiContainer _diContainer;
 
         public LevelItemFactory(
@@ -32,6 +33,7 @@ namespace App.Scripts.Scenes.MainMenuScene.Factories.Levels
             LevelItemViewByTypeProvider levelItemViewByTypeProvider,
             ILevelPackTransferData levelPackTransferData,
             IStateMachine stateMachine,
+            LevelPackProvider levelPackProvider,
             DiContainer diContainer)
         {
             _prefab = prefab;
@@ -40,6 +42,7 @@ namespace App.Scripts.Scenes.MainMenuScene.Factories.Levels
             _levelItemViewByTypeProvider = levelItemViewByTypeProvider;
             _levelPackTransferData = levelPackTransferData;
             _stateMachine = stateMachine;
+            _levelPackProvider = levelPackProvider;
             _diContainer = diContainer;
         }
         
@@ -97,7 +100,7 @@ namespace App.Scripts.Scenes.MainMenuScene.Factories.Levels
             var lastOpenedPack = _levelPackProgressDictionary.Last();
 
             if (packIndex == lastOpenedPack.Key + 1 &&
-                lastOpenedPack.Value.PassedLevels >= levelPack.Levels.Count)
+                lastOpenedPack.Value.PassedLevels >= _levelPackProvider.LevelPacks[lastOpenedPack.Key].Levels.Count)
             {
                 return VisualTypeId.InProgress;
             }
