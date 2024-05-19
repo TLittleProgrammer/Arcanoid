@@ -1,4 +1,5 @@
 ﻿using App.Scripts.External.GameStateMachine;
+using App.Scripts.General.LevelPackInfoService;
 using App.Scripts.General.Levels;
 using App.Scripts.General.Popup;
 using App.Scripts.General.RootUI;
@@ -13,7 +14,7 @@ namespace App.Scripts.Scenes.GameScene.States
         private readonly IPopupService _popupService;
         private readonly RootUIViewProvider _rootUIViewProvider;
         private readonly IStateMachine _gameStateMachine;
-        private readonly ILevelPackTransferData _levelPackTransferData;
+        private readonly ILevelPackInfoService _levelPackInfoService;
 
         private WinPopupView _winPopupView;
 
@@ -22,14 +23,14 @@ namespace App.Scripts.Scenes.GameScene.States
             IPopupService popupService,
             RootUIViewProvider rootUIViewProvider,
             IStateMachine gameStateMachine,
-            ILevelPackTransferData levelPackTransferData)
+            ILevelPackInfoService levelPackInfoService)
         {
             _popupService = popupService;
             _timeScaleAnimator = timeScaleAnimator;
             _popupService = popupService;
             _rootUIViewProvider = rootUIViewProvider;
             _gameStateMachine = gameStateMachine;
-            _levelPackTransferData = levelPackTransferData;
+            _levelPackInfoService = levelPackInfoService;
         }
         
         public async void Enter()
@@ -42,10 +43,10 @@ namespace App.Scripts.Scenes.GameScene.States
 
         private void UpdateVisual()
         {
-            LevelPack currentPack = _levelPackTransferData.LevelPack;
+            LevelPack currentPack = _levelPackInfoService.GetData().LevelPack;
             _winPopupView.GalacticIcon.sprite = currentPack.GalacticIcon;
             _winPopupView.GalacticName.SetToken(currentPack.LocaleKey);
-            _winPopupView.PassedLevelsText.text = $"{_levelPackTransferData.LevelIndex + 1}/{currentPack.Levels.Count}";
+            _winPopupView.PassedLevelsText.text = $"{_levelPackInfoService.GetData().LevelIndex + 1}/{currentPack.Levels.Count}";
         }
 
         private void Subscribe()

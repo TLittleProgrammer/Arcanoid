@@ -4,7 +4,8 @@ namespace App.Scripts.General.LevelPackInfoService
 {
     public interface ILevelPackInfoService
     {
-        ILevelPackTransferData UpdateLevelPackTransferData(ILevelPackTransferData levelPackTransferData);
-        
+        ILevelPackTransferData UpdateLevelPackTransferData();
+        ILevelPackTransferData GetData();
+        void SetData(ILevelPackTransferData levelPackTransferData);
     }
 }

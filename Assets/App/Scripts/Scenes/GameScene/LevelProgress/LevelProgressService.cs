@@ -1,4 +1,5 @@
 ﻿using System;
+using App.Scripts.General.LevelPackInfoService;
 using App.Scripts.General.Levels;
 using App.Scripts.Scenes.GameScene.Levels;
 using App.Scripts.Scenes.GameScene.Levels.AssetManagement;
@@ -10,7 +11,7 @@ namespace App.Scripts.Scenes.GameScene.LevelProgress
 {
     public class LevelProgressService : ILevelProgressService
     {
-        private readonly ILevelPackTransferData _levelPackTransferData;
+        private readonly ILevelPackInfoService _levelPackInfoService;
         private readonly ILevelPackInfoView _levelPackInfoView;
         private readonly ILevelPackBackgroundView _levelPackBackgroundView;
         private readonly EntityProvider _entitesProvider;
@@ -25,13 +26,13 @@ namespace App.Scripts.Scenes.GameScene.LevelProgress
         public event Action LevelPassed;
         
         public LevelProgressService(
-            ILevelPackTransferData levelPackTransferData,
+            ILevelPackInfoService levelPackInfoService,
             ILevelPackInfoView levelPackInfoView,
             ILevelPackBackgroundView levelPackBackgroundView,
             EntityProvider entitesProvider,
             IScoreAnimationService scoreAnimationService)
         {
-            _levelPackTransferData = levelPackTransferData;
+            _levelPackInfoService = levelPackInfoService;
             _levelPackInfoView = levelPackInfoView;
             _levelPackBackgroundView = levelPackBackgroundView;
             _entitesProvider = entitesProvider;
@@ -40,16 +41,17 @@ namespace App.Scripts.Scenes.GameScene.LevelProgress
 
         public void Initialize()
         {
-            if (_levelPackTransferData.NeedLoadLevel)
+            var data = _levelPackInfoService.GetData();
+            if (data.NeedLoadLevel)
             {
-                _levelPackBackgroundView.Background.sprite = _levelPackTransferData.LevelPack.GalacticBackground;
+                _levelPackBackgroundView.Background.sprite = data.LevelPack.GalacticBackground;
 
                 _targetScore = 0;
                 _levelPackInfoView.Initialize(new()
                 {
-                    CurrentLevelIndex = _levelPackTransferData.LevelIndex,
-                    AllLevelsCountFromPack = _levelPackTransferData.LevelPack.Levels.Count,
-                    Sprite = _levelPackTransferData.LevelPack.GalacticIcon,
+                    CurrentLevelIndex = data.LevelIndex,
+                    AllLevelsCountFromPack = data.LevelPack.Levels.Count,
+                    Sprite = data.LevelPack.GalacticIcon,
                     TargetScore = _targetScore
                 });
             }

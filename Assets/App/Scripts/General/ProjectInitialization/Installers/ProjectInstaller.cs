@@ -26,7 +26,6 @@ namespace App.Scripts.General.ProjectInitialization.Installers
             Container.Bind<ISceneManagementService>().To<SceneManagementService>().AsSingle();
             Container.Bind<IDotweenContainerService>().To<DotweenContainerService>().AsSingle();
             Container.Bind<LevelProgressDataService>().AsSingle();
-            Container.Bind<ILevelPackTransferData>().To<LevelPackTransferData>().AsSingle();
             Container.Bind<ILocaleService>().To<LocaleService>().AsSingle().WithArguments(Localisation.text).NonLazy();
 
             CreateRootUI();

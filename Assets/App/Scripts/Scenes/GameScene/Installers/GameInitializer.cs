@@ -1,5 +1,6 @@
 ﻿using App.Scripts.General.Constants;
 using App.Scripts.General.Infrastructure;
+using App.Scripts.General.LevelPackInfoService;
 using App.Scripts.General.Levels;
 using App.Scripts.General.Popup.AssetManagment;
 using App.Scripts.Scenes.GameScene.Ball;
@@ -23,7 +24,6 @@ namespace App.Scripts.Scenes.GameScene.Installers
         private readonly IPopupProvider _popupProvider;
         private readonly IBallSpeedUpdater _ballSpeedUpdater;
         private readonly IBallMovementService _ballMovementService;
-        private readonly ILevelPackTransferData _levelPackTransferData;
         private readonly ILevelLoader _levelLoader;
         private readonly ILevelProgressService _levelProgressService;
         private readonly IHealthContainer _healthContainer;
@@ -31,26 +31,26 @@ namespace App.Scripts.Scenes.GameScene.Installers
         private readonly IPlayerShapeMover _playerShapeMover;
         private readonly IWallLoader _wallLoader;
         private readonly TextAsset _levelData;
+        private readonly ILevelPackInfoService _levelPackInfoService;
 
         public GameInitializer(
             IGridPositionResolver gridPositionResolver,
             IPopupProvider popupProvider,
             IBallSpeedUpdater ballSpeedUpdater,
             IBallMovementService ballMovementService,
-            ILevelPackTransferData levelPackTransferData,
             ILevelLoader levelLoader,
             ILevelProgressService levelProgressService,
             IHealthContainer healthContainer,
             IHealthPointService healthPointService,
             IPlayerShapeMover playerShapeMover,
             IWallLoader wallLoader,
-            TextAsset levelData)
+            TextAsset levelData,
+            ILevelPackInfoService levelPackInfoService)
         {
             _gridPositionResolver = gridPositionResolver;
             _popupProvider = popupProvider;
             _ballSpeedUpdater = ballSpeedUpdater;
             _ballMovementService = ballMovementService;
-            _levelPackTransferData = levelPackTransferData;
             _levelLoader = levelLoader;
             _levelProgressService = levelProgressService;
             _healthContainer = healthContainer;
@@ -58,6 +58,7 @@ namespace App.Scripts.Scenes.GameScene.Installers
             _playerShapeMover = playerShapeMover;
             _wallLoader = wallLoader;
             _levelData = levelData;
+            _levelPackInfoService = levelPackInfoService;
         }
         
         public async void Initialize()
@@ -74,9 +75,10 @@ namespace App.Scripts.Scenes.GameScene.Installers
     
         private LevelData ChooseLevelData()
         {
-            if (_levelPackTransferData.NeedLoadLevel)
+            var data = _levelPackInfoService.GetData();
+            if (data.NeedLoadLevel)
             {
-                return JsonConvert.DeserializeObject<LevelData>(_levelPackTransferData.LevelPack.Levels[_levelPackTransferData.LevelIndex].text);
+                return JsonConvert.DeserializeObject<LevelData>(data.LevelPack.Levels[data.LevelIndex].text);
             }
 
             return JsonConvert.DeserializeObject<LevelData>(_levelData.text);

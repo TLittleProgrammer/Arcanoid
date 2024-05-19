@@ -1,17 +1,15 @@
 ﻿using System.Linq;
 using App.Scripts.External.Components;
 using App.Scripts.External.GameStateMachine;
-using App.Scripts.External.Localisation;
 using App.Scripts.External.UserData;
 using App.Scripts.General.Constants;
+using App.Scripts.General.LevelPackInfoService;
 using App.Scripts.General.Levels;
 using App.Scripts.General.States;
 using App.Scripts.General.UserData.Data;
 using App.Scripts.Scenes.MainMenuScene.Constants;
 using App.Scripts.Scenes.MainMenuScene.LevelPacks;
 using App.Scripts.Scenes.MainMenuScene.LevelPacks.Configs;
-using TMPro;
-using UnityEngine;
 using Zenject;
 
 namespace App.Scripts.Scenes.MainMenuScene.Factories.Levels
@@ -22,9 +20,9 @@ namespace App.Scripts.Scenes.MainMenuScene.Factories.Levels
         private readonly ITransformable _prefabParent;
         private readonly IUserDataContainer _userDataContainer;
         private readonly LevelItemViewByTypeProvider _levelItemViewByTypeProvider;
-        private readonly ILevelPackTransferData _levelPackTransferData;
         private readonly IStateMachine _stateMachine;
         private readonly LevelPackProvider _levelPackProvider;
+        private readonly ILevelPackInfoService _levelPackInfoService;
         private readonly DiContainer _diContainer;
 
         public LevelItemFactory(
@@ -32,18 +30,18 @@ namespace App.Scripts.Scenes.MainMenuScene.Factories.Levels
             ITransformable prefabParent,
             IUserDataContainer userDataContainer,
             LevelItemViewByTypeProvider levelItemViewByTypeProvider,
-            ILevelPackTransferData levelPackTransferData,
             IStateMachine stateMachine,
             LevelPackProvider levelPackProvider,
+            ILevelPackInfoService levelPackInfoService,
             DiContainer diContainer)
         {
             _prefab = prefab;
             _prefabParent = prefabParent;
             _userDataContainer = userDataContainer;
             _levelItemViewByTypeProvider = levelItemViewByTypeProvider;
-            _levelPackTransferData = levelPackTransferData;
             _stateMachine = stateMachine;
             _levelPackProvider = levelPackProvider;
+            _levelPackInfoService = levelPackInfoService;
             _diContainer = diContainer;
         }
         
@@ -79,10 +77,13 @@ namespace App.Scripts.Scenes.MainMenuScene.Factories.Levels
                 
                 levelItemView.Clicked += () =>
                 {
-                    _levelPackTransferData.NeedLoadLevel = true;
-                    _levelPackTransferData.LevelIndex = targetLevelIndex;
-                    _levelPackTransferData.LevelPack = levelPack;
-                    _levelPackTransferData.PackIndex = packIndex;
+                    _levelPackInfoService.SetData(new LevelPackTransferData()
+                    {
+                        NeedLoadLevel = true,
+                        LevelIndex = targetLevelIndex,
+                        LevelPack = levelPack,
+                        PackIndex = packIndex
+                    });
                     
                     _stateMachine.Enter<LoadingSceneState, string, bool>(SceneNaming.Game, false);
                 };

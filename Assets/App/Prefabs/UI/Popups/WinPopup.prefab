@@ -2025,6 +2025,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5105319382497480775}
     m_Modifications:
+    - target: {fileID: 3934696525304340027, guid: df1d8f2f264d7cc46901478c9f1dbcc9, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8992640202423976495, guid: df1d8f2f264d7cc46901478c9f1dbcc9, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -2121,7 +2125,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 861458842912146767, guid: df1d8f2f264d7cc46901478c9f1dbcc9, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: df1d8f2f264d7cc46901478c9f1dbcc9, type: 3}
 --- !u!224 &868188856744573006 stripped
 RectTransform:

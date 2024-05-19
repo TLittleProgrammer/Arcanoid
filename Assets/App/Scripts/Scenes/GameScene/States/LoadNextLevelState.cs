@@ -1,14 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using App.Scripts.External.GameStateMachine;
-using App.Scripts.External.UserData;
 using App.Scripts.General.Infrastructure;
 using App.Scripts.General.LevelPackInfoService;
 using App.Scripts.General.Levels;
 using App.Scripts.General.LoadingScreen;
 using App.Scripts.General.Popup;
-using App.Scripts.General.UserData.Data;
-using App.Scripts.General.UserData.Services;
 using App.Scripts.Scenes.GameScene.Dotween;
 using App.Scripts.Scenes.GameScene.Grid;
 using App.Scripts.Scenes.GameScene.LevelProgress;
@@ -18,6 +15,7 @@ using App.Scripts.Scenes.GameScene.Levels.View;
 using App.Scripts.Scenes.GameScene.LevelView;
 using App.Scripts.Scenes.GameScene.Popups;
 using App.Scripts.Scenes.GameScene.Time;
+using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace App.Scripts.Scenes.GameScene.States
@@ -37,14 +35,12 @@ namespace App.Scripts.Scenes.GameScene.States
         private readonly ILevelPackInfoService _levelPackInfoService;
         private readonly ILevelViewUpdater _levelViewUpdater;
         
-        private ILevelPackTransferData _levelPackTransferData;
 
         public LoadNextLevelState(
             ILoadingScreen loadingScreen,
             IEnumerable<IRestartable> restartables,
             IStateMachine gameStateMachine,
             ILevelLoader levelLoader,
-            ILevelPackTransferData levelPackTransferData,
             IPopupService popupService,
             ILevelPackInfoView levelPackInfoView,
             ITimeProvider timeProvider,
@@ -57,7 +53,6 @@ namespace App.Scripts.Scenes.GameScene.States
             _restartables = restartables;
             _gameStateMachine = gameStateMachine;
             _levelLoader = levelLoader;
-            _levelPackTransferData = levelPackTransferData;
             _popupService = popupService;
             _levelPackInfoView = levelPackInfoView;
             _timeProvider = timeProvider;
@@ -75,7 +70,8 @@ namespace App.Scripts.Scenes.GameScene.States
             RestartAll();
             await ClosePopups();
 
-            LevelData levelData = GetNextLevelData();
+            var data  = _levelPackInfoService.UpdateLevelPackTransferData();
+            LevelData levelData = JsonConvert.DeserializeObject<LevelData>(data.LevelPack.Levels[data.LevelIndex].text);
 
             await _gridPositionResolver.AsyncInitialize(levelData);
             _levelProgressService.CalculateStepByLevelData(levelData);
@@ -83,24 +79,16 @@ namespace App.Scripts.Scenes.GameScene.States
             _levelLoader.LoadLevel(levelData);
             _levelPackInfoView.Initialize(new LevelPackInfoRecord
             {
-                AllLevelsCountFromPack = _levelPackTransferData.LevelPack.Levels.Count,
-                CurrentLevelIndex = _levelPackTransferData.LevelIndex,
-                Sprite = _levelPackTransferData.LevelPack.GalacticIcon,
+                AllLevelsCountFromPack = data.LevelPack.Levels.Count,
+                CurrentLevelIndex = data.LevelIndex,
+                Sprite = data.LevelPack.GalacticIcon,
                 TargetScore = 0
             });
             
             _gameStateMachine.Enter<GameLoopState>();
         }
 
-        private LevelData GetNextLevelData()
-        {
-            _levelPackTransferData = _levelPackInfoService.UpdateLevelPackTransferData(_levelPackTransferData);
-            LevelData levelData = JsonConvert.DeserializeObject<LevelData>(_levelPackTransferData.LevelPack.Levels[_levelPackTransferData.LevelIndex].text);
-
-            return levelData;
-        }
-
-        private async Task ClosePopups()
+        private async UniTask ClosePopups()
         {
             await _popupService.Close<WinPopupView>();
             _timeProvider.TimeScale = 1f;
