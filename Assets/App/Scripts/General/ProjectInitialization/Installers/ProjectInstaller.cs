@@ -2,15 +2,9 @@
 using App.Scripts.External.DotweenContainerService;
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.External.Localisation;
-using App.Scripts.External.Localisation.Editor;
 using App.Scripts.External.SceneManagment;
-using App.Scripts.General.Constants;
 using App.Scripts.General.Levels;
 using App.Scripts.General.LoadingScreen;
-using App.Scripts.General.Popup;
-using App.Scripts.General.Popup.AssetManagment;
-using App.Scripts.General.Popup.Factory;
-using App.Scripts.General.ProjectInitialization.Settings;
 using App.Scripts.General.RootUI;
 using App.Scripts.General.States;
 using App.Scripts.General.UserData.Services;
@@ -32,7 +26,7 @@ namespace App.Scripts.General.ProjectInitialization.Installers
             Container.Bind<ISceneManagementService>().To<SceneManagementService>().AsSingle();
             Container.Bind<IDotweenContainerService>().To<DotweenContainerService>().AsSingle();
             Container.Bind<LevelProgressDataService>().AsSingle();
-            Container.Bind<ILevelPackTransferData>().To<LevelPackTransferDataService>().AsSingle();
+            Container.Bind<ILevelPackTransferData>().To<LevelPackTransferData>().AsSingle();
             Container.Bind<ILocaleService>().To<LocaleService>().AsSingle().WithArguments(Localisation.text).NonLazy();
 
             CreateRootUI();

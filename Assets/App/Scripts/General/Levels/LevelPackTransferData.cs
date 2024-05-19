@@ -1,6 +1,6 @@
 ﻿namespace App.Scripts.General.Levels
 {
-    public sealed class LevelPackTransferDataService : ILevelPackTransferData
+    public sealed class LevelPackTransferData : ILevelPackTransferData
     {
         public bool NeedLoadLevel { get; set; }
         public int LevelIndex { get; set; }

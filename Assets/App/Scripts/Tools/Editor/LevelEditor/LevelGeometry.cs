@@ -149,6 +149,7 @@ namespace App.Scripts.Tools.Editor.LevelEditor
                 
                 File.WriteAllText(path, json);
                 AssetDatabase.ImportAsset("Assets" + path.Split("Assets")[0]);
+                AssetDatabase.Refresh();
             }
         }
         

@@ -1,5 +1,6 @@
 ﻿using App.Scripts.External.UserData;
 using App.Scripts.External.UserData.SaveLoad;
+using App.Scripts.General.LevelPackInfoService;
 using App.Scripts.General.UserData.Data;
 using Zenject;
 
@@ -12,7 +13,8 @@ namespace App.Scripts.General.ProjectInitialization.Installers
             Container.BindInterfacesAndSelfTo<UserDataInstaller>().FromInstance(this).AsSingle();
             Container.Bind<ISaveLoadService>().To<SaveLoadService>().AsSingle();
             Container.Bind<IUserDataContainer>().To<UserDataContainer>().AsSingle();
-            
+            Container.Bind<ILevelPackInfoService>().To<LevelPackInfoService.LevelPackInfoService>().AsSingle();
+
             Initialize();
         }
 

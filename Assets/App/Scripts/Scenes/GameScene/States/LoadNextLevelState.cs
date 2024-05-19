@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.External.UserData;
 using App.Scripts.General.Infrastructure;
+using App.Scripts.General.LevelPackInfoService;
 using App.Scripts.General.Levels;
 using App.Scripts.General.LoadingScreen;
 using App.Scripts.General.Popup;
@@ -27,16 +28,16 @@ namespace App.Scripts.Scenes.GameScene.States
         private readonly IEnumerable<IRestartable> _restartables;
         private readonly IStateMachine _gameStateMachine;
         private readonly ILevelLoader _levelLoader;
-        private readonly ILevelPackTransferData _levelPackTransferData;
         private readonly IPopupService _popupService;
         private readonly ILevelPackInfoView _levelPackInfoView;
         private readonly ITimeProvider _timeProvider;
         private readonly IGridPositionResolver _gridPositionResolver;
         private readonly ILevelProgressService _levelProgressService;
         private readonly ITweenersLocator _tweenersLocator;
-        private readonly LevelProgressDataService _levelProgressDataService;
-        private readonly IUserDataContainer _userDataContainer;
+        private readonly ILevelPackInfoService _levelPackInfoService;
         private readonly ILevelViewUpdater _levelViewUpdater;
+        
+        private ILevelPackTransferData _levelPackTransferData;
 
         public LoadNextLevelState(
             ILoadingScreen loadingScreen,
@@ -50,8 +51,7 @@ namespace App.Scripts.Scenes.GameScene.States
             IGridPositionResolver gridPositionResolver,
             ILevelProgressService levelProgressService,
             ITweenersLocator tweenersLocator,
-            LevelProgressDataService levelProgressDataService,
-            IUserDataContainer userDataContainer)
+            ILevelPackInfoService levelPackInfoService)
         {
             _loadingScreen = loadingScreen;
             _restartables = restartables;
@@ -64,8 +64,7 @@ namespace App.Scripts.Scenes.GameScene.States
             _gridPositionResolver = gridPositionResolver;
             _levelProgressService = levelProgressService;
             _tweenersLocator = tweenersLocator;
-            _levelProgressDataService = levelProgressDataService;
-            _userDataContainer = userDataContainer;
+            _levelPackInfoService = levelPackInfoService;
         }
 
         public async void Enter()
@@ -75,18 +74,30 @@ namespace App.Scripts.Scenes.GameScene.States
             RemoveTweeners();
             RestartAll();
             await ClosePopups();
-            UpdateUserData();
 
-            _levelPackTransferData.LevelIndex++;
-            LevelData levelData = JsonConvert.DeserializeObject<LevelData>(_levelPackTransferData.LevelPack.Levels[_levelPackTransferData.LevelIndex].text);
+            LevelData levelData = GetNextLevelData();
 
             await _gridPositionResolver.AsyncInitialize(levelData);
             _levelProgressService.CalculateStepByLevelData(levelData);
             
             _levelLoader.LoadLevel(levelData);
-            _levelPackInfoView.UpdatePassedLevels(_levelPackTransferData.LevelIndex, _levelPackTransferData.LevelPack.Levels.Count);
-
+            _levelPackInfoView.Initialize(new LevelPackInfoRecord
+            {
+                AllLevelsCountFromPack = _levelPackTransferData.LevelPack.Levels.Count,
+                CurrentLevelIndex = _levelPackTransferData.LevelIndex,
+                Sprite = _levelPackTransferData.LevelPack.GalacticIcon,
+                TargetScore = 0
+            });
+            
             _gameStateMachine.Enter<GameLoopState>();
+        }
+
+        private LevelData GetNextLevelData()
+        {
+            _levelPackTransferData = _levelPackInfoService.UpdateLevelPackTransferData(_levelPackTransferData);
+            LevelData levelData = JsonConvert.DeserializeObject<LevelData>(_levelPackTransferData.LevelPack.Levels[_levelPackTransferData.LevelIndex].text);
+
+            return levelData;
         }
 
         private async Task ClosePopups()
@@ -106,12 +117,6 @@ namespace App.Scripts.Scenes.GameScene.States
             {
                 restartable.Restart();
             }
-        }
-
-        private void UpdateUserData()
-        { 
-            _levelProgressDataService.PassLevel(_levelPackTransferData.PackIndex);
-            _userDataContainer.SaveData<LevelPackProgressDictionary>();
         }
 
         public void Exit()

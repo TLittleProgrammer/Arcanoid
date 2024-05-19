@@ -2,6 +2,7 @@
 using App.Scripts.External.Components;
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.External.Localisation;
+using App.Scripts.External.UserData;
 using App.Scripts.General.Constants;
 using App.Scripts.General.Levels;
 using App.Scripts.General.States;
@@ -19,7 +20,7 @@ namespace App.Scripts.Scenes.MainMenuScene.Factories.Levels
     {
         private readonly ILevelItemView _prefab;
         private readonly ITransformable _prefabParent;
-        private readonly LevelPackProgressDictionary _levelPackProgressDictionary;
+        private readonly IUserDataContainer _userDataContainer;
         private readonly LevelItemViewByTypeProvider _levelItemViewByTypeProvider;
         private readonly ILevelPackTransferData _levelPackTransferData;
         private readonly IStateMachine _stateMachine;
@@ -29,7 +30,7 @@ namespace App.Scripts.Scenes.MainMenuScene.Factories.Levels
         public LevelItemFactory(
             ILevelItemView prefab,
             ITransformable prefabParent,
-            LevelPackProgressDictionary levelPackProgressDictionary,
+            IUserDataContainer userDataContainer,
             LevelItemViewByTypeProvider levelItemViewByTypeProvider,
             ILevelPackTransferData levelPackTransferData,
             IStateMachine stateMachine,
@@ -38,7 +39,7 @@ namespace App.Scripts.Scenes.MainMenuScene.Factories.Levels
         {
             _prefab = prefab;
             _prefabParent = prefabParent;
-            _levelPackProgressDictionary = levelPackProgressDictionary;
+            _userDataContainer = userDataContainer;
             _levelItemViewByTypeProvider = levelItemViewByTypeProvider;
             _levelPackTransferData = levelPackTransferData;
             _stateMachine = stateMachine;
@@ -49,15 +50,18 @@ namespace App.Scripts.Scenes.MainMenuScene.Factories.Levels
         public ILevelItemView Create(int packIndex, LevelPack levelPack)
         {
             ILevelItemView levelItemView = _diContainer.InstantiatePrefab(_prefab.GameObject, _prefabParent.Transform).GetComponent<ILevelItemView>();
-            VisualTypeId visualType = GetVisualType(packIndex, levelPack);
+
+            LevelPackProgressDictionary packProgress = (LevelPackProgressDictionary)_userDataContainer.GetData<LevelPackProgressDictionary>();
             
-            ChangeVisual(packIndex, levelItemView, levelPack, visualType);
-            SubsribeOnClickIfNeed(levelItemView, packIndex, levelPack, visualType);
+            VisualTypeId visualType = GetVisualType(packIndex, levelPack, packProgress);
+            
+            ChangeVisual(packIndex, levelItemView, levelPack, visualType, packProgress);
+            SubsribeOnClickIfNeed(levelItemView, packIndex, levelPack, visualType, packProgress);
             
             return levelItemView;
         }
 
-        private void SubsribeOnClickIfNeed(ILevelItemView levelItemView, int packIndex, LevelPack levelPack, VisualTypeId visualType)
+        private void SubsribeOnClickIfNeed(ILevelItemView levelItemView, int packIndex, LevelPack levelPack, VisualTypeId visualType, LevelPackProgressDictionary packProgress)
         {
             int targetLevelIndex;
             if (visualType is not VisualTypeId.NotOpened)
@@ -68,8 +72,8 @@ namespace App.Scripts.Scenes.MainMenuScene.Factories.Levels
                 }
                 else
                 {
-                    targetLevelIndex = _levelPackProgressDictionary.ContainsKey(packIndex)
-                        ? _levelPackProgressDictionary[packIndex].PassedLevels
+                    targetLevelIndex = packProgress.ContainsKey(packIndex)
+                        ? packProgress[packIndex].PassedLevels
                         : 0;
                 }
                 
@@ -85,10 +89,10 @@ namespace App.Scripts.Scenes.MainMenuScene.Factories.Levels
             }
         }
 
-        private void ChangeVisual(int packIndex, ILevelItemView levelItemView, LevelPack levelPack, VisualTypeId visualType)
+        private void ChangeVisual(int packIndex, ILevelItemView levelItemView, LevelPack levelPack, VisualTypeId visualType, LevelPackProgressDictionary packProgress)
         {
             LevelItemViewData levelItemViewData = _levelItemViewByTypeProvider.Views[visualType];
-            int passedLevels = _levelPackProgressDictionary.ContainsKey(packIndex) ? _levelPackProgressDictionary[packIndex].PassedLevels : 0;
+            int passedLevels = packProgress.ContainsKey(packIndex) ? packProgress[packIndex].PassedLevels : 0;
                 
             levelItemView.UpdateVisual(new()
             {
@@ -100,15 +104,15 @@ namespace App.Scripts.Scenes.MainMenuScene.Factories.Levels
             });
         }
 
-        private VisualTypeId GetVisualType(int packIndex, LevelPack levelPack)
+        private VisualTypeId GetVisualType(int packIndex, LevelPack levelPack, LevelPackProgressDictionary packProgress)
         {
-            if (packIndex == 0 && _levelPackProgressDictionary.Count == 0)
+            if (packIndex == 0 && packProgress.Count == 0)
             {
-                _levelPackProgressDictionary.Add(0, new());
+                packProgress.Add(0, new());
                 return VisualTypeId.InProgress;
             }
 
-            var lastOpenedPack = _levelPackProgressDictionary.Last();
+            var lastOpenedPack = packProgress.Last();
 
             if (packIndex == lastOpenedPack.Key + 1 &&
                 lastOpenedPack.Value.PassedLevels >= _levelPackProvider.LevelPacks[lastOpenedPack.Key].Levels.Count)
@@ -116,12 +120,12 @@ namespace App.Scripts.Scenes.MainMenuScene.Factories.Levels
                 return VisualTypeId.InProgress;
             }
             
-            if (!_levelPackProgressDictionary.ContainsKey(packIndex))
+            if (!packProgress.ContainsKey(packIndex))
             {
                 return VisualTypeId.NotOpened;
             }
 
-            if (_levelPackProgressDictionary[packIndex].PassedLevels >= levelPack.Levels.Count)
+            if (packProgress[packIndex].PassedLevels >= levelPack.Levels.Count)
             {
                 return VisualTypeId.Passed;
             }
