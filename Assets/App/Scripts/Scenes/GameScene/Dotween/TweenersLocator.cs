@@ -26,12 +26,12 @@ namespace App.Scripts.Scenes.GameScene.Dotween
 
         public void RemoveAll()
         {
-            foreach (Tweener tweener in _tweeners)
+            foreach (Tweener tweener in _tweeners.ToArray())
             {
                 tweener.Kill();
             }
 
-            foreach (Sequence sequence in _sequences)
+            foreach (Sequence sequence in _sequences.ToArray())
             {
                 sequence.Kill();
             }

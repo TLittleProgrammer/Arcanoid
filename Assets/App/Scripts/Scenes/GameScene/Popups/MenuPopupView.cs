@@ -21,15 +21,12 @@ namespace App.Scripts.Scenes.GameScene.Popups
         private Sequence _sequence;
         private IPopupService _popupService;
         private IStateMachine _gameStateMachine;
-        private IStateMachine _projectStateMachine;
-
+        
         [Inject]
         private void Construct(
             IPopupService popupService,
-            [Inject(Id = BindingConstants.ProjectStateMachine)] IStateMachine projectStateMachine,
-            [Inject(Id = BindingConstants.GameStateMachine)] IStateMachine gameStateMachine)
+            IStateMachine gameStateMachine)
         {
-            _projectStateMachine = projectStateMachine;
             _gameStateMachine = gameStateMachine;
             _popupService = popupService;
 
@@ -63,7 +60,7 @@ namespace App.Scripts.Scenes.GameScene.Popups
         private void Back()
         {
             Close().Forget();
-            _projectStateMachine.Enter<LoadingSceneState, string, bool>(SceneNaming.MainMenu, false);
+            _gameStateMachine.Enter<LoadSceneFromMainMenuState, string>(SceneNaming.MainMenu);
         }
 
         private async void Continue()

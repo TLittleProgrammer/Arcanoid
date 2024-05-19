@@ -139,6 +139,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animationSettings: {fileID: 11400000, guid: 0f55cb655a3e999478f905970d669ad3, type: 2}
+  _animatedTransform: {fileID: 0}
 --- !u!1 &220711383754786383
 GameObject:
   m_ObjectHideFlags: 0
@@ -302,6 +303,7 @@ GameObject:
   - component: {fileID: 220711384880003199}
   - component: {fileID: 220711384880003197}
   - component: {fileID: 220711384880003196}
+  - component: {fileID: 8993789969081344421}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -426,6 +428,20 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &8993789969081344421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 220711384880003198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 200415cde1bc41f5864389359cb6e7e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _localeKey: Play
+  _text: {fileID: 220711384880003196}
 --- !u!1 &220711384928109020
 GameObject:
   m_ObjectHideFlags: 0

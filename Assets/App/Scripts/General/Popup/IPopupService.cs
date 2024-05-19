@@ -1,4 +1,4 @@
-﻿using App.Scripts.General.Components;
+﻿using App.Scripts.External.Components;
 using Cysharp.Threading.Tasks;
 
 namespace App.Scripts.General.Popup
@@ -7,5 +7,6 @@ namespace App.Scripts.General.Popup
     {
         IPopupView Show<TPopupView>(ITransformable parent = null) where TPopupView : IPopupView;
         UniTask Close<TPopup>() where TPopup : IPopupView;
+        UniTask CloseAll();
     }
 }

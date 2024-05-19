@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using App.Scripts.Scenes.GameScene.LevelProgress;
+using TMPro;
 using UnityEngine.UI;
 
 namespace App.Scripts.Scenes.GameScene.LevelView
@@ -10,5 +11,7 @@ namespace App.Scripts.Scenes.GameScene.LevelView
         Image Image { get; }
 
         void UpdatePassedLevels(int currentLevel, int allLevels);
+        void UpdateProgressText(int value);
+        void Initialize(LevelPackInfoRecord packInfoRecord);
     }
 }

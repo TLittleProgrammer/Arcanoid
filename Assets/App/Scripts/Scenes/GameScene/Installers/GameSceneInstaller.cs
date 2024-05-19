@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
+using App.Scripts.External.Components;
 using App.Scripts.External.Extensions.ZenjectExtensions;
 using App.Scripts.External.GameStateMachine;
-using App.Scripts.General.Components;
+using App.Scripts.General.Infrastructure;
 using App.Scripts.General.Popup;
 using App.Scripts.General.Popup.AssetManagment;
 using App.Scripts.General.Popup.Factory;
@@ -10,19 +11,17 @@ using App.Scripts.Scenes.GameScene.Ball.Collision;
 using App.Scripts.Scenes.GameScene.Ball.Movement;
 using App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants;
 using App.Scripts.Scenes.GameScene.Camera;
-using App.Scripts.Scenes.GameScene.Collisions;
-using App.Scripts.Scenes.GameScene.Components;
 using App.Scripts.Scenes.GameScene.Constants;
-using App.Scripts.Scenes.GameScene.Containers;
 using App.Scripts.Scenes.GameScene.Dotween;
 using App.Scripts.Scenes.GameScene.Effects;
 using App.Scripts.Scenes.GameScene.Entities;
+using App.Scripts.Scenes.GameScene.Factories.CircleEffect;
 using App.Scripts.Scenes.GameScene.Factories.Entity;
 using App.Scripts.Scenes.GameScene.Factories.Health;
+using App.Scripts.Scenes.GameScene.Factories.OnTopSprite;
 using App.Scripts.Scenes.GameScene.Grid;
 using App.Scripts.Scenes.GameScene.Healthes;
 using App.Scripts.Scenes.GameScene.Healthes.View;
-using App.Scripts.Scenes.GameScene.Infrastructure;
 using App.Scripts.Scenes.GameScene.Input;
 using App.Scripts.Scenes.GameScene.LevelProgress;
 using App.Scripts.Scenes.GameScene.Levels.Load;
@@ -37,6 +36,7 @@ using App.Scripts.Scenes.GameScene.ScreenInfo;
 using App.Scripts.Scenes.GameScene.Settings;
 using App.Scripts.Scenes.GameScene.States;
 using App.Scripts.Scenes.GameScene.Time;
+using App.Scripts.Scenes.GameScene.TopSprites;
 using App.Scripts.Scenes.GameScene.Walls;
 using UnityEngine;
 using Zenject;
@@ -64,7 +64,6 @@ namespace App.Scripts.Scenes.GameScene.Installers
         private List<ITickable> _gameLoopTickables = new();
         
         private IStateMachine _gameStateMachine = new StateMachine();
-        private IBallSpeedUpdater _ballSpeedUpdater = new BallSpeedUpdater();
         
         public override void InstallBindings()
         {
@@ -81,15 +80,13 @@ namespace App.Scripts.Scenes.GameScene.Installers
             BindScreenInfoProvider();
             BindInput();
             BindGridPositionResolver();
-            BindContainers();
+            BindBallSpeedUpdater();
             BindLevelLoader();
-            BindCollisionService();
             BindPositionCheckers();
             BindPlayerMoving();
             BindHealthPointService();
             BindBallMovers();
             BindBallMovement();
-            BindBallSpeedUpdater();
             BindBallCollisionService();
             BindWallLoader();
 
@@ -121,7 +118,7 @@ namespace App.Scripts.Scenes.GameScene.Installers
 
         private void BindBallSpeedUpdater()
         {
-            Container.Bind<IBallSpeedUpdater>().FromInstance(_ballSpeedUpdater).AsSingle();
+            Container.Bind<IBallSpeedUpdater>().To<BallSpeedUpdater>().AsSingle();
         }
 
         private void BindMousePositionChecker()
@@ -167,37 +164,21 @@ namespace App.Scripts.Scenes.GameScene.Installers
             GameLoopState gameLoopState = Container.Instantiate<GameLoopState>(new object[]{_gameLoopTickables, _gameStateMachine});
             PopupState popupState = Container.Instantiate<PopupState>();
             LooseState looseState = Container.Instantiate<LooseState>();
-            WinState winState = Container.Instantiate<WinState>();
+            WinState winState = Container.Instantiate<WinState>(new[] { _gameStateMachine });
+            LoadSceneFromMainMenuState loadSceneFromMainMenuState = Container.Instantiate<LoadSceneFromMainMenuState>(new[] { _projectStateMachine });
             RestartState restartState = Container.Instantiate<RestartState>(new object[] {_restartables, _gameStateMachine});
             LoadNextLevelState loadNextLevelState = Container.Instantiate<LoadNextLevelState>(new object[] {_levelPackInfoView, _restartablesForLoadNewLevel, _gameStateMachine});
 
             Container.BindInterfacesTo<GameLoopState>().FromInstance(gameLoopState);
             
             
-            _gameStateMachine.AsyncInitialize(new IState[] { gameLoopState, popupState, restartState, loadNextLevelState, looseState, winState });
+            _gameStateMachine.AsyncInitialize(new IExitableState[] { gameLoopState, popupState, restartState, loadNextLevelState, looseState, winState, loadSceneFromMainMenuState });
             _gameStateMachine.Enter<GameLoopState>();
             
             Container.Bind<IStateMachine>()
-                .WithId(BindingConstants.GameStateMachine)
                 .FromInstance(_gameStateMachine)
                 .AsCached()
                 .NonLazy();
-
-            Container.Bind<IStateMachine>()
-                .WithId(BindingConstants.ProjectStateMachine)
-                .FromInstance(_projectStateMachine)
-                .AsCached()
-                .NonLazy();
-        }
-
-        private void BindCollisionService()
-        {
-            Container.Bind<ICollisionService<EntityView>>().To<EntityCollisionService>().AsSingle();
-        }
-
-        private void BindContainers()
-        {
-            Container.Bind<IContainer<IBoxColliderable2D>>().To<EntityColliderContainer>().AsSingle();
         }
 
         private void BindBallMovers()
@@ -250,12 +231,13 @@ namespace App.Scripts.Scenes.GameScene.Installers
         {
             Container.BindFactory<string, IEntityView, IEntityView.Factory>().FromFactory<EntityFactory>();
             Container.BindFactory<ITransformable, IHealthPointView, IHealthPointView.Factory>().FromFactory<HealthFactory>();
+            Container.BindFactory<EntityView, CircleEffect, CircleEffect.Factory>().FromFactory<CircleEffectFactory>();
+            Container.BindFactory<IEntityView, OnTopSprites, OnTopSprites.Factory>().FromFactory<OnTopSpriteFactory>();
             
             Container.Bind<IPopupProvider>().To<ResourcesPopupProvider>().AsSingle();
             Container.Bind<IPopupFactory>().To<PopupFactory>().AsSingle();
-
             Container.Bind<IPopupService>().To<PopupService>().AsSingle();
-            
+
             _restartables.Add(Container.Resolve<IPopupService>() as IRestartable);
             _restartablesForLoadNewLevel.Add(Container.Resolve<IPopupService>() as IRestartable);
         }
@@ -273,6 +255,7 @@ namespace App.Scripts.Scenes.GameScene.Installers
             BindPool<EntityView, EntityView.Pool>(PoolTypeId.EntityView);
             BindPool<CircleEffect, IEffect<CircleEffect>.Pool>(PoolTypeId.CircleEffect);
             BindPool<HealthPointView, HealthPointView.Pool>(PoolTypeId.HealthPointView);
+            BindPool<OnTopSprites, OnTopSprites.Pool>(PoolTypeId.OnTopSprite);
         }
 
         private void BindPool<TInstance, TPool>(PoolTypeId poolType) where TPool : IMemoryPool where TInstance : MonoBehaviour 
@@ -282,7 +265,7 @@ namespace App.Scripts.Scenes.GameScene.Installers
 
         private void BindLevelLoader()
         {
-            Container.Bind<ILevelViewUpdater>().To<LevelViewUpdater>().AsSingle().WithArguments(_ballSpeedUpdater);
+            Container.Bind<ILevelViewUpdater>().To<LevelViewUpdater>().AsSingle();
             Container.Bind<ILevelLoader>().To<LevelLoader>().AsSingle();
             
             _restartables.Add(Container.Resolve<ILevelLoader>());

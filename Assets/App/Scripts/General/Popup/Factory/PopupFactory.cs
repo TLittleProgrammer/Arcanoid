@@ -1,8 +1,9 @@
 ﻿using System;
+using App.Scripts.External.Components;
 using App.Scripts.External.Initialization;
-using App.Scripts.General.Components;
 using App.Scripts.General.Popup.AssetManagment;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 using Zenject;
 
 namespace App.Scripts.General.Popup.Factory
@@ -28,7 +29,8 @@ namespace App.Scripts.General.Popup.Factory
         {
             IPopupView prefab = _popupProvider.LoadPopup<TViewPopupProvider>();
 
-            return _diContainer.InstantiatePrefabForComponent<IPopupView>(prefab.GameObject, parent.Transform);
+            Transform parentPrefab = parent is null ? null : parent.Transform;
+            return _diContainer.InstantiatePrefabForComponent<IPopupView>(prefab.GameObject, parentPrefab);
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using System;
-using App.Scripts.Scenes.GameScene.Infrastructure;
+using App.Scripts.General.Infrastructure;
 using App.Scripts.Scenes.GameScene.Levels;
 using Zenject;
 

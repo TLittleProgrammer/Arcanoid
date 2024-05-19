@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using App.Scripts.General.Components;
+using App.Scripts.External.Components;
+using App.Scripts.General.Infrastructure;
 using App.Scripts.General.Popup.Factory;
-using App.Scripts.Scenes.GameScene.Infrastructure;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
@@ -46,6 +46,17 @@ namespace App.Scripts.General.Popup
             }
 
             await UniTask.CompletedTask;
+        }
+
+        public async UniTask CloseAll()
+        {
+            foreach (IPopupView view in _popupsList)
+            {
+                await view.Close();
+                Object.Destroy(view.GameObject);
+            }
+            
+            _popupsList.Clear();
         }
 
         private void LockButtonsForLastPopup()

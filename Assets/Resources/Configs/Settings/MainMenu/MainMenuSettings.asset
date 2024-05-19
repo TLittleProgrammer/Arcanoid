@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LevelPackProvider: {fileID: 11400000, guid: efb5007b3d476144eb1e75085b4284d3, type: 2}
   LevelItemViewByTypeProvider: {fileID: 11400000, guid: 8964ef10891f61544bc9a66a4314abe4, type: 2}
+  LocaleProvider: {fileID: 11400000, guid: edd0156c9b956d846a76a5332b0a2355, type: 2}

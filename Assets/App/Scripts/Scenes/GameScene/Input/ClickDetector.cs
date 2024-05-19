@@ -1,5 +1,4 @@
 ﻿using System;
-using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.Input
 {

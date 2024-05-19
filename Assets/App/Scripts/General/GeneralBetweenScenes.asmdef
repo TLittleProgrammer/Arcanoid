@@ -12,7 +12,8 @@
         "OdinPackageUnityExtensions",
         "UserData",
         "DotweenContainerService",
-        "Initialization"
+        "Initialization",
+        "Localisation"
     ],
     "includePlatforms": [
         "Android",

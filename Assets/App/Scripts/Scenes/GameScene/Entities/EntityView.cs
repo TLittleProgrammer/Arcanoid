@@ -37,10 +37,7 @@ namespace App.Scripts.Scenes.GameScene.Entities
             set => transform.localScale = value;
         }
 
-        public BoxCollider2D BoxCollider2D
-        {
-            get => _collider2D;
-        }
+        public BoxCollider2D BoxCollider2D => _collider2D;
 
 
         public class Pool : MonoMemoryPool<EntityView>

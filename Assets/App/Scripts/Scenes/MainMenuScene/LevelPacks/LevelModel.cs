@@ -9,5 +9,6 @@ namespace App.Scripts.Scenes.MainMenuScene.LevelPacks
         public LevelPack LevelPack;
         public VisualTypeId VisualTypeId;
         public int PassedLevels;
+        public string LocaleKey;
     }
 }

@@ -1329,6 +1329,10 @@ PrefabInstance:
       propertyPath: LocaleKey
       value: Restart
       objectReference: {fileID: 0}
+    - target: {fileID: 6667574834146640482, guid: 724f24a4b20b1ef498010f396ab47048, type: 3}
+      propertyPath: _localeKey
+      value: Restart
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 724f24a4b20b1ef498010f396ab47048, type: 3}
 --- !u!224 &2066557482657369369 stripped
@@ -1497,6 +1501,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6667574834146640482, guid: 724f24a4b20b1ef498010f396ab47048, type: 3}
       propertyPath: LocaleKey
+      value: Back
+      objectReference: {fileID: 0}
+    - target: {fileID: 6667574834146640482, guid: 724f24a4b20b1ef498010f396ab47048, type: 3}
+      propertyPath: _localeKey
       value: Back
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1669,6 +1677,10 @@ PrefabInstance:
       propertyPath: LocaleKey
       value: Continue
       objectReference: {fileID: 0}
+    - target: {fileID: 6667574834146640482, guid: 724f24a4b20b1ef498010f396ab47048, type: 3}
+      propertyPath: _localeKey
+      value: Continue
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 724f24a4b20b1ef498010f396ab47048, type: 3}
 --- !u!224 &2066557481749286325 stripped
@@ -1798,6 +1810,10 @@ PrefabInstance:
     - target: {fileID: 2875981765120574083, guid: 724f24a4b20b1ef498010f396ab47048, type: 3}
       propertyPath: m_Name
       value: LocalePrefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 6667574834146640482, guid: 724f24a4b20b1ef498010f396ab47048, type: 3}
+      propertyPath: _localeKey
+      value: Menu
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 724f24a4b20b1ef498010f396ab47048, type: 3}

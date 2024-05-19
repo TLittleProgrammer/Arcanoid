@@ -1,4 +1,5 @@
-﻿using App.Scripts.Scenes.MainMenuScene.Factories.Levels;
+﻿using App.Scripts.General.Levels;
+using App.Scripts.Scenes.MainMenuScene.Factories.Levels;
 using App.Scripts.Scenes.MainMenuScene.LevelPacks.Configs;
 using UnityEngine;
 using Zenject;

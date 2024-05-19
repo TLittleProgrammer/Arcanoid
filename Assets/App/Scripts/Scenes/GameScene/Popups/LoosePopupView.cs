@@ -23,7 +23,7 @@ namespace App.Scripts.Scenes.GameScene.Popups
 
         [Inject]
         private void Construct(
-            [Inject(Id = BindingConstants.GameStateMachine)] IStateMachine gameStateMachine,
+            IStateMachine gameStateMachine,
             ITweenersLocator tweenersLocator,
             WinContinueButtonAnimationSettings winContinueButtonAnimationSettings)
         {

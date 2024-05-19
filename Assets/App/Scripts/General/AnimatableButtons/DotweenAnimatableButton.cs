@@ -1,5 +1,5 @@
+using App.Scripts.External.DotweenContainerService;
 using App.Scripts.General.AnimatableButtons.Settings;
-using App.Scripts.General.DotweenContainerService;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;

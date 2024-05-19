@@ -1,15 +1,10 @@
 ﻿using System.Collections.Generic;
+using App.Scripts.External.DotweenContainerService;
 using App.Scripts.External.GameStateMachine;
+using App.Scripts.External.Localisation;
 using App.Scripts.External.SceneManagment;
-using App.Scripts.General.Components;
-using App.Scripts.General.Constants;
-using App.Scripts.General.DotweenContainerService;
 using App.Scripts.General.Levels;
 using App.Scripts.General.LoadingScreen;
-using App.Scripts.General.Popup;
-using App.Scripts.General.Popup.AssetManagment;
-using App.Scripts.General.Popup.Factory;
-using App.Scripts.General.ProjectInitialization.Settings;
 using App.Scripts.General.RootUI;
 using App.Scripts.General.States;
 using App.Scripts.General.UserData.Services;
@@ -18,29 +13,23 @@ using Zenject;
 
 namespace App.Scripts.General.ProjectInitialization.Installers
 {
-    public class ProjectInstaller : MonoInstaller, IInitializable   
+    public class ProjectInstaller : MonoInstaller
     {
         public RootUIViewProvider RootUIPrefab;
         public GameObject LoadingScreenPrefab;
-        
-        [Inject] private ApplicationSettings _applicationSettings;
-        
+        public TextAsset Localisation;
+
         public override void InstallBindings()
         {
-            Container.BindInterfacesAndSelfTo<ProjectInstaller>().FromInstance(this).AsSingle();
+            Container.BindInterfacesAndSelfTo<ProjectInitializer>().AsSingle();
+            
             Container.Bind<ISceneManagementService>().To<SceneManagementService>().AsSingle();
-            Container.Bind<IDotweenContainerService>().To<DotweenContainerService.DotweenContainerService>().AsSingle();
+            Container.Bind<IDotweenContainerService>().To<DotweenContainerService>().AsSingle();
             Container.Bind<LevelProgressDataService>().AsSingle();
-            Container.Bind<ILevelPackTransferData>().To<LevelPackTransferDataService>().AsSingle();
+            Container.Bind<ILocaleService>().To<LocaleService>().AsSingle().WithArguments(Localisation.text).NonLazy();
 
             CreateRootUI();
             BindProjectStateMachine();
-        }
-
-        public void Initialize()
-        {
-            Application.targetFrameRate = _applicationSettings.TargetFPS;
-            QualitySettings.vSyncCount = _applicationSettings.VSyncCounter;
         }
 
         private void CreateRootUI()

@@ -14,10 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EntityTypeId: 0
   Sprite: {fileID: 21300000, guid: a0a5a1449edfcc24484e9d990239890c, type: 3}
-  HealthCounter: 1
+  MaxHealthCounter: 4
   ICanGetDamage: 1
-  NextStage: {fileID: 0}
-  AvailableSpritesOnMainSprite:
-  - {fileID: 21300000, guid: 0998e706526ae37439a0c260753600cc, type: 3}
-  - {fileID: 21300000, guid: b27b4338851fabe4eb5ae17791da562a, type: 3}
-  - {fileID: 21300000, guid: 47d0058aace7d8d4585a4a5ebb9fe9c2, type: 3}
+  AddSpritesOnMainByHp:
+  - Healthes: 1
+    Sprites:
+    - {fileID: 21300000, guid: 0998e706526ae37439a0c260753600cc, type: 3}
+  - Healthes: 2
+    Sprites:
+    - {fileID: 21300000, guid: b27b4338851fabe4eb5ae17791da562a, type: 3}
+  - Healthes: 3
+    Sprites:
+    - {fileID: 21300000, guid: 47d0058aace7d8d4585a4a5ebb9fe9c2, type: 3}

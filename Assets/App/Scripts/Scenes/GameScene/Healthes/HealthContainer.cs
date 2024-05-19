@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using App.Scripts.General.Infrastructure;
 using App.Scripts.Scenes.GameScene.Constants;
-using App.Scripts.Scenes.GameScene.Infrastructure;
 using App.Scripts.Scenes.GameScene.Levels;
 using Cysharp.Threading.Tasks;
 
@@ -32,24 +32,30 @@ namespace App.Scripts.Scenes.GameScene.Healthes
 
         public void UpdateHealth(int healthCount)
         {
+            _healthPointService.UpdateHealth(healthCount);
+
+            UpdateHealthCounter(healthCount);
+            RestartServicesIfNeed(healthCount);
+        }
+
+        private void UpdateHealthCounter(int healthCount)
+        {
+            _currentHealthCounter += healthCount;
+
+            if (_currentHealthCounter < 0)
+            {
+                LivesAreWasted?.Invoke();
+            }
+        }
+
+        private void RestartServicesIfNeed(int healthCount)
+        {
             if (healthCount < 0)
             {
                 foreach (IRestartable restartable in _restartables)
                 {
                     restartable.Restart();
                 }
-            }
-            
-            _healthPointService.UpdateHealth(healthCount);
-            
-            if (_currentHealthCounter + healthCount < 0)
-            {
-                _currentHealthCounter = -1;
-                LivesAreWasted?.Invoke();
-            }
-            else
-            {
-                _currentHealthCounter += healthCount;
             }
         }
 

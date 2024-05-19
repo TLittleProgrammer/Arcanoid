@@ -2,6 +2,7 @@
 using App.Scripts.Scenes.GameScene.Effects;
 using App.Scripts.Scenes.GameScene.Entities;
 using App.Scripts.Scenes.GameScene.Healthes.View;
+using App.Scripts.Scenes.GameScene.TopSprites;
 using UnityEngine;
 using Zenject;
 
@@ -12,17 +13,24 @@ namespace App.Scripts.Scenes.GameScene.Pools
         private readonly EntityView.Pool _entityViewPool;
         private readonly IEffect<CircleEffect>.Pool _circleEffectPool;
         private readonly HealthPointView.Pool _healthPointPool;
+        private readonly OnTopSprites.Pool _onTopSpritesPool;
 
         private List<MonoBehaviour> _entitySpawned = new();
         private List<MonoBehaviour> _circleEffectSpawned = new();
         private List<MonoBehaviour> _healthPointSpawned = new();
+        private List<MonoBehaviour> _onTopSpritesSpawned = new();
 
         private Dictionary<PoolTypeId, List<MonoBehaviour>> _spawnedItemDictionaryHelper;
 
-        public PoolContainer(EntityView.Pool entityViewPool, IEffect<CircleEffect>.Pool circleEffectPool, HealthPointView.Pool healthPointPool)
+        public PoolContainer(
+            EntityView.Pool entityViewPool,
+            IEffect<CircleEffect>.Pool circleEffectPool,
+            HealthPointView.Pool healthPointPool,
+            OnTopSprites.Pool onTopSpritesPool)
         {
             _circleEffectPool = circleEffectPool;
             _healthPointPool = healthPointPool;
+            _onTopSpritesPool = onTopSpritesPool;
             _entityViewPool = entityViewPool;
 
             _spawnedItemDictionaryHelper = new()
@@ -30,6 +38,7 @@ namespace App.Scripts.Scenes.GameScene.Pools
                 [PoolTypeId.EntityView]      = _entitySpawned,
                 [PoolTypeId.CircleEffect]    = _circleEffectSpawned,
                 [PoolTypeId.HealthPointView] = _healthPointSpawned,
+                [PoolTypeId.OnTopSprite]     = _onTopSpritesSpawned,
             };
         }
 
@@ -40,6 +49,7 @@ namespace App.Scripts.Scenes.GameScene.Pools
                 PoolTypeId.EntityView      => _entityViewPool.Spawn().GetComponent<TItem>(),
                 PoolTypeId.CircleEffect    => _circleEffectPool.Spawn().GetComponent<TItem>(),
                 PoolTypeId.HealthPointView => _healthPointPool.Spawn().GetComponent<TItem>(),
+                PoolTypeId.OnTopSprite     => _onTopSpritesPool.Spawn().GetComponent<TItem>(),
                 
                 _ => null
             };
@@ -55,7 +65,8 @@ namespace App.Scripts.Scenes.GameScene.Pools
             {
                 case PoolTypeId.EntityView: RemoveItemFromPool(item, _entityViewPool, _entitySpawned); break;
                 case PoolTypeId.CircleEffect: RemoveItemFromPool(item, _circleEffectPool, _circleEffectSpawned); break;
-                case PoolTypeId.HealthPointView: RemoveItemFromPool(item, _healthPointPool, _healthPointSpawned);break;
+                case PoolTypeId.HealthPointView: RemoveItemFromPool(item, _healthPointPool, _healthPointSpawned); break;
+                case PoolTypeId.OnTopSprite: RemoveItemFromPool(item, _onTopSpritesPool, _onTopSpritesSpawned); break;
             }
         }
 
@@ -72,6 +83,7 @@ namespace App.Scripts.Scenes.GameScene.Pools
             Clear<EntityView>(_entitySpawned, _entityViewPool);
             Clear<CircleEffect>(_circleEffectSpawned, _circleEffectPool);
             Clear<HealthPointView>(_healthPointSpawned, _healthPointPool);
+            Clear<OnTopSprites>(_onTopSpritesSpawned, _onTopSpritesPool);
         }
 
         private void Clear<TView>(List<MonoBehaviour> spawned, IMemoryPool memoryPool) where TView : MonoBehaviour

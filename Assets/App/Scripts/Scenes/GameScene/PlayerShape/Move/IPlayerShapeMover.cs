@@ -1,4 +1,4 @@
-﻿using App.Scripts.Scenes.GameScene.Infrastructure;
+﻿using App.Scripts.General.Infrastructure;
 using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.PlayerShape.Move

@@ -2,74 +2,117 @@
 using App.Scripts.External.Extensions.ListExtensions;
 using App.Scripts.External.Grid;
 using App.Scripts.Scenes.GameScene.Ball;
-using App.Scripts.Scenes.GameScene.Components;
-using App.Scripts.Scenes.GameScene.Containers;
 using App.Scripts.Scenes.GameScene.Entities;
 using App.Scripts.Scenes.GameScene.LevelProgress;
 using App.Scripts.Scenes.GameScene.Levels.AssetManagement;
+using App.Scripts.Scenes.GameScene.Levels.Data;
 using App.Scripts.Scenes.GameScene.Pools;
+using App.Scripts.Scenes.GameScene.TopSprites;
+using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Levels.View
 {
     public class LevelViewUpdater : ILevelViewUpdater
     {
         private readonly EntityProvider _entityProvider;
-        private readonly IContainer<IBoxColliderable2D> _boxColliderContainer;
         private readonly IPoolContainer _poolContainer;
         private readonly ILevelProgressService _levelProgressService;
         private readonly IBallSpeedUpdater _ballSpeedUpdater;
+        private readonly OnTopSprites.Factory _spritesFactory;
 
         private Grid<int> _levelGrid;
+        private Grid<GridItemData> _levelGridItemData = new(Vector2Int.zero);
 
         public LevelViewUpdater(
             EntityProvider entityProvider,
-            IContainer<IBoxColliderable2D> boxColliderContainer,
             IPoolContainer poolContainer,
             ILevelProgressService levelProgressService,
-            IBallSpeedUpdater ballSpeedUpdater)
+            IBallSpeedUpdater ballSpeedUpdater,
+            OnTopSprites.Factory spritesFactory)
         {
             _entityProvider = entityProvider;
-            _boxColliderContainer = boxColliderContainer;
             _poolContainer = poolContainer;
             _levelProgressService = levelProgressService;
             _ballSpeedUpdater = ballSpeedUpdater;
+            _spritesFactory = spritesFactory;
         } 
 
         public void SetGrid(Grid<int> grid)
         {
             _levelGrid = grid;
+
+            InitializeGridItemData();
         }
 
-        public void UpdateVisual(IEntityView entityView)
+        private void InitializeGridItemData()
         {
-            string index = GetIndexByEntityView(entityView);
-            
-            EntityStage entityStage = _entityProvider.EntityStages[index];
+            _levelGridItemData.UpdateMatrix(_levelGrid.Size);
 
-            if (entityStage.ICanGetDamage)
+            for (int i = 0; i < _levelGrid.Width; i++)
             {
-                if (entityStage.HealthCounter - 1 <= 0)
+                for (int j = 0; j < _levelGrid.Height; j++)
                 {
-                    _levelProgressService.TakeOneStep();
-                    _boxColliderContainer.RemoveItem(entityView);
-                    _poolContainer.RemoveItem(PoolTypeId.EntityView, entityView as EntityView);
-                    _ballSpeedUpdater.UpdateSpeed();
-                }
-                else
-                {
-                    EntityStage nextStage = entityStage.NextStage;
+                    string index = _levelGrid[i, j].ToString();
+                    EntityStage entityStage = _entityProvider.EntityStages[index];
 
-                    entityView.MainSprite  = nextStage.Sprite;
-                    entityView.OnTopSprite = nextStage.AvailableSpritesOnMainSprite.GetRandomValue();
-
-                    _levelGrid[entityView.GridPositionX, entityView.GridPositionY] = GetIndexByStage(nextStage);
+                    _levelGridItemData[i, j] = new();
+                    _levelGridItemData[i, j].CurrentHealth = entityStage.MaxHealthCounter;
                 }
             }
         }
 
-        private int GetIndexByStage(EntityStage entityStage)
+        public void UpdateVisual(IEntityView entityView)
         {
-            return int.Parse(_entityProvider.EntityStages.First(x => x.Value.Equals(entityStage)).Key);
+            EntityStage entityStage = GetEntityStage(entityView);
+
+            if (entityStage.ICanGetDamage is false)
+                return;
+            
+            GridItemData itemData = _levelGridItemData[entityView.GridPositionX, entityView.GridPositionY];
+            itemData.CurrentHealth--;
+
+            if (ReturnIfCurrentHealthIsEqualsOrLessZero(entityView, itemData)) return;
+            TryAddOnTopSprite(entityView, entityStage, itemData);
+        }
+
+        private void TryAddOnTopSprite(IEntityView entityView, EntityStage entityStage, GridItemData itemData)
+        {
+            HealthSpriteData healthSpriteData = entityStage.AddSpritesOnMainByHp.FirstOrDefault(x => x.Healthes == itemData.CurrentHealth);
+
+            if (healthSpriteData is not null)
+            {
+                OnTopSprites topSprite = _spritesFactory.Create(entityView);
+                topSprite.SetSprite(healthSpriteData.Sprites.GetRandomValue());
+
+                itemData.Sprites.Add(topSprite);
+            }
+        }
+
+        private bool ReturnIfCurrentHealthIsEqualsOrLessZero(IEntityView entityView, GridItemData itemData)
+        {
+            if (itemData.CurrentHealth <= 0)
+            {
+                _levelProgressService.TakeOneStep();
+
+                _poolContainer.RemoveItem(PoolTypeId.EntityView, entityView as EntityView);
+                foreach (OnTopSprites sprite in itemData.Sprites)
+                {
+                    _poolContainer.RemoveItem(PoolTypeId.OnTopSprite, sprite);
+                }
+
+                _ballSpeedUpdater.UpdateSpeed();
+                return true;
+            }
+
+            return false;
+        }
+
+        private EntityStage GetEntityStage(IEntityView entityView)
+        {
+            string index = GetIndexByEntityView(entityView);
+
+            EntityStage entityStage = _entityProvider.EntityStages[index];
+            return entityStage;
         }
 
         private string GetIndexByEntityView(IEntityView entityView)

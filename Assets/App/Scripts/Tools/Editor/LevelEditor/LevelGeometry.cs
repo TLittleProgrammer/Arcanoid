@@ -5,7 +5,6 @@ using App.Scripts.External.Converters;
 using App.Scripts.External.Extensions.MathExtensions;
 using App.Scripts.Scenes.GameScene.Levels;
 using App.Scripts.Scenes.GameScene.Levels.AssetManagement;
-using App.Scripts.Scenes.GameScene.Levels.Entities;
 using Newtonsoft.Json;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
@@ -57,7 +56,7 @@ namespace App.Scripts.Tools.Editor.LevelEditor
         [OnInspectorInit]
         private void CreateGrid()
         {
-            _pathToDirectoryLevels = Path.Combine(Application.dataPath, "/Resources/Levels/");
+            _pathToDirectoryLevels = Path.Combine(Application.dataPath, "Resources", "Levels");
             CurrentEntityCellData = new();
             PresetsData = GetPresets();
             BrushingPresetName = PresetsData.PresetItems.First().Key;
@@ -125,7 +124,7 @@ namespace App.Scripts.Tools.Editor.LevelEditor
                     EntityStage entityStage = EntitiesProvider.EntityStages[key];
                     
                     CurrentEntityCellData.Sprite = entityStage.Sprite;
-                    CurrentEntityCellData.HealthPoints = entityStage.HealthCounter;
+                    CurrentEntityCellData.HealthPoints = entityStage.MaxHealthCounter;
                 }
             }
         }
@@ -149,6 +148,8 @@ namespace App.Scripts.Tools.Editor.LevelEditor
                 var json = JsonConvert.SerializeObject(levelData, Formatting.Indented, new Int2Converter());
                 
                 File.WriteAllText(path, json);
+                AssetDatabase.ImportAsset("Assets" + path.Split("Assets")[0]);
+                AssetDatabase.Refresh();
             }
         }
         

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using DG.Tweening;
 
-namespace App.Scripts.General.DotweenContainerService
+namespace App.Scripts.External.DotweenContainerService
 {
     public class DotweenContainerService : IDotweenContainerService
     {

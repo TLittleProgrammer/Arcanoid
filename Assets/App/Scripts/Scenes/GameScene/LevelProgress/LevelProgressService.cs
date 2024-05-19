@@ -1,16 +1,17 @@
 ﻿using System;
+using App.Scripts.General.LevelPackInfoService;
 using App.Scripts.General.Levels;
 using App.Scripts.Scenes.GameScene.Levels;
 using App.Scripts.Scenes.GameScene.Levels.AssetManagement;
 using App.Scripts.Scenes.GameScene.LevelView;
 using App.Scripts.Scenes.GameScene.ScoreAnimation;
-using UnityEngine;
+using TMPro;
 
 namespace App.Scripts.Scenes.GameScene.LevelProgress
 {
     public class LevelProgressService : ILevelProgressService
     {
-        private readonly ILevelPackTransferData _levelPackTransferData;
+        private readonly ILevelPackInfoService _levelPackInfoService;
         private readonly ILevelPackInfoView _levelPackInfoView;
         private readonly ILevelPackBackgroundView _levelPackBackgroundView;
         private readonly EntityProvider _entitesProvider;
@@ -25,13 +26,13 @@ namespace App.Scripts.Scenes.GameScene.LevelProgress
         public event Action LevelPassed;
         
         public LevelProgressService(
-            ILevelPackTransferData levelPackTransferData,
+            ILevelPackInfoService levelPackInfoService,
             ILevelPackInfoView levelPackInfoView,
             ILevelPackBackgroundView levelPackBackgroundView,
             EntityProvider entitesProvider,
             IScoreAnimationService scoreAnimationService)
         {
-            _levelPackTransferData = levelPackTransferData;
+            _levelPackInfoService = levelPackInfoService;
             _levelPackInfoView = levelPackInfoView;
             _levelPackBackgroundView = levelPackBackgroundView;
             _entitesProvider = entitesProvider;
@@ -40,14 +41,19 @@ namespace App.Scripts.Scenes.GameScene.LevelProgress
 
         public void Initialize()
         {
-            if (_levelPackTransferData.NeedLoadLevel)
+            var data = _levelPackInfoService.GetData();
+            if (data.NeedLoadLevel)
             {
-                _levelPackBackgroundView.Background.sprite = _levelPackTransferData.LevelPack.GalacticBackground;
-                _levelPackInfoView.Image.sprite = _levelPackTransferData.LevelPack.GalacticIcon;
-                _levelPackInfoView.PassedLevels.text = $"{_levelPackTransferData.LevelIndex}/{_levelPackTransferData.LevelPack.Levels.Count}";
+                _levelPackBackgroundView.Background.sprite = data.LevelPack.GalacticBackground;
 
                 _targetScore = 0;
-                UpdateProgressText(_targetScore);
+                _levelPackInfoView.Initialize(new()
+                {
+                    CurrentLevelIndex = data.LevelIndex,
+                    AllLevelsCountFromPack = data.LevelPack.Levels.Count,
+                    Sprite = data.LevelPack.GalacticIcon,
+                    TargetScore = _targetScore
+                });
             }
         }
 
@@ -58,9 +64,7 @@ namespace App.Scripts.Scenes.GameScene.LevelProgress
             if (_destroyedBlockCounter == _allBlockCounter)
             {
                 _progress = 1f;
-                _scoreAnimationService.Animate(_levelPackInfoView.LevelPassProgress, _targetScore, 100, UpdateProgressText);
-
-                Debug.Log("Кря");
+                AnimateScore(_levelPackInfoView.LevelPassProgress, _targetScore, 100, _levelPackInfoView.UpdateProgressText);
                 LevelPassed?.Invoke();
                 
                 return;
@@ -69,7 +73,7 @@ namespace App.Scripts.Scenes.GameScene.LevelProgress
             _progress += _step;
             _targetScore = (int)Math.Round(_progress * 100f);
             
-            _scoreAnimationService.Animate(_levelPackInfoView.LevelPassProgress, (int)((_progress - _step) * 100), _targetScore, UpdateProgressText);
+            AnimateScore(_levelPackInfoView.LevelPassProgress, (int)((_progress - _step) * 100), _targetScore, _levelPackInfoView.UpdateProgressText);
         }
 
         public void CalculateStepByLevelData(LevelData levelData)
@@ -97,12 +101,12 @@ namespace App.Scripts.Scenes.GameScene.LevelProgress
             _destroyedBlockCounter = 0;
             _targetScore = 0;
             
-            UpdateProgressText(_targetScore);
+            _levelPackInfoView.UpdateProgressText(_targetScore);
         }
 
-        private void UpdateProgressText(int value)
+        private void AnimateScore(TMP_Text text, int from, int to, Action<int> ticked)
         {
-            _levelPackInfoView.LevelPassProgress.text = $"{value}%";
+            _scoreAnimationService.Animate(text, from, to, ticked);
         }
     }
 }

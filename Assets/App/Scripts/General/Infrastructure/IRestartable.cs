@@ -1,4 +1,4 @@
-﻿namespace App.Scripts.Scenes.GameScene.Infrastructure
+﻿namespace App.Scripts.General.Infrastructure
 {
     public interface IRestartable
     {

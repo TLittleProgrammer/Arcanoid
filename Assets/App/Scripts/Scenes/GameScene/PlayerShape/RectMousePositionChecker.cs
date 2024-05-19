@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using App.Scripts.General.Components;
+using App.Scripts.External.Components;
 using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.PlayerShape

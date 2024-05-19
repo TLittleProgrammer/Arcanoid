@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace App.Scripts.Scenes.GameScene.Components
+namespace App.Scripts.External.Components
 {
     public interface IGameObjectable : IComponent
     {

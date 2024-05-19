@@ -1,5 +1,6 @@
 ﻿using App.Scripts.Scenes.GameScene.Components;
 using App.Scripts.Scenes.GameScene.Settings;
+using App.Scripts.Scenes.GameScene.Time;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -8,22 +9,33 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
     public class BallFreeFlight : IBallFreeFlightMover
     {
         private readonly BallFlyingSettings _settings;
+        private readonly ITimeProvider _timeProvider;
         private readonly IRigidablebody _ballRigidbody;
         private readonly float _maxSecondAngle;
         private readonly float _minSecondAngle;
 
-        private Vector3 _direction;
+        private Vector3 _previousVelocity;
         private float _speed;
 
-        public BallFreeFlight(IRigidablebody ballRigidbody, BallFlyingSettings settings)
+        public BallFreeFlight(IRigidablebody ballRigidbody, BallFlyingSettings settings, ITimeProvider timeProvider)
         {
             _ballRigidbody = ballRigidbody;
             _settings = settings;
+            _timeProvider = timeProvider;
+            
             _ballRigidbody.Collidered += OnCollidered;
+            _timeProvider.TimeScaleChanged += OnTimeScaleChanged;
 
             _speed = _settings.Speed;
             _maxSecondAngle = (180f - _settings.MaxAngle);
             _minSecondAngle = (180f - _settings.MinAngle);
+        }
+
+        public async UniTask AsyncInitialize(Vector2 param)
+        {
+            Velocity = param.normalized * _speed;
+            _previousVelocity = Velocity;
+            await UniTask.CompletedTask;
         }
 
         private Vector2 Velocity
@@ -32,22 +44,31 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
             set => _ballRigidbody.Rigidbody2D.velocity = value;
         }
 
-        public async UniTask AsyncInitialize(Vector2 param)
-        {
-            Velocity = param.normalized * _speed;
-
-            await UniTask.CompletedTask;
-        }
+        public float Speed => _ballRigidbody.Rigidbody2D.velocity.magnitude;
 
         public void UpdateSpeed(float addValue)
         {
             _speed += addValue;
+
+            _ballRigidbody.Rigidbody2D.simulated = _speed != 0f;
+
+            if (_speed == 0f)
+            {
+                return;
+            }
+
+            Velocity = Velocity.normalized * _speed;
         }
 
         public void Restart()
         {
             Velocity = Vector2.zero;
             _speed = _settings.Speed;
+        }
+
+        private void OnTimeScaleChanged()
+        {
+            Velocity = Velocity.normalized * _speed * _timeProvider.TimeScale;
         }
 
         private async void OnCollidered(Collider2D collider)
@@ -83,6 +104,8 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
                 x = speed * Mathf.Cos(targetAngle * Mathf.Deg2Rad),
                 y = speed * Mathf.Sin(targetAngle * Mathf.Deg2Rad)
             };
+
+            _previousVelocity = Velocity;
         }
     }
 }

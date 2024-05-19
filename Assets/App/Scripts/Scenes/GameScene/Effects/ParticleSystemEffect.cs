@@ -10,7 +10,7 @@ namespace App.Scripts.Scenes.GameScene.Effects
 
         private ParticleSystem.MainModule _particlesMainModule;
         
-        private void Awake()
+        protected void Awake()
         {
             _particlesMainModule = _particleSystem.main;
         }

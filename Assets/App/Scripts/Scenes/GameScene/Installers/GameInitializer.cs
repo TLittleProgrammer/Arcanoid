@@ -1,18 +1,15 @@
-﻿using System.ComponentModel;
-using App.Scripts.General.Constants;
+﻿using App.Scripts.General.Constants;
+using App.Scripts.General.Infrastructure;
+using App.Scripts.General.LevelPackInfoService;
 using App.Scripts.General.Levels;
 using App.Scripts.General.Popup.AssetManagment;
 using App.Scripts.Scenes.GameScene.Ball;
 using App.Scripts.Scenes.GameScene.Ball.Movement;
-using App.Scripts.Scenes.GameScene.Components;
-using App.Scripts.Scenes.GameScene.Containers;
 using App.Scripts.Scenes.GameScene.Grid;
 using App.Scripts.Scenes.GameScene.Healthes;
-using App.Scripts.Scenes.GameScene.Infrastructure;
 using App.Scripts.Scenes.GameScene.LevelProgress;
 using App.Scripts.Scenes.GameScene.Levels;
 using App.Scripts.Scenes.GameScene.Levels.Load;
-using App.Scripts.Scenes.GameScene.PlayerShape;
 using App.Scripts.Scenes.GameScene.PlayerShape.Move;
 using App.Scripts.Scenes.GameScene.Walls;
 using Newtonsoft.Json;
@@ -24,11 +21,9 @@ namespace App.Scripts.Scenes.GameScene.Installers
     public class GameInitializer : IInitializable
     {
         private readonly IGridPositionResolver _gridPositionResolver;
-        private readonly IContainer<IBoxColliderable2D> _boxesContainer;
         private readonly IPopupProvider _popupProvider;
         private readonly IBallSpeedUpdater _ballSpeedUpdater;
         private readonly IBallMovementService _ballMovementService;
-        private readonly ILevelPackTransferData _levelPackTransferData;
         private readonly ILevelLoader _levelLoader;
         private readonly ILevelProgressService _levelProgressService;
         private readonly IHealthContainer _healthContainer;
@@ -36,15 +31,13 @@ namespace App.Scripts.Scenes.GameScene.Installers
         private readonly IPlayerShapeMover _playerShapeMover;
         private readonly IWallLoader _wallLoader;
         private readonly TextAsset _levelData;
-        private readonly PlayerView _playerView;
+        private readonly ILevelPackInfoService _levelPackInfoService;
 
         public GameInitializer(
             IGridPositionResolver gridPositionResolver,
-            IContainer<IBoxColliderable2D> boxesContainer,
             IPopupProvider popupProvider,
             IBallSpeedUpdater ballSpeedUpdater,
             IBallMovementService ballMovementService,
-            ILevelPackTransferData levelPackTransferData,
             ILevelLoader levelLoader,
             ILevelProgressService levelProgressService,
             IHealthContainer healthContainer,
@@ -52,14 +45,12 @@ namespace App.Scripts.Scenes.GameScene.Installers
             IPlayerShapeMover playerShapeMover,
             IWallLoader wallLoader,
             TextAsset levelData,
-            PlayerView playerView)
+            ILevelPackInfoService levelPackInfoService)
         {
             _gridPositionResolver = gridPositionResolver;
-            _boxesContainer = boxesContainer;
             _popupProvider = popupProvider;
             _ballSpeedUpdater = ballSpeedUpdater;
             _ballMovementService = ballMovementService;
-            _levelPackTransferData = levelPackTransferData;
             _levelLoader = levelLoader;
             _levelProgressService = levelProgressService;
             _healthContainer = healthContainer;
@@ -67,7 +58,7 @@ namespace App.Scripts.Scenes.GameScene.Installers
             _playerShapeMover = playerShapeMover;
             _wallLoader = wallLoader;
             _levelData = levelData;
-            _playerView = playerView;
+            _levelPackInfoService = levelPackInfoService;
         }
         
         public async void Initialize()
@@ -75,7 +66,6 @@ namespace App.Scripts.Scenes.GameScene.Installers
             LevelData levelData = ChooseLevelData();
             
             await _gridPositionResolver.AsyncInitialize(levelData);
-            _boxesContainer.AddItem(_playerView);
 
             LoadLevel(levelData);
             await _wallLoader.AsyncInitialize();
@@ -85,9 +75,10 @@ namespace App.Scripts.Scenes.GameScene.Installers
     
         private LevelData ChooseLevelData()
         {
-            if (_levelPackTransferData.NeedLoadLevel)
+            var data = _levelPackInfoService.GetData();
+            if (data.NeedLoadLevel)
             {
-                return JsonConvert.DeserializeObject<LevelData>(_levelPackTransferData.LevelPack.Levels[_levelPackTransferData.LevelIndex].text);
+                return JsonConvert.DeserializeObject<LevelData>(data.LevelPack.Levels[data.LevelIndex].text);
             }
 
             return JsonConvert.DeserializeObject<LevelData>(_levelData.text);

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using App.Scripts.Scenes.GameScene.Entities;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -10,19 +11,21 @@ namespace App.Scripts.Scenes.GameScene.Levels.AssetManagement
     {
         public EntityTypeId EntityTypeId;
 
-        [PreviewField(50),
-         HorizontalGroup("MainParameters")]
+        [PreviewField(50), HorizontalGroup("MainParameters")]
         public Sprite Sprite;
 
         [HorizontalGroup("MainParameters")]
-        public int HealthCounter;
+        public int MaxHealthCounter;
 
         public bool ICanGetDamage;
+        public List<HealthSpriteData> AddSpritesOnMainByHp;
+    }
 
-        [ShowIf("ICanGetDamage")]
-        public EntityStage NextStage;
-
+    [Serializable]
+    public class HealthSpriteData
+    {
+        public int Healthes;
         [PreviewField(50)]
-        public List<Sprite> AvailableSpritesOnMainSprite;
+        public List<Sprite> Sprites;
     }
 }
