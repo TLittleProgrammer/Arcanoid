@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using App.Scripts.External.Components;
 using App.Scripts.External.UserData;
+using App.Scripts.General.Energy;
 using App.Scripts.General.Levels;
 using App.Scripts.General.Popup;
 using App.Scripts.General.Popup.AssetManagment;
 using App.Scripts.General.Popup.Factory;
-using App.Scripts.General.UserData.Data;
+using App.Scripts.General.UserData.Levels;
 using App.Scripts.Scenes.MainMenuScene.Factories.ItemView;
 using App.Scripts.Scenes.MainMenuScene.Factories.Levels;
 using App.Scripts.Scenes.MainMenuScene.LevelPacks;
@@ -21,6 +22,7 @@ namespace App.Scripts.Scenes.MainMenuScene.Installers
         [OdinSerialize] public LevelItemView LevelItemView;
         [OdinSerialize] public LevelPackParent LevelPackParent;
         [OdinSerialize] public LocaleItemView LocaleItemView;
+        [OdinSerialize] public EnergyScrollView EnergyScrollView;
         
         public override void InstallBindings()
         {
@@ -29,6 +31,7 @@ namespace App.Scripts.Scenes.MainMenuScene.Installers
             LevelPackProgressDictionary levelPackProgressDictionary =
                 (LevelPackProgressDictionary)Container.Resolve<IUserDataContainer>().GetData<LevelPackProgressDictionary>();
 
+            Container.Bind<EnergyScrollView>().FromInstance(EnergyScrollView).AsSingle();
             Container.Bind<ILevelItemView>().FromInstance(LevelItemView);
             Container.Bind<ILocaleItemView>().FromInstance(LocaleItemView);
             Container.Bind<ITransformable>().FromInstance(LevelPackParent);

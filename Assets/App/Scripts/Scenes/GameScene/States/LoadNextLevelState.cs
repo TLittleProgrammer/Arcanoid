@@ -1,14 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using App.Scripts.External.GameStateMachine;
-using App.Scripts.External.UserData;
 using App.Scripts.General.Infrastructure;
 using App.Scripts.General.LevelPackInfoService;
 using App.Scripts.General.Levels;
 using App.Scripts.General.LoadingScreen;
 using App.Scripts.General.Popup;
-using App.Scripts.General.UserData.Data;
-using App.Scripts.General.UserData.Services;
 using App.Scripts.Scenes.GameScene.Dotween;
 using App.Scripts.Scenes.GameScene.Grid;
 using App.Scripts.Scenes.GameScene.LevelProgress;
