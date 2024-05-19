@@ -29,5 +29,18 @@ namespace App.Scripts.General.UserData.Services
             
             _userDataContainer.SaveData<LevelPackProgressDictionary>();
         }
+
+        public int GetPassedLevelsForPackIndex(int packIndex)
+        {
+            LevelPackProgressDictionary levelPackDictionary =
+                (LevelPackProgressDictionary) _userDataContainer.GetData<LevelPackProgressDictionary>();
+            
+            if (!levelPackDictionary.ContainsKey(packIndex))
+            {
+                return 0;
+            }
+
+            return levelPackDictionary[packIndex].PassedLevels;
+        }
     }
 }

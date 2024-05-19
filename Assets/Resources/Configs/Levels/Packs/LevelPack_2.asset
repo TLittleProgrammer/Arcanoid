@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LocaleKey: Galactic_Sunflower
   GalacticIcon: {fileID: 21300000, guid: 31cb0e9047d20ce45ad8c504088a3cb6, type: 3}
-  GalacticBackground: {fileID: 21300000, guid: 55343f1e359ba7040b7d499986a6e8f3, type: 3}
+  GalacticBackground: {fileID: 21300000, guid: 8cf13ac5c44d84647be6df3564fce9f6, type: 3}
   Levels:
   - {fileID: 4900000, guid: 01d2859bd4e4e8543bbb2e6cfd7bc1f0, type: 3}
   - {fileID: 4900000, guid: 67dc282b21fd89545857016009a3a652, type: 3}

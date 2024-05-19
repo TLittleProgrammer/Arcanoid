@@ -1,8 +1,10 @@
 ﻿using App.Scripts.External.GameStateMachine;
+using App.Scripts.General.Constants;
 using App.Scripts.General.LevelPackInfoService;
 using App.Scripts.General.Levels;
 using App.Scripts.General.Popup;
 using App.Scripts.General.RootUI;
+using App.Scripts.General.States;
 using App.Scripts.Scenes.GameScene.Popups;
 using App.Scripts.Scenes.GameScene.Time;
 
@@ -37,8 +39,8 @@ namespace App.Scripts.Scenes.GameScene.States
         {
             await _timeScaleAnimator.Animate(0f);
             ShowPopup();
-            Subscribe();
             UpdateVisual();
+            Subscribe();
         }
 
         private void UpdateVisual()
@@ -67,7 +69,15 @@ namespace App.Scripts.Scenes.GameScene.States
         private void OnContinueClicked()
         {
             _winPopupView.ContinueButton.interactable = false;
-            _gameStateMachine.Enter<LoadNextLevelState>();
+
+            if (_levelPackInfoService.NeedLoadNextPackOrLevel())
+            {
+                _gameStateMachine.Enter<LoadNextLevelState>();
+            }
+            else
+            {
+                _gameStateMachine.Enter<LoadSceneFromMainMenuState, string>(SceneNaming.MainMenu);
+            }
         }
     }
 }

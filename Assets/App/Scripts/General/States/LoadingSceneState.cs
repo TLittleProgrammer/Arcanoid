@@ -25,7 +25,6 @@ namespace App.Scripts.General.States
 
         public void Exit()
         {
-            
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using App.Scripts.General.Levels;
 using App.Scripts.General.UserData.Services;
-using UnityEngine;
 
 namespace App.Scripts.General.LevelPackInfoService
 {
@@ -43,6 +42,22 @@ namespace App.Scripts.General.LevelPackInfoService
         public void SetData(ILevelPackTransferData levelPackTransferData)
         {
             _levelPackTransferData = levelPackTransferData;
+        }
+
+        public bool NeedLoadNextPackOrLevel()
+        {
+            if (_levelPackProvider.LevelPacks.Count < _levelPackTransferData.PackIndex + 1)
+            {
+                return false;
+            }
+
+            if (_levelProgressDataService.GetPassedLevelsForPackIndex(_levelPackTransferData.PackIndex + 1) == 0 ||
+                _levelPackTransferData.LevelIndex + 1 < _levelPackTransferData.LevelPack.Levels.Count)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         private void LoadLevelPack(ILevelPackTransferData data)

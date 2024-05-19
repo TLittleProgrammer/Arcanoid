@@ -48,6 +48,17 @@ namespace App.Scripts.General.Popup
             await UniTask.CompletedTask;
         }
 
+        public async UniTask CloseAll()
+        {
+            foreach (IPopupView view in _popupsList)
+            {
+                await view.Close();
+                Object.Destroy(view.GameObject);
+            }
+            
+            _popupsList.Clear();
+        }
+
         private void LockButtonsForLastPopup()
         {
             if (_popupsList.Count > 1)

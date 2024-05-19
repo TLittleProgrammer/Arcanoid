@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LocaleKey: Galactic_Sombrero
   GalacticIcon: {fileID: 21300000, guid: 1fa903c2fb717824fa6a87737414cc72, type: 3}
-  GalacticBackground: {fileID: 21300000, guid: 55343f1e359ba7040b7d499986a6e8f3, type: 3}
+  GalacticBackground: {fileID: 21300000, guid: 465fd2cc6f5b0c143aee2fe2460d9d56, type: 3}
   Levels:
   - {fileID: 4900000, guid: 373a435cf99688543beae145057b7952, type: 3}
   - {fileID: 4900000, guid: e6c1b6bad2fe44748ae9218cd74d4901, type: 3}
