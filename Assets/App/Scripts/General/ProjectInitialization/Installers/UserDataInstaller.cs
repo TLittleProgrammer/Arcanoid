@@ -1,9 +1,7 @@
 ﻿using App.Scripts.External.UserData;
 using App.Scripts.External.UserData.SaveLoad;
 using App.Scripts.General.LevelPackInfoService;
-using App.Scripts.General.UserData.Energy;
-using App.Scripts.General.UserData.Levels;
-using App.Scripts.General.UserData.Persistent;
+using App.Scripts.General.UserData.Data;
 using Zenject;
 
 namespace App.Scripts.General.ProjectInitialization.Installers
@@ -16,7 +14,6 @@ namespace App.Scripts.General.ProjectInitialization.Installers
             Container.Bind<ISaveLoadService>().To<SaveLoadService>().AsSingle();
             Container.Bind<IUserDataContainer>().To<UserDataContainer>().AsSingle();
             Container.Bind<ILevelPackInfoService>().To<LevelPackInfoService.LevelPackInfoService>().AsSingle();
-            Container.Bind<IEnergyDataService>().To<EnergyDataService>().AsSingle();
 
             Initialize();
         }
@@ -27,8 +24,6 @@ namespace App.Scripts.General.ProjectInitialization.Installers
             var userDataContainer = Container.Resolve<IUserDataContainer>();
             
             AddSavable<LevelPackProgressDictionary>(saveLoad, userDataContainer);
-            AddSavable<PersistentData>(saveLoad, userDataContainer);
-            AddSavable<EnergyData>(saveLoad, userDataContainer);
         }
 
         private void AddSavable<TSavable>(ISaveLoadService saveLoad, IUserDataContainer userDataContainer) where TSavable : ISavable, new()

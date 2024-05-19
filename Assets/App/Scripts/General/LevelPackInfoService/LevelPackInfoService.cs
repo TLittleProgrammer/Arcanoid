@@ -1,5 +1,5 @@
 ﻿using App.Scripts.General.Levels;
-using App.Scripts.General.UserData.Levels;
+using App.Scripts.General.UserData.Services;
 
 namespace App.Scripts.General.LevelPackInfoService
 {

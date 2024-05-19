@@ -624,7 +624,6 @@ MonoBehaviour:
   LevelItemView: {fileID: 7663323947058073807, guid: 0c19f9e1e167c0d4cb7a1afd291d514d, type: 3}
   LevelPackParent: {fileID: 757809301}
   LocaleItemView: {fileID: 242811568416679768, guid: ba27fbe70916df94d87dd5e2ba3c4248, type: 3}
-  EnergyScrollView: {fileID: 8992640201986031489}
 --- !u!1 &1051483797
 GameObject:
   m_ObjectHideFlags: 0
@@ -1973,22 +1972,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1373915408}
     m_Modifications:
-    - target: {fileID: 7089080628526671988, guid: df1d8f2f264d7cc46901478c9f1dbcc9, type: 3}
-      propertyPath: m_fontColor.b
-      value: 0.5686275
-      objectReference: {fileID: 0}
-    - target: {fileID: 7089080628526671988, guid: df1d8f2f264d7cc46901478c9f1dbcc9, type: 3}
-      propertyPath: m_fontColor.g
-      value: 0.43921572
-      objectReference: {fileID: 0}
-    - target: {fileID: 7089080628526671988, guid: df1d8f2f264d7cc46901478c9f1dbcc9, type: 3}
-      propertyPath: m_fontColor.r
-      value: 0.40000004
-      objectReference: {fileID: 0}
-    - target: {fileID: 7089080628526671988, guid: df1d8f2f264d7cc46901478c9f1dbcc9, type: 3}
-      propertyPath: m_fontColor32.rgba
-      value: 4287721574
-      objectReference: {fileID: 0}
     - target: {fileID: 8992640202423976495, guid: df1d8f2f264d7cc46901478c9f1dbcc9, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0.25
@@ -2087,14 +2070,3 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df1d8f2f264d7cc46901478c9f1dbcc9, type: 3}
---- !u!114 &8992640201986031489 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 861458842912146767, guid: df1d8f2f264d7cc46901478c9f1dbcc9, type: 3}
-  m_PrefabInstance: {fileID: 8992640201986031488}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17d39376d824443c989bab127c9bb893, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

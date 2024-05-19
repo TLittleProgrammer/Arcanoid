@@ -1,4 +1,4 @@
-﻿namespace App.Scripts.General.UserData.Levels
+﻿namespace App.Scripts.General.UserData.Data
 {
     public sealed class LevelPackProgressProgressData
     {
