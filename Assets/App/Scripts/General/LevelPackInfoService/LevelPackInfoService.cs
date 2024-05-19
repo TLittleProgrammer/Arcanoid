@@ -39,6 +39,11 @@ namespace App.Scripts.General.LevelPackInfoService
             return _levelPackTransferData;
         }
 
+        public LevelPack GetDataForNextPack()
+        {
+            return _levelPackProvider.LevelPacks[_levelPackTransferData.PackIndex + 1];
+        }
+
         public void SetData(ILevelPackTransferData levelPackTransferData)
         {
             _levelPackTransferData = levelPackTransferData;
@@ -51,13 +56,14 @@ namespace App.Scripts.General.LevelPackInfoService
                 return false;
             }
 
-            if (_levelProgressDataService.GetPassedLevelsForPackIndex(_levelPackTransferData.PackIndex + 1) == 0 ||
-                _levelPackTransferData.LevelIndex + 1 < _levelPackTransferData.LevelPack.Levels.Count)
-            {
-                return true;
-            }
+            return _levelProgressDataService.GetPassedLevelsForPackIndex(_levelPackTransferData.PackIndex + 1) == 0 ||
+                   _levelPackTransferData.LevelIndex + 1 < _levelPackTransferData.LevelPack.Levels.Count;;
+        }
 
-            return false;
+        public bool NeedLoadNextPack()
+        {
+            return _levelProgressDataService.GetPassedLevelsForPackIndex(_levelPackTransferData.PackIndex + 1) == 0 &&
+                   _levelPackTransferData.LevelIndex + 1 >= _levelPackTransferData.LevelPack.Levels.Count;
         }
 
         private void LoadLevelPack(ILevelPackTransferData data)

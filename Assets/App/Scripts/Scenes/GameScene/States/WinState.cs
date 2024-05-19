@@ -4,9 +4,11 @@ using App.Scripts.General.LevelPackInfoService;
 using App.Scripts.General.Levels;
 using App.Scripts.General.Popup;
 using App.Scripts.General.RootUI;
-using App.Scripts.General.States;
 using App.Scripts.Scenes.GameScene.Popups;
 using App.Scripts.Scenes.GameScene.Time;
+using Cysharp.Threading.Tasks;
+using DG.Tweening;
+using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.States
 {
@@ -38,15 +40,58 @@ namespace App.Scripts.Scenes.GameScene.States
         public async void Enter()
         {
             await _timeScaleAnimator.Animate(0f);
+            
             ShowPopup();
             UpdateVisual();
             Subscribe();
+            AnimateIfNeed();
+        }
+
+        private async void AnimateIfNeed()
+        {
+            if (_levelPackInfoService.NeedLoadNextPack())
+            {
+                LevelPack nextPack = _levelPackInfoService.GetDataForNextPack();
+                LevelPack currentLevelPack = _levelPackInfoService.GetData().LevelPack;
+                
+                _winPopupView.TopGalacticIcon.color = Color.clear;
+                _winPopupView.TopGalacticIcon.sprite = nextPack.GalacticIcon;
+                _winPopupView.ContinueButton.interactable = false;
+                
+                await UniTask.Delay(2000);
+                await DOVirtual.Float(1f, 0f, 1f, HideObjects);
+
+                _winPopupView.GalacticName.SetToken(nextPack.LocaleKey);
+                
+                DOVirtual.Float(0f, 1f, 1f, ShowObjects).ToUniTask().Forget();
+                await DOVirtual.Float(0f, 1f, 1f, (value) =>
+                {
+                    int currentLevel = (int)Mathf.Lerp(currentLevelPack.Levels.Count, 0, value);
+                    int maxLevelsCount = (int)Mathf.Lerp(currentLevelPack.Levels.Count, nextPack.Levels.Count, value);
+                    
+                    _winPopupView.PassedLevelsText.text = $"{currentLevel.ToString()}/{maxLevelsCount.ToString()}";
+                });
+                
+                _winPopupView.ContinueButton.interactable = true;
+            }
+        }
+
+        private void ShowObjects(float value)
+        {
+            _winPopupView.GalacticName.Text.color = new Color(1f, 1f, 1f, value);
+            _winPopupView.TopGalacticIcon.color = new Color(1f, 1f, 1f, value);
+        }
+
+        private void HideObjects(float value)
+        {
+            _winPopupView.GalacticName.Text.color = new Color(1f, 1f, 1f, value);
+            _winPopupView.BottomGalacticIcon.color = new Color(1f, 1f, 1f, value);
         }
 
         private void UpdateVisual()
         {
             LevelPack currentPack = _levelPackInfoService.GetData().LevelPack;
-            _winPopupView.GalacticIcon.sprite = currentPack.GalacticIcon;
+            _winPopupView.BottomGalacticIcon.sprite = currentPack.GalacticIcon;
             _winPopupView.GalacticName.SetToken(currentPack.LocaleKey);
             _winPopupView.PassedLevelsText.text = $"{_levelPackInfoService.GetData().LevelIndex + 1}/{currentPack.Levels.Count}";
         }

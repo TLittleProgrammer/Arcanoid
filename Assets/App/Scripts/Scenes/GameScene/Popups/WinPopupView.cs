@@ -17,7 +17,8 @@ namespace App.Scripts.Scenes.GameScene.Popups
     {
         [SerializeField] private Button _continueButton;
         [SerializeField] private UILocale _galacticName;
-        [SerializeField] private Image _galacticIcon;
+        [SerializeField] private Image _bottomGalacticIcon;
+        [SerializeField] private Image _topGalacticIcon;
         [SerializeField] private TMP_Text _passedLevelsText;
         [SerializeField] private RectTransform _textFalling;
         [SerializeField] private RectTransform _targetPositionForTextFalling;
@@ -42,7 +43,8 @@ namespace App.Scripts.Scenes.GameScene.Popups
 
         public UILocale GalacticName => _galacticName;
         public TMP_Text PassedLevelsText => _passedLevelsText;
-        public Image GalacticIcon => _galacticIcon;
+        public Image BottomGalacticIcon => _bottomGalacticIcon;
+        public Image TopGalacticIcon => _topGalacticIcon;
         public Button ContinueButton => _continueButton;
 
         public override async UniTask Show()

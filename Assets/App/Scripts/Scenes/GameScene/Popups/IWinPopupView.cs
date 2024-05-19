@@ -8,7 +8,7 @@ namespace App.Scripts.Scenes.GameScene.Popups
     {
         UILocale GalacticName { get; }
         TMP_Text PassedLevelsText { get; }
-        Image GalacticIcon { get; }
+        Image BottomGalacticIcon { get; }
         Button ContinueButton { get; }
     }
 }
