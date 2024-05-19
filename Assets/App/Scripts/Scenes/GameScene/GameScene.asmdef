@@ -14,7 +14,8 @@
         "GameStateMachine",
         "UniTask.DOTween",
         "Unity.TextMeshPro",
-        "UserData"
+        "UserData",
+        "Localisation"
     ],
     "includePlatforms": [
         "Android",

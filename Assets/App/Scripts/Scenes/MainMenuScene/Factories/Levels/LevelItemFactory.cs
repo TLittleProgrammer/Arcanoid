@@ -59,15 +59,26 @@ namespace App.Scripts.Scenes.MainMenuScene.Factories.Levels
 
         private void SubsribeOnClickIfNeed(ILevelItemView levelItemView, int packIndex, LevelPack levelPack, VisualTypeId visualType)
         {
+            int targetLevelIndex;
             if (visualType is not VisualTypeId.NotOpened)
             {
+                if (visualType is VisualTypeId.Passed)
+                {
+                    targetLevelIndex = 0;
+                }
+                else
+                {
+                    targetLevelIndex = _levelPackProgressDictionary.ContainsKey(packIndex)
+                        ? _levelPackProgressDictionary[packIndex].PassedLevels
+                        : 0;
+                }
+                
                 levelItemView.Clicked += () =>
                 {
                     _levelPackTransferData.NeedLoadLevel = true;
-                    _levelPackTransferData.LevelIndex = _levelPackProgressDictionary.ContainsKey(packIndex) ? _levelPackProgressDictionary[packIndex].PassedLevels : 0;
+                    _levelPackTransferData.LevelIndex = targetLevelIndex;
                     _levelPackTransferData.LevelPack = levelPack;
-                    _levelPackTransferData.LevelIndex = packIndex;
-                    _levelPackTransferData.LevelPackProgress = 0f;
+                    _levelPackTransferData.PackIndex = packIndex;
                     
                     _stateMachine.Enter<LoadingSceneState, string, bool>(SceneNaming.Game, false);
                 };

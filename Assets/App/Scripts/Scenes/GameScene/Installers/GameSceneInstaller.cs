@@ -164,7 +164,7 @@ namespace App.Scripts.Scenes.GameScene.Installers
             GameLoopState gameLoopState = Container.Instantiate<GameLoopState>(new object[]{_gameLoopTickables, _gameStateMachine});
             PopupState popupState = Container.Instantiate<PopupState>();
             LooseState looseState = Container.Instantiate<LooseState>();
-            WinState winState = Container.Instantiate<WinState>();
+            WinState winState = Container.Instantiate<WinState>(new[] { _gameStateMachine });
             LoadSceneFromMainMenuState loadSceneFromMainMenuState = Container.Instantiate<LoadSceneFromMainMenuState>(new[] { _projectStateMachine });
             RestartState restartState = Container.Instantiate<RestartState>(new object[] {_restartables, _gameStateMachine});
             LoadNextLevelState loadNextLevelState = Container.Instantiate<LoadNextLevelState>(new object[] {_levelPackInfoView, _restartablesForLoadNewLevel, _gameStateMachine});

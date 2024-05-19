@@ -3,9 +3,8 @@
     public interface ILevelPackTransferData
     {
         bool NeedLoadLevel { get; set; }
-        int LevelIndex { get; set; }
         int PackIndex { get; set; }
-        float LevelPackProgress { get; set; }
+        int LevelIndex { get; set; }
         LevelPack LevelPack { get; set; }
     }
 }

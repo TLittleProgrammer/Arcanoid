@@ -1,35 +1,38 @@
 ﻿using App.Scripts.External.GameStateMachine;
+using App.Scripts.External.Localisation.MonoBehaviours;
 using App.Scripts.General.Popup;
 using App.Scripts.Scenes.GameScene.Dotween;
 using App.Scripts.Scenes.GameScene.Settings;
-using App.Scripts.Scenes.GameScene.States;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Zenject;
 using Button = UnityEngine.UI.Button;
 
 namespace App.Scripts.Scenes.GameScene.Popups
 {
-    public class WinPopupView : PopupView
+    public class WinPopupView : PopupView, IWinPopupView
     {
         [SerializeField] private Button _continueButton;
+        [SerializeField] private UILocale _galacticName;
+        [SerializeField] private Image _galacticIcon;
+        [SerializeField] private TMP_Text _passedLevelsText;
         [SerializeField] private RectTransform _textFalling;
         [SerializeField] private RectTransform _targetPositionForTextFalling;
-        
-        private IStateMachine _gameStateMachine;
+
         private WinContinueButtonAnimationSettings _winContinueButtonAnimationSettings;
         private ITweenersLocator _tweenersLocator;
-
+        private Button _continue;
+        
         [Inject]
         private void Construct(
-            IStateMachine gameStateMachine,
             WinContinueButtonAnimationSettings winContinueButtonAnimationSettings,
             ITweenersLocator tweenersLocator)
         {
             _tweenersLocator = tweenersLocator;
             _winContinueButtonAnimationSettings = winContinueButtonAnimationSettings;
-            _gameStateMachine = gameStateMachine;
 
             Buttons = new()
             {
@@ -37,15 +40,10 @@ namespace App.Scripts.Scenes.GameScene.Popups
             };
         }
 
-        private void OnEnable()
-        {
-            _continueButton.onClick.AddListener(Continue);
-        }
-
-        private void OnDisable()
-        {
-            _continueButton.onClick.RemoveListener(Continue);
-        }
+        public UILocale GalacticName => _galacticName;
+        public TMP_Text PassedLevelsText => _passedLevelsText;
+        public Image GalacticIcon => _galacticIcon;
+        public Button ContinueButton => _continueButton;
 
         public override async UniTask Show()
         {
@@ -68,11 +66,6 @@ namespace App.Scripts.Scenes.GameScene.Popups
 
 
             _tweenersLocator.AddSequence(sequence);
-        }
-
-        private void Continue()
-        {
-            _gameStateMachine.Enter<LoadNextLevelState>();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.External.UserData;
 using App.Scripts.General.Infrastructure;
@@ -71,16 +72,9 @@ namespace App.Scripts.Scenes.GameScene.States
         {
             await _loadingScreen.Show(false);
 
-            _tweenersLocator.RemoveAll();
-            
-            foreach (IRestartable restartable in _restartables)
-            {
-                restartable.Restart();
-            }
-
-            await _popupService.Close<WinPopupView>();
-            _timeProvider.TimeScale = 1f;
-
+            RemoveTweeners();
+            RestartAll();
+            await ClosePopups();
             UpdateUserData();
 
             _levelPackTransferData.LevelIndex++;
@@ -93,6 +87,25 @@ namespace App.Scripts.Scenes.GameScene.States
             _levelPackInfoView.UpdatePassedLevels(_levelPackTransferData.LevelIndex, _levelPackTransferData.LevelPack.Levels.Count);
 
             _gameStateMachine.Enter<GameLoopState>();
+        }
+
+        private async Task ClosePopups()
+        {
+            await _popupService.Close<WinPopupView>();
+            _timeProvider.TimeScale = 1f;
+        }
+
+        private void RemoveTweeners()
+        {
+            _tweenersLocator.RemoveAll();
+        }
+
+        private void RestartAll()
+        {
+            foreach (IRestartable restartable in _restartables)
+            {
+                restartable.Restart();
+            }
         }
 
         private void UpdateUserData()

@@ -478,6 +478,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _continueButton: {fileID: 5105319381787347625}
+  _galacticName: {fileID: 3190747868696532078}
+  _galacticIcon: {fileID: 8124541781241154106}
+  _passedLevelsText: {fileID: 8124541780413028716}
   _textFalling: {fileID: 8124541780413028717}
   _targetPositionForTextFalling: {fileID: 7901662209234281130}
 --- !u!1 &5105319381366885646
@@ -2444,6 +2447,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 724f24a4b20b1ef498010f396ab47048, type: 3}
+--- !u!114 &3190747868696532078 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6667574834146640482, guid: 724f24a4b20b1ef498010f396ab47048, type: 3}
+  m_PrefabInstance: {fileID: 8124541780941657612}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 200415cde1bc41f5864389359cb6e7e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &7127421995963368612 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1308747860915458728, guid: 724f24a4b20b1ef498010f396ab47048, type: 3}

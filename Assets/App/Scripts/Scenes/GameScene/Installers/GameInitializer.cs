@@ -9,7 +9,6 @@ using App.Scripts.Scenes.GameScene.Healthes;
 using App.Scripts.Scenes.GameScene.LevelProgress;
 using App.Scripts.Scenes.GameScene.Levels;
 using App.Scripts.Scenes.GameScene.Levels.Load;
-using App.Scripts.Scenes.GameScene.PlayerShape;
 using App.Scripts.Scenes.GameScene.PlayerShape.Move;
 using App.Scripts.Scenes.GameScene.Walls;
 using Newtonsoft.Json;
@@ -32,7 +31,6 @@ namespace App.Scripts.Scenes.GameScene.Installers
         private readonly IPlayerShapeMover _playerShapeMover;
         private readonly IWallLoader _wallLoader;
         private readonly TextAsset _levelData;
-        private readonly PlayerView _playerView;
 
         public GameInitializer(
             IGridPositionResolver gridPositionResolver,
@@ -46,8 +44,7 @@ namespace App.Scripts.Scenes.GameScene.Installers
             IHealthPointService healthPointService,
             IPlayerShapeMover playerShapeMover,
             IWallLoader wallLoader,
-            TextAsset levelData,
-            PlayerView playerView)
+            TextAsset levelData)
         {
             _gridPositionResolver = gridPositionResolver;
             _popupProvider = popupProvider;
@@ -61,7 +58,6 @@ namespace App.Scripts.Scenes.GameScene.Installers
             _playerShapeMover = playerShapeMover;
             _wallLoader = wallLoader;
             _levelData = levelData;
-            _playerView = playerView;
         }
         
         public async void Initialize()
