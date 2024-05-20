@@ -15,6 +15,7 @@ using App.Scripts.Scenes.GameScene.Constants;
 using App.Scripts.Scenes.GameScene.Dotween;
 using App.Scripts.Scenes.GameScene.Effects;
 using App.Scripts.Scenes.GameScene.Entities;
+using App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers;
 using App.Scripts.Scenes.GameScene.Factories.CircleEffect;
 using App.Scripts.Scenes.GameScene.Factories.Entity;
 using App.Scripts.Scenes.GameScene.Factories.Health;
@@ -68,17 +69,26 @@ namespace App.Scripts.Scenes.GameScene.Installers
         public override void InstallBindings()
         {
             BindInitializeDependencies();
-            BindTweenersLocator();
+            TweenersLocatorInstaller.Install(Container);
+            
+            TimeProviderInstaller.Install(Container);
             BindTimeProvider();
-            BindScoreAnimationService();
+            
+            ScoreAnimationServiceInstaller.Install(Container);
+            
             BindPools();
             BindPoolContainer();
             BindFactories();
             BindMousePositionChecker();
             BindLevelProgressService();
             BindCameraService();
-            BindScreenInfoProvider();
+            
+            ScreenInfoProviderInstaller.Install(Container);
+            InputInstaller.Install(Container);
             BindInput();
+            
+            LevelServicesInstaller.Install(Container);
+            
             BindGridPositionResolver();
             BindBallSpeedUpdater();
             BindLevelLoader();
@@ -136,16 +146,6 @@ namespace App.Scripts.Scenes.GameScene.Installers
             
             _restartables.Add(Resolve<IHealthContainer>());
             _restartablesForLoadNewLevel.Add(Resolve<IHealthContainer>());
-        }
-
-        private void BindTweenersLocator()
-        {
-            Container.Bind<ITweenersLocator>().To<TweenersLocator>().AsSingle();
-        }
-
-        private void BindScoreAnimationService()
-        { 
-            Container.Bind<IScoreAnimationService>().To<ScoreAnimationService>().AsSingle();
         }
 
         private void BindLevelProgressService()
@@ -265,26 +265,17 @@ namespace App.Scripts.Scenes.GameScene.Installers
 
         private void BindLevelLoader()
         {
-            Container.Bind<ILevelViewUpdater>().To<LevelViewUpdater>().AsSingle();
-            Container.Bind<ILevelLoader>().To<LevelLoader>().AsSingle();
-            
             _restartables.Add(Container.Resolve<ILevelLoader>());
         }
 
         private void BindTimeProvider()
         {
-            Container.Bind<ITimeProvider>().To<TimeProvider>().AsSingle();
-            Container.Bind<ITimeScaleAnimator>().To<TimeScaleAnimator>().AsSingle();
-            
             _restartables.Add(Container.Resolve<ITimeProvider>());
             _restartablesForLoadNewLevel.Add(Container.Resolve<ITimeProvider>());
         }
 
         private void BindInput()
         {
-            Container.Bind<IClickDetector>().To<ClickDetector>().AsSingle();
-            Container.Bind<IInputService>().To<InputService>().AsSingle();
-            
             _gameLoopTickables.Add(Resolve<IClickDetector>());
             _gameLoopTickables.Add(Resolve<IInputService>());
         }
@@ -304,11 +295,6 @@ namespace App.Scripts.Scenes.GameScene.Installers
         private void BindCameraService()
         {
             Container.Bind<ICameraService>().To<CameraService>().AsSingle().WithArguments(_camera);
-        }
-
-        private void BindScreenInfoProvider()
-        {
-            Container.Bind<IScreenInfoProvider>().To<ScreenInfoProvider>().AsSingle();
         }
     }
 }
