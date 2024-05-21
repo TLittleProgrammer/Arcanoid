@@ -15,6 +15,7 @@ namespace App.Scripts.General.Energy
         private int _secondsToAddEnergy;
         private int _currentMinutes;
         private int _currentSeconds;
+        private bool _isTickes = false;
 
         public EnergyService(
             ITimeTicker ticker,
@@ -28,11 +29,21 @@ namespace App.Scripts.General.Energy
 
         public async UniTask AsyncInitialize()
         {
-            _ticker.SecondsTicked += OnSecondsTicked;
+            if (_isTickes == false)
+            {
+                _isTickes = true;
+                _ticker.SecondsTicked += OnSecondsTicked;
+            }
+            
             _energyDataService.ValueChanged += OnValueChanged;
             _secondsToAddEnergy = _energySettings.SecondsToRecoveryEnergy;
             
             await UniTask.CompletedTask;
+        }
+
+        public void SetSecondsToAddEnergy(int seconds)
+        {
+            _secondsToAddEnergy = seconds;
         }
 
         public void AddView(EnergyView view)
@@ -65,6 +76,7 @@ namespace App.Scripts.General.Energy
 
             if (_secondsToAddEnergy <= 0)
             {
+                _isTickes = false;
                 _ticker.SecondsTicked -= OnSecondsTicked;
                 _energyDataService.Add(1);
             }
@@ -81,8 +93,13 @@ namespace App.Scripts.General.Energy
             }
             else
             {
+                if (_isTickes == false)
+                {
+                    _isTickes = true;
+                    _ticker.SecondsTicked += OnSecondsTicked;
+                } 
+                
                 _secondsToAddEnergy = _energySettings.SecondsToRecoveryEnergy;
-                _ticker.SecondsTicked += OnSecondsTicked;
                 ShowOrHideTimers(true);
             }
         }

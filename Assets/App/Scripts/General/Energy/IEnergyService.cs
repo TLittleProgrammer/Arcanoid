@@ -7,5 +7,6 @@ namespace App.Scripts.General.Energy
     {
         void AddView(EnergyView view);
         void RemoveView(EnergyView view);
+        void SetSecondsToAddEnergy(int seconds);
     }
 }

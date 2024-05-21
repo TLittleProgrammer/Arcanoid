@@ -11,6 +11,7 @@ namespace App.Scripts.General.UserData.Energy
         [JsonProperty("EnergyValue")]
         public int Value;
 
+        [JsonIgnore]
         public string FileName => SavableConstants.EnergyFileName;
     }
 }

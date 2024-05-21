@@ -9,10 +9,11 @@ namespace App.Scripts.General.UserData.Global
     public class GlobalData : ISavable
     {
         [JsonProperty("IsFirstEnter")]
-        public bool IsFirstEnter;
+        public bool IsFirstEnter = true;
         [JsonProperty("LastTimestampEnter")]
         public long LastTimestampEnter;
 
+        [JsonIgnore]
         public string FileName => SavableConstants.GlobalFileName;
     }
 }
