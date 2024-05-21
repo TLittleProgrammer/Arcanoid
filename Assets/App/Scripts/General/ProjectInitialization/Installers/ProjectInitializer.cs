@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using App.Scripts.External.Localisation;
 using App.Scripts.External.Localisation.Converters;
+using App.Scripts.General.Energy;
 using App.Scripts.General.ProjectInitialization.Settings;
+using App.Scripts.General.UserData.Energy;
 using UnityEngine;
 using Zenject;
 
@@ -13,17 +15,23 @@ namespace App.Scripts.General.ProjectInitialization.Installers
         private readonly ILocaleService _localeService;
         private readonly IConverter _converter;
         private readonly TextAsset _localisation;
+        private readonly IEnergyService _energyService;
+        private readonly IEnergyDataService _energyDataService;
 
         public ProjectInitializer(
             ApplicationSettings applicationSettings,
             ILocaleService localeService,
             IConverter converter,
-            TextAsset localisation)
+            TextAsset localisation,
+            IEnergyService energyService,
+            IEnergyDataService energyDataService)
         {
             _applicationSettings = applicationSettings;
             _localeService = localeService;
             _converter = converter;
             _localisation = localisation;
+            _energyService = energyService;
+            _energyDataService = energyDataService;
         }
         
         public void Initialize()
@@ -32,6 +40,13 @@ namespace App.Scripts.General.ProjectInitialization.Installers
             QualitySettings.vSyncCount = _applicationSettings.VSyncCounter;
             
             InitializeLocale();
+            InitializeEnergyServices();
+        }
+        
+        private async void InitializeEnergyServices()
+        {
+            await _energyDataService.AsyncInitialize();
+            await _energyService.AsyncInitialize();
         }
 
         private void InitializeLocale()

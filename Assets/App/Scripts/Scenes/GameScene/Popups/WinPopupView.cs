@@ -1,5 +1,6 @@
 ﻿using App.Scripts.External.GameStateMachine;
 using App.Scripts.External.Localisation.MonoBehaviours;
+using App.Scripts.General.Energy;
 using App.Scripts.General.Popup;
 using App.Scripts.Scenes.GameScene.Dotween;
 using App.Scripts.Scenes.GameScene.Settings;
@@ -22,6 +23,7 @@ namespace App.Scripts.Scenes.GameScene.Popups
         [SerializeField] private TMP_Text _passedLevelsText;
         [SerializeField] private RectTransform _textFalling;
         [SerializeField] private RectTransform _targetPositionForTextFalling;
+        [SerializeField] private EnergyView _energyView;
 
         private WinContinueButtonAnimationSettings _winContinueButtonAnimationSettings;
         private ITweenersLocator _tweenersLocator;
@@ -46,6 +48,7 @@ namespace App.Scripts.Scenes.GameScene.Popups
         public Image BottomGalacticIcon => _bottomGalacticIcon;
         public Image TopGalacticIcon => _topGalacticIcon;
         public Button ContinueButton => _continueButton;
+        public EnergyView EnergyView => _energyView;
 
         public override async UniTask Show()
         {

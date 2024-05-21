@@ -549,6 +549,7 @@ GameObject:
   - component: {fileID: 8992640202488373766}
   - component: {fileID: 8992640202488373765}
   - component: {fileID: 8992640202488373764}
+  - component: {fileID: 4985920621117193363}
   m_Layer: 5
   m_Name: EnergyScrollbar
   m_TagString: Untagged
@@ -666,3 +667,18 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4985920621117193363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8992640202488373762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39414b58a35a49e7a5bfb217478390a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _energyText: {fileID: 8992640202213274035}
+  _timerText: {fileID: 6891480143868332529}
+  _scrollbar: {fileID: 8992640202488373764}

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using App.Scripts.External.Components;
 using App.Scripts.External.UserData;
+using App.Scripts.General.Energy;
 using App.Scripts.General.Levels;
 using App.Scripts.General.Popup;
 using App.Scripts.General.Popup.AssetManagment;
@@ -21,10 +22,11 @@ namespace App.Scripts.Scenes.MainMenuScene.Installers
         [OdinSerialize] public LevelItemView LevelItemView;
         [OdinSerialize] public LevelPackParent LevelPackParent;
         [OdinSerialize] public LocaleItemView LocaleItemView;
+        [OdinSerialize] public EnergyView EnergyView;
         
         public override void InstallBindings()
         {
-            Container.BindInterfacesAndSelfTo<MainMenuInitalizer>().AsSingle();
+            Container.BindInterfacesAndSelfTo<MainMenuInitalizer>().AsSingle().WithArguments(EnergyView);
             
             LevelPackProgressDictionary levelPackProgressDictionary =
                 (LevelPackProgressDictionary)Container.Resolve<IUserDataContainer>().GetData<LevelPackProgressDictionary>();

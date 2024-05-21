@@ -16,6 +16,8 @@ namespace App.Scripts.General.UserData.Energy
             _userDataContainer = userDataContainer;
         }
 
+        public int CurrentValue => _energyData.Value;
+
         public async UniTask AsyncInitialize()
         {
             _energyData = (EnergyData)_userDataContainer.GetData<EnergyData>();
