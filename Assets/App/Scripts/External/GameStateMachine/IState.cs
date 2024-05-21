@@ -1,16 +1,19 @@
-﻿namespace App.Scripts.External.GameStateMachine
+﻿using Cysharp.Threading.Tasks;
+
+namespace App.Scripts.External.GameStateMachine
 {
     public interface IState : IExitableState
     {
-        void Enter();
+        UniTask Enter();
     }
 
     public interface IState<TParam> : IExitableState
     {
-        void Enter(TParam param);
+        UniTask Enter(TParam param);
     }
+    
     public interface IState<TParam, TSecondParam> : IExitableState
     {
-        void Enter(TParam param, TSecondParam secondParam);
+        UniTask Enter(TParam param, TSecondParam secondParam);
     }
 }

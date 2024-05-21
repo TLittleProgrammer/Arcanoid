@@ -1,15 +1,18 @@
 ﻿using App.Scripts.External.GameStateMachine;
+using Cysharp.Threading.Tasks;
 
 namespace App.Scripts.Scenes.GameScene.States
 {
     public class PopupState : IState
     {
-        public void Enter()
+        public async UniTask Enter()
         {
+            await UniTask.CompletedTask;
         }
 
-        public void Exit()
+        public async UniTask Exit()
         {
+            await UniTask.CompletedTask;
         }
     }
 }

@@ -37,7 +37,7 @@ namespace App.Scripts.Scenes.GameScene.States
             _levelPackInfoService = levelPackInfoService;
         }
         
-        public async void Enter()
+        public async UniTask Enter()
         {
             await _timeScaleAnimator.Animate(0f);
             
@@ -45,6 +45,13 @@ namespace App.Scripts.Scenes.GameScene.States
             UpdateVisual();
             Subscribe();
             AnimateIfNeed();
+        }
+
+        public async UniTask Exit()
+        {
+            _winPopupView.ContinueButton.onClick.RemoveListener(OnContinueClicked);
+            
+            await UniTask.CompletedTask;
         }
 
         private async void AnimateIfNeed()
@@ -104,11 +111,6 @@ namespace App.Scripts.Scenes.GameScene.States
         private void ShowPopup()
         {
             _winPopupView = (WinPopupView)_popupService.Show<WinPopupView>(_rootUIViewProvider.PopupUpViewProvider);
-        }
-
-        public void Exit()
-        {
-            _winPopupView.ContinueButton.onClick.RemoveListener(OnContinueClicked);
         }
 
         private void OnContinueClicked()

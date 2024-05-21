@@ -31,8 +31,6 @@ namespace App.Scripts.General.ProjectInitialization.Installers
             Application.targetFrameRate = _applicationSettings.TargetFPS;
             QualitySettings.vSyncCount = _applicationSettings.VSyncCounter;
             
-            Debug.Log("CYKA");
-
             InitializeLocale();
         }
 

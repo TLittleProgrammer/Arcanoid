@@ -1,7 +1,9 @@
-﻿namespace App.Scripts.External.GameStateMachine
+﻿using Cysharp.Threading.Tasks;
+
+namespace App.Scripts.External.GameStateMachine
 {
     public interface IExitableState
     {
-        void Exit();
+        UniTask Exit();
     }
 }

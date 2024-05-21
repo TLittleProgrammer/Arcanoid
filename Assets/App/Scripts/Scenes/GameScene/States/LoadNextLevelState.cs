@@ -62,7 +62,7 @@ namespace App.Scripts.Scenes.GameScene.States
             _levelPackInfoService = levelPackInfoService;
         }
 
-        public async void Enter()
+        public async UniTask Enter()
         {
             await _loadingScreen.Show(false);
 
@@ -107,9 +107,9 @@ namespace App.Scripts.Scenes.GameScene.States
             }
         }
 
-        public void Exit()
+        public async UniTask Exit()
         {
-            _loadingScreen.Hide();
+            await _loadingScreen.Hide();
         }
     }
 }
