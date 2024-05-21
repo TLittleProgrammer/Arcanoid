@@ -1,5 +1,6 @@
 ﻿using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Constants;
+using App.Scripts.General.Energy;
 using App.Scripts.General.LevelPackInfoService;
 using App.Scripts.General.Levels;
 using App.Scripts.General.Popup;
@@ -19,6 +20,7 @@ namespace App.Scripts.Scenes.GameScene.States
         private readonly RootUIViewProvider _rootUIViewProvider;
         private readonly IStateMachine _gameStateMachine;
         private readonly ILevelPackInfoService _levelPackInfoService;
+        private readonly IEnergyService _energyService;
 
         private WinPopupView _winPopupView;
 
@@ -27,7 +29,8 @@ namespace App.Scripts.Scenes.GameScene.States
             IPopupService popupService,
             RootUIViewProvider rootUIViewProvider,
             IStateMachine gameStateMachine,
-            ILevelPackInfoService levelPackInfoService)
+            ILevelPackInfoService levelPackInfoService,
+            IEnergyService energyService)
         {
             _popupService = popupService;
             _timeScaleAnimator = timeScaleAnimator;
@@ -35,6 +38,7 @@ namespace App.Scripts.Scenes.GameScene.States
             _rootUIViewProvider = rootUIViewProvider;
             _gameStateMachine = gameStateMachine;
             _levelPackInfoService = levelPackInfoService;
+            _energyService = energyService;
         }
         
         public async UniTask Enter()
@@ -50,6 +54,7 @@ namespace App.Scripts.Scenes.GameScene.States
         public async UniTask Exit()
         {
             _winPopupView.ContinueButton.onClick.RemoveListener(OnContinueClicked);
+            _energyService.RemoveView(_winPopupView.EnergyView);
             
             await UniTask.CompletedTask;
         }
@@ -111,6 +116,7 @@ namespace App.Scripts.Scenes.GameScene.States
         private void ShowPopup()
         {
             _winPopupView = (WinPopupView)_popupService.Show<WinPopupView>(_rootUIViewProvider.PopupUpViewProvider);
+            _energyService.AddView(_winPopupView.EnergyView);
         }
 
         private void OnContinueClicked()

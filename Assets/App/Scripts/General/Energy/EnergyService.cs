@@ -104,5 +104,10 @@ namespace App.Scripts.General.Energy
                 view.Timer.SetActive(active);
             }
         }
+
+        public void Dispose()
+        {
+            _views.Clear();
+        }
     }
 }

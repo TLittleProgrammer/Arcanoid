@@ -3,6 +3,7 @@ using App.Scripts.External.Components;
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.External.UserData;
 using App.Scripts.General.Constants;
+using App.Scripts.General.Energy;
 using App.Scripts.General.LevelPackInfoService;
 using App.Scripts.General.Levels;
 using App.Scripts.General.States;
@@ -24,6 +25,7 @@ namespace App.Scripts.Scenes.MainMenuScene.Factories.Levels
         private readonly LevelPackProvider _levelPackProvider;
         private readonly ILevelPackInfoService _levelPackInfoService;
         private readonly DiContainer _diContainer;
+        private readonly IEnergyService _energyService;
 
         public LevelItemFactory(
             ILevelItemView prefab,
@@ -33,7 +35,8 @@ namespace App.Scripts.Scenes.MainMenuScene.Factories.Levels
             IStateMachine stateMachine,
             LevelPackProvider levelPackProvider,
             ILevelPackInfoService levelPackInfoService,
-            DiContainer diContainer)
+            DiContainer diContainer,
+            IEnergyService energyService)
         {
             _prefab = prefab;
             _prefabParent = prefabParent;
@@ -43,6 +46,7 @@ namespace App.Scripts.Scenes.MainMenuScene.Factories.Levels
             _levelPackProvider = levelPackProvider;
             _levelPackInfoService = levelPackInfoService;
             _diContainer = diContainer;
+            _energyService = energyService;
         }
         
         public ILevelItemView Create(int packIndex, LevelPack levelPack)
@@ -84,6 +88,8 @@ namespace App.Scripts.Scenes.MainMenuScene.Factories.Levels
                         LevelPack = levelPack,
                         PackIndex = packIndex
                     });
+                  
+                    _energyService.Dispose();
                     
                     _stateMachine.Enter<LoadingSceneState, string, bool>(SceneNaming.Game, false);
                 };

@@ -1,5 +1,4 @@
-﻿using App.Scripts.External.GameStateMachine;
-using App.Scripts.External.Localisation.MonoBehaviours;
+﻿using App.Scripts.External.Localisation.MonoBehaviours;
 using App.Scripts.General.Energy;
 using App.Scripts.General.Popup;
 using App.Scripts.Scenes.GameScene.Dotween;

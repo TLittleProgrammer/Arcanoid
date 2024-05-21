@@ -560,6 +560,7 @@ MonoBehaviour:
   _passedLevelsText: {fileID: 8124541780413028716}
   _textFalling: {fileID: 8124541780601856468}
   _targetPositionForTextFalling: {fileID: 7901662209234281130}
+  _energyView: {fileID: 3887072496364365534}
 --- !u!1 &5105319381366885646
 GameObject:
   m_ObjectHideFlags: 0
@@ -2231,6 +2232,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8992640202488373763, guid: df1d8f2f264d7cc46901478c9f1dbcc9, type: 3}
   m_PrefabInstance: {fileID: 8124541780575197773}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3887072496364365534 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4985920621117193363, guid: df1d8f2f264d7cc46901478c9f1dbcc9, type: 3}
+  m_PrefabInstance: {fileID: 8124541780575197773}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39414b58a35a49e7a5bfb217478390a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8124541780618093923
 PrefabInstance:
   m_ObjectHideFlags: 0
