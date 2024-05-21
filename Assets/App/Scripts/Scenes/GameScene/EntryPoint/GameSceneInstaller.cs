@@ -4,8 +4,6 @@ using App.Scripts.External.Extensions.ZenjectExtensions;
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Infrastructure;
 using App.Scripts.General.Popup;
-using App.Scripts.General.Popup.AssetManagment;
-using App.Scripts.General.Popup.Factory;
 using App.Scripts.Scenes.GameScene.Ball;
 using App.Scripts.Scenes.GameScene.Ball.Collision;
 using App.Scripts.Scenes.GameScene.Ball.Movement;
@@ -14,14 +12,11 @@ using App.Scripts.Scenes.GameScene.Camera;
 using App.Scripts.Scenes.GameScene.Effects;
 using App.Scripts.Scenes.GameScene.Entities;
 using App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers;
-using App.Scripts.Scenes.GameScene.Factories.CircleEffect;
-using App.Scripts.Scenes.GameScene.Factories.Entity;
-using App.Scripts.Scenes.GameScene.Factories.Health;
-using App.Scripts.Scenes.GameScene.Factories.OnTopSprite;
 using App.Scripts.Scenes.GameScene.Grid;
 using App.Scripts.Scenes.GameScene.Healthes;
 using App.Scripts.Scenes.GameScene.Healthes.View;
 using App.Scripts.Scenes.GameScene.Input;
+using App.Scripts.Scenes.GameScene.Installers;
 using App.Scripts.Scenes.GameScene.LevelProgress;
 using App.Scripts.Scenes.GameScene.Levels.Load;
 using App.Scripts.Scenes.GameScene.LevelView;
@@ -36,7 +31,7 @@ using App.Scripts.Scenes.GameScene.Walls;
 using UnityEngine;
 using Zenject;
 
-namespace App.Scripts.Scenes.GameScene.Installers
+namespace App.Scripts.Scenes.GameScene.EntryPoint
 {
     public class GameSceneInstaller : MonoInstaller
     {
@@ -61,29 +56,25 @@ namespace App.Scripts.Scenes.GameScene.Installers
         public override void InstallBindings()
         {
             BindInitializeDependencies();
+            
             TweenersLocatorInstaller.Install(Container);
-            
             TimeProviderInstaller.Install(Container);
-            BindTimeProvider();
-            
             ScoreAnimationServiceInstaller.Install(Container);
             
             BindPools();
             BindPoolContainer();
-            BindFactories();
+            
+            FactoriesInstaller.Install(Container);
             BindMousePositionChecker();
             BindLevelProgressService();
             BindCameraService();
             
             ScreenInfoProviderInstaller.Install(Container);
             InputInstaller.Install(Container);
-            BindInput();
-            
             LevelServicesInstaller.Install(Container);
             
             BindGridPositionResolver();
             BindBallSpeedUpdater();
-            BindLevelLoader();
             BindPositionCheckers();
             BindPlayerMoving();
             BindHealthPointService();
@@ -92,10 +83,45 @@ namespace App.Scripts.Scenes.GameScene.Installers
             BindBallCollisionService();
             BindWallLoader();
 
+            InitRestartables();
             
             StateMachineInstaller.Install(Container, _gameLoopTickables, _projectStateMachine, _restartables, _levelPackInfoView, _restartablesForLoadNewLevel);
             
             Container.BindInterfacesTo<GameInitializer>().AsSingle();
+        }
+
+        private void InitRestartables()
+        {
+            _restartables.Add(Resolve<IHealthPointService>());
+            _restartablesForLoadNewLevel.Add(Resolve<IHealthPointService>());
+            
+            _restartables.Add(Resolve<IHealthContainer>());
+            _restartablesForLoadNewLevel.Add(Resolve<IHealthContainer>());
+
+            _restartables.Add(Container.Resolve<ILevelProgressService>());
+            _restartablesForLoadNewLevel.Add(Container.Resolve<ILevelProgressService>());
+            
+            var mover = Resolve<IPlayerShapeMover>();
+            _restartables.Add(mover);
+            _restartablesForLoadNewLevel.Add(mover);
+            _gameLoopTickables.Add(mover);
+            
+            _restartables.Add(Resolve<IBallMovementService>());
+            _restartablesForLoadNewLevel.Add(Resolve<IBallMovementService>());
+            _gameLoopTickables.Add(Resolve<IBallMovementService>());
+
+            _restartables.Add(Container.Resolve<IPopupService>() as IRestartable);
+            _restartablesForLoadNewLevel.Add(Container.Resolve<IPopupService>() as IRestartable);
+            
+            _restartables.Add(Container.Resolve<IPoolContainer>());
+            _restartablesForLoadNewLevel.Add(Container.Resolve<IPoolContainer>());
+            
+            _restartables.Add(Container.Resolve<ILevelLoader>());
+            _restartables.Add(Container.Resolve<ITimeProvider>());
+            _restartablesForLoadNewLevel.Add(Container.Resolve<ITimeProvider>());
+            _gameLoopTickables.Add(Resolve<IClickDetector>());
+            _gameLoopTickables.Add(Resolve<IInputService>());
+            _restartables.Add(Container.Resolve<IGridPositionResolver>());
         }
 
         private void BindBallCollisionService()
@@ -133,12 +159,6 @@ namespace App.Scripts.Scenes.GameScene.Installers
         {
             Container.Bind<IHealthPointService>().To<HealthPointService>().AsSingle().WithArguments(_healthParent as ITransformable);
             Container.Bind<IHealthContainer>().To<HealthContainer>().AsSingle();
-            
-            _restartables.Add(Resolve<IHealthPointService>());
-            _restartablesForLoadNewLevel.Add(Resolve<IHealthPointService>());
-            
-            _restartables.Add(Resolve<IHealthContainer>());
-            _restartablesForLoadNewLevel.Add(Resolve<IHealthContainer>());
         }
 
         private void BindLevelProgressService()
@@ -147,9 +167,6 @@ namespace App.Scripts.Scenes.GameScene.Installers
                 .BindInterfacesAndSelfTo<LevelProgressService>()
                 .AsSingle()
                 .WithArguments(_levelPackInfoView, _levelPackBackground);
-
-            _restartables.Add(Container.Resolve<ILevelProgressService>());
-            _restartablesForLoadNewLevel.Add(Container.Resolve<ILevelProgressService>());
         }
 
         private void BindBallMovers()
@@ -182,43 +199,16 @@ namespace App.Scripts.Scenes.GameScene.Installers
             shapeMoverSettings.Speed = 5f;
             
             Container.Bind<IPlayerShapeMover>().To<PlayerShapeMover>().AsSingle().WithArguments(_playerShape, shapeMoverSettings);
-
-            var mover = Resolve<IPlayerShapeMover>();
-            _restartables.Add(mover);
-            _restartablesForLoadNewLevel.Add(mover);
-            _gameLoopTickables.Add(mover);
         }
 
         private void BindBallMovement()
         {
             Container.Bind<IBallMovementService>().To<BallMovementService>().AsSingle().WithArguments(_ballView);
-            
-            _restartables.Add(Resolve<IBallMovementService>());
-            _restartablesForLoadNewLevel.Add(Resolve<IBallMovementService>());
-            _gameLoopTickables.Add(Resolve<IBallMovementService>());
-        }
-
-        private void BindFactories()
-        {
-            Container.BindFactory<string, IEntityView, IEntityView.Factory>().FromFactory<EntityFactory>();
-            Container.BindFactory<ITransformable, IHealthPointView, IHealthPointView.Factory>().FromFactory<HealthFactory>();
-            Container.BindFactory<EntityView, CircleEffect, CircleEffect.Factory>().FromFactory<CircleEffectFactory>();
-            Container.BindFactory<IEntityView, OnTopSprites, OnTopSprites.Factory>().FromFactory<OnTopSpriteFactory>();
-            
-            Container.Bind<IPopupProvider>().To<ResourcesPopupProvider>().AsSingle();
-            Container.Bind<IPopupFactory>().To<PopupFactory>().AsSingle();
-            Container.Bind<IPopupService>().To<PopupService>().AsSingle();
-
-            _restartables.Add(Container.Resolve<IPopupService>() as IRestartable);
-            _restartablesForLoadNewLevel.Add(Container.Resolve<IPopupService>() as IRestartable);
         }
 
         private void BindPoolContainer()
         {
             Container.Bind<IPoolContainer>().To<PoolContainer>().AsSingle();
-            
-            _restartables.Add(Container.Resolve<IPoolContainer>());
-            _restartablesForLoadNewLevel.Add(Container.Resolve<IPoolContainer>());
         }
 
         private void BindPools()
@@ -234,23 +224,6 @@ namespace App.Scripts.Scenes.GameScene.Installers
             Container.BindPool<TInstance, TPool>(_poolProviders.Pools[poolType].InitialSize, _poolProviders.Pools[poolType].View.GetComponent<TInstance>(), _poolProviders.Pools[poolType].ParentName);
         }
 
-        private void BindLevelLoader()
-        {
-            _restartables.Add(Container.Resolve<ILevelLoader>());
-        }
-
-        private void BindTimeProvider()
-        {
-            _restartables.Add(Container.Resolve<ITimeProvider>());
-            _restartablesForLoadNewLevel.Add(Container.Resolve<ITimeProvider>());
-        }
-
-        private void BindInput()
-        {
-            _gameLoopTickables.Add(Resolve<IClickDetector>());
-            _gameLoopTickables.Add(Resolve<IInputService>());
-        }
-
         private TResult Resolve<TResult>()
         {
             return Container.Resolve<TResult>();
@@ -259,8 +232,6 @@ namespace App.Scripts.Scenes.GameScene.Installers
         private void BindGridPositionResolver()
         {
             Container.Bind<IGridPositionResolver>().To<GridPositionResolver>().AsSingle().WithArguments(_header);
-            
-            _restartables.Add(Container.Resolve<IGridPositionResolver>());
         }
 
         private void BindCameraService()
