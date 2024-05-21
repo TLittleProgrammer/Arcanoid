@@ -3,7 +3,6 @@ using App.Scripts.External.Components;
 using App.Scripts.External.Extensions.ZenjectExtensions;
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Infrastructure;
-using App.Scripts.General.Popup;
 using App.Scripts.Scenes.GameScene.Ball;
 using App.Scripts.Scenes.GameScene.Ball.Collision;
 using App.Scripts.Scenes.GameScene.Ball.Movement;
@@ -15,17 +14,14 @@ using App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers;
 using App.Scripts.Scenes.GameScene.Grid;
 using App.Scripts.Scenes.GameScene.Healthes;
 using App.Scripts.Scenes.GameScene.Healthes.View;
-using App.Scripts.Scenes.GameScene.Input;
 using App.Scripts.Scenes.GameScene.Installers;
 using App.Scripts.Scenes.GameScene.LevelProgress;
-using App.Scripts.Scenes.GameScene.Levels.Load;
 using App.Scripts.Scenes.GameScene.LevelView;
 using App.Scripts.Scenes.GameScene.PlayerShape;
 using App.Scripts.Scenes.GameScene.PlayerShape.Move;
 using App.Scripts.Scenes.GameScene.Pools;
 using App.Scripts.Scenes.GameScene.PositionChecker;
 using App.Scripts.Scenes.GameScene.Settings;
-using App.Scripts.Scenes.GameScene.Time;
 using App.Scripts.Scenes.GameScene.TopSprites;
 using App.Scripts.Scenes.GameScene.Walls;
 using UnityEngine;
@@ -82,46 +78,14 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             BindBallMovement();
             BindBallCollisionService();
             BindWallLoader();
-
-            InitRestartables();
             
             StateMachineInstaller.Install(Container, _gameLoopTickables, _projectStateMachine, _restartables, _levelPackInfoView, _restartablesForLoadNewLevel);
             
             Container.BindInterfacesTo<GameInitializer>().AsSingle();
-        }
-
-        private void InitRestartables()
-        {
-            _restartables.Add(Resolve<IHealthPointService>());
-            _restartablesForLoadNewLevel.Add(Resolve<IHealthPointService>());
-            
-            _restartables.Add(Resolve<IHealthContainer>());
-            _restartablesForLoadNewLevel.Add(Resolve<IHealthContainer>());
-
-            _restartables.Add(Container.Resolve<ILevelProgressService>());
-            _restartablesForLoadNewLevel.Add(Container.Resolve<ILevelProgressService>());
-            
-            var mover = Resolve<IPlayerShapeMover>();
-            _restartables.Add(mover);
-            _restartablesForLoadNewLevel.Add(mover);
-            _gameLoopTickables.Add(mover);
-            
-            _restartables.Add(Resolve<IBallMovementService>());
-            _restartablesForLoadNewLevel.Add(Resolve<IBallMovementService>());
-            _gameLoopTickables.Add(Resolve<IBallMovementService>());
-
-            _restartables.Add(Container.Resolve<IPopupService>() as IRestartable);
-            _restartablesForLoadNewLevel.Add(Container.Resolve<IPopupService>() as IRestartable);
-            
-            _restartables.Add(Container.Resolve<IPoolContainer>());
-            _restartablesForLoadNewLevel.Add(Container.Resolve<IPoolContainer>());
-            
-            _restartables.Add(Container.Resolve<ILevelLoader>());
-            _restartables.Add(Container.Resolve<ITimeProvider>());
-            _restartablesForLoadNewLevel.Add(Container.Resolve<ITimeProvider>());
-            _gameLoopTickables.Add(Resolve<IClickDetector>());
-            _gameLoopTickables.Add(Resolve<IInputService>());
-            _restartables.Add(Container.Resolve<IGridPositionResolver>());
+            Container
+                .BindInterfacesTo<InitializeAllRestartableAnsTickablesLists>()
+                .AsSingle()
+                .WithArguments(_restartables, _restartablesForLoadNewLevel, _gameLoopTickables);
         }
 
         private void BindBallCollisionService()
@@ -222,11 +186,6 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
         private void BindPool<TInstance, TPool>(PoolTypeId poolType) where TPool : IMemoryPool where TInstance : MonoBehaviour 
         {
             Container.BindPool<TInstance, TPool>(_poolProviders.Pools[poolType].InitialSize, _poolProviders.Pools[poolType].View.GetComponent<TInstance>(), _poolProviders.Pools[poolType].ParentName);
-        }
-
-        private TResult Resolve<TResult>()
-        {
-            return Container.Resolve<TResult>();
         }
 
         private void BindGridPositionResolver()
