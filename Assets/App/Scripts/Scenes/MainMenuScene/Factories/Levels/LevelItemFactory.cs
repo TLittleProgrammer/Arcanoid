@@ -6,7 +6,7 @@ using App.Scripts.General.Constants;
 using App.Scripts.General.LevelPackInfoService;
 using App.Scripts.General.Levels;
 using App.Scripts.General.States;
-using App.Scripts.General.UserData.Data;
+using App.Scripts.General.UserData.Levels.Data;
 using App.Scripts.Scenes.MainMenuScene.Constants;
 using App.Scripts.Scenes.MainMenuScene.LevelPacks;
 using App.Scripts.Scenes.MainMenuScene.LevelPacks.Configs;

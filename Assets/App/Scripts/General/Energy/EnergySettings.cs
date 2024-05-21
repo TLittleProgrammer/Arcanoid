@@ -6,6 +6,7 @@ namespace App.Scripts.General.Energy
     public class EnergySettings : ScriptableObject
     {
         public int MaxEnergyCount;
+        public int InitialEnergyCount;
         public int SecondsToRecoveryEnergy;
     }
 }

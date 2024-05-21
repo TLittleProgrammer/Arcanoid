@@ -9,7 +9,8 @@ using App.Scripts.General.LoadingScreen;
 using App.Scripts.General.RootUI;
 using App.Scripts.General.States;
 using App.Scripts.General.Time;
-using App.Scripts.General.UserData.Services;
+using App.Scripts.General.UserData.Energy;
+using App.Scripts.General.UserData.Levels;
 using UnityEngine;
 using Zenject;
 
@@ -30,6 +31,7 @@ namespace App.Scripts.General.ProjectInitialization.Installers
             Container.Bind<LevelProgressDataService>().AsSingle();
             Container.Bind<ILocaleService>().To<LocaleService>().AsSingle();
             Container.Bind<IConverter>().To<CsvConverter>().AsSingle();
+            Container.Bind<IEnergyDataService>().To<EnergyDataService>().AsSingle();
             Container.Bind<IEnergyService>().To<EnergyService>().AsSingle();
 
             CreateRootUI();

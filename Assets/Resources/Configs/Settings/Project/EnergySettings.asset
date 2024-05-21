@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: EnergySettings
   m_EditorClassIdentifier: 
   MaxEnergyCount: 100
+  InitialEnergyCount: 50
   SecondsToRecoveryEnergy: 25

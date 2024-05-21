@@ -2,7 +2,7 @@
 using App.Scripts.External.UserData.SaveLoad;
 using App.Scripts.General.UserData.Constants;
 
-namespace App.Scripts.General.UserData.Data
+namespace App.Scripts.General.UserData.Levels.Data
 {
     public sealed class LevelPackProgressDictionary : Dictionary<int, LevelPackProgressProgressData>, ISavable, ILevelPackProgress
     {

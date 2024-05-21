@@ -14,6 +14,8 @@ namespace App.Scripts.General.Energy
         private const string _energyValueFormat = "{0}/{1}";
         private const string _energyTimerFormat = "{0}:{1}";
 
+        public GameObject Timer => _timerText.gameObject;
+        
         public void UpdateTimer(int minutes, int seconds)
         {
             string secondsStr = seconds >= 10 ? seconds.ToString() : $"0{seconds.ToString()}";
