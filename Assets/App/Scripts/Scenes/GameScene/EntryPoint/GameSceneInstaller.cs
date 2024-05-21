@@ -45,9 +45,9 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
         [Inject] private PoolProviders _poolProviders;
         [Inject] private IStateMachine _projectStateMachine;
 
-        private List<IRestartable> _restartables = new();
-        private List<IRestartable> _restartablesForLoadNewLevel = new();
-        private List<ITickable> _gameLoopTickables = new();
+        private readonly List<IRestartable> _restartables = new();
+        private readonly List<IRestartable> _restartablesForLoadNewLevel = new();
+        private readonly List<ITickable> _gameLoopTickables = new();
 
         public override void InstallBindings()
         {
@@ -58,49 +58,34 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             ScoreAnimationServiceInstaller.Install(Container);
             
             BindPools();
-            BindPoolContainer();
             
+            Container.Bind<IPoolContainer>().To<PoolContainer>().AsSingle();
             FactoriesInstaller.Install(Container);
-            BindMousePositionChecker();
-            BindLevelProgressService();
-            BindCameraService();
             
+            Container.Bind<IRectMousePositionChecker>().To<RectMousePositionChecker>().AsSingle().WithArguments(_rectTransformableViews);
+            Container.BindInterfacesAndSelfTo<LevelProgressService>().AsSingle().WithArguments(_levelPackInfoView, _levelPackBackground);
+            Container.Bind<ICameraService>().To<CameraService>().AsSingle().WithArguments(_camera);
+
             ScreenInfoProviderInstaller.Install(Container);
             InputInstaller.Install(Container);
             LevelServicesInstaller.Install(Container);
             
-            BindGridPositionResolver();
-            BindBallSpeedUpdater();
-            BindPositionCheckers();
+            Container.Bind<IGridPositionResolver>().To<GridPositionResolver>().AsSingle().WithArguments(_header);
+            Container.Bind<IBallSpeedUpdater>().To<BallSpeedUpdater>().AsSingle();
+            Container.Bind<IShapePositionChecker>().To<PlayerShapePositionChecker>().AsTransient().WithArguments(_playerShape);
+            
             BindPlayerMoving();
             BindHealthPointService();
             BindBallMovers();
-            BindBallMovement();
-            BindBallCollisionService();
-            BindWallLoader();
+            
+            Container.Bind<IBallMovementService>().To<BallMovementService>().AsSingle().WithArguments(_ballView);
+            Container.Bind<IBallCollisionService>().To<BallCollisionService>().AsSingle().WithArguments(_ballView, _playerShape).NonLazy();
+            Container.Bind<IWallLoader>().To<WallLoader>().AsSingle().WithArguments(_wallPrefab);
             
             StateMachineInstaller.Install(Container, _gameLoopTickables, _projectStateMachine, _restartables, _levelPackInfoView, _restartablesForLoadNewLevel);
             
             Container.BindInterfacesTo<GameInitializer>().AsSingle();
-            Container
-                .BindInterfacesTo<InitializeAllRestartableAnsTickablesLists>()
-                .AsSingle()
-                .WithArguments(_restartables, _restartablesForLoadNewLevel, _gameLoopTickables);
-        }
-
-        private void BindBallCollisionService()
-        {
-            Container
-                .Bind<IBallCollisionService>()
-                .To<BallCollisionService>()
-                .AsSingle()
-                .WithArguments(_ballView, _playerShape)
-                .NonLazy();
-        }
-
-        private void BindWallLoader()
-        {
-            Container.Bind<IWallLoader>().To<WallLoader>().AsSingle().WithArguments(_wallPrefab);
+            Container.BindInterfacesTo<InitializeAllRestartableAnsTickablesLists>().AsSingle().WithArguments(_restartables, _restartablesForLoadNewLevel, _gameLoopTickables);
         }
 
         private void BindInitializeDependencies()
@@ -109,28 +94,10 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.Bind<PlayerView>().FromInstance(_playerShape).AsSingle();
         }
 
-        private void BindBallSpeedUpdater()
-        {
-            Container.Bind<IBallSpeedUpdater>().To<BallSpeedUpdater>().AsSingle();
-        }
-
-        private void BindMousePositionChecker()
-        {
-            Container.Bind<IRectMousePositionChecker>().To<RectMousePositionChecker>().AsSingle().WithArguments(_rectTransformableViews);
-        }
-
         private void BindHealthPointService()
         {
             Container.Bind<IHealthPointService>().To<HealthPointService>().AsSingle().WithArguments(_healthParent as ITransformable);
             Container.Bind<IHealthContainer>().To<HealthContainer>().AsSingle();
-        }
-
-        private void BindLevelProgressService()
-        {
-            Container
-                .BindInterfacesAndSelfTo<LevelProgressService>()
-                .AsSingle()
-                .WithArguments(_levelPackInfoView, _levelPackBackground);
         }
 
         private void BindBallMovers()
@@ -148,31 +115,12 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
                 .WithArguments(_ballView);
         }
 
-        private void BindPositionCheckers()
-        {
-            Container
-                .Bind<IShapePositionChecker>()
-                .To<PlayerShapePositionChecker>()
-                .AsTransient()
-                .WithArguments(_playerShape);
-        }
-
         private void BindPlayerMoving()
         {
             ShapeMoverSettings shapeMoverSettings = new();
             shapeMoverSettings.Speed = 5f;
             
             Container.Bind<IPlayerShapeMover>().To<PlayerShapeMover>().AsSingle().WithArguments(_playerShape, shapeMoverSettings);
-        }
-
-        private void BindBallMovement()
-        {
-            Container.Bind<IBallMovementService>().To<BallMovementService>().AsSingle().WithArguments(_ballView);
-        }
-
-        private void BindPoolContainer()
-        {
-            Container.Bind<IPoolContainer>().To<PoolContainer>().AsSingle();
         }
 
         private void BindPools()
@@ -186,16 +134,6 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
         private void BindPool<TInstance, TPool>(PoolTypeId poolType) where TPool : IMemoryPool where TInstance : MonoBehaviour 
         {
             Container.BindPool<TInstance, TPool>(_poolProviders.Pools[poolType].InitialSize, _poolProviders.Pools[poolType].View.GetComponent<TInstance>(), _poolProviders.Pools[poolType].ParentName);
-        }
-
-        private void BindGridPositionResolver()
-        {
-            Container.Bind<IGridPositionResolver>().To<GridPositionResolver>().AsSingle().WithArguments(_header);
-        }
-
-        private void BindCameraService()
-        {
-            Container.Bind<ICameraService>().To<CameraService>().AsSingle().WithArguments(_camera);
         }
     }
 }
