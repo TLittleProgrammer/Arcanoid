@@ -11,8 +11,6 @@ using App.Scripts.Scenes.GameScene.Ball.Collision;
 using App.Scripts.Scenes.GameScene.Ball.Movement;
 using App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants;
 using App.Scripts.Scenes.GameScene.Camera;
-using App.Scripts.Scenes.GameScene.Constants;
-using App.Scripts.Scenes.GameScene.Dotween;
 using App.Scripts.Scenes.GameScene.Effects;
 using App.Scripts.Scenes.GameScene.Entities;
 using App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers;
@@ -26,16 +24,12 @@ using App.Scripts.Scenes.GameScene.Healthes.View;
 using App.Scripts.Scenes.GameScene.Input;
 using App.Scripts.Scenes.GameScene.LevelProgress;
 using App.Scripts.Scenes.GameScene.Levels.Load;
-using App.Scripts.Scenes.GameScene.Levels.View;
 using App.Scripts.Scenes.GameScene.LevelView;
 using App.Scripts.Scenes.GameScene.PlayerShape;
 using App.Scripts.Scenes.GameScene.PlayerShape.Move;
 using App.Scripts.Scenes.GameScene.Pools;
 using App.Scripts.Scenes.GameScene.PositionChecker;
-using App.Scripts.Scenes.GameScene.ScoreAnimation;
-using App.Scripts.Scenes.GameScene.ScreenInfo;
 using App.Scripts.Scenes.GameScene.Settings;
-using App.Scripts.Scenes.GameScene.States;
 using App.Scripts.Scenes.GameScene.Time;
 using App.Scripts.Scenes.GameScene.TopSprites;
 using App.Scripts.Scenes.GameScene.Walls;
@@ -63,9 +57,7 @@ namespace App.Scripts.Scenes.GameScene.Installers
         private List<IRestartable> _restartables = new();
         private List<IRestartable> _restartablesForLoadNewLevel = new();
         private List<ITickable> _gameLoopTickables = new();
-        
-        private IStateMachine _gameStateMachine = new StateMachine();
-        
+
         public override void InstallBindings()
         {
             BindInitializeDependencies();
@@ -100,7 +92,8 @@ namespace App.Scripts.Scenes.GameScene.Installers
             BindBallCollisionService();
             BindWallLoader();
 
-            BindGameStateMachine();
+            
+            StateMachineInstaller.Install(Container, _gameLoopTickables, _projectStateMachine, _restartables, _levelPackInfoView, _restartablesForLoadNewLevel);
             
             Container.BindInterfacesTo<GameInitializer>().AsSingle();
         }
@@ -157,28 +150,6 @@ namespace App.Scripts.Scenes.GameScene.Installers
 
             _restartables.Add(Container.Resolve<ILevelProgressService>());
             _restartablesForLoadNewLevel.Add(Container.Resolve<ILevelProgressService>());
-        }
-
-        private void BindGameStateMachine()
-        {
-            GameLoopState gameLoopState = Container.Instantiate<GameLoopState>(new object[]{_gameLoopTickables, _gameStateMachine});
-            PopupState popupState = Container.Instantiate<PopupState>();
-            LooseState looseState = Container.Instantiate<LooseState>();
-            WinState winState = Container.Instantiate<WinState>(new[] { _gameStateMachine });
-            LoadSceneFromMainMenuState loadSceneFromMainMenuState = Container.Instantiate<LoadSceneFromMainMenuState>(new[] { _projectStateMachine });
-            RestartState restartState = Container.Instantiate<RestartState>(new object[] {_restartables, _gameStateMachine});
-            LoadNextLevelState loadNextLevelState = Container.Instantiate<LoadNextLevelState>(new object[] {_levelPackInfoView, _restartablesForLoadNewLevel, _gameStateMachine});
-
-            Container.BindInterfacesTo<GameLoopState>().FromInstance(gameLoopState);
-            
-            
-            _gameStateMachine.AsyncInitialize(new IExitableState[] { gameLoopState, popupState, restartState, loadNextLevelState, looseState, winState, loadSceneFromMainMenuState });
-            _gameStateMachine.Enter<GameLoopState>();
-            
-            Container.Bind<IStateMachine>()
-                .FromInstance(_gameStateMachine)
-                .AsCached()
-                .NonLazy();
         }
 
         private void BindBallMovers()

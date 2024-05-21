@@ -1,4 +1,5 @@
-﻿using App.Scripts.General.Constants;
+﻿using App.Scripts.External.GameStateMachine;
+using App.Scripts.General.Constants;
 using App.Scripts.General.Infrastructure;
 using App.Scripts.General.LevelPackInfoService;
 using App.Scripts.General.Levels;
@@ -11,6 +12,7 @@ using App.Scripts.Scenes.GameScene.LevelProgress;
 using App.Scripts.Scenes.GameScene.Levels;
 using App.Scripts.Scenes.GameScene.Levels.Load;
 using App.Scripts.Scenes.GameScene.PlayerShape.Move;
+using App.Scripts.Scenes.GameScene.States;
 using App.Scripts.Scenes.GameScene.Walls;
 using Newtonsoft.Json;
 using UnityEngine;
@@ -32,6 +34,14 @@ namespace App.Scripts.Scenes.GameScene.Installers
         private readonly IWallLoader _wallLoader;
         private readonly TextAsset _levelData;
         private readonly ILevelPackInfoService _levelPackInfoService;
+        private readonly GameLoopState _gameLoopState;
+        private readonly WinState _winState;
+        private readonly LoadSceneFromMainMenuState _loadSceneFromMainMenuState;
+        private readonly RestartState _restartState;
+        private readonly LoadNextLevelState _loadNextLevelState;
+        private readonly PopupState _popupState;
+        private readonly LooseState _looseState;
+        private readonly IStateMachine _stateMachine;
 
         public GameInitializer(
             IGridPositionResolver gridPositionResolver,
@@ -45,7 +55,15 @@ namespace App.Scripts.Scenes.GameScene.Installers
             IPlayerShapeMover playerShapeMover,
             IWallLoader wallLoader,
             TextAsset levelData,
-            ILevelPackInfoService levelPackInfoService)
+            ILevelPackInfoService levelPackInfoService,
+            GameLoopState gameLoopState,
+            WinState winState,
+            LoadSceneFromMainMenuState loadSceneFromMainMenuState,
+            RestartState restartState,
+            LoadNextLevelState loadNextLevelState,
+            PopupState popupState,
+            LooseState looseState,
+            IStateMachine stateMachine)
         {
             _gridPositionResolver = gridPositionResolver;
             _popupProvider = popupProvider;
@@ -59,6 +77,14 @@ namespace App.Scripts.Scenes.GameScene.Installers
             _wallLoader = wallLoader;
             _levelData = levelData;
             _levelPackInfoService = levelPackInfoService;
+            _gameLoopState = gameLoopState;
+            _winState = winState;
+            _loadSceneFromMainMenuState = loadSceneFromMainMenuState;
+            _restartState = restartState;
+            _loadNextLevelState = loadNextLevelState;
+            _popupState = popupState;
+            _looseState = looseState;
+            _stateMachine = stateMachine;
         }
         
         public async void Initialize()
@@ -71,8 +97,28 @@ namespace App.Scripts.Scenes.GameScene.Installers
             await _wallLoader.AsyncInitialize();
             await _popupProvider.AsyncInitialize(Pathes.PathToPopups);
             await _ballSpeedUpdater.AsyncInitialize(_ballMovementService);
+
+            InitializeStateMachine();
         }
-    
+
+        private void InitializeStateMachine()
+        {
+            IExitableState[] states =
+            {
+                _gameLoopState,
+                _winState,
+                _loadSceneFromMainMenuState,
+                _restartState,
+                _loadNextLevelState,
+                _popupState,
+                _looseState,
+            };
+
+            _stateMachine.AsyncInitialize(states);
+            
+            _stateMachine.Enter<GameLoopState>();
+        }
+
         private LevelData ChooseLevelData()
         {
             var data = _levelPackInfoService.GetData();
