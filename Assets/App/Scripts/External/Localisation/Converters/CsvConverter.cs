@@ -2,11 +2,11 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
-namespace App.Scripts.External.Localisation
+namespace App.Scripts.External.Localisation.Converters
 {
-    public sealed class CsvFileService
+    public sealed class CsvConverter : IConverter
     {
-        public static string[,] SplitCsvGrid(string csvText)
+        public string[,] ConvertFileToGrid(string csvText)
         {
             string[] lines = csvText.Split('\n');
 
@@ -27,7 +27,7 @@ namespace App.Scripts.External.Localisation
             return outputGrid;
         }
 
-        private static string[] SplitCsvLine(string line)
+        private string[] SplitCsvLine(string line)
         {
             return (from Match m in Regex.Matches
             (
