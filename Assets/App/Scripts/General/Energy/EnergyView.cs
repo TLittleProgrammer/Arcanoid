@@ -15,6 +15,12 @@ namespace App.Scripts.General.Energy
         private const string _energyTimerFormat = "{0}:{1}";
 
         public GameObject Timer => _timerText.gameObject;
+
+        public void InitializeView(EnergyViewModel model)
+        {
+            UpdateTimer(model.Minutes, model.Seconds);
+            UpdateEnergyValue(model.Energy, model.MaxEnergy, (float)model.Energy / model.MaxEnergy);
+        }
         
         public void UpdateTimer(int minutes, int seconds)
         {
