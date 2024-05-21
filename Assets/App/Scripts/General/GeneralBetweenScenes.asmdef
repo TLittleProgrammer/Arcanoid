@@ -13,7 +13,9 @@
         "UserData",
         "DotweenContainerService",
         "Initialization",
-        "Localisation"
+        "Localisation",
+        "UniTask.TextMeshPro",
+        "Unity.TextMeshPro"
     ],
     "includePlatforms": [
         "Android",

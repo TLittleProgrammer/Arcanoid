@@ -4,9 +4,11 @@ using App.Scripts.External.GameStateMachine;
 using App.Scripts.External.Localisation;
 using App.Scripts.External.Localisation.Converters;
 using App.Scripts.External.SceneManagment;
+using App.Scripts.General.Energy;
 using App.Scripts.General.LoadingScreen;
 using App.Scripts.General.RootUI;
 using App.Scripts.General.States;
+using App.Scripts.General.Time;
 using App.Scripts.General.UserData.Services;
 using UnityEngine;
 using Zenject;
@@ -21,11 +23,14 @@ namespace App.Scripts.General.ProjectInitialization.Installers
 
         public override void InstallBindings()
         {
+            Container.BindInterfacesAndSelfTo<TimeTicker>().AsSingle();
+            
             Container.Bind<ISceneManagementService>().To<SceneManagementService>().AsSingle();
             Container.Bind<IDotweenContainerService>().To<DotweenContainerService>().AsSingle();
             Container.Bind<LevelProgressDataService>().AsSingle();
             Container.Bind<ILocaleService>().To<LocaleService>().AsSingle();
             Container.Bind<IConverter>().To<CsvConverter>().AsSingle();
+            Container.Bind<IEnergyService>().To<EnergyService>().AsSingle();
 
             CreateRootUI();
             BindProjectStateMachine();
