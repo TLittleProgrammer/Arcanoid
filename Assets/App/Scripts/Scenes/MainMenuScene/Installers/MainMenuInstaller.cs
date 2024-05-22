@@ -6,6 +6,7 @@ using App.Scripts.General.Levels;
 using App.Scripts.General.Popup;
 using App.Scripts.General.Popup.AssetManagment;
 using App.Scripts.General.Popup.Factory;
+using App.Scripts.General.RootUI;
 using App.Scripts.General.UserData.Levels.Data;
 using App.Scripts.Scenes.MainMenuScene.Factories.ItemView;
 using App.Scripts.Scenes.MainMenuScene.Factories.Levels;
@@ -23,6 +24,8 @@ namespace App.Scripts.Scenes.MainMenuScene.Installers
         [OdinSerialize] public LevelPackParent LevelPackParent;
         [OdinSerialize] public LocaleItemView LocaleItemView;
         [OdinSerialize] public EnergyView EnergyView;
+
+        [Inject] private RootUIViewProvider _rootUIView;
         
         public override void InstallBindings()
         {
@@ -38,7 +41,7 @@ namespace App.Scripts.Scenes.MainMenuScene.Installers
             
             Container.Bind<IPopupProvider>().To<ResourcesPopupProvider>().AsSingle();
             Container.Bind<IPopupFactory>().To<PopupFactory>().AsSingle();
-            Container.Bind<IPopupService>().To<PopupService>().AsSingle();
+            Container.Bind<IPopupService>().To<PopupService>().AsSingle().WithArguments(_rootUIView.BackPopupPlane);
             
             
             Container

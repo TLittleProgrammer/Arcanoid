@@ -1,15 +1,11 @@
-﻿using System.Collections.Generic;
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace App.Scripts.General.Popup
 {
     public abstract class PopupView : MonoBehaviour, IPopupView
     {
-        public List<Button> Buttons { get; protected set; }
-
         public virtual async UniTask Show()
         {
             gameObject.SetActive(true);

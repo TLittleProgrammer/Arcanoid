@@ -3,6 +3,7 @@ using App.Scripts.External.Components;
 using App.Scripts.External.Extensions.ZenjectExtensions;
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Infrastructure;
+using App.Scripts.General.RootUI;
 using App.Scripts.Scenes.GameScene.Ball;
 using App.Scripts.Scenes.GameScene.Ball.Collision;
 using App.Scripts.Scenes.GameScene.Ball.Movement;
@@ -45,6 +46,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
 
         [Inject] private PoolProviders _poolProviders;
         [Inject] private IStateMachine _projectStateMachine;
+        [Inject] private RootUIViewProvider _rootUIView;
 
         private readonly List<IRestartable> _restartables = new();
         private readonly List<IRestartable> _restartablesForLoadNewLevel = new();
@@ -61,7 +63,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             BindPools();
             
             Container.Bind<IPoolContainer>().To<PoolContainer>().AsSingle();
-            FactoriesInstaller.Install(Container);
+            FactoriesInstaller.Install(Container, _rootUIView);
             
             Container.Bind<IRectMousePositionChecker>().To<RectMousePositionChecker>().AsSingle().WithArguments(_rectTransformableViews);
             Container.BindInterfacesAndSelfTo<LevelProgressService>().AsSingle().WithArguments(_levelPackInfoView, _levelPackBackground);

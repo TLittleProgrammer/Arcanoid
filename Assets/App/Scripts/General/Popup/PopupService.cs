@@ -4,26 +4,28 @@ using App.Scripts.General.Infrastructure;
 using App.Scripts.General.Popup.Factory;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace App.Scripts.General.Popup
 {
     public sealed class PopupService : IPopupService, IRestartable
     {
         private readonly IPopupFactory _factory;
+        private readonly IBackPopupPlane _backPopupPlane;
         private readonly List<IPopupView> _popupsList;
 
-        public PopupService(IPopupFactory factory)
+        public PopupService(IPopupFactory factory, IBackPopupPlane backPopupPlane)
         {
             _factory = factory;
+            _backPopupPlane = backPopupPlane;
             _popupsList = new();
         }
 
         public IPopupView Show<TPopupView>(ITransformable parent = null) where TPopupView : IPopupView
         {
             IPopupView popupView = _factory.Create<TPopupView>(parent);
-
-            LockButtonsForLastPopup();
+            
+            UpdateRaycastTargetForBackPanel(true);
+            UpdateSiblingPosition();
             
             _popupsList.Add(popupView);
             popupView.Show();
@@ -41,8 +43,16 @@ namespace App.Scripts.General.Popup
                 
                 _popupsList.Remove(popupViewProvider);
                 Object.Destroy(popupViewProvider.GameObject);
-                
-                UnlockButtonsForLastViewProvider();
+
+                if (_popupsList.Count != 0)
+                {
+                    UpdateRaycastTargetForBackPanel(true);
+                    UpdateSiblingPosition();
+                }
+                else
+                {
+                    UpdateRaycastTargetForBackPanel(false);
+                }
             }
 
             await UniTask.CompletedTask;
@@ -56,31 +66,19 @@ namespace App.Scripts.General.Popup
                 Object.Destroy(view.GameObject);
             }
             
+            UpdateRaycastTargetForBackPanel(false);
             _popupsList.Clear();
         }
 
-        private void LockButtonsForLastPopup()
+        public void Restart()
         {
-            if (_popupsList.Count > 1)
+            foreach (IPopupView viewPopupProvider in _popupsList)
             {
-                UpdateInteractableForButtons(_popupsList[^2].Buttons.ToArray(), false);
+                Object.Destroy(viewPopupProvider.GameObject);
             }
-        }
-        
-        private void UnlockButtonsForLastViewProvider()
-        {
-            if (_popupsList.Count != 0)
-            {
-                UpdateInteractableForButtons(_popupsList[^1].Buttons.ToArray(), true);
-            }
-        }
 
-        private void UpdateInteractableForButtons(Button[] buttons, bool interactableValue)
-        {
-            foreach (Button button in buttons)
-            {
-                button.interactable = interactableValue;
-            }
+            UpdateRaycastTargetForBackPanel(false);
+            _popupsList.Clear();
         }
 
         private IPopupView FindPopup<TPopup>() where TPopup : IPopupView
@@ -96,14 +94,14 @@ namespace App.Scripts.General.Popup
             return null;
         }
 
-        public void Restart()
+        private void UpdateSiblingPosition()
         {
-            foreach (IPopupView viewPopupProvider in _popupsList)
-            {
-                Object.Destroy(viewPopupProvider.GameObject);
-            }
-            
-            _popupsList.Clear();
+            _backPopupPlane.Transform.SetSiblingIndex(_popupsList.Count + 1);
+        }
+
+        private void UpdateRaycastTargetForBackPanel(bool value)
+        {
+            _backPopupPlane.Image.raycastTarget = value;
         }
     }
 }

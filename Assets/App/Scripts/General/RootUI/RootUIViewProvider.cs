@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using App.Scripts.General.Popup;
+using UnityEngine;
 
 namespace App.Scripts.General.RootUI
 {
@@ -6,5 +7,6 @@ namespace App.Scripts.General.RootUI
     {
         public PopupUpViewProvider PopupUpViewProvider;
         public CanvasGroup LoadingCanvasGroup;
+        public BackPopupPlane BackPopupPlane;
     }
 }
