@@ -44,17 +44,8 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement
         {
             _clickDetector.MouseUp -= OnMouseUp;
 
-            Vector2 direction = GetDirection();
-
-            _ballFreeFlightMover.AsyncInitialize(direction);
+            _ballFreeFlightMover.AsyncInitialize(Vector2.up);
             _ballFollowMover = null;
-        }
-
-        private Vector2 GetDirection()
-        {
-            return _ballPositionable.Position.x > _previousBallPosition.x
-                ? new Vector2(0.5f, 0.5f)
-                : new Vector2(-0.5f, 0.5f);
         }
 
         public void Restart()

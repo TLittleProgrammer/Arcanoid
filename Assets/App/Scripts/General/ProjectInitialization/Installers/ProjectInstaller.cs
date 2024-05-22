@@ -37,6 +37,7 @@ namespace App.Scripts.General.ProjectInitialization.Installers
             Container.Bind<IEnergyService>().To<EnergyService>().AsSingle();
             Container.Bind<IDateTimeService>().To<DateTimeService>().AsSingle();
             Container.Bind<IGlobalDataService>().To<GlobalDataService>().AsSingle();
+            Container.Bind<InfoBetweenScenes.InfoBetweenScenes>().AsSingle();
 
             CreateRootUI();
             BindProjectStateMachine();

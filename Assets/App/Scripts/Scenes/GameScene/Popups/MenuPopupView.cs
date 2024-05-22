@@ -1,8 +1,6 @@
 ﻿using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Constants;
 using App.Scripts.General.Popup;
-using App.Scripts.General.States;
-using App.Scripts.Scenes.GameScene.Constants;
 using App.Scripts.Scenes.GameScene.Restart;
 using App.Scripts.Scenes.GameScene.States;
 using Cysharp.Threading.Tasks;
@@ -33,13 +31,6 @@ namespace App.Scripts.Scenes.GameScene.Popups
             _restartService = restartService;
             _gameStateMachine = gameStateMachine;
             _popupService = popupService;
-
-            Buttons = new()
-            {
-                _restartButton,
-                _backButton,
-                _continueButton
-            };
         }
 
         private void OnEnable()

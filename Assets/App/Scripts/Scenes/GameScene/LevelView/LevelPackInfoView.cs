@@ -18,7 +18,7 @@ namespace App.Scripts.Scenes.GameScene.LevelView
         
         public void UpdatePassedLevels(int currentLevel, int allLevels)
         {
-            _passedLevel.text = $"{currentLevel}/{allLevels}";
+            _passedLevel.text = $"{currentLevel + 1}/{allLevels}";
         }
 
         public void UpdateProgressText(int value)
@@ -28,7 +28,7 @@ namespace App.Scripts.Scenes.GameScene.LevelView
 
         public void Initialize(LevelPackInfoRecord packInfoRecord)
         {
-            PassedLevels.text = $"{packInfoRecord.CurrentLevelIndex}/{packInfoRecord.AllLevelsCountFromPack}";
+            PassedLevels.text = $"{packInfoRecord.CurrentLevelIndex + 1}/{packInfoRecord.AllLevelsCountFromPack}";
             Image.sprite = packInfoRecord.Sprite;
             
             UpdateProgressText(packInfoRecord.TargetScore);

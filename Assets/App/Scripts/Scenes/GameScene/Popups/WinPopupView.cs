@@ -26,7 +26,6 @@ namespace App.Scripts.Scenes.GameScene.Popups
 
         private WinContinueButtonAnimationSettings _winContinueButtonAnimationSettings;
         private ITweenersLocator _tweenersLocator;
-        private Button _continue;
         
         [Inject]
         private void Construct(
@@ -35,11 +34,6 @@ namespace App.Scripts.Scenes.GameScene.Popups
         {
             _tweenersLocator = tweenersLocator;
             _winContinueButtonAnimationSettings = winContinueButtonAnimationSettings;
-
-            Buttons = new()
-            {
-                _continueButton
-            };
         }
 
         public UILocale GalacticName => _galacticName;

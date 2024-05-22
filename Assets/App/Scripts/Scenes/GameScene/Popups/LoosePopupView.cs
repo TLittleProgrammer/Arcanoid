@@ -1,11 +1,8 @@
-﻿using System.Collections.Generic;
-using App.Scripts.External.GameStateMachine;
+﻿using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Popup;
-using App.Scripts.Scenes.GameScene.Constants;
 using App.Scripts.Scenes.GameScene.Dotween;
 using App.Scripts.Scenes.GameScene.Restart;
 using App.Scripts.Scenes.GameScene.Settings;
-using App.Scripts.Scenes.GameScene.States;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
@@ -18,7 +15,6 @@ namespace App.Scripts.Scenes.GameScene.Popups
     {
         [SerializeField] private Button _restartButton;
         
-        private IStateMachine _gameStateMachine;
         private ITweenersLocator _tweenersLocator;
         private WinContinueButtonAnimationSettings _popupButtonAnimationSettings;
         private IRestartService _restartService;
@@ -33,12 +29,6 @@ namespace App.Scripts.Scenes.GameScene.Popups
             _restartService = restartService;
             _popupButtonAnimationSettings = winContinueButtonAnimationSettings;
             _tweenersLocator = tweenersLocator;
-            _gameStateMachine = gameStateMachine;
-
-            Buttons = new List<Button>
-            {
-                _restartButton
-            };
         }
 
         private void OnEnable()
