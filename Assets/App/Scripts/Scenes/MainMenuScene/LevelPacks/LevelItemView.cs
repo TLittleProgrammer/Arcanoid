@@ -24,6 +24,8 @@ namespace App.Scripts.Scenes.MainMenuScene.LevelPacks
         private UILocale _galacticName;
         [BoxGroup("General"), SerializeField]
         private Image _glow;
+        [BoxGroup("General"), SerializeField]
+        private TMP_Text _energyText;
         [BoxGroup("Left"), SerializeField]
         private Image _leftImageHalf;
         [BoxGroup("Left"), SerializeField]
@@ -35,6 +37,7 @@ namespace App.Scripts.Scenes.MainMenuScene.LevelPacks
         private Image _maskableImage;
 
         [SerializeField] private UILocale _subTextLocale;
+        [SerializeField] private GameObject _energyPanel;
 
         public event Action Clicked;
 
@@ -44,6 +47,7 @@ namespace App.Scripts.Scenes.MainMenuScene.LevelPacks
         public TMP_Text GalacticText => _galacticText;
         public UILocale GalacticName => _galacticName;
         public Image Glow => _glow;
+        public TMP_Text EnergyText => _energyText;
         public Image LeftImageHalf => _leftImageHalf;
         public Image GalacticIcon => _galacticIcon;
         public Image LockIcon => _lockIcon;
@@ -63,6 +67,7 @@ namespace App.Scripts.Scenes.MainMenuScene.LevelPacks
         {
             if (visualType is VisualTypeId.NotOpened)
             {
+                _energyPanel.gameObject.SetActive(false);
                 GalacticPassedLevels.text = $"0/{levelPack.Levels.Count}";
                 GalacticIcon.gameObject.SetActive(false);
                 LockIcon.gameObject.SetActive(true);
@@ -75,6 +80,8 @@ namespace App.Scripts.Scenes.MainMenuScene.LevelPacks
             }
             else
             {
+                _energyPanel.gameObject.SetActive(true);
+                _energyText.text = levelPack.EnergyPrice.ToString();
                 GalacticIcon.sprite = levelPack.GalacticIcon;
                 GalacticPassedLevels.text = $"{passedLevels}/{levelPack.Levels.Count}";
                 GalacticIcon.gameObject.SetActive(true);
