@@ -29,7 +29,7 @@ namespace App.Scripts.General.Energy
 
         public async UniTask AsyncInitialize()
         {
-            if (_isTickes == false)
+            if (_isTickes == false && _energyDataService.CurrentValue < _energySettings.MaxEnergyCount)
             {
                 _isTickes = true;
                 _ticker.SecondsTicked += OnSecondsTicked;
