@@ -3,6 +3,7 @@ using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Infrastructure;
 using App.Scripts.General.LoadingScreen;
 using App.Scripts.Scenes.GameScene.Dotween;
+using Cysharp.Threading.Tasks;
 
 namespace App.Scripts.Scenes.GameScene.States
 {
@@ -26,7 +27,7 @@ namespace App.Scripts.Scenes.GameScene.States
             _tweenersLocator = tweenersLocator;
         }
         
-        public async void Enter()
+        public async UniTask Enter()
         {
             await _loadingScreen.Show(false);
 
@@ -40,9 +41,9 @@ namespace App.Scripts.Scenes.GameScene.States
             _gameStateMachine.Enter<GameLoopState>();
         }
 
-        public void Exit()
+        public async UniTask Exit()
         {
-            _loadingScreen.Hide();
+            await _loadingScreen.Hide();
         }
     }
 }

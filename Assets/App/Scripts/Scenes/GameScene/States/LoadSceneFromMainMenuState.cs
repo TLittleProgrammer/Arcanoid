@@ -3,6 +3,7 @@ using App.Scripts.General.Popup;
 using App.Scripts.General.States;
 using App.Scripts.Scenes.GameScene.Dotween;
 using App.Scripts.Scenes.GameScene.Popups;
+using Cysharp.Threading.Tasks;
 
 namespace App.Scripts.Scenes.GameScene.States
 {
@@ -19,16 +20,17 @@ namespace App.Scripts.Scenes.GameScene.States
             _tweenersLocator = tweenersLocator;
         }
         
-        public void Enter(string sceneName)
+        public async UniTask Enter(string sceneName)
         {
             _projectStateMachine.Enter<LoadingSceneState, string, bool>(sceneName, false);
             
             _tweenersLocator.RemoveAll();
-            _popupService.Close<WinPopupView>();
+            await _popupService.Close<WinPopupView>();
         }
 
-        public void Exit()
+        public async UniTask Exit()
         {
+            await UniTask.CompletedTask;
         }
     }
 }

@@ -1,6 +1,8 @@
-﻿using App.Scripts.External.GameStateMachine;
+﻿using System.Threading.Tasks;
+using App.Scripts.External.GameStateMachine;
 using App.Scripts.External.SceneManagment;
 using App.Scripts.General.LoadingScreen;
+using Cysharp.Threading.Tasks;
 
 namespace App.Scripts.General.States
 {
@@ -16,15 +18,16 @@ namespace App.Scripts.General.States
             _sceneManagementService = sceneManagementService;
         }
 
-        public async void Enter(string sceneName, bool showQuickly)
+        public async UniTask Enter(string sceneName, bool showQuickly)
         {
             await _loadingScreen.Show(showQuickly);
             await _sceneManagementService.LoadSceneAsync(sceneName);
             await _loadingScreen.Hide();
         }
 
-        public void Exit()
+        public async UniTask Exit()
         {
+            await UniTask.CompletedTask;
         }
     }
 }

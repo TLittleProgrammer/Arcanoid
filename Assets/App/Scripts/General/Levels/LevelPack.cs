@@ -9,6 +9,8 @@ namespace App.Scripts.General.Levels
         public string LocaleKey;
         public Sprite GalacticIcon;
         public Sprite GalacticBackground;
+        public int EnergyPrice = 3;
+        public int EnergyAddForWin = 5;
         public List<TextAsset> Levels;
     }
 }

@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TargetFPS: 60
   VSyncCounter: 0
+  SaveGlobalDataEnterFromSeconds: 5

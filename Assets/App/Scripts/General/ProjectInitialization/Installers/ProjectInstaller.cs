@@ -2,12 +2,17 @@
 using App.Scripts.External.DotweenContainerService;
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.External.Localisation;
+using App.Scripts.External.Localisation.Converters;
 using App.Scripts.External.SceneManagment;
-using App.Scripts.General.Levels;
+using App.Scripts.General.DateTime;
+using App.Scripts.General.Energy;
 using App.Scripts.General.LoadingScreen;
 using App.Scripts.General.RootUI;
 using App.Scripts.General.States;
-using App.Scripts.General.UserData.Services;
+using App.Scripts.General.Time;
+using App.Scripts.General.UserData.Energy;
+using App.Scripts.General.UserData.Global;
+using App.Scripts.General.UserData.Levels;
 using UnityEngine;
 using Zenject;
 
@@ -21,15 +26,22 @@ namespace App.Scripts.General.ProjectInitialization.Installers
 
         public override void InstallBindings()
         {
-            Container.BindInterfacesAndSelfTo<ProjectInitializer>().AsSingle();
+            Container.BindInterfacesAndSelfTo<TimeTicker>().AsSingle();
             
             Container.Bind<ISceneManagementService>().To<SceneManagementService>().AsSingle();
             Container.Bind<IDotweenContainerService>().To<DotweenContainerService>().AsSingle();
             Container.Bind<LevelProgressDataService>().AsSingle();
-            Container.Bind<ILocaleService>().To<LocaleService>().AsSingle().WithArguments(Localisation.text).NonLazy();
+            Container.Bind<ILocaleService>().To<LocaleService>().AsSingle();
+            Container.Bind<IConverter>().To<CsvConverter>().AsSingle();
+            Container.Bind<IEnergyDataService>().To<EnergyDataService>().AsSingle();
+            Container.Bind<IEnergyService>().To<EnergyService>().AsSingle();
+            Container.Bind<IDateTimeService>().To<DateTimeService>().AsSingle();
+            Container.Bind<IGlobalDataService>().To<GlobalDataService>().AsSingle();
 
             CreateRootUI();
             BindProjectStateMachine();
+            
+            Container.BindInterfacesAndSelfTo<ProjectInitializer>().AsSingle().WithArguments(Localisation);
         }
 
         private void CreateRootUI()

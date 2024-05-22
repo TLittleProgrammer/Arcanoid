@@ -3,6 +3,7 @@ using App.Scripts.General.Constants;
 using App.Scripts.General.Popup;
 using App.Scripts.General.States;
 using App.Scripts.Scenes.GameScene.Constants;
+using App.Scripts.Scenes.GameScene.Restart;
 using App.Scripts.Scenes.GameScene.States;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
@@ -21,12 +22,15 @@ namespace App.Scripts.Scenes.GameScene.Popups
         private Sequence _sequence;
         private IPopupService _popupService;
         private IStateMachine _gameStateMachine;
-        
+        private IRestartService _restartService;
+
         [Inject]
         private void Construct(
             IPopupService popupService,
-            IStateMachine gameStateMachine)
+            IStateMachine gameStateMachine,
+            IRestartService restartService)
         {
+            _restartService = restartService;
             _gameStateMachine = gameStateMachine;
             _popupService = popupService;
 
@@ -54,7 +58,7 @@ namespace App.Scripts.Scenes.GameScene.Popups
 
         private void Restart()
         {
-            _gameStateMachine.Enter<RestartState>();
+            _restartService.TryRestart();
         }
 
         private void Back()

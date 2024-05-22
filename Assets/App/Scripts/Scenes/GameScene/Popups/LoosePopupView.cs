@@ -3,6 +3,7 @@ using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Popup;
 using App.Scripts.Scenes.GameScene.Constants;
 using App.Scripts.Scenes.GameScene.Dotween;
+using App.Scripts.Scenes.GameScene.Restart;
 using App.Scripts.Scenes.GameScene.Settings;
 using App.Scripts.Scenes.GameScene.States;
 using Cysharp.Threading.Tasks;
@@ -20,13 +21,16 @@ namespace App.Scripts.Scenes.GameScene.Popups
         private IStateMachine _gameStateMachine;
         private ITweenersLocator _tweenersLocator;
         private WinContinueButtonAnimationSettings _popupButtonAnimationSettings;
+        private IRestartService _restartService;
 
         [Inject]
         private void Construct(
             IStateMachine gameStateMachine,
             ITweenersLocator tweenersLocator,
-            WinContinueButtonAnimationSettings winContinueButtonAnimationSettings)
+            WinContinueButtonAnimationSettings winContinueButtonAnimationSettings,
+            IRestartService restartService)
         {
+            _restartService = restartService;
             _popupButtonAnimationSettings = winContinueButtonAnimationSettings;
             _tweenersLocator = tweenersLocator;
             _gameStateMachine = gameStateMachine;
@@ -71,7 +75,7 @@ namespace App.Scripts.Scenes.GameScene.Popups
 
         private void Restart()
         {
-            _gameStateMachine.Enter<RestartState>();
+            _restartService.TryRestart();
         }
     }
 }

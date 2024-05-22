@@ -47,21 +47,25 @@ namespace App.Scripts.Scenes.GameScene.States
             _rootUIViewProvider = rootUIViewProvider;
         }
         
-        public void Enter()
+        public async UniTask Enter()
         {
             _stateIsEntered = true;
             _ballFreeFlightMover.UpdateSpeed(_lastBallSpeed);
             _healthContainer.LivesAreWasted   += OnLivesAreWasted;
             _levelProgressService.LevelPassed += OnLevelPassed;
+            
+            await UniTask.CompletedTask;
         }
 
-        public void Exit()
+        public async UniTask Exit()
         {
             _stateIsEntered = false;
             _lastBallSpeed = _ballFreeFlightMover.Speed;
             _ballFreeFlightMover.UpdateSpeed(-_lastBallSpeed);
             _healthContainer.LivesAreWasted   -= OnLivesAreWasted;
             _levelProgressService.LevelPassed -= OnLevelPassed;
+            
+            await UniTask.CompletedTask;
         }
 
         public void Tick()

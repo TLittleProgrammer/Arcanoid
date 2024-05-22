@@ -1,9 +1,11 @@
 ﻿using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Constants;
+using App.Scripts.General.Energy;
 using App.Scripts.General.LevelPackInfoService;
 using App.Scripts.General.Levels;
 using App.Scripts.General.Popup;
 using App.Scripts.General.RootUI;
+using App.Scripts.General.UserData.Energy;
 using App.Scripts.Scenes.GameScene.Popups;
 using App.Scripts.Scenes.GameScene.Time;
 using Cysharp.Threading.Tasks;
@@ -19,6 +21,8 @@ namespace App.Scripts.Scenes.GameScene.States
         private readonly RootUIViewProvider _rootUIViewProvider;
         private readonly IStateMachine _gameStateMachine;
         private readonly ILevelPackInfoService _levelPackInfoService;
+        private readonly IEnergyService _energyService;
+        private readonly IEnergyDataService _energyDataService;
 
         private WinPopupView _winPopupView;
 
@@ -27,7 +31,9 @@ namespace App.Scripts.Scenes.GameScene.States
             IPopupService popupService,
             RootUIViewProvider rootUIViewProvider,
             IStateMachine gameStateMachine,
-            ILevelPackInfoService levelPackInfoService)
+            ILevelPackInfoService levelPackInfoService,
+            IEnergyService energyService,
+            IEnergyDataService energyDataService)
         {
             _popupService = popupService;
             _timeScaleAnimator = timeScaleAnimator;
@@ -35,16 +41,29 @@ namespace App.Scripts.Scenes.GameScene.States
             _rootUIViewProvider = rootUIViewProvider;
             _gameStateMachine = gameStateMachine;
             _levelPackInfoService = levelPackInfoService;
+            _energyService = energyService;
+            _energyDataService = energyDataService;
         }
         
-        public async void Enter()
+        public async UniTask Enter()
         {
             await _timeScaleAnimator.Animate(0f);
             
             ShowPopup();
             UpdateVisual();
             Subscribe();
+            
+            _energyDataService.Add(_levelPackInfoService.GetDataForCurrentPack().EnergyAddForWin);
+            
             AnimateIfNeed();
+        }
+
+        public async UniTask Exit()
+        {
+            _winPopupView.ContinueButton.onClick.RemoveListener(OnContinueClicked);
+            _energyService.RemoveView(_winPopupView.EnergyView);
+            
+            await UniTask.CompletedTask;
         }
 
         private async void AnimateIfNeed()
@@ -104,11 +123,7 @@ namespace App.Scripts.Scenes.GameScene.States
         private void ShowPopup()
         {
             _winPopupView = (WinPopupView)_popupService.Show<WinPopupView>(_rootUIViewProvider.PopupUpViewProvider);
-        }
-
-        public void Exit()
-        {
-            _winPopupView.ContinueButton.onClick.RemoveListener(OnContinueClicked);
+            _energyService.AddView(_winPopupView.EnergyView);
         }
 
         private void OnContinueClicked()

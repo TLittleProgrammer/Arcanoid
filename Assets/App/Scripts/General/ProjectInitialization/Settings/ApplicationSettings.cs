@@ -7,5 +7,6 @@ namespace App.Scripts.General.ProjectInitialization.Settings
     {
         public int TargetFPS;
         public int VSyncCounter;
+        public int SaveGlobalDataEnterFromSeconds;
     }
 }
