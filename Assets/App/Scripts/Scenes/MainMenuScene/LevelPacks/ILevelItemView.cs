@@ -15,6 +15,7 @@ namespace App.Scripts.Scenes.MainMenuScene.LevelPacks
         TMP_Text GalacticText { get; }
         UILocale GalacticName { get; }
         Image Glow { get; }
+        TMP_Text EnergyText { get; }
         Image LeftImageHalf { get; }
         Image GalacticIcon { get; }
         Image LockIcon { get; }
