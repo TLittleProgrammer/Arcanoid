@@ -21,6 +21,7 @@ using App.Scripts.Scenes.GameScene.PlayerShape;
 using App.Scripts.Scenes.GameScene.PlayerShape.Move;
 using App.Scripts.Scenes.GameScene.Pools;
 using App.Scripts.Scenes.GameScene.PositionChecker;
+using App.Scripts.Scenes.GameScene.Restart;
 using App.Scripts.Scenes.GameScene.Settings;
 using App.Scripts.Scenes.GameScene.TopSprites;
 using App.Scripts.Scenes.GameScene.Walls;
@@ -81,6 +82,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.Bind<IBallMovementService>().To<BallMovementService>().AsSingle().WithArguments(_ballView);
             Container.Bind<IBallCollisionService>().To<BallCollisionService>().AsSingle().WithArguments(_ballView, _playerShape).NonLazy();
             Container.Bind<IWallLoader>().To<WallLoader>().AsSingle().WithArguments(_wallPrefab);
+            Container.Bind<IRestartService>().To<RestartService>().AsSingle();
             
             StateMachineInstaller.Install(Container, _gameLoopTickables, _projectStateMachine, _restartables, _levelPackInfoView, _restartablesForLoadNewLevel);
             

@@ -7,6 +7,7 @@ namespace App.Scripts.General.LevelPackInfoService
         ILevelPackTransferData UpdateLevelPackTransferData();
         ILevelPackTransferData GetData();
         LevelPack GetDataForNextPack();
+        LevelPack GetDataForCurrentPack();
         void SetData(ILevelPackTransferData levelPackTransferData);
         bool NeedLoadNextPackOrLevel();
         bool NeedLoadNextPack();

@@ -1,6 +1,7 @@
 ﻿using System;
 using App.Scripts.External.UserData;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 namespace App.Scripts.General.UserData.Energy
 {

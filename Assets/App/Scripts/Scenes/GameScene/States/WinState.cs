@@ -5,6 +5,7 @@ using App.Scripts.General.LevelPackInfoService;
 using App.Scripts.General.Levels;
 using App.Scripts.General.Popup;
 using App.Scripts.General.RootUI;
+using App.Scripts.General.UserData.Energy;
 using App.Scripts.Scenes.GameScene.Popups;
 using App.Scripts.Scenes.GameScene.Time;
 using Cysharp.Threading.Tasks;
@@ -21,6 +22,7 @@ namespace App.Scripts.Scenes.GameScene.States
         private readonly IStateMachine _gameStateMachine;
         private readonly ILevelPackInfoService _levelPackInfoService;
         private readonly IEnergyService _energyService;
+        private readonly IEnergyDataService _energyDataService;
 
         private WinPopupView _winPopupView;
 
@@ -30,7 +32,8 @@ namespace App.Scripts.Scenes.GameScene.States
             RootUIViewProvider rootUIViewProvider,
             IStateMachine gameStateMachine,
             ILevelPackInfoService levelPackInfoService,
-            IEnergyService energyService)
+            IEnergyService energyService,
+            IEnergyDataService energyDataService)
         {
             _popupService = popupService;
             _timeScaleAnimator = timeScaleAnimator;
@@ -39,6 +42,7 @@ namespace App.Scripts.Scenes.GameScene.States
             _gameStateMachine = gameStateMachine;
             _levelPackInfoService = levelPackInfoService;
             _energyService = energyService;
+            _energyDataService = energyDataService;
         }
         
         public async UniTask Enter()
@@ -48,6 +52,9 @@ namespace App.Scripts.Scenes.GameScene.States
             ShowPopup();
             UpdateVisual();
             Subscribe();
+            
+            _energyDataService.Add(_levelPackInfoService.GetDataForCurrentPack().EnergyAddForWin);
+            
             AnimateIfNeed();
         }
 

@@ -6,6 +6,7 @@ using App.Scripts.General.Energy;
 using App.Scripts.General.LevelPackInfoService;
 using App.Scripts.General.Levels;
 using App.Scripts.General.States;
+using App.Scripts.General.UserData.Energy;
 using App.Scripts.General.UserData.Levels.Data;
 using App.Scripts.Scenes.MainMenuScene.Constants;
 using App.Scripts.Scenes.MainMenuScene.LevelPacks.Configs;
@@ -21,6 +22,7 @@ namespace App.Scripts.Scenes.MainMenuScene.LevelPacks.MonoBehaviours
         private LevelPackProvider _levelPackProvider;
         private ILevelPackInfoService _levelPackInfoService;
         private IEnergyService _energyService;
+        private IEnergyDataService _energyDataService;
 
         [Inject]
         private void Construct(
@@ -30,8 +32,10 @@ namespace App.Scripts.Scenes.MainMenuScene.LevelPacks.MonoBehaviours
             LevelItemViewByTypeProvider levelItemViewByTypeProvider,
             IStateMachine stateMachine,
             ILevelPackInfoService levelPackInfoService,
-            IEnergyService energyService)
+            IEnergyService energyService,
+            IEnergyDataService energyDataService)
         {
+            _energyDataService = energyDataService;
             _energyService = energyService;
             _levelItemViewByTypeProvider = levelItemViewByTypeProvider;
             _levelPackProvider = levelPackProvider;
@@ -72,19 +76,31 @@ namespace App.Scripts.Scenes.MainMenuScene.LevelPacks.MonoBehaviours
                 
                 levelItemView.Clicked += () =>
                 {
-                    _levelPackInfoService.SetData(new LevelPackTransferData()
-                    {
-                        NeedLoadLevel = true,
-                        LevelIndex = targetLevelIndex,
-                        LevelPack = levelPack,
-                        PackIndex = packIndex
-                    });
-                  
-                    _energyService.Dispose();
-                    
-                    _stateMachine.Enter<LoadingSceneState, string, bool>(SceneNaming.Game, false);
+                    OnLevelItemClicked(packIndex, levelPack, targetLevelIndex);
                 };
             }
+        }
+
+        private void OnLevelItemClicked(int packIndex, LevelPack levelPack, int targetLevelIndex)
+        {
+            if (levelPack.EnergyPrice > _energyDataService.CurrentValue)
+            {
+                return;
+            }
+            
+            _energyDataService.Add(-levelPack.EnergyPrice);
+            
+            _levelPackInfoService.SetData(new LevelPackTransferData
+            {
+                NeedLoadLevel = true,
+                LevelIndex = targetLevelIndex,
+                LevelPack = levelPack,
+                PackIndex = packIndex
+            });
+
+            _energyService.Dispose();
+
+            _stateMachine.Enter<LoadingSceneState, string, bool>(SceneNaming.Game, false);
         }
 
         private void ChangeVisual(int packIndex, ILevelItemView levelItemView, LevelPack levelPack, VisualTypeId visualType, LevelPackProgressDictionary packProgress)
