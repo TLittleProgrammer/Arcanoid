@@ -189,7 +189,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &532605434
 RectTransform:
   m_ObjectHideFlags: 0
@@ -309,8 +309,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000579834}
-  m_SizeDelta: {x: 0, y: -230.71753}
+  m_AnchoredPosition: {x: 0, y: 0.00061035156}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &735784049
 MonoBehaviour:
@@ -647,6 +647,10 @@ MonoBehaviour:
   LevelPackParent: {fileID: 735784049}
   LocaleItemView: {fileID: 242811568416679768, guid: ba27fbe70916df94d87dd5e2ba3c4248, type: 3}
   EnergyView: {fileID: 1262163235}
+  PlayButton: {fileID: 1501781784}
+  BackButton: {fileID: 1652827043}
+  InitialScreen: {fileID: 380377277}
+  LevelPacksScreen: {fileID: 863262296}
 --- !u!1 &1051483797
 GameObject:
   m_ObjectHideFlags: 0
@@ -1134,11 +1138,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8992640202423976495, guid: df1d8f2f264d7cc46901478c9f1dbcc9, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8992640202423976495, guid: df1d8f2f264d7cc46901478c9f1dbcc9, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8992640202488373762, guid: df1d8f2f264d7cc46901478c9f1dbcc9, type: 3}
       propertyPath: m_Name
@@ -1724,6 +1728,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1480722133}
   m_CullTransparentMesh: 1
+--- !u!114 &1501781784 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 220711383591971946, guid: 63f3ea51668bc2345bb1ea7eaf3bfec9, type: 3}
+  m_PrefabInstance: {fileID: 220711384731008186}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1649216909
 GameObject:
   m_ObjectHideFlags: 0
@@ -1742,7 +1757,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1649216910
 RectTransform:
   m_ObjectHideFlags: 0
