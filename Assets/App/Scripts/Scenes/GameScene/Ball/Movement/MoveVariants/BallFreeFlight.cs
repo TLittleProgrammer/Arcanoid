@@ -14,6 +14,7 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
         private readonly float _maxSecondAngle;
         private readonly float _minSecondAngle;
 
+        private Vector3 _previousVelocity;
         private float _speed;
 
         public BallFreeFlight(IRigidablebody ballRigidbody, BallFlyingSettings settings, ITimeProvider timeProvider)
@@ -33,6 +34,8 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
         public async UniTask AsyncInitialize(Vector2 param)
         {
             Velocity = param.normalized * _speed;
+            _previousVelocity = Velocity;
+            
             await UniTask.CompletedTask;
         }
 
@@ -42,7 +45,8 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
             set => _ballRigidbody.Rigidbody2D.velocity = value;
         }
 
-        public float Speed => _ballRigidbody.Rigidbody2D.velocity.magnitude;
+        public float VelocitySpeed => _ballRigidbody.Rigidbody2D.velocity.magnitude;
+        public float GeneralSpeed => _speed;
 
         public void UpdateSpeed(float addValue)
         {
@@ -60,8 +64,9 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
 
         public void Restart()
         {
-            _speed = 0f;
             Velocity = Vector2.zero;
+            _speed = _settings.Speed;
+            _ballRigidbody.Rigidbody2D.simulated = true;
         }
 
         private void OnTimeScaleChanged()
@@ -102,6 +107,8 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
                 x = speed * Mathf.Cos(targetAngle * Mathf.Deg2Rad),
                 y = speed * Mathf.Sin(targetAngle * Mathf.Deg2Rad)
             };
+
+            _previousVelocity = Velocity;
         }
     }
 }
