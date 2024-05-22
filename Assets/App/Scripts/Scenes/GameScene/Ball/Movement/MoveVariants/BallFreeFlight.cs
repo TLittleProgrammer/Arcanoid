@@ -35,6 +35,7 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
         {
             Velocity = param.normalized * _speed;
             _previousVelocity = Velocity;
+            
             await UniTask.CompletedTask;
         }
 
@@ -44,7 +45,8 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
             set => _ballRigidbody.Rigidbody2D.velocity = value;
         }
 
-        public float Speed => _ballRigidbody.Rigidbody2D.velocity.magnitude;
+        public float VelocitySpeed => _ballRigidbody.Rigidbody2D.velocity.magnitude;
+        public float GeneralSpeed => _speed;
 
         public void UpdateSpeed(float addValue)
         {
@@ -64,6 +66,7 @@ namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
         {
             Velocity = Vector2.zero;
             _speed = _settings.Speed;
+            _ballRigidbody.Rigidbody2D.simulated = true;
         }
 
         private void OnTimeScaleChanged()

@@ -50,9 +50,13 @@ namespace App.Scripts.Scenes.GameScene.States
         public async UniTask Enter()
         {
             _stateIsEntered = true;
-            _ballFreeFlightMover.UpdateSpeed(_lastBallSpeed);
             _healthContainer.LivesAreWasted   += OnLivesAreWasted;
             _levelProgressService.LevelPassed += OnLevelPassed;
+
+            if (_ballFreeFlightMover.GeneralSpeed == 0f)
+            {
+                _ballFreeFlightMover.UpdateSpeed(_lastBallSpeed);
+            }
             
             await UniTask.CompletedTask;
         }
@@ -60,7 +64,7 @@ namespace App.Scripts.Scenes.GameScene.States
         public async UniTask Exit()
         {
             _stateIsEntered = false;
-            _lastBallSpeed = _ballFreeFlightMover.Speed;
+            _lastBallSpeed = _ballFreeFlightMover.VelocitySpeed;
             _ballFreeFlightMover.UpdateSpeed(-_lastBallSpeed);
             _healthContainer.LivesAreWasted   -= OnLivesAreWasted;
             _levelProgressService.LevelPassed -= OnLevelPassed;
