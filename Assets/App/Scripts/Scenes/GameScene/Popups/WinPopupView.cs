@@ -65,5 +65,11 @@ namespace App.Scripts.Scenes.GameScene.Popups
 
             _tweenersLocator.AddSequence(sequence);
         }
+
+        public override UniTask Close()
+        {
+            _tweenersLocator.AddTweener(transform.DOScale(Vector3.zero, 1f).From(Vector3.zero));
+            return UniTask.CompletedTask;
+        }
     }
 }

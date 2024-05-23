@@ -1,10 +1,13 @@
-﻿using App.Scripts.External.GameStateMachine;
+﻿using System.Threading.Tasks;
+using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.InfoBetweenScenes;
 using App.Scripts.General.Popup;
 using App.Scripts.General.States;
 using App.Scripts.Scenes.GameScene.Dotween;
 using App.Scripts.Scenes.GameScene.Popups;
 using Cysharp.Threading.Tasks;
+using Unity.Plastic.Newtonsoft.Json.Serialization;
+using Action = System.Action;
 
 namespace App.Scripts.Scenes.GameScene.States
 {
@@ -30,10 +33,13 @@ namespace App.Scripts.Scenes.GameScene.States
         public async UniTask Enter(string sceneName)
         {
             _infoBetweenScenes.NeedShowLevelPackContainer = true;
-            _projectStateMachine.Enter<LoadingSceneState, string, bool>(sceneName, false);
-            
-            _tweenersLocator.RemoveAll();
-            await _popupService.CloseAll();
+            _projectStateMachine.Enter<LoadingSceneState, string, bool, Action>(sceneName, false, () =>
+            {
+                _tweenersLocator.RemoveAll();
+                _popupService.CloseAll();
+            });
+
+            await UniTask.CompletedTask;
         }
 
         public async UniTask Exit()

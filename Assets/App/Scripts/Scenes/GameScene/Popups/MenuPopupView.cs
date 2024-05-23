@@ -1,6 +1,7 @@
 ﻿using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Constants;
 using App.Scripts.General.Popup;
+using App.Scripts.Scenes.GameScene.Dotween;
 using App.Scripts.Scenes.GameScene.Restart;
 using App.Scripts.Scenes.GameScene.States;
 using Cysharp.Threading.Tasks;
@@ -21,13 +22,16 @@ namespace App.Scripts.Scenes.GameScene.Popups
         private IPopupService _popupService;
         private IStateMachine _gameStateMachine;
         private IRestartService _restartService;
+        private ITweenersLocator _tweenersLocator;
 
         [Inject]
         private void Construct(
             IPopupService popupService,
             IStateMachine gameStateMachine,
-            IRestartService restartService)
+            IRestartService restartService,
+            ITweenersLocator tweenersLocator)
         {
+            _tweenersLocator = tweenersLocator;
             _restartService = restartService;
             _gameStateMachine = gameStateMachine;
             _popupService = popupService;
@@ -81,11 +85,13 @@ namespace App.Scripts.Scenes.GameScene.Popups
             _sequence.Kill();
             _sequence = DOTween.Sequence();
             
-            await _sequence
+            _tweenersLocator.AddSequence(_sequence
                 .Append(_continueButton.transform.DOScale(Vector3.zero, 0.25f).From(Vector3.one).SetEase(Ease.OutBounce))
                 .Append(_backButton.transform.DOScale(Vector3.zero, 0.25f).From(Vector3.one).SetEase(Ease.OutBounce))
                 .Append(_restartButton.transform.DOScale(Vector3.zero, 0.25f).From(Vector3.one).SetEase(Ease.OutBounce))
-                .Append(transform.DOScale(Vector3.zero, 1f).From(Vector3.one)).ToUniTask();
+                .Append(transform.DOScale(Vector3.zero, 1f).From(Vector3.one)));
+
+            await UniTask.CompletedTask;
         }
     }
 }

@@ -51,6 +51,13 @@ namespace App.Scripts.External.GameStateMachine
             
             state.Enter(param, secondParam);
         }
+        
+        public void Enter<TState, TParam, TSecondParam, TThirdParam>(TParam param, TSecondParam secondParam, TThirdParam thirdParam) where TState : class, IState<TParam, TSecondParam, TThirdParam>
+        {
+            TState state = ChangeState<TState>();
+            
+            state.Enter(param, secondParam, thirdParam);
+        }
 
         private TState ChangeState<TState>() where TState : class, IExitableState
         {

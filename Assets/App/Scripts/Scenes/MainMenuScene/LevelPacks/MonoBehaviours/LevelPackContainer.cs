@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.External.UserData;
 using App.Scripts.General.Constants;
@@ -100,7 +101,7 @@ namespace App.Scripts.Scenes.MainMenuScene.LevelPacks.MonoBehaviours
 
             _energyService.Dispose();
 
-            _stateMachine.Enter<LoadingSceneState, string, bool>(SceneNaming.Game, false);
+            _stateMachine.Enter<LoadingSceneState, string, bool, Action>(SceneNaming.Game, false, null);
         }
 
         private void ChangeVisual(int packIndex, ILevelItemView levelItemView, LevelPack levelPack, VisualTypeId visualType, LevelPackProgressDictionary packProgress)
