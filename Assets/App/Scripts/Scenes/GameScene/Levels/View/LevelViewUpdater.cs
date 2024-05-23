@@ -1,12 +1,10 @@
 ﻿using System.Linq;
 using App.Scripts.External.Extensions.ListExtensions;
 using App.Scripts.External.Grid;
-using App.Scripts.Scenes.GameScene.Ball;
 using App.Scripts.Scenes.GameScene.Entities;
-using App.Scripts.Scenes.GameScene.LevelProgress;
 using App.Scripts.Scenes.GameScene.Levels.AssetManagement;
 using App.Scripts.Scenes.GameScene.Levels.Data;
-using App.Scripts.Scenes.GameScene.Pools;
+using App.Scripts.Scenes.GameScene.Levels.ItemsDestroyer;
 using App.Scripts.Scenes.GameScene.TopSprites;
 using UnityEngine;
 
@@ -15,27 +13,23 @@ namespace App.Scripts.Scenes.GameScene.Levels.View
     public class LevelViewUpdater : ILevelViewUpdater
     {
         private readonly EntityProvider _entityProvider;
-        private readonly IPoolContainer _poolContainer;
-        private readonly ILevelProgressService _levelProgressService;
-        private readonly IBallSpeedUpdater _ballSpeedUpdater;
         private readonly OnTopSprites.Factory _spritesFactory;
+        private readonly IItemsDestroyable _itemsDestroyable;
 
         private Grid<int> _levelGrid;
         private Grid<GridItemData> _levelGridItemData = new(Vector2Int.zero);
 
         public LevelViewUpdater(
             EntityProvider entityProvider,
-            IPoolContainer poolContainer,
-            ILevelProgressService levelProgressService,
-            IBallSpeedUpdater ballSpeedUpdater,
-            OnTopSprites.Factory spritesFactory)
+            OnTopSprites.Factory spritesFactory,
+            IItemsDestroyable itemsDestroyable)
         {
             _entityProvider = entityProvider;
-            _poolContainer = poolContainer;
-            _levelProgressService = levelProgressService;
-            _ballSpeedUpdater = ballSpeedUpdater;
             _spritesFactory = spritesFactory;
-        } 
+            _itemsDestroyable = itemsDestroyable;
+        }
+
+        public Grid<GridItemData> LevelGridItemData => _levelGridItemData;
 
         public void SetGrid(Grid<int> grid)
         {
@@ -57,6 +51,8 @@ namespace App.Scripts.Scenes.GameScene.Levels.View
 
                     _levelGridItemData[i, j] = new();
                     _levelGridItemData[i, j].CurrentHealth = entityStage.MaxHealthCounter;
+                    _levelGridItemData[i, j].BoostTypeId   = entityStage.BoostTypeId;
+                    _levelGridItemData[i, j].Damage        = entityStage.Damage;
                 }
             }
         }
@@ -71,8 +67,23 @@ namespace App.Scripts.Scenes.GameScene.Levels.View
             GridItemData itemData = _levelGridItemData[entityView.GridPositionX, entityView.GridPositionY];
             itemData.CurrentHealth--;
 
-            if (ReturnIfCurrentHealthIsEqualsOrLessZero(entityView, itemData)) return;
+            if (ReturnIfCurrentHealthIsEqualsOrLessZero(entityView, itemData))
+            {
+                return;
+            }
+            
             TryAddOnTopSprite(entityView, entityStage, itemData);
+        }
+
+        private bool ReturnIfCurrentHealthIsEqualsOrLessZero(IEntityView entityView, GridItemData itemData)
+        {
+            if (itemData.CurrentHealth <= 0)
+            {
+                _itemsDestroyable.Destroy(itemData, entityView);
+                return true;
+            }
+
+            return false;
         }
 
         private void TryAddOnTopSprite(IEntityView entityView, EntityStage entityStage, GridItemData itemData)
@@ -86,25 +97,6 @@ namespace App.Scripts.Scenes.GameScene.Levels.View
 
                 itemData.Sprites.Add(topSprite);
             }
-        }
-
-        private bool ReturnIfCurrentHealthIsEqualsOrLessZero(IEntityView entityView, GridItemData itemData)
-        {
-            if (itemData.CurrentHealth <= 0)
-            {
-                _levelProgressService.TakeOneStep();
-
-                _poolContainer.RemoveItem(PoolTypeId.EntityView, entityView as EntityView);
-                foreach (OnTopSprites sprite in itemData.Sprites)
-                {
-                    _poolContainer.RemoveItem(PoolTypeId.OnTopSprite, sprite);
-                }
-
-                _ballSpeedUpdater.UpdateSpeed();
-                return true;
-            }
-
-            return false;
         }
 
         private EntityStage GetEntityStage(IEntityView entityView)

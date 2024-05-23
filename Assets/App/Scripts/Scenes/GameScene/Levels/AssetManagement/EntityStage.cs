@@ -9,7 +9,10 @@ namespace App.Scripts.Scenes.GameScene.Levels.AssetManagement
     [CreateAssetMenu(menuName = "Configs/Level/EntityStage", fileName = "EntityStage")]
     public sealed class EntityStage : ScriptableObject
     {
-        public EntityTypeId EntityTypeId;
+        public BoostTypeId BoostTypeId;
+        [ShowIf("BoostTypeId", BoostTypeId.Bomb)]
+        public int Damage = 0;
+        
 
         [PreviewField(50), HorizontalGroup("MainParameters")]
         public Sprite Sprite;

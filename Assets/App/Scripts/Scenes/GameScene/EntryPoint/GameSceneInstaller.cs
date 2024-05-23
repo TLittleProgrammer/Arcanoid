@@ -86,8 +86,10 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.Bind<IWallLoader>().To<WallLoader>().AsSingle().WithArguments(_wallPrefab);
             Container.Bind<IRestartService>().To<RestartService>().AsSingle();
             
+            ItemsDestroyableInstaller.Install(Container);
             StateMachineInstaller.Install(Container, _gameLoopTickables, _projectStateMachine, _restartables, _levelPackInfoView, _restartablesForLoadNewLevel);
             
+            Container.BindInterfacesTo<ItemsDestroyerInitializer>().AsSingle();
             Container.BindInterfacesTo<GameInitializer>().AsSingle();
             Container.BindInterfacesTo<InitializeAllRestartableAnsTickablesLists>().AsSingle().WithArguments(_restartables, _restartablesForLoadNewLevel, _gameLoopTickables);
         }
