@@ -77,14 +77,14 @@ namespace App.Scripts.Scenes.GameScene.Levels.ItemsDestroyer.DestroyServices
 
         private async UniTask AnimateAll(EntityView bomb, List<EntityData> immediateEntityDatas, List<EntityData> diagonalsEntityDatas)
         {
-            bomb.GameObject.transform.DOScale(Vector3.zero, 0.35f).SetEase(Ease.InOutBounce).ToUniTask().Forget();
+            bomb.GameObject.transform.DOScale(Vector3.zero, 0.35f).SetEase(Ease.InBack).ToUniTask().Forget();
             await UniTask.Delay(350);
             
             foreach (EntityData data in immediateEntityDatas)
             {
                 Transform transform = data.EntityView.GameObject.transform;
 
-                transform.DOScale(Vector3.zero, 0.35f).SetEase(Ease.InOutBounce).ToUniTask().Forget();
+                transform.DOScale(Vector3.zero, 0.35f).SetEase(Ease.InBack).ToUniTask().Forget();
             }
 
             await UniTask.Delay(350);
@@ -93,7 +93,7 @@ namespace App.Scripts.Scenes.GameScene.Levels.ItemsDestroyer.DestroyServices
             {
                 Transform transform = data.EntityView.GameObject.transform;
 
-                transform.DOScale(Vector3.zero, 0.35f).SetEase(Ease.InOutBounce).ToUniTask().Forget();
+                transform.DOScale(Vector3.zero, 0.35f).SetEase(Ease.InBack).ToUniTask().Forget();
             }
 
             await UniTask.Delay(350);
