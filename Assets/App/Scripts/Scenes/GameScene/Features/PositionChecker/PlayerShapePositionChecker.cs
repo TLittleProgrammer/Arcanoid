@@ -1,8 +1,8 @@
-﻿using App.Scripts.Scenes.GameScene.Components;
-using App.Scripts.Scenes.GameScene.ScreenInfo;
+﻿using App.Scripts.Scenes.GameScene.Features.Components;
+using App.Scripts.Scenes.GameScene.Features.ScreenInfo;
 using UnityEngine;
 
-namespace App.Scripts.Scenes.GameScene.PositionChecker
+namespace App.Scripts.Scenes.GameScene.Features.PositionChecker
 {
     public sealed class PlayerShapePositionChecker : IShapePositionChecker
     {

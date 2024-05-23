@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Zenject;
 
-namespace App.Scripts.Scenes.GameScene.Entities
+namespace App.Scripts.Scenes.GameScene.Features.Entities
 {
     public class EntityView : MonoBehaviour, IEntityView
     {

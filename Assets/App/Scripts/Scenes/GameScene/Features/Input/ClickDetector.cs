@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace App.Scripts.Scenes.GameScene.Input
+namespace App.Scripts.Scenes.GameScene.Features.Input
 {
     public sealed class ClickDetector : IClickDetector
     {

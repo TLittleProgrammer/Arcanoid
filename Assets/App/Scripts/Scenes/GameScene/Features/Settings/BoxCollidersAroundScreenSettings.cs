@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace App.Scripts.Scenes.GameScene.Settings
+namespace App.Scripts.Scenes.GameScene.Features.Settings
 {
     [CreateAssetMenu(menuName = "Configs/Game Settings/Box colliders settings", fileName = "BoxCollidersAroundScreenSettings")]
     public class BoxCollidersAroundScreenSettings : ScriptableObject

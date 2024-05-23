@@ -1,15 +1,15 @@
 ﻿using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Popup;
-using App.Scripts.Scenes.GameScene.Dotween;
-using App.Scripts.Scenes.GameScene.Restart;
-using App.Scripts.Scenes.GameScene.Settings;
+using App.Scripts.Scenes.GameScene.Features.Dotween;
+using App.Scripts.Scenes.GameScene.Features.Restart;
+using App.Scripts.Scenes.GameScene.Features.Settings;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-namespace App.Scripts.Scenes.GameScene.Popups
+namespace App.Scripts.Scenes.GameScene.Features.Popups
 {
     public class LoosePopupView : PopupView
     {

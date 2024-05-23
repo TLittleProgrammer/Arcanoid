@@ -1,9 +1,9 @@
 ﻿using App.Scripts.External.Initialization;
 using App.Scripts.General.Infrastructure;
-using App.Scripts.Scenes.GameScene.Levels;
+using App.Scripts.Scenes.GameScene.Features.Levels;
 using UnityEngine;
 
-namespace App.Scripts.Scenes.GameScene.Grid
+namespace App.Scripts.Scenes.GameScene.Features.Grid
 {
     public interface IGridPositionResolver : IAsyncInitializable<LevelData>, IRestartable
     {

@@ -1,7 +1,7 @@
-﻿using App.Scripts.Scenes.GameScene.Components;
+﻿using App.Scripts.Scenes.GameScene.Features.Components;
 using UnityEngine;
 
-namespace App.Scripts.Scenes.GameScene.Walls
+namespace App.Scripts.Scenes.GameScene.Features.Walls
 {
     public class WallView : MonoBehaviour, IBoxColliderable2D
     {

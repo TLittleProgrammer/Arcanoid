@@ -1,4 +1,4 @@
-﻿namespace App.Scripts.Scenes.GameScene.Constants
+﻿namespace App.Scripts.Scenes.GameScene.Features.Constants
 {
     public static class GameConstants
     {

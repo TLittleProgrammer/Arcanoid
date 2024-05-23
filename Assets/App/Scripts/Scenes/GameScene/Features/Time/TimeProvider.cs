@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace App.Scripts.Scenes.GameScene.Time
+namespace App.Scripts.Scenes.GameScene.Features.Time
 {
     public sealed class TimeProvider : ITimeProvider
     {

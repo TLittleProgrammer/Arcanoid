@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using App.Scripts.External.Grid;
-using App.Scripts.Scenes.GameScene.Entities;
-using App.Scripts.Scenes.GameScene.Grid;
-using App.Scripts.Scenes.GameScene.Levels.View;
+using App.Scripts.Scenes.GameScene.Features.Entities;
+using App.Scripts.Scenes.GameScene.Features.Grid;
+using App.Scripts.Scenes.GameScene.Features.Levels.View;
 using UnityEngine;
 
-namespace App.Scripts.Scenes.GameScene.Levels.Load
+namespace App.Scripts.Scenes.GameScene.Features.Levels.Load
 {
     public sealed class LevelLoader : ILevelLoader
     {

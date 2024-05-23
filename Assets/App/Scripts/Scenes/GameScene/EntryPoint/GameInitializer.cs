@@ -3,21 +3,21 @@ using App.Scripts.General.Constants;
 using App.Scripts.General.Infrastructure;
 using App.Scripts.General.LevelPackInfoService;
 using App.Scripts.General.Popup.AssetManagment;
-using App.Scripts.Scenes.GameScene.Ball;
-using App.Scripts.Scenes.GameScene.Ball.Movement;
-using App.Scripts.Scenes.GameScene.Grid;
-using App.Scripts.Scenes.GameScene.Healthes;
-using App.Scripts.Scenes.GameScene.LevelProgress;
-using App.Scripts.Scenes.GameScene.Levels;
-using App.Scripts.Scenes.GameScene.Levels.Load;
-using App.Scripts.Scenes.GameScene.PlayerShape.Move;
-using App.Scripts.Scenes.GameScene.States;
-using App.Scripts.Scenes.GameScene.Walls;
+using App.Scripts.Scenes.GameScene.Features.Ball;
+using App.Scripts.Scenes.GameScene.Features.Ball.Movement;
+using App.Scripts.Scenes.GameScene.Features.Grid;
+using App.Scripts.Scenes.GameScene.Features.Healthes;
+using App.Scripts.Scenes.GameScene.Features.LevelProgress;
+using App.Scripts.Scenes.GameScene.Features.Levels;
+using App.Scripts.Scenes.GameScene.Features.Levels.Load;
+using App.Scripts.Scenes.GameScene.Features.PlayerShape.Move;
+using App.Scripts.Scenes.GameScene.Features.States;
+using App.Scripts.Scenes.GameScene.Features.Walls;
 using Newtonsoft.Json;
 using UnityEngine;
 using Zenject;
 
-namespace App.Scripts.Scenes.GameScene.Installers
+namespace App.Scripts.Scenes.GameScene.EntryPoint
 {
     public class GameInitializer : IInitializable
     {

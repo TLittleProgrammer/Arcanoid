@@ -1,21 +1,21 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using App.Scripts.Scenes.GameScene.Ball;
-using App.Scripts.Scenes.GameScene.Effects;
-using App.Scripts.Scenes.GameScene.Entities;
-using App.Scripts.Scenes.GameScene.LevelProgress;
-using App.Scripts.Scenes.GameScene.Levels.AssetManagement;
-using App.Scripts.Scenes.GameScene.Levels.Data;
-using App.Scripts.Scenes.GameScene.Levels.Load;
-using App.Scripts.Scenes.GameScene.Levels.View;
-using App.Scripts.Scenes.GameScene.Pools;
-using App.Scripts.Scenes.GameScene.TopSprites;
+using App.Scripts.Scenes.GameScene.Features.Ball;
+using App.Scripts.Scenes.GameScene.Features.Effects;
+using App.Scripts.Scenes.GameScene.Features.Entities;
+using App.Scripts.Scenes.GameScene.Features.LevelProgress;
+using App.Scripts.Scenes.GameScene.Features.Levels.AssetManagement;
+using App.Scripts.Scenes.GameScene.Features.Levels.Data;
+using App.Scripts.Scenes.GameScene.Features.Levels.Load;
+using App.Scripts.Scenes.GameScene.Features.Levels.View;
+using App.Scripts.Scenes.GameScene.Features.Pools;
+using App.Scripts.Scenes.GameScene.Features.TopSprites;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Unity.Mathematics;
 using UnityEngine;
 
-namespace App.Scripts.Scenes.GameScene.Levels.ItemsDestroyer.DestroyServices
+namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroyServices
 {
     public sealed class BombDestroyService : IBlockDestroyService
     {

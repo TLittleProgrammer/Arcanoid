@@ -1,9 +1,9 @@
-﻿using App.Scripts.Scenes.GameScene.Levels.AssetManagement;
-using App.Scripts.Scenes.GameScene.Settings;
+﻿using App.Scripts.Scenes.GameScene.Features.Levels.AssetManagement;
+using App.Scripts.Scenes.GameScene.Features.Settings;
 using UnityEngine;
 using Zenject;
 
-namespace App.Scripts.Scenes.GameScene.Installers
+namespace App.Scripts.Scenes.GameScene.EntryPoint
 {
     [CreateAssetMenu(menuName = "Configs/Settings/Game Settings", fileName = "GameSettings")]
     public class GameSettingsInstaller : ScriptableObjectInstaller

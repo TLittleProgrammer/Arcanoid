@@ -1,7 +1,7 @@
-﻿using App.Scripts.Scenes.GameScene.Components;
+﻿using App.Scripts.Scenes.GameScene.Features.Components;
 using UnityEngine;
 
-namespace App.Scripts.Scenes.GameScene.PlayerShape
+namespace App.Scripts.Scenes.GameScene.Features.PlayerShape
 {
     [RequireComponent(typeof(SpriteRenderer), typeof(BoxCollider2D))]
     public sealed class PlayerView : MonoBehaviour, IPositionable, ISpriteRenderable, IBoxColliderable2D

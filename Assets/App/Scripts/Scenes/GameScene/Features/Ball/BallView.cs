@@ -1,8 +1,8 @@
 ﻿using System;
-using App.Scripts.Scenes.GameScene.Components;
+using App.Scripts.Scenes.GameScene.Features.Components;
 using UnityEngine;
 
-namespace App.Scripts.Scenes.GameScene.Ball
+namespace App.Scripts.Scenes.GameScene.Features.Ball
 {
     [RequireComponent(typeof(SpriteRenderer), typeof(Rigidbody2D))]
     public class BallView : MonoBehaviour, IRigidablebody, ISpriteRenderable

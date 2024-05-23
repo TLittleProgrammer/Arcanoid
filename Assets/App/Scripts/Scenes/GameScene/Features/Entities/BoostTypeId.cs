@@ -1,4 +1,4 @@
-﻿namespace App.Scripts.Scenes.GameScene.Entities
+﻿namespace App.Scripts.Scenes.GameScene.Features.Entities
 {
     public enum BoostTypeId
     {

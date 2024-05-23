@@ -1,8 +1,8 @@
-﻿using App.Scripts.Scenes.GameScene.Settings;
+﻿using App.Scripts.Scenes.GameScene.Features.Settings;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 
-namespace App.Scripts.Scenes.GameScene.Time
+namespace App.Scripts.Scenes.GameScene.Features.Time
 {
     public sealed class TimeScaleAnimator : ITimeScaleAnimator
     {

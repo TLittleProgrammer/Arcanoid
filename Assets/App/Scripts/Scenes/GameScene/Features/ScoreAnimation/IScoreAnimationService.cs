@@ -1,7 +1,7 @@
 ﻿using System;
 using TMPro;
 
-namespace App.Scripts.Scenes.GameScene.ScoreAnimation
+namespace App.Scripts.Scenes.GameScene.Features.ScoreAnimation
 {
     public interface IScoreAnimationService
     {

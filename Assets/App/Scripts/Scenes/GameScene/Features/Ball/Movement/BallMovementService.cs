@@ -1,9 +1,9 @@
-﻿using App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants;
-using App.Scripts.Scenes.GameScene.Components;
-using App.Scripts.Scenes.GameScene.Input;
+﻿using App.Scripts.Scenes.GameScene.Features.Ball.Movement.MoveVariants;
+using App.Scripts.Scenes.GameScene.Features.Components;
+using App.Scripts.Scenes.GameScene.Features.Input;
 using UnityEngine;
 
-namespace App.Scripts.Scenes.GameScene.Ball.Movement
+namespace App.Scripts.Scenes.GameScene.Features.Ball.Movement
 {
     public sealed class BallMovementService : IBallMovementService
     {

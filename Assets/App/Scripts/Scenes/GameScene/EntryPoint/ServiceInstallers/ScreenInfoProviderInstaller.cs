@@ -1,4 +1,4 @@
-﻿using App.Scripts.Scenes.GameScene.ScreenInfo;
+﻿using App.Scripts.Scenes.GameScene.Features.ScreenInfo;
 using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers

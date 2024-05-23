@@ -2,10 +2,10 @@
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Infrastructure;
 using App.Scripts.General.LoadingScreen;
-using App.Scripts.Scenes.GameScene.Dotween;
+using App.Scripts.Scenes.GameScene.Features.Dotween;
 using Cysharp.Threading.Tasks;
 
-namespace App.Scripts.Scenes.GameScene.States
+namespace App.Scripts.Scenes.GameScene.Features.States
 {
     public class RestartState : IState
     {

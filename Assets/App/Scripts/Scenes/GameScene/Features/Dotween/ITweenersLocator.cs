@@ -1,6 +1,6 @@
 ﻿using DG.Tweening;
 
-namespace App.Scripts.Scenes.GameScene.Dotween
+namespace App.Scripts.Scenes.GameScene.Features.Dotween
 {
     public interface ITweenersLocator
     {

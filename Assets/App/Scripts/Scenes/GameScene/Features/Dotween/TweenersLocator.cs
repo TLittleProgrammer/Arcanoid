@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using DG.Tweening;
 
-namespace App.Scripts.Scenes.GameScene.Dotween
+namespace App.Scripts.Scenes.GameScene.Features.Dotween
 {
     public class TweenersLocator : ITweenersLocator
     {

@@ -1,10 +1,10 @@
-﻿using App.Scripts.Scenes.GameScene.Dotween;
-using App.Scripts.Scenes.GameScene.Settings;
+﻿using App.Scripts.Scenes.GameScene.Features.Dotween;
+using App.Scripts.Scenes.GameScene.Features.Settings;
 using DG.Tweening;
 using UnityEngine;
 using Zenject;
 
-namespace App.Scripts.Scenes.GameScene.Popups.Win
+namespace App.Scripts.Scenes.GameScene.Features.Popups.Win
 {
     public class CircleWinEffect : MonoBehaviour
     {

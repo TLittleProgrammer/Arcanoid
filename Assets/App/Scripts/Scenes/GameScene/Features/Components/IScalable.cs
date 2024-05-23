@@ -1,6 +1,6 @@
 using App.Scripts.External.Components;
 
-namespace App.Scripts.Scenes.GameScene.Components
+namespace App.Scripts.Scenes.GameScene.Features.Components
 {
     public interface IScalable<TScale> : IComponent
     {

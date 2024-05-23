@@ -1,7 +1,7 @@
-﻿using App.Scripts.Scenes.GameScene.Components;
+﻿using App.Scripts.Scenes.GameScene.Features.Components;
 using UnityEngine;
 
-namespace App.Scripts.Scenes.GameScene.Effects
+namespace App.Scripts.Scenes.GameScene.Features.Effects
 {
     [RequireComponent(typeof(ParticleSystem))]
     public abstract class ParticleSystemEffect<TEffect> : MonoBehaviour, IEffect<TEffect>, IPositionable, IScalable<float> where TEffect : MonoBehaviour

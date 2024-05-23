@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace App.Scripts.Scenes.GameScene.Camera
+namespace App.Scripts.Scenes.GameScene.Features.Camera
 {
     public interface ICameraService
     {

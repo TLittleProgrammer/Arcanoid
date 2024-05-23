@@ -1,11 +1,11 @@
 ﻿using System.Linq;
 using App.Scripts.External.Extensions.ListExtensions;
-using App.Scripts.Scenes.GameScene.Entities;
-using App.Scripts.Scenes.GameScene.Levels.AssetManagement;
-using App.Scripts.Scenes.GameScene.Levels.Data;
-using App.Scripts.Scenes.GameScene.TopSprites;
+using App.Scripts.Scenes.GameScene.Features.Entities;
+using App.Scripts.Scenes.GameScene.Features.Levels.AssetManagement;
+using App.Scripts.Scenes.GameScene.Features.Levels.Data;
+using App.Scripts.Scenes.GameScene.Features.TopSprites;
 
-namespace App.Scripts.Scenes.GameScene.Levels
+namespace App.Scripts.Scenes.GameScene.Features.Levels
 {
     public class ItemViewDamageService : IItemViewDamageService
     {

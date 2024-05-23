@@ -1,4 +1,4 @@
-﻿using App.Scripts.Scenes.GameScene.Time;
+﻿using App.Scripts.Scenes.GameScene.Features.Time;
 using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers

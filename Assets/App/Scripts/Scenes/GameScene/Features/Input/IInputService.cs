@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Zenject;
 
-namespace App.Scripts.Scenes.GameScene.Input
+namespace App.Scripts.Scenes.GameScene.Features.Input
 {
     public interface IInputService : ITickable
     {

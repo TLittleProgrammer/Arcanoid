@@ -1,8 +1,8 @@
 ﻿using App.Scripts.External.Localisation.MonoBehaviours;
 using App.Scripts.General.Energy;
 using App.Scripts.General.Popup;
-using App.Scripts.Scenes.GameScene.Dotween;
-using App.Scripts.Scenes.GameScene.Settings;
+using App.Scripts.Scenes.GameScene.Features.Dotween;
+using App.Scripts.Scenes.GameScene.Features.Settings;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using TMPro;
@@ -11,7 +11,7 @@ using UnityEngine.UI;
 using Zenject;
 using Button = UnityEngine.UI.Button;
 
-namespace App.Scripts.Scenes.GameScene.Popups
+namespace App.Scripts.Scenes.GameScene.Features.Popups
 {
     public class WinPopupView : PopupView, IWinPopupView
     {

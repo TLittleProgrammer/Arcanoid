@@ -1,4 +1,4 @@
-﻿namespace App.Scripts.Scenes.GameScene.Restart
+﻿namespace App.Scripts.Scenes.GameScene.Features.Restart
 {
     public interface IRestartService
     {

@@ -1,10 +1,10 @@
-﻿using App.Scripts.Scenes.GameScene.Components;
-using App.Scripts.Scenes.GameScene.ScreenInfo;
-using App.Scripts.Scenes.GameScene.Settings;
+﻿using App.Scripts.Scenes.GameScene.Features.Components;
+using App.Scripts.Scenes.GameScene.Features.ScreenInfo;
+using App.Scripts.Scenes.GameScene.Features.Settings;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace App.Scripts.Scenes.GameScene.Walls
+namespace App.Scripts.Scenes.GameScene.Features.Walls
 {
     public class WallLoader : IWallLoader
     {

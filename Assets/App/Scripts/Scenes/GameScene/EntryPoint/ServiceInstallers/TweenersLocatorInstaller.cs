@@ -1,4 +1,4 @@
-﻿using App.Scripts.Scenes.GameScene.Dotween;
+﻿using App.Scripts.Scenes.GameScene.Features.Dotween;
 using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers

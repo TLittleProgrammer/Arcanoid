@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Zenject;
 
-namespace App.Scripts.Scenes.GameScene.Effects
+namespace App.Scripts.Scenes.GameScene.Features.Effects
 {
     public interface IEffect<TEffect> where TEffect : MonoBehaviour
     {

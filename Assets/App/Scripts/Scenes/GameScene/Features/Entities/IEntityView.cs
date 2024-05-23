@@ -1,9 +1,9 @@
 ﻿using App.Scripts.External.Components;
-using App.Scripts.Scenes.GameScene.Components;
+using App.Scripts.Scenes.GameScene.Features.Components;
 using UnityEngine;
 using Zenject;
 
-namespace App.Scripts.Scenes.GameScene.Entities
+namespace App.Scripts.Scenes.GameScene.Features.Entities
 {
     public interface IEntityView : IPositionable, IScalable<Vector3>, IBoxColliderable2D, IGridPositinable, IGameObjectable
     {

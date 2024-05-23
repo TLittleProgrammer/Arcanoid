@@ -1,10 +1,10 @@
-﻿using App.Scripts.Scenes.GameScene.Components;
-using App.Scripts.Scenes.GameScene.Input;
-using App.Scripts.Scenes.GameScene.PositionChecker;
-using App.Scripts.Scenes.GameScene.Time;
+﻿using App.Scripts.Scenes.GameScene.Features.Components;
+using App.Scripts.Scenes.GameScene.Features.Input;
+using App.Scripts.Scenes.GameScene.Features.PositionChecker;
+using App.Scripts.Scenes.GameScene.Features.Time;
 using UnityEngine;
 
-namespace App.Scripts.Scenes.GameScene.PlayerShape.Move
+namespace App.Scripts.Scenes.GameScene.Features.PlayerShape.Move
 {
     public sealed class PlayerShapeMover : IPlayerShapeMover
     {

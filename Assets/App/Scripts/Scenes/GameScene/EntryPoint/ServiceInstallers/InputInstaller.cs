@@ -1,4 +1,4 @@
-﻿using App.Scripts.Scenes.GameScene.Input;
+﻿using App.Scripts.Scenes.GameScene.Features.Input;
 using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers

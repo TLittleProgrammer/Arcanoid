@@ -1,9 +1,9 @@
-﻿using App.Scripts.Scenes.GameScene.Components;
-using App.Scripts.Scenes.GameScene.Entities;
+﻿using App.Scripts.Scenes.GameScene.Features.Components;
+using App.Scripts.Scenes.GameScene.Features.Entities;
 using UnityEngine;
 using Zenject;
 
-namespace App.Scripts.Scenes.GameScene.TopSprites
+namespace App.Scripts.Scenes.GameScene.Features.TopSprites
 {
     public class OnTopSprites : MonoBehaviour, ISpriteRenderable
     {

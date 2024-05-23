@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using App.Scripts.Scenes.GameScene.Ball;
-using App.Scripts.Scenes.GameScene.Entities;
-using App.Scripts.Scenes.GameScene.LevelProgress;
-using App.Scripts.Scenes.GameScene.Levels.Data;
-using App.Scripts.Scenes.GameScene.Levels.ItemsDestroyer.DestroyServices;
-using App.Scripts.Scenes.GameScene.Pools;
-using App.Scripts.Scenes.GameScene.TopSprites;
+using App.Scripts.Scenes.GameScene.Features.Ball;
+using App.Scripts.Scenes.GameScene.Features.Entities;
+using App.Scripts.Scenes.GameScene.Features.LevelProgress;
+using App.Scripts.Scenes.GameScene.Features.Levels.Data;
+using App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroyServices;
+using App.Scripts.Scenes.GameScene.Features.Pools;
+using App.Scripts.Scenes.GameScene.Features.TopSprites;
 using Cysharp.Threading.Tasks;
 
-namespace App.Scripts.Scenes.GameScene.Levels.ItemsDestroyer
+namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer
 {
     public sealed class ItemsDestroyer : IItemsDestroyable
     {

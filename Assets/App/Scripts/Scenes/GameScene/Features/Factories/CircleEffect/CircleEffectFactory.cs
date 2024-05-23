@@ -1,8 +1,8 @@
-﻿using App.Scripts.Scenes.GameScene.Entities;
-using App.Scripts.Scenes.GameScene.Pools;
+﻿using App.Scripts.Scenes.GameScene.Features.Entities;
+using App.Scripts.Scenes.GameScene.Features.Pools;
 using Zenject;
 
-namespace App.Scripts.Scenes.GameScene.Factories.CircleEffect
+namespace App.Scripts.Scenes.GameScene.Features.Factories.CircleEffect
 {
     public class CircleEffectFactory : IFactory<EntityView, Effects.CircleEffect>
     {

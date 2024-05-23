@@ -1,12 +1,12 @@
-﻿using App.Scripts.Scenes.GameScene.Components;
-using App.Scripts.Scenes.GameScene.Effects;
-using App.Scripts.Scenes.GameScene.Entities;
-using App.Scripts.Scenes.GameScene.Healthes;
-using App.Scripts.Scenes.GameScene.Levels.View;
-using App.Scripts.Scenes.GameScene.ScreenInfo;
+﻿using App.Scripts.Scenes.GameScene.Features.Components;
+using App.Scripts.Scenes.GameScene.Features.Effects;
+using App.Scripts.Scenes.GameScene.Features.Entities;
+using App.Scripts.Scenes.GameScene.Features.Healthes;
+using App.Scripts.Scenes.GameScene.Features.Levels.View;
+using App.Scripts.Scenes.GameScene.Features.ScreenInfo;
 using UnityEngine;
 
-namespace App.Scripts.Scenes.GameScene.Ball.Collision
+namespace App.Scripts.Scenes.GameScene.Features.Ball.Collision
 {
     public class BallCollisionService : IBallCollisionService
     {

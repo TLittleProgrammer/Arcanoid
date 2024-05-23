@@ -2,9 +2,9 @@
 using App.Scripts.General.LevelPackInfoService;
 using App.Scripts.General.Levels;
 using App.Scripts.General.UserData.Energy;
-using App.Scripts.Scenes.GameScene.States;
+using App.Scripts.Scenes.GameScene.Features.States;
 
-namespace App.Scripts.Scenes.GameScene.Restart
+namespace App.Scripts.Scenes.GameScene.Features.Restart
 {
     public sealed class RestartService : IRestartService
     {

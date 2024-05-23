@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using App.Scripts.Scenes.GameScene.Entities;
+using App.Scripts.Scenes.GameScene.Features.Entities;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace App.Scripts.Scenes.GameScene.Levels.AssetManagement
+namespace App.Scripts.Scenes.GameScene.Features.Levels.AssetManagement
 {
     [CreateAssetMenu(menuName = "Configs/Level/EntityStage", fileName = "EntityStage")]
     public sealed class EntityStage : ScriptableObject

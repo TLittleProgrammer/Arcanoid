@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
-using App.Scripts.Scenes.GameScene.Effects;
-using App.Scripts.Scenes.GameScene.Entities;
-using App.Scripts.Scenes.GameScene.Healthes.View;
-using App.Scripts.Scenes.GameScene.TopSprites;
+using App.Scripts.Scenes.GameScene.Features.Effects;
+using App.Scripts.Scenes.GameScene.Features.Entities;
+using App.Scripts.Scenes.GameScene.Features.Healthes.View;
+using App.Scripts.Scenes.GameScene.Features.TopSprites;
 using UnityEngine;
 using Zenject;
 
-namespace App.Scripts.Scenes.GameScene.Pools
+namespace App.Scripts.Scenes.GameScene.Features.Pools
 {
     public sealed class PoolContainer : IPoolContainer
     {

@@ -1,8 +1,8 @@
-﻿using App.Scripts.Scenes.GameScene.Ball.Movement;
-using App.Scripts.Scenes.GameScene.Settings;
+﻿using App.Scripts.Scenes.GameScene.Features.Ball.Movement;
+using App.Scripts.Scenes.GameScene.Features.Settings;
 using Cysharp.Threading.Tasks;
 
-namespace App.Scripts.Scenes.GameScene.Ball
+namespace App.Scripts.Scenes.GameScene.Features.Ball
 {
     public sealed class BallSpeedUpdater : IBallSpeedUpdater
     {

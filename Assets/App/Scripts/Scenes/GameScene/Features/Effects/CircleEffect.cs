@@ -1,8 +1,8 @@
-﻿using App.Scripts.Scenes.GameScene.Entities;
+﻿using App.Scripts.Scenes.GameScene.Features.Entities;
 using UnityEngine;
 using Zenject;
 
-namespace App.Scripts.Scenes.GameScene.Effects
+namespace App.Scripts.Scenes.GameScene.Features.Effects
 {
     public class CircleEffect : ParticleSystemEffect<CircleEffect>
     {

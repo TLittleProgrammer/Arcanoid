@@ -1,8 +1,8 @@
-﻿using App.Scripts.Scenes.GameScene.LevelProgress;
+﻿using App.Scripts.Scenes.GameScene.Features.LevelProgress;
 using TMPro;
 using UnityEngine.UI;
 
-namespace App.Scripts.Scenes.GameScene.LevelView
+namespace App.Scripts.Scenes.GameScene.Features.LevelView
 {
     public interface ILevelPackInfoView
     {

@@ -2,7 +2,7 @@
 using TMPro;
 using UnityEngine.UI;
 
-namespace App.Scripts.Scenes.GameScene.Popups
+namespace App.Scripts.Scenes.GameScene.Features.Popups
 {
     public interface IWinPopupView
     {

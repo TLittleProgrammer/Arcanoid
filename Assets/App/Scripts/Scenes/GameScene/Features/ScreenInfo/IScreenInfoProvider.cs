@@ -1,4 +1,4 @@
-﻿namespace App.Scripts.Scenes.GameScene.ScreenInfo
+﻿namespace App.Scripts.Scenes.GameScene.Features.ScreenInfo
 {
     public interface IScreenInfoProvider
     {

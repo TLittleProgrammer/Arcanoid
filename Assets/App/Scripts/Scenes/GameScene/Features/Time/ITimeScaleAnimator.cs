@@ -1,6 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 
-namespace App.Scripts.Scenes.GameScene.Time
+namespace App.Scripts.Scenes.GameScene.Features.Time
 {
     public interface ITimeScaleAnimator
     {

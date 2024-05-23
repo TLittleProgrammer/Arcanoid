@@ -1,7 +1,7 @@
 ﻿using System;
 using App.Scripts.General.Infrastructure;
 
-namespace App.Scripts.Scenes.GameScene.Time
+namespace App.Scripts.Scenes.GameScene.Features.Time
 {
     public interface ITimeProvider : IRestartable
     {

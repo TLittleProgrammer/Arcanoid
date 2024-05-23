@@ -1,4 +1,4 @@
-﻿namespace App.Scripts.Scenes.GameScene.Pools
+﻿namespace App.Scripts.Scenes.GameScene.Features.Pools
 {
     public enum PoolTypeId
     {

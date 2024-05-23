@@ -1,11 +1,11 @@
-﻿using App.Scripts.Scenes.GameScene.Camera;
-using App.Scripts.Scenes.GameScene.Levels;
-using App.Scripts.Scenes.GameScene.ScreenInfo;
+﻿using App.Scripts.Scenes.GameScene.Features.Camera;
+using App.Scripts.Scenes.GameScene.Features.Levels;
+using App.Scripts.Scenes.GameScene.Features.ScreenInfo;
 using Cysharp.Threading.Tasks;
 using Unity.Mathematics;
 using UnityEngine;
 
-namespace App.Scripts.Scenes.GameScene.Grid
+namespace App.Scripts.Scenes.GameScene.Features.Grid
 {
     public class GridPositionResolver : IGridPositionResolver
     {

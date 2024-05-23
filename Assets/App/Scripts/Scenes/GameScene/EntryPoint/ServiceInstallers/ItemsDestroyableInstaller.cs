@@ -1,5 +1,5 @@
-﻿using App.Scripts.Scenes.GameScene.Levels.ItemsDestroyer;
-using App.Scripts.Scenes.GameScene.Levels.ItemsDestroyer.DestroyServices;
+﻿using App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer;
+using App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroyServices;
 using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers

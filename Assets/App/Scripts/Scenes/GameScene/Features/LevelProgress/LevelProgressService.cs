@@ -1,12 +1,12 @@
 ﻿using System;
 using App.Scripts.General.LevelPackInfoService;
-using App.Scripts.Scenes.GameScene.Levels;
-using App.Scripts.Scenes.GameScene.Levels.AssetManagement;
-using App.Scripts.Scenes.GameScene.LevelView;
-using App.Scripts.Scenes.GameScene.ScoreAnimation;
+using App.Scripts.Scenes.GameScene.Features.Levels;
+using App.Scripts.Scenes.GameScene.Features.Levels.AssetManagement;
+using App.Scripts.Scenes.GameScene.Features.LevelView;
+using App.Scripts.Scenes.GameScene.Features.ScoreAnimation;
 using TMPro;
 
-namespace App.Scripts.Scenes.GameScene.LevelProgress
+namespace App.Scripts.Scenes.GameScene.Features.LevelProgress
 {
     public class LevelProgressService : ILevelProgressService
     {

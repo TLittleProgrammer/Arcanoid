@@ -1,9 +1,9 @@
-﻿using App.Scripts.Scenes.GameScene.Entities;
-using App.Scripts.Scenes.GameScene.Levels.AssetManagement;
-using App.Scripts.Scenes.GameScene.Pools;
+﻿using App.Scripts.Scenes.GameScene.Features.Entities;
+using App.Scripts.Scenes.GameScene.Features.Levels.AssetManagement;
+using App.Scripts.Scenes.GameScene.Features.Pools;
 using Zenject;
 
-namespace App.Scripts.Scenes.GameScene.Factories.Entity
+namespace App.Scripts.Scenes.GameScene.Features.Factories.Entity
 {
     public class EntityFactory : IFactory<string, IEntityView>
     {

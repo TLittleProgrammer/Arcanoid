@@ -4,19 +4,19 @@ using App.Scripts.General.Infrastructure;
 using App.Scripts.General.LevelPackInfoService;
 using App.Scripts.General.LoadingScreen;
 using App.Scripts.General.Popup;
-using App.Scripts.Scenes.GameScene.Dotween;
-using App.Scripts.Scenes.GameScene.Grid;
-using App.Scripts.Scenes.GameScene.LevelProgress;
-using App.Scripts.Scenes.GameScene.Levels;
-using App.Scripts.Scenes.GameScene.Levels.Load;
-using App.Scripts.Scenes.GameScene.Levels.View;
-using App.Scripts.Scenes.GameScene.LevelView;
-using App.Scripts.Scenes.GameScene.Popups;
-using App.Scripts.Scenes.GameScene.Time;
+using App.Scripts.Scenes.GameScene.Features.Dotween;
+using App.Scripts.Scenes.GameScene.Features.Grid;
+using App.Scripts.Scenes.GameScene.Features.LevelProgress;
+using App.Scripts.Scenes.GameScene.Features.Levels;
+using App.Scripts.Scenes.GameScene.Features.Levels.Load;
+using App.Scripts.Scenes.GameScene.Features.Levels.View;
+using App.Scripts.Scenes.GameScene.Features.LevelView;
+using App.Scripts.Scenes.GameScene.Features.Popups;
+using App.Scripts.Scenes.GameScene.Features.Time;
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace App.Scripts.Scenes.GameScene.States
+namespace App.Scripts.Scenes.GameScene.Features.States
 {
     public class LoadNextLevelState : IState
     {

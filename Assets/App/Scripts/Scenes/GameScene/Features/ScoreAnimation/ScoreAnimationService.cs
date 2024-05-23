@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using App.Scripts.Scenes.GameScene.Settings;
+using App.Scripts.Scenes.GameScene.Features.Settings;
 using DG.Tweening;
 using TMPro;
 
-namespace App.Scripts.Scenes.GameScene.ScoreAnimation
+namespace App.Scripts.Scenes.GameScene.Features.ScoreAnimation
 {
     public sealed class ScoreAnimationService : IScoreAnimationService
     {

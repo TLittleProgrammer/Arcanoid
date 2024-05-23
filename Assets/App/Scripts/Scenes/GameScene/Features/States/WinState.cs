@@ -6,13 +6,13 @@ using App.Scripts.General.Levels;
 using App.Scripts.General.Popup;
 using App.Scripts.General.RootUI;
 using App.Scripts.General.UserData.Energy;
-using App.Scripts.Scenes.GameScene.Popups;
-using App.Scripts.Scenes.GameScene.Time;
+using App.Scripts.Scenes.GameScene.Features.Popups;
+using App.Scripts.Scenes.GameScene.Features.Time;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 
-namespace App.Scripts.Scenes.GameScene.States
+namespace App.Scripts.Scenes.GameScene.Features.States
 {
     public class WinState : IState
     {

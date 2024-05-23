@@ -1,10 +1,10 @@
-﻿using App.Scripts.Scenes.GameScene.Entities;
-using App.Scripts.Scenes.GameScene.Pools;
-using App.Scripts.Scenes.GameScene.TopSprites;
+﻿using App.Scripts.Scenes.GameScene.Features.Entities;
+using App.Scripts.Scenes.GameScene.Features.Pools;
+using App.Scripts.Scenes.GameScene.Features.TopSprites;
 using UnityEngine;
 using Zenject;
 
-namespace App.Scripts.Scenes.GameScene.Factories.OnTopSprite
+namespace App.Scripts.Scenes.GameScene.Features.Factories.OnTopSprite
 {
     public class OnTopSpriteFactory : IFactory<IEntityView, OnTopSprites>
     {

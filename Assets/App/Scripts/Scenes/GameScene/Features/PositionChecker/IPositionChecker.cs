@@ -1,4 +1,4 @@
-﻿namespace App.Scripts.Scenes.GameScene.PositionChecker
+﻿namespace App.Scripts.Scenes.GameScene.Features.PositionChecker
 {
     public interface IPositionChecker
     {

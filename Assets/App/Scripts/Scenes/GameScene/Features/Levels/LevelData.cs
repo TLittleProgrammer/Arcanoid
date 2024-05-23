@@ -2,7 +2,7 @@
 using Unity.Mathematics;
 using Unity.Plastic.Newtonsoft.Json;
 
-namespace App.Scripts.Scenes.GameScene.Levels
+namespace App.Scripts.Scenes.GameScene.Features.Levels
 {
     [Serializable]
     public class LevelData

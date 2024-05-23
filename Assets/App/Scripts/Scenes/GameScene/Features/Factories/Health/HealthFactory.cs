@@ -1,10 +1,10 @@
 ﻿using App.Scripts.External.Components;
-using App.Scripts.Scenes.GameScene.Healthes.View;
-using App.Scripts.Scenes.GameScene.Pools;
+using App.Scripts.Scenes.GameScene.Features.Healthes.View;
+using App.Scripts.Scenes.GameScene.Features.Pools;
 using UnityEngine;
 using Zenject;
 
-namespace App.Scripts.Scenes.GameScene.Factories.Health
+namespace App.Scripts.Scenes.GameScene.Features.Factories.Health
 {
     public class HealthFactory : IFactory<ITransformable, IHealthPointView>
     {

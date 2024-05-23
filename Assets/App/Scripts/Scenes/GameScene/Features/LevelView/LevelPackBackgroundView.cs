@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace App.Scripts.Scenes.GameScene.LevelView
+namespace App.Scripts.Scenes.GameScene.Features.LevelView
 {
     public sealed class LevelPackBackgroundView : MonoBehaviour, ILevelPackBackgroundView
     {

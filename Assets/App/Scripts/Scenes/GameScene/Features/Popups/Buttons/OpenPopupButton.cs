@@ -1,12 +1,12 @@
 ﻿using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Popup;
 using App.Scripts.General.RootUI;
-using App.Scripts.Scenes.GameScene.States;
+using App.Scripts.Scenes.GameScene.Features.States;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Zenject;
 
-namespace App.Scripts.Scenes.GameScene.Popups.Buttons
+namespace App.Scripts.Scenes.GameScene.Features.Popups.Buttons
 {
     public abstract class OpenPopupButton : MonoBehaviour, IPointerClickHandler
     {

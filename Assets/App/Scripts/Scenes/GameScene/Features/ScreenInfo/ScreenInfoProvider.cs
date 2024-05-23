@@ -1,7 +1,7 @@
-﻿using App.Scripts.Scenes.GameScene.Camera;
+﻿using App.Scripts.Scenes.GameScene.Features.Camera;
 using UnityEngine;
 
-namespace App.Scripts.Scenes.GameScene.ScreenInfo
+namespace App.Scripts.Scenes.GameScene.Features.ScreenInfo
 {
     public class ScreenInfoProvider : IScreenInfoProvider
     {

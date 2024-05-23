@@ -1,4 +1,4 @@
-﻿using App.Scripts.Scenes.GameScene.ScoreAnimation;
+﻿using App.Scripts.Scenes.GameScene.Features.ScoreAnimation;
 using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers

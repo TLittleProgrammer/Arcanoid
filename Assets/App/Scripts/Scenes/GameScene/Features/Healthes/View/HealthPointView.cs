@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using Zenject;
 
-namespace App.Scripts.Scenes.GameScene.Healthes.View
+namespace App.Scripts.Scenes.GameScene.Features.Healthes.View
 {
     public sealed class HealthPointView : MonoBehaviour, IHealthPointView
     {

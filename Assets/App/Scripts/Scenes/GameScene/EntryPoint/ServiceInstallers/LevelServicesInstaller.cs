@@ -1,5 +1,5 @@
-﻿using App.Scripts.Scenes.GameScene.Levels.Load;
-using App.Scripts.Scenes.GameScene.Levels.View;
+﻿using App.Scripts.Scenes.GameScene.Features.Levels.Load;
+using App.Scripts.Scenes.GameScene.Features.Levels.View;
 using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers

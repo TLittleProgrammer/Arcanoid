@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace App.Scripts.Scenes.GameScene.LevelProgress
+namespace App.Scripts.Scenes.GameScene.Features.LevelProgress
 {
     public record LevelPackInfoRecord
     {

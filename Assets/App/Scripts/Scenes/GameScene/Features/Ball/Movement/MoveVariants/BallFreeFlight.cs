@@ -1,10 +1,10 @@
-﻿using App.Scripts.Scenes.GameScene.Components;
-using App.Scripts.Scenes.GameScene.Settings;
-using App.Scripts.Scenes.GameScene.Time;
+﻿using App.Scripts.Scenes.GameScene.Features.Components;
+using App.Scripts.Scenes.GameScene.Features.Settings;
+using App.Scripts.Scenes.GameScene.Features.Time;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace App.Scripts.Scenes.GameScene.Ball.Movement.MoveVariants
+namespace App.Scripts.Scenes.GameScene.Features.Ball.Movement.MoveVariants
 {
     public class BallFreeFlight : IBallFreeFlightMover
     {

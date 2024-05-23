@@ -1,4 +1,4 @@
-﻿namespace App.Scripts.Scenes.GameScene.PlayerShape
+﻿namespace App.Scripts.Scenes.GameScene.Features.PlayerShape
 {
     public struct ShapeMoverSettings
     {
