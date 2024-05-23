@@ -11,6 +11,14 @@
     "YellowBlock_01":
     {
       "blockKey": "3"
+    },
+    "GranitBlock":
+    {
+      "blockKey": "4"
+    },
+    "BombBlock":
+    {
+      "blockKey": "5"
     }
   }
 }

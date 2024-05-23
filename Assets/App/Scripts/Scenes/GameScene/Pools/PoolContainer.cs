@@ -70,12 +70,17 @@ namespace App.Scripts.Scenes.GameScene.Pools
             }
         }
 
-        private void RemoveItemFromPool<TItem, TMono>(TItem item, MemoryPoolBase<TMono> poolBase, List<MonoBehaviour> spawnedList)
+        private void RemoveItemFromPool<TItem, TMono>(TItem item, MemoryPoolBase<TMono> poolBase,
+            List<MonoBehaviour> spawnedList)
             where TMono : MonoBehaviour
             where TItem : MonoBehaviour
         {
-            poolBase.Despawn(item as TMono);
-            spawnedList.Remove(item);
+            if (spawnedList.Contains(item))
+            {
+
+                poolBase.Despawn(item as TMono);
+                spawnedList.Remove(item);
+            }
         }
 
         public void Restart()

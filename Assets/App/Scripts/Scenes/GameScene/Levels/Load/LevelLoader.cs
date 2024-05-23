@@ -1,4 +1,5 @@
-﻿using App.Scripts.External.Grid;
+﻿using System.Collections.Generic;
+using App.Scripts.External.Grid;
 using App.Scripts.Scenes.GameScene.Entities;
 using App.Scripts.Scenes.GameScene.Grid;
 using App.Scripts.Scenes.GameScene.Levels.View;
@@ -13,6 +14,8 @@ namespace App.Scripts.Scenes.GameScene.Levels.Load
         private readonly ILevelViewUpdater _levelViewUpdater;
         
         private LevelData _previousLevelData;
+        private List<IEntityView> _entityViews;
+        public List<IEntityView> Entities => _entityViews;
 
         public LevelLoader(
             IGridPositionResolver gridPositionResolver,
@@ -22,6 +25,7 @@ namespace App.Scripts.Scenes.GameScene.Levels.Load
             _gridPositionResolver = gridPositionResolver;
             _entityFactory = entityFactory;
             _levelViewUpdater = levelViewUpdater;
+            _entityViews = new();
         }
 
         public void LoadLevel(LevelData levelData)
@@ -29,6 +33,8 @@ namespace App.Scripts.Scenes.GameScene.Levels.Load
             Grid<int> levelGrid = new Grid<int>(new(levelData.GridSize.x, levelData.GridSize.y));
             _previousLevelData = levelData;
             
+            _entityViews.Clear();
+
             for (int i = 0; i < levelData.Grid.GetLength(1); i++)
             {
                 for (int j = 0; j < levelData.Grid.GetLength(0); j++)
@@ -50,6 +56,9 @@ namespace App.Scripts.Scenes.GameScene.Levels.Load
                     spawnedBlock.Scale = _gridPositionResolver.GetCellSize();
                     spawnedBlock.GridPositionX = j;
                     spawnedBlock.GridPositionY = i;
+                    spawnedBlock.BoxCollider2D.enabled = true;
+                    
+                    _entityViews.Add(spawnedBlock);
                 }
             }
 
