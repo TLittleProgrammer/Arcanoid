@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using App.Scripts.External.Extensions.ListExtensions;
-using App.Scripts.External.Grid;
+﻿using App.Scripts.External.Grid;
 using App.Scripts.Scenes.GameScene.Entities;
 using App.Scripts.Scenes.GameScene.Levels.AssetManagement;
 using App.Scripts.Scenes.GameScene.Levels.Data;

@@ -8,7 +8,6 @@ using App.Scripts.Scenes.GameScene.Levels.ItemsDestroyer.DestroyServices;
 using App.Scripts.Scenes.GameScene.Pools;
 using App.Scripts.Scenes.GameScene.TopSprites;
 using Cysharp.Threading.Tasks;
-using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Levels.ItemsDestroyer
 {

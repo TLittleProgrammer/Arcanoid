@@ -2,7 +2,6 @@
 using App.Scripts.General.Constants;
 using App.Scripts.General.Infrastructure;
 using App.Scripts.General.LevelPackInfoService;
-using App.Scripts.General.Levels;
 using App.Scripts.General.Popup.AssetManagment;
 using App.Scripts.Scenes.GameScene.Ball;
 using App.Scripts.Scenes.GameScene.Ball.Movement;

@@ -1,12 +1,9 @@
-﻿using System.Threading.Tasks;
-using App.Scripts.External.GameStateMachine;
+﻿using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.InfoBetweenScenes;
 using App.Scripts.General.Popup;
 using App.Scripts.General.States;
 using App.Scripts.Scenes.GameScene.Dotween;
-using App.Scripts.Scenes.GameScene.Popups;
 using Cysharp.Threading.Tasks;
-using Unity.Plastic.Newtonsoft.Json.Serialization;
 using Action = System.Action;
 
 namespace App.Scripts.Scenes.GameScene.States

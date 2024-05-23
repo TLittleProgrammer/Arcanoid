@@ -1,6 +1,5 @@
 ﻿using System;
 using Unity.Mathematics;
-using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Levels.ItemsDestroyer.DestroyServices
 {
