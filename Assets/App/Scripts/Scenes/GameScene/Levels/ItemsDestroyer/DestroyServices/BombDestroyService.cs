@@ -72,59 +72,49 @@ namespace App.Scripts.Scenes.GameScene.Levels.ItemsDestroyer.DestroyServices
             {
                 EntityView = entityView,
                 GridItemData = gridItemData
-            }, immediateDatas, diagonalsDatas);
+            },
+                immediateDatas, diagonalsDatas);
         }
 
         private async UniTask AnimateAll(EntityView bomb, List<EntityData> immediateEntityDatas, List<EntityData> diagonalsEntityDatas)
         {
-            bomb.GameObject.transform.DOScale(Vector3.zero, 0.35f).SetEase(Ease.InBack).ToUniTask().Forget();
-            await UniTask.Delay(350);
-            
+            await AnimateDataList(new List<EntityData>()
+            {
+                new()
+                {
+                    GridItemData = null,
+                    EntityView = bomb
+                }
+            });
+            await AnimateDataList(immediateEntityDatas);
+            await AnimateDataList(diagonalsEntityDatas);
+        }
+
+        private async UniTask AnimateDataList(List<EntityData> immediateEntityDatas)
+        {
             foreach (EntityData data in immediateEntityDatas)
             {
                 Transform transform = data.EntityView.GameObject.transform;
 
                 transform.DOScale(Vector3.zero, 0.35f).SetEase(Ease.InBack).ToUniTask().Forget();
             }
-
-            await UniTask.Delay(350);
             
-            foreach (EntityData data in diagonalsEntityDatas)
-            {
-                Transform transform = data.EntityView.GameObject.transform;
-
-                transform.DOScale(Vector3.zero, 0.35f).SetEase(Ease.InBack).ToUniTask().Forget();
-            }
-
             await UniTask.Delay(350);
         }
 
         private void DestroyAllEntites(EntityData bomb, List<EntityData> immediateDatas, List<EntityData> diagonalDatas)
         {
-            _levelProgressService.TakeOneStep();
-
-            _poolContainer.RemoveItem(PoolTypeId.EntityView, bomb.EntityView as EntityView);
-            foreach (OnTopSprites sprite in bomb.GridItemData.Sprites)
+            DestroyEntities(new List<EntityData>
             {
-                _poolContainer.RemoveItem(PoolTypeId.OnTopSprite, sprite);
-            }
+                bomb
+            });
+            DestroyEntities(immediateDatas);
+            DestroyEntities(diagonalDatas);
+        }
 
-            _ballSpeedUpdater.UpdateSpeed();
-            
+        private void DestroyEntities(List<EntityData> immediateDatas)
+        {
             foreach (EntityData entityData in immediateDatas)
-            {
-                _levelProgressService.TakeOneStep();
-
-                _poolContainer.RemoveItem(PoolTypeId.EntityView, entityData.EntityView as EntityView);
-                foreach (OnTopSprites sprite in entityData.GridItemData.Sprites)
-                {
-                    _poolContainer.RemoveItem(PoolTypeId.OnTopSprite, sprite);
-                }
-
-                _ballSpeedUpdater.UpdateSpeed();
-            }
-
-            foreach (EntityData entityData in diagonalDatas)
             {
                 _levelProgressService.TakeOneStep();
 
