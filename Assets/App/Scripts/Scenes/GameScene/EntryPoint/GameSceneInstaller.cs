@@ -17,6 +17,7 @@ using App.Scripts.Scenes.GameScene.Healthes;
 using App.Scripts.Scenes.GameScene.Healthes.View;
 using App.Scripts.Scenes.GameScene.Installers;
 using App.Scripts.Scenes.GameScene.LevelProgress;
+using App.Scripts.Scenes.GameScene.Levels;
 using App.Scripts.Scenes.GameScene.LevelView;
 using App.Scripts.Scenes.GameScene.PlayerShape;
 using App.Scripts.Scenes.GameScene.PlayerShape.Move;
@@ -85,6 +86,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.Bind<IBallCollisionService>().To<BallCollisionService>().AsSingle().WithArguments(_ballView, _playerShape).NonLazy();
             Container.Bind<IWallLoader>().To<WallLoader>().AsSingle().WithArguments(_wallPrefab);
             Container.Bind<IRestartService>().To<RestartService>().AsSingle();
+            Container.Bind<IItemViewDamageService>().To<ItemViewDamageService>().AsSingle();
             
             ItemsDestroyableInstaller.Install(Container);
             StateMachineInstaller.Install(Container, _gameLoopTickables, _projectStateMachine, _restartables, _levelPackInfoView, _restartablesForLoadNewLevel);

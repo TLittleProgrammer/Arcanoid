@@ -15,6 +15,7 @@ namespace App.Scripts.Scenes.GameScene.Levels.View
         private readonly EntityProvider _entityProvider;
         private readonly OnTopSprites.Factory _spritesFactory;
         private readonly IItemsDestroyable _itemsDestroyable;
+        private readonly IItemViewDamageService _itemViewDamageService;
 
         private Grid<int> _levelGrid;
         private Grid<GridItemData> _levelGridItemData = new(Vector2Int.zero);
@@ -22,11 +23,13 @@ namespace App.Scripts.Scenes.GameScene.Levels.View
         public LevelViewUpdater(
             EntityProvider entityProvider,
             OnTopSprites.Factory spritesFactory,
-            IItemsDestroyable itemsDestroyable)
+            IItemsDestroyable itemsDestroyable,
+            IItemViewDamageService itemViewDamageService)
         {
             _entityProvider = entityProvider;
             _spritesFactory = spritesFactory;
             _itemsDestroyable = itemsDestroyable;
+            _itemViewDamageService = itemViewDamageService;
         }
 
         public Grid<GridItemData> LevelGridItemData => _levelGridItemData;
@@ -72,7 +75,7 @@ namespace App.Scripts.Scenes.GameScene.Levels.View
                 return;
             }
             
-            TryAddOnTopSprite(entityView, entityStage, itemData);
+            _itemViewDamageService.TryAddOnTopSprite(entityView, entityStage, itemData);
         }
 
         private bool ReturnIfCurrentHealthIsEqualsOrLessZero(IEntityView entityView, GridItemData itemData)
@@ -86,20 +89,7 @@ namespace App.Scripts.Scenes.GameScene.Levels.View
             return false;
         }
 
-        private void TryAddOnTopSprite(IEntityView entityView, EntityStage entityStage, GridItemData itemData)
-        {
-            HealthSpriteData healthSpriteData = entityStage.AddSpritesOnMainByHp.FirstOrDefault(x => x.Healthes == itemData.CurrentHealth);
-
-            if (healthSpriteData is not null)
-            {
-                OnTopSprites topSprite = _spritesFactory.Create(entityView);
-                topSprite.SetSprite(healthSpriteData.Sprites.GetRandomValue());
-
-                itemData.Sprites.Add(topSprite);
-            }
-        }
-
-        private EntityStage GetEntityStage(IEntityView entityView)
+        public EntityStage GetEntityStage(IEntityView entityView)
         {
             string index = GetIndexByEntityView(entityView);
 

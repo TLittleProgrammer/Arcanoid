@@ -5,6 +5,7 @@ using App.Scripts.General.UserData.Energy;
 using App.Scripts.Scenes.GameScene.Ball;
 using App.Scripts.Scenes.GameScene.Entities;
 using App.Scripts.Scenes.GameScene.LevelProgress;
+using App.Scripts.Scenes.GameScene.Levels.AssetManagement;
 using App.Scripts.Scenes.GameScene.Levels.Data;
 using App.Scripts.Scenes.GameScene.Levels.Load;
 using App.Scripts.Scenes.GameScene.Levels.View;
@@ -24,19 +25,22 @@ namespace App.Scripts.Scenes.GameScene.Levels.ItemsDestroyer.DestroyServices
         private readonly ILevelProgressService _levelProgressService;
         private readonly IPoolContainer _poolContainer;
         private readonly IBallSpeedUpdater _ballSpeedUpdater;
+        private readonly IItemViewDamageService _itemViewDamageService;
 
         public BombDestroyService(
             ILevelViewUpdater levelViewUpdater,
             ILevelLoader levelLoader,
             ILevelProgressService levelProgressService,
             IPoolContainer poolContainer,
-            IBallSpeedUpdater ballSpeedUpdater)
+            IBallSpeedUpdater ballSpeedUpdater,
+            IItemViewDamageService itemViewDamageService)
         {
             _levelViewUpdater = levelViewUpdater;
             _levelLoader = levelLoader;
             _levelProgressService = levelProgressService;
             _poolContainer = poolContainer;
             _ballSpeedUpdater = ballSpeedUpdater;
+            _itemViewDamageService = itemViewDamageService;
         }
         
         public async void Destroy(GridItemData gridItemData, IEntityView iEntityView)
@@ -63,8 +67,8 @@ namespace App.Scripts.Scenes.GameScene.Levels.ItemsDestroyer.DestroyServices
                     Direction.DownRight
                 });
 
-            List<EntityData> immediateDatas = GetEntityDatas(simpleCorrectGridPosition);
-            List<EntityData> diagonalsDatas = GetEntityDatas(diagonalsCorrectGridPosition);
+            List<EntityData> immediateDatas = GetEntityDatas(simpleCorrectGridPosition, gridItemData.Damage);
+            List<EntityData> diagonalsDatas = GetEntityDatas(diagonalsCorrectGridPosition, gridItemData.Damage);
 
             await AnimateAll(entityView, immediateDatas, diagonalsDatas);
 
@@ -128,7 +132,7 @@ namespace App.Scripts.Scenes.GameScene.Levels.ItemsDestroyer.DestroyServices
             }
         }
 
-        private List<EntityData> GetEntityDatas(int2[] simpleCorrectGridPosition)
+        private List<EntityData> GetEntityDatas(int2[] simpleCorrectGridPosition, int damage)
         {
             List<EntityData> result = new();
             
@@ -137,13 +141,27 @@ namespace App.Scripts.Scenes.GameScene.Levels.ItemsDestroyer.DestroyServices
                 GridItemData gridItemData = _levelViewUpdater.LevelGridItemData[new Vector2Int(position.x, position.y)];
                 IEntityView entityView = _levelLoader.Entities.First(x => x.GridPositionX == position.x && x.GridPositionY == position.y);
 
-                entityView.BoxCollider2D.enabled = false;
                 
-                result.Add(new()
+                if (gridItemData.CurrentHealth - damage <= 0)
                 {
-                    GridItemData = gridItemData,
-                    EntityView = entityView
-                });
+                    entityView.BoxCollider2D.enabled = false;
+                    result.Add(new()
+                    {
+                        GridItemData = gridItemData,
+                        EntityView = entityView
+                    });
+                    continue;
+                }
+
+                int currentHealth = gridItemData.CurrentHealth;
+
+                gridItemData.CurrentHealth -= damage;
+                EntityStage entityStage = _levelViewUpdater.GetEntityStage(entityView);
+
+                for (int i = currentHealth; i >= gridItemData.CurrentHealth; i--)
+                {
+                    _itemViewDamageService.TryAddOnTopSprite(entityView, entityStage, gridItemData, i);
+                }
             }
 
             return result;
