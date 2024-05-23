@@ -83,7 +83,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             BindBallMovers();
             
             Container.Bind<IBallMovementService>().To<BallMovementService>().AsSingle().WithArguments(_ballView);
-            Container.Bind<IBallCollisionService>().To<BallCollisionService>().AsSingle().WithArguments(_ballView, _playerShape).NonLazy();
+            Container.Bind<IBallCollisionService>().To<BallCollisionService>().AsSingle().WithArguments(_ballView).NonLazy();
             Container.Bind<IWallLoader>().To<WallLoader>().AsSingle().WithArguments(_wallPrefab);
             Container.Bind<IRestartService>().To<RestartService>().AsSingle();
             Container.Bind<IItemViewDamageService>().To<ItemViewDamageService>().AsSingle();

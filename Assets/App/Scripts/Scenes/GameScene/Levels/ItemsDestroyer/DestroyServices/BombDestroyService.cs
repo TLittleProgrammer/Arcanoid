@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using App.Scripts.General.UserData.Energy;
 using App.Scripts.Scenes.GameScene.Ball;
+using App.Scripts.Scenes.GameScene.Effects;
 using App.Scripts.Scenes.GameScene.Entities;
 using App.Scripts.Scenes.GameScene.LevelProgress;
 using App.Scripts.Scenes.GameScene.Levels.AssetManagement;
@@ -26,14 +27,16 @@ namespace App.Scripts.Scenes.GameScene.Levels.ItemsDestroyer.DestroyServices
         private readonly IPoolContainer _poolContainer;
         private readonly IBallSpeedUpdater _ballSpeedUpdater;
         private readonly IItemViewDamageService _itemViewDamageService;
-
+        private readonly CircleEffect.Factory _circleEffectFactory;
+        
         public BombDestroyService(
             ILevelViewUpdater levelViewUpdater,
             ILevelLoader levelLoader,
             ILevelProgressService levelProgressService,
             IPoolContainer poolContainer,
             IBallSpeedUpdater ballSpeedUpdater,
-            IItemViewDamageService itemViewDamageService)
+            IItemViewDamageService itemViewDamageService,
+            CircleEffect.Factory circleEffectFactory)
         {
             _levelViewUpdater = levelViewUpdater;
             _levelLoader = levelLoader;
@@ -41,6 +44,7 @@ namespace App.Scripts.Scenes.GameScene.Levels.ItemsDestroyer.DestroyServices
             _poolContainer = poolContainer;
             _ballSpeedUpdater = ballSpeedUpdater;
             _itemViewDamageService = itemViewDamageService;
+            _circleEffectFactory = circleEffectFactory;
         }
         
         public async void Destroy(GridItemData gridItemData, IEntityView iEntityView)
@@ -162,6 +166,9 @@ namespace App.Scripts.Scenes.GameScene.Levels.ItemsDestroyer.DestroyServices
                 {
                     _itemViewDamageService.TryAddOnTopSprite(entityView, entityStage, gridItemData, i);
                 }
+
+                CircleEffect circleEffect = _circleEffectFactory.Create(entityView as EntityView);
+                circleEffect.PlayEffect();
             }
 
             return result;

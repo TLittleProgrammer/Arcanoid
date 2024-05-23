@@ -11,7 +11,6 @@ namespace App.Scripts.Scenes.GameScene.Ball.Collision
     public class BallCollisionService : IBallCollisionService
     {
         private readonly IRigidablebody _ball;
-        private readonly IPositionable _playerView;
         private readonly IHealthContainer _healthContainer;
         private readonly CircleEffect.Factory _circleEffectFactory;
         private readonly ILevelViewUpdater _levelViewUpdater;
@@ -20,14 +19,12 @@ namespace App.Scripts.Scenes.GameScene.Ball.Collision
 
         public BallCollisionService(
             IRigidablebody ball,
-            IPositionable playerView,
             IHealthContainer healthContainer,
             CircleEffect.Factory circleEffectFactory,
             ILevelViewUpdater levelViewUpdater,
             IScreenInfoProvider screenInfoProvider)
         {
             _ball = ball;
-            _playerView = playerView;
             _healthContainer = healthContainer;
             _circleEffectFactory = circleEffectFactory;
             _levelViewUpdater = levelViewUpdater;
