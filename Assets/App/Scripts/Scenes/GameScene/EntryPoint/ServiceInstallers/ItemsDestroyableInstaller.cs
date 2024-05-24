@@ -14,6 +14,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
             Container.Bind<IAddVisualDamage>().To<AddVisualDamageService>().AsSingle();
             Container.Bind<SimpleDestroyService>().AsSingle();
             Container.BindInterfacesAndSelfTo<BoostMoveService>().AsSingle();
+            Container.BindInterfacesAndSelfTo<BoostPositionCheckerService>().AsSingle();
             
             Container.Bind<BombDestroyService>().AsSingle();
             Container.Bind<BallSpeedBoostsDestroyer>().AsSingle();
