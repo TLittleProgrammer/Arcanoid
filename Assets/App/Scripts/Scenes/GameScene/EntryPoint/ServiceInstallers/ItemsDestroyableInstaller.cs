@@ -1,4 +1,5 @@
-﻿using App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer;
+﻿using App.Scripts.Scenes.GameScene.Features.Boosts;
+using App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer;
 using App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroyServices;
 using App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.Helpers;
 using Zenject;
@@ -12,6 +13,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
             Container.Bind<IAnimatedDestroyService>().To<AnimatedDestroyService>().AsSingle();
             Container.Bind<IAddVisualDamage>().To<AddVisualDamageService>().AsSingle();
             Container.Bind<SimpleDestroyService>().AsSingle();
+            Container.BindInterfacesAndSelfTo<BoostMoveService>().AsSingle();
             
             Container.Bind<BombDestroyService>().AsSingle();
             Container.Bind<BallSpeedBoostsDestroyer>().AsSingle();
