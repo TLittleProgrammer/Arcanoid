@@ -121,7 +121,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
         private LevelData ChooseLevelData()
         {
             var data = _levelPackInfoService.GetData();
-            if (data.NeedLoadLevel)
+            if (data is not null && data.NeedLoadLevel)
             {
                 return JsonConvert.DeserializeObject<LevelData>(data.LevelPack.Levels[data.LevelIndex].text);
             }

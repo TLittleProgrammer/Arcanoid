@@ -41,7 +41,7 @@ namespace App.Scripts.Scenes.GameScene.Features.LevelProgress
         public void Initialize()
         {
             var data = _levelPackInfoService.GetData();
-            if (data.NeedLoadLevel)
+            if (data is not null && data.NeedLoadLevel)
             {
                 _levelPackBackgroundView.Background.sprite = data.LevelPack.GalacticBackground;
 
