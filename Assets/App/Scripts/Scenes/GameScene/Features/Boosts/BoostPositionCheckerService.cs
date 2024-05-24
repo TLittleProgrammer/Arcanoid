@@ -42,5 +42,10 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts
         {
             _views.Add(view);
         }
+        
+        public void Remove(BoostView view)
+        {
+            _views.Remove(view);
+        }
     }
 }

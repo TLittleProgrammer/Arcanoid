@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c306e0bd4a534ad48adcc6d80d356421, type: 3}
   m_Name: BoostsSettings
   m_EditorClassIdentifier: 
-  Duration: 2
+  BallSpeedDuration: 2
   SlowDownPercentFromAll: 0.75
   AcceleratePercentFromAll: 1.25

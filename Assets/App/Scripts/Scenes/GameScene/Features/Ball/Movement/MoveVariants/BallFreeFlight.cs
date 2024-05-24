@@ -62,6 +62,12 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Movement.MoveVariants
             Velocity = Velocity.normalized * _speed;
         }
 
+        public void SetSpeed(float targetValue)
+        {
+            _speed = targetValue;
+            Velocity = Velocity.normalized * _speed;
+        }
+
         public void Restart()
         {
             Velocity = Vector2.zero;

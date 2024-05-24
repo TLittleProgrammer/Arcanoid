@@ -20,6 +20,7 @@ using App.Scripts.Scenes.GameScene.Features.LevelProgress;
 using App.Scripts.Scenes.GameScene.Features.Levels;
 using App.Scripts.Scenes.GameScene.Features.LevelView;
 using App.Scripts.Scenes.GameScene.Features.PlayerShape;
+using App.Scripts.Scenes.GameScene.Features.PlayerShape.Collisions;
 using App.Scripts.Scenes.GameScene.Features.PlayerShape.Move;
 using App.Scripts.Scenes.GameScene.Features.Pools;
 using App.Scripts.Scenes.GameScene.Features.PositionChecker;
@@ -77,6 +78,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.Bind<IGridPositionResolver>().To<GridPositionResolver>().AsSingle().WithArguments(_header);
             Container.Bind<IBallSpeedUpdater>().To<BallSpeedUpdater>().AsSingle();
             Container.Bind<IShapePositionChecker>().To<PlayerShapePositionChecker>().AsTransient().WithArguments(_playerShape);
+            Container.Bind<PlayerCollisionService>().AsSingle().WithArguments(_playerShape).NonLazy();
             
             BindPlayerMoving();
             BindHealthPointService();

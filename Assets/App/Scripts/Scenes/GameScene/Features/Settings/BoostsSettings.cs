@@ -7,7 +7,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Settings
     public class BoostsSettings : ScriptableObject
     {
         [BoxGroup("Ball speed")]
-        public float Duration;
+        public float BallSpeedDuration;
         [BoxGroup("Ball speed")]
         public float SlowDownPercentFromAll;
         [BoxGroup("Ball speed")]

@@ -15,7 +15,7 @@ MonoBehaviour:
   BoostTypeId: 2
   Damage: 0
   Sprite: {fileID: 21300000, guid: d7b525ac21070b34ea05ae83b41ec312, type: 3}
-  MaxHealthCounter: 3
+  MaxHealthCounter: 1
   ICanGetDamage: 1
   AddSpritesOnMainByHp:
   - Healthes: 1
