@@ -6,12 +6,12 @@ using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.LevelProgress;
 using App.Scripts.Scenes.GameScene.Features.Levels.AssetManagement;
 using App.Scripts.Scenes.GameScene.Features.Levels.Data;
+using App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.Helpers;
 using App.Scripts.Scenes.GameScene.Features.Levels.Load;
 using App.Scripts.Scenes.GameScene.Features.Levels.View;
 using App.Scripts.Scenes.GameScene.Features.Pools;
 using App.Scripts.Scenes.GameScene.Features.TopSprites;
 using Cysharp.Threading.Tasks;
-using DG.Tweening;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -21,28 +21,22 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroySer
     {
         private readonly ILevelViewUpdater _levelViewUpdater;
         private readonly ILevelLoader _levelLoader;
-        private readonly ILevelProgressService _levelProgressService;
-        private readonly IPoolContainer _poolContainer;
-        private readonly IBallSpeedUpdater _ballSpeedUpdater;
-        private readonly IItemViewService _itemViewService;
-        private readonly CircleEffect.Factory _circleEffectFactory;
-        
+        private readonly IAnimatedDestroyService _animatedDestroyService;
+        private readonly IAddVisualDamage _addVisualDamage;
+        private readonly SimpleDestroyService _simpleDestroyService;
+
         public BombDestroyService(
             ILevelViewUpdater levelViewUpdater,
             ILevelLoader levelLoader,
-            ILevelProgressService levelProgressService,
-            IPoolContainer poolContainer,
-            IBallSpeedUpdater ballSpeedUpdater,
-            IItemViewService itemViewService,
-            CircleEffect.Factory circleEffectFactory)
+            IAnimatedDestroyService animatedDestroyService,
+            IAddVisualDamage addVisualDamage,
+            SimpleDestroyService simpleDestroyService)
         {
             _levelViewUpdater = levelViewUpdater;
             _levelLoader = levelLoader;
-            _levelProgressService = levelProgressService;
-            _poolContainer = poolContainer;
-            _ballSpeedUpdater = ballSpeedUpdater;
-            _itemViewService = itemViewService;
-            _circleEffectFactory = circleEffectFactory;
+            _animatedDestroyService = animatedDestroyService;
+            _addVisualDamage = addVisualDamage;
+            _simpleDestroyService = simpleDestroyService;
         }
         
         public async void Destroy(GridItemData gridItemData, IEntityView iEntityView)
@@ -84,7 +78,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroySer
 
         private async UniTask AnimateAll(EntityView bomb, List<EntityData> immediateEntityDatas, List<EntityData> diagonalsEntityDatas)
         {
-            await AnimateDataList(new List<EntityData>()
+            await _animatedDestroyService.Animate(new List<EntityData>()
             {
                 new()
                 {
@@ -92,20 +86,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroySer
                     EntityView = bomb
                 }
             });
-            await AnimateDataList(immediateEntityDatas);
-            await AnimateDataList(diagonalsEntityDatas);
-        }
-
-        private async UniTask AnimateDataList(List<EntityData> immediateEntityDatas)
-        {
-            foreach (EntityData data in immediateEntityDatas)
-            {
-                Transform transform = data.EntityView.GameObject.transform;
-
-                transform.DOScale(Vector3.zero, 0.35f).SetEase(Ease.InBack).ToUniTask().Forget();
-            }
-            
-            await UniTask.Delay(350);
+            await _animatedDestroyService.Animate(immediateEntityDatas);
+            await _animatedDestroyService.Animate(diagonalsEntityDatas);
         }
 
         private void DestroyAllEntites(EntityData bomb, List<EntityData> immediateDatas, List<EntityData> diagonalDatas)
@@ -122,15 +104,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroySer
         {
             foreach (EntityData entityData in immediateDatas)
             {
-                _levelProgressService.TakeOneStep();
-
-                _poolContainer.RemoveItem(PoolTypeId.EntityView, entityData.EntityView as EntityView);
-                foreach (OnTopSprites sprite in entityData.GridItemData.Sprites)
-                {
-                    _poolContainer.RemoveItem(PoolTypeId.OnTopSprite, sprite);
-                }
-
-                _ballSpeedUpdater.UpdateSpeed();
+                _simpleDestroyService.Destroy(entityData.GridItemData, entityData.EntityView);
             }
         }
 
@@ -142,7 +116,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroySer
             {
                 GridItemData gridItemData = _levelViewUpdater.LevelGridItemData[new Vector2Int(position.x, position.y)];
                 IEntityView entityView = _levelLoader.Entities.First(x => x.GridPositionX == position.x && x.GridPositionY == position.y);
-
                 
                 if (gridItemData.CurrentHealth - damage <= 0)
                 {
@@ -155,18 +128,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroySer
                     continue;
                 }
 
-                int currentHealth = gridItemData.CurrentHealth;
-
-                gridItemData.CurrentHealth -= damage;
-                EntityStage entityStage = _levelViewUpdater.GetEntityStage(entityView);
-
-                for (int i = currentHealth; i >= gridItemData.CurrentHealth; i--)
-                {
-                    _itemViewService.TryAddOnTopSprite(entityView, entityStage, gridItemData, i);
-                }
-
-                CircleEffect circleEffect = _circleEffectFactory.Create(entityView as EntityView);
-                circleEffect.PlayEffect();
+                _addVisualDamage.AddVisualDamage(damage, gridItemData, entityView);
             }
 
             return result;

@@ -9,14 +9,17 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
     {
         private readonly IItemsDestroyable _itemsDestroyable;
         private readonly BombDestroyService _bombDestroyService;
+        private readonly BallSpeedBoostsDestroyer _ballSpeedBoostsDestroyer;
 
         public ItemsDestroyerInitializer(
             IItemsDestroyable itemsDestroyable,
-            BombDestroyService bombDestroyService
+            BombDestroyService bombDestroyService,
+            BallSpeedBoostsDestroyer ballSpeedBoostsDestroyer
             )
         {
             _itemsDestroyable = itemsDestroyable;
             _bombDestroyService = bombDestroyService;
+            _ballSpeedBoostsDestroyer = ballSpeedBoostsDestroyer;
         }
         
         public void Initialize()
@@ -27,6 +30,16 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
                 {
                     BoostTypeId = BoostTypeId.Bomb,
                     BlockDestroyService = _bombDestroyService
+                },
+                new DestroyServiceData()
+                {
+                    BoostTypeId = BoostTypeId.BallAcceleration,
+                    BlockDestroyService = _ballSpeedBoostsDestroyer
+                },
+                new DestroyServiceData()
+                {
+                    BoostTypeId = BoostTypeId.BallSlowdown,
+                    BlockDestroyService = _ballSpeedBoostsDestroyer
                 }
             });
         }
