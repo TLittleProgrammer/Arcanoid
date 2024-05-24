@@ -1,4 +1,6 @@
-﻿using App.Scripts.External.Grid;
+﻿using System.Collections.Generic;
+using System.Linq;
+using App.Scripts.External.Grid;
 using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.Levels.AssetManagement;
 using App.Scripts.Scenes.GameScene.Features.Levels.Data;
@@ -13,7 +15,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.View
         private readonly EntityProvider _entityProvider;
         private readonly OnTopSprites.Factory _spritesFactory;
         private readonly IItemsDestroyable _itemsDestroyable;
-        private readonly IItemViewDamageService _itemViewDamageService;
+        private readonly IItemViewService _itemViewService;
 
         private Grid<int> _levelGrid;
         private Grid<GridItemData> _levelGridItemData = new(Vector2Int.zero);
@@ -22,24 +24,24 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.View
             EntityProvider entityProvider,
             OnTopSprites.Factory spritesFactory,
             IItemsDestroyable itemsDestroyable,
-            IItemViewDamageService itemViewDamageService)
+            IItemViewService itemViewService)
         {
             _entityProvider = entityProvider;
             _spritesFactory = spritesFactory;
             _itemsDestroyable = itemsDestroyable;
-            _itemViewDamageService = itemViewDamageService;
+            _itemViewService = itemViewService;
         }
 
         public Grid<GridItemData> LevelGridItemData => _levelGridItemData;
 
-        public void SetGrid(Grid<int> grid)
+        public void SetGrid(Grid<int> grid, List<IEntityView> entityViews)
         {
             _levelGrid = grid;
 
-            InitializeGridItemData();
+            InitializeGridItemData(entityViews);
         }
 
-        private void InitializeGridItemData()
+        private void InitializeGridItemData(List<IEntityView> entityViews)
         {
             _levelGridItemData.UpdateMatrix(_levelGrid.Size);
 
@@ -54,6 +56,14 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.View
                     _levelGridItemData[i, j].CurrentHealth = entityStage.MaxHealthCounter;
                     _levelGridItemData[i, j].BoostTypeId   = entityStage.BoostTypeId;
                     _levelGridItemData[i, j].Damage        = entityStage.Damage;
+
+                    IEntityView entityView = entityViews.First(x => x.GridPositionX == i && x.GridPositionY == j);
+                    
+                    if (entityView.BoostTypeId is not BoostTypeId.Bomb &&
+                        entityView.BoostTypeId is not  BoostTypeId.None)
+                    {
+                        _itemViewService.AddBoostSprite(entityView, _levelGridItemData[i, j], entityView.BoostTypeId);
+                    }
                 }
             }
         }
@@ -73,7 +83,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.View
                 return;
             }
             
-            _itemViewDamageService.TryAddOnTopSprite(entityView, entityStage, itemData);
+            _itemViewService.TryAddOnTopSprite(entityView, entityStage, itemData);
         }
 
         private bool ReturnIfCurrentHealthIsEqualsOrLessZero(IEntityView entityView, GridItemData itemData)

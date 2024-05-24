@@ -16,18 +16,19 @@ namespace App.Scripts.Scenes.GameScene.Features.Factories.Entity
             _poolContainer = poolContainer;
         }
 
-        public IEntityView Create(string key)
+        public IEntityView Create(string targetType)
         {
-            if (!_entityProvider.EntityStages.ContainsKey(key))
+            if (!_entityProvider.EntityStages.ContainsKey(targetType))
             {
                 return null;
             }
 
-            EntityStage entityStage = _entityProvider.EntityStages[key];
+            EntityStage entityStage = _entityProvider.EntityStages[targetType];
             EntityView entityView   = _poolContainer.GetItem<EntityView>(PoolTypeId.EntityView);
 
             entityView.MainSprite   = entityStage.Sprite;
-            
+            entityView.BoostTypeId = entityStage.BoostTypeId;
+
             return entityView;
         }
     }

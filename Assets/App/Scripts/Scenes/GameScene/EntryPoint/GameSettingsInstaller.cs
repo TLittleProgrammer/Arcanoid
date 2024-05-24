@@ -16,6 +16,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
         public StopGameSettings StopGameSettings;
         public WinContinueButtonAnimationSettings WinContinueButtonAnimationSettings;
         public BoxCollidersAroundScreenSettings BoxCollidersAroundScreenSettings;
+        public BoostViewProvider BoostViewProvider;
 
         public override void InstallBindings()
         {
@@ -27,6 +28,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.Bind<StopGameSettings>().FromInstance(StopGameSettings).IfNotBound();
             Container.Bind<WinContinueButtonAnimationSettings>().FromInstance(WinContinueButtonAnimationSettings).IfNotBound();
             Container.Bind<BoxCollidersAroundScreenSettings>().FromInstance(BoxCollidersAroundScreenSettings).IfNotBound();
+            Container.Bind<BoostViewProvider>().FromInstance(BoostViewProvider).IfNotBound();
         }
     }
 }

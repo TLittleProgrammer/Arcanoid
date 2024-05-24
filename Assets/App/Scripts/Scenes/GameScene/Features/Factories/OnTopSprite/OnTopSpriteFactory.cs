@@ -15,12 +15,12 @@ namespace App.Scripts.Scenes.GameScene.Features.Factories.OnTopSprite
             _poolContainer = poolContainer;
         }
         
-        public OnTopSprites Create(IEntityView entityView)
+        public OnTopSprites Create(IEntityView targetType)
         {
             OnTopSprites sprite = _poolContainer.GetItem<OnTopSprites>(PoolTypeId.OnTopSprite);
 
             Transform spriteTransform     = sprite.transform;
-            spriteTransform.parent        = entityView.GameObject.transform;
+            spriteTransform.parent        = targetType.GameObject.transform;
             spriteTransform.localPosition = Vector3.zero;
             spriteTransform.localScale    = Vector3.one;
 

@@ -5,5 +5,7 @@
         None = 0,
         
         Bomb = 1,
+        BallAcceleration = 2,
+        BallSlowdown     = 3,
     }
 }

@@ -9,6 +9,7 @@ using App.Scripts.Scenes.GameScene.Features.Ball;
 using App.Scripts.Scenes.GameScene.Features.Ball.Collision;
 using App.Scripts.Scenes.GameScene.Features.Ball.Movement;
 using App.Scripts.Scenes.GameScene.Features.Ball.Movement.MoveVariants;
+using App.Scripts.Scenes.GameScene.Features.Boosts;
 using App.Scripts.Scenes.GameScene.Features.Camera;
 using App.Scripts.Scenes.GameScene.Features.Effects;
 using App.Scripts.Scenes.GameScene.Features.Entities;
@@ -85,7 +86,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.Bind<IBallCollisionService>().To<BallCollisionService>().AsSingle().WithArguments(_ballView).NonLazy();
             Container.Bind<IWallLoader>().To<WallLoader>().AsSingle().WithArguments(_wallPrefab);
             Container.Bind<IRestartService>().To<RestartService>().AsSingle();
-            Container.Bind<IItemViewDamageService>().To<ItemViewDamageService>().AsSingle();
+            Container.Bind<IItemViewService>().To<ItemViewService>().AsSingle();
             
             ItemsDestroyableInstaller.Install(Container);
             StateMachineInstaller.Install(Container, _gameLoopTickables, _projectStateMachine, _restartables, _levelPackInfoView, _restartablesForLoadNewLevel);
@@ -136,6 +137,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             BindPool<CircleEffect, IEffect<CircleEffect>.Pool>(PoolTypeId.CircleEffect);
             BindPool<HealthPointView, HealthPointView.Pool>(PoolTypeId.HealthPointView);
             BindPool<OnTopSprites, OnTopSprites.Pool>(PoolTypeId.OnTopSprite);
+            BindPool<BoostView, BoostView.Pool>(PoolTypeId.Boosts);
         }
 
         private void BindPool<TInstance, TPool>(PoolTypeId poolType) where TPool : IMemoryPool where TInstance : MonoBehaviour 

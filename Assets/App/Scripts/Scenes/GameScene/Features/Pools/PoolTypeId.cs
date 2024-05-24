@@ -6,5 +6,6 @@
         CircleEffect    = 1,
         HealthPointView = 2,
         OnTopSprite     = 3,
+        Boosts          = 4,
     }
 }

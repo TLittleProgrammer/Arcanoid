@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using App.Scripts.Scenes.GameScene.Features.Boosts;
 using App.Scripts.Scenes.GameScene.Features.Effects;
 using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.Healthes.View;
@@ -14,11 +15,13 @@ namespace App.Scripts.Scenes.GameScene.Features.Pools
         private readonly IEffect<CircleEffect>.Pool _circleEffectPool;
         private readonly HealthPointView.Pool _healthPointPool;
         private readonly OnTopSprites.Pool _onTopSpritesPool;
+        private readonly BoostView.Pool _boostsViewPool;
 
         private List<MonoBehaviour> _entitySpawned = new();
         private List<MonoBehaviour> _circleEffectSpawned = new();
         private List<MonoBehaviour> _healthPointSpawned = new();
         private List<MonoBehaviour> _onTopSpritesSpawned = new();
+        private List<MonoBehaviour> _boostsViewSpawned = new();
 
         private Dictionary<PoolTypeId, List<MonoBehaviour>> _spawnedItemDictionaryHelper;
 
@@ -26,11 +29,13 @@ namespace App.Scripts.Scenes.GameScene.Features.Pools
             EntityView.Pool entityViewPool,
             IEffect<CircleEffect>.Pool circleEffectPool,
             HealthPointView.Pool healthPointPool,
-            OnTopSprites.Pool onTopSpritesPool)
+            OnTopSprites.Pool onTopSpritesPool,
+            BoostView.Pool boostsViewPool)
         {
             _circleEffectPool = circleEffectPool;
             _healthPointPool = healthPointPool;
             _onTopSpritesPool = onTopSpritesPool;
+            _boostsViewPool = boostsViewPool;
             _entityViewPool = entityViewPool;
 
             _spawnedItemDictionaryHelper = new()
@@ -39,6 +44,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Pools
                 [PoolTypeId.CircleEffect]    = _circleEffectSpawned,
                 [PoolTypeId.HealthPointView] = _healthPointSpawned,
                 [PoolTypeId.OnTopSprite]     = _onTopSpritesSpawned,
+                [PoolTypeId.Boosts]          = _boostsViewSpawned,
             };
         }
 
@@ -50,6 +56,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Pools
                 PoolTypeId.CircleEffect    => _circleEffectPool.Spawn().GetComponent<TItem>(),
                 PoolTypeId.HealthPointView => _healthPointPool.Spawn().GetComponent<TItem>(),
                 PoolTypeId.OnTopSprite     => _onTopSpritesPool.Spawn().GetComponent<TItem>(),
+                PoolTypeId.Boosts          => _boostsViewPool.Spawn().GetComponent<TItem>(),
                 
                 _ => null
             };
@@ -67,6 +74,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Pools
                 case PoolTypeId.CircleEffect: RemoveItemFromPool(item, _circleEffectPool, _circleEffectSpawned); break;
                 case PoolTypeId.HealthPointView: RemoveItemFromPool(item, _healthPointPool, _healthPointSpawned); break;
                 case PoolTypeId.OnTopSprite: RemoveItemFromPool(item, _onTopSpritesPool, _onTopSpritesSpawned); break;
+                case PoolTypeId.Boosts: RemoveItemFromPool(item, _boostsViewPool, _boostsViewSpawned); break;
             }
         }
 
@@ -89,6 +97,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Pools
             Clear<CircleEffect>(_circleEffectSpawned, _circleEffectPool);
             Clear<HealthPointView>(_healthPointSpawned, _healthPointPool);
             Clear<OnTopSprites>(_onTopSpritesSpawned, _onTopSpritesPool);
+            Clear<BoostView>(_boostsViewSpawned, _boostsViewPool);
         }
 
         private void Clear<TView>(List<MonoBehaviour> spawned, IMemoryPool memoryPool) where TView : MonoBehaviour

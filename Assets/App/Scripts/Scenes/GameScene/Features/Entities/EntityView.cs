@@ -25,6 +25,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities
             set => _onTopSpriteRenderer.sprite = value;
         }
 
+        public BoostTypeId BoostTypeId { get; set; }
+
         public Vector3 Position
         {
             get => transform.position;

@@ -19,6 +19,14 @@
     "BombBlock":
     {
       "blockKey": "5"
+    },
+    "RedBlock_UpBallSpeed":
+    {
+      "blockKey": "6"
+    },
+    "RedBlock_LowBalSpeed":
+    {
+      "blockKey": "7"
     }
   }
 }

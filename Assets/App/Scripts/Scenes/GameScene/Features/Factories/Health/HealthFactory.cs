@@ -15,14 +15,14 @@ namespace App.Scripts.Scenes.GameScene.Features.Factories.Health
             _poolContainer = poolContainer;
         }
 
-        public IHealthPointView Create(ITransformable parent)
+        public IHealthPointView Create(ITransformable targetType)
         {
             HealthPointView healthView = _poolContainer.GetItem<HealthPointView>(PoolTypeId.HealthPointView);
 
             healthView.Image.fillAmount = 1f;
             
             Transform healthTransform = healthView.transform;
-            healthTransform.SetParent(parent.Transform, false);
+            healthTransform.SetParent(targetType.Transform, false);
             healthTransform.localScale = Vector3.one;
 
             return healthView;

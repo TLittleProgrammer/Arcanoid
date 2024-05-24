@@ -13,12 +13,12 @@ namespace App.Scripts.Scenes.GameScene.Features.Factories.CircleEffect
             _poolContainer = poolContainer;
         }
         
-        public Effects.CircleEffect Create(EntityView entityView)
+        public Effects.CircleEffect Create(EntityView targetType)
         {
             Effects.CircleEffect effect = _poolContainer.GetItem<Effects.CircleEffect>(PoolTypeId.CircleEffect);
 
-            effect.Position = entityView.Position;
-            effect.Scale    = entityView.Scale.x;
+            effect.Position = targetType.Position;
+            effect.Scale    = targetType.Scale.x;
             effect.ScaleForSubParticles = effect.Scale / 10f;
 
             return effect;

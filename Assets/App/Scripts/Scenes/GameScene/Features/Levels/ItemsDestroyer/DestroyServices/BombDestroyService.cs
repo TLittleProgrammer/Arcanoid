@@ -24,7 +24,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroySer
         private readonly ILevelProgressService _levelProgressService;
         private readonly IPoolContainer _poolContainer;
         private readonly IBallSpeedUpdater _ballSpeedUpdater;
-        private readonly IItemViewDamageService _itemViewDamageService;
+        private readonly IItemViewService _itemViewService;
         private readonly CircleEffect.Factory _circleEffectFactory;
         
         public BombDestroyService(
@@ -33,7 +33,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroySer
             ILevelProgressService levelProgressService,
             IPoolContainer poolContainer,
             IBallSpeedUpdater ballSpeedUpdater,
-            IItemViewDamageService itemViewDamageService,
+            IItemViewService itemViewService,
             CircleEffect.Factory circleEffectFactory)
         {
             _levelViewUpdater = levelViewUpdater;
@@ -41,7 +41,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroySer
             _levelProgressService = levelProgressService;
             _poolContainer = poolContainer;
             _ballSpeedUpdater = ballSpeedUpdater;
-            _itemViewDamageService = itemViewDamageService;
+            _itemViewService = itemViewService;
             _circleEffectFactory = circleEffectFactory;
         }
         
@@ -162,7 +162,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroySer
 
                 for (int i = currentHealth; i >= gridItemData.CurrentHealth; i--)
                 {
-                    _itemViewDamageService.TryAddOnTopSprite(entityView, entityStage, gridItemData, i);
+                    _itemViewService.TryAddOnTopSprite(entityView, entityStage, gridItemData, i);
                 }
 
                 CircleEffect circleEffect = _circleEffectFactory.Create(entityView as EntityView);

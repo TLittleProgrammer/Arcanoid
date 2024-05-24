@@ -9,31 +9,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a6fe43b9f2445b8bad8ae2173d97a57, type: 3}
-  m_Name: PoolProvider
+  m_Script: {fileID: 11500000, guid: 4ca1b62143c74f47b52d0c8d20f972ab, type: 3}
+  m_Name: BoostViewProvider
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
-    - {fileID: 11400000, guid: 87cea2c65db92f84288cb48247d4f798, type: 2}
-    - {fileID: 11400000, guid: 3ad073994522ad0419b255b28223d431, type: 2}
-    - {fileID: 11400000, guid: f67bec871f880e849aaeab6325296825, type: 2}
-    - {fileID: 11400000, guid: 66042d7864cd9e54e9c9729fe2ecb638, type: 2}
-    - {fileID: 11400000, guid: afa9bfb109b366d4b90b12fc64470915, type: 2}
+    - {fileID: 21300000, guid: 3a7378c469112054ca8f8656e4bb4014, type: 3}
+    - {fileID: 21300000, guid: 1e7152ee93e13d540bb28fa7313ef7d5, type: 3}
+    - {fileID: 21300000, guid: db2c046d2f371594aa92005092da0af3, type: 3}
+    - {fileID: 21300000, guid: dbbd762fb9f67674ba4b8de2f5562b64, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: Pools
+    - Name: Sprites
       Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[App.Scripts.Scenes.GameScene.Features.Pools.PoolTypeId,
-        Game],[App.Scripts.Scenes.GameScene.Features.Settings.PoolSettings, Game]],
-        mscorlib
+      Data: 0|System.Collections.Generic.Dictionary`2[[App.Scripts.Scenes.GameScene.Features.Entities.BoostTypeId,
+        Game],[UnityEngine.Sprite, UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[App.Scripts.Scenes.GameScene.Features.Pools.PoolTypeId,
+      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[App.Scripts.Scenes.GameScene.Features.Entities.BoostTypeId,
         Game]], mscorlib
     - Name: 
       Entry: 12
@@ -46,13 +44,13 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 5
+      Data: 2
     - Name: 
       Entry: 7
       Data: 
     - Name: $k
       Entry: 3
-      Data: 0
+      Data: 2
     - Name: $v
       Entry: 10
       Data: 0
@@ -64,13 +62,39 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 1
+      Data: 3
     - Name: $v
       Entry: 10
       Data: 1
     - Name: 
       Entry: 8
       Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: Icons
+      Entry: 7
+      Data: 2|System.Collections.Generic.Dictionary`2[[App.Scripts.Scenes.GameScene.Features.Entities.BoostTypeId,
+        Game],[UnityEngine.Sprite, UnityEngine.CoreModule]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 3|System.Collections.Generic.EnumEqualityComparer`1[[App.Scripts.Scenes.GameScene.Features.Entities.BoostTypeId,
+        Game]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 2
     - Name: 
       Entry: 7
       Data: 
@@ -92,18 +116,6 @@ MonoBehaviour:
     - Name: $v
       Entry: 10
       Data: 3
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 4
-    - Name: $v
-      Entry: 10
-      Data: 4
     - Name: 
       Entry: 8
       Data: 

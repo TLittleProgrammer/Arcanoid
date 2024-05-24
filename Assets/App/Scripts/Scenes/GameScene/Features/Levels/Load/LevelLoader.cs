@@ -3,6 +3,7 @@ using App.Scripts.External.Grid;
 using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.Grid;
 using App.Scripts.Scenes.GameScene.Features.Levels.View;
+using App.Scripts.Scenes.GameScene.Features.Settings;
 using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Levels.Load
@@ -12,7 +13,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.Load
         private readonly IGridPositionResolver _gridPositionResolver;
         private readonly IEntityView.Factory _entityFactory;
         private readonly ILevelViewUpdater _levelViewUpdater;
-        
+
         private LevelData _previousLevelData;
         private List<IEntityView> _entityViews;
         public List<IEntityView> Entities => _entityViews;
@@ -57,12 +58,13 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.Load
                     spawnedBlock.GridPositionX = j;
                     spawnedBlock.GridPositionY = i;
                     spawnedBlock.BoxCollider2D.enabled = true;
-                    
+
+
                     _entityViews.Add(spawnedBlock);
                 }
             }
 
-            _levelViewUpdater.SetGrid(levelGrid);
+            _levelViewUpdater.SetGrid(levelGrid, _entityViews);
         }
 
         public void Restart()
