@@ -1,10 +1,12 @@
-﻿using Sirenix.OdinInspector;
+﻿using System.Collections.Generic;
+using App.Scripts.Scenes.GameScene.Features.Entities;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Settings
 {
     [CreateAssetMenu(menuName = "Configs/Game/BoostsSettings", fileName = "BoostsSettings")]
-    public class BoostsSettings : ScriptableObject
+    public class BoostsSettings : SerializedScriptableObject
     {
         [BoxGroup("Ball speed")]
         public float BallSpeedDuration;
@@ -12,5 +14,13 @@ namespace App.Scripts.Scenes.GameScene.Features.Settings
         public float SlowDownPercentFromAll;
         [BoxGroup("Ball speed")]
         public float AcceleratePercentFromAll;
+        
+        [BoxGroup("Player Shape size")]
+        public float ShapeSizeDuration;
+        [BoxGroup("Player Shape size")]
+        public float AddPercent;
+        [BoxGroup("Player Shape size")]
+        public float MinusPercent;
+        public Dictionary<BoostTypeId, Sprite> PlayerShapeSprites;
     }
 }

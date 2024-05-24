@@ -53,26 +53,32 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts
 
         private void CheckBallSpeedBoost(BoostTypeId boostTypeId)
         {
-            if (boostTypeId is BoostTypeId.BallSlowdown)
+            BallSpeed(boostTypeId, BoostTypeId.BallAcceleration, BoostTypeId.BallSlowdown, _boostsSettings.BallSpeedDuration);
+            BallSpeed(boostTypeId, BoostTypeId.PlayerShapeAddSize, BoostTypeId.PlayerShapeMinusSize, _boostsSettings.ShapeSizeDuration);
+        }
+        
+        private void BallSpeed(BoostTypeId boostTypeId, BoostTypeId firstType, BoostTypeId secondType, float duration)
+        {
+            if (boostTypeId == firstType)
             {
-                if (_boosts.Count(x => x.BoostTypeId == BoostTypeId.BallAcceleration) != 0)
+                if (_boosts.Count(x => x.BoostTypeId == secondType) != 0)
                 {
-                    BoostData boostData = _boosts.First(x => x.BoostTypeId == BoostTypeId.BallAcceleration);
+                    BoostData boostData = _boosts.First(x => x.BoostTypeId == secondType);
                     _boosts.Remove(boostData);
                 }
 
-                _boosts.Add(new(BoostTypeId.BallSlowdown, _boostsSettings.BallSpeedDuration));
+                _boosts.Add(new(firstType, duration));
             }
 
-            if (boostTypeId is BoostTypeId.BallAcceleration)
+            if (boostTypeId == secondType)
             {
-                if (_boosts.Count(x => x.BoostTypeId == BoostTypeId.BallSlowdown) != 0)
+                if (_boosts.Count(x => x.BoostTypeId == firstType) != 0)
                 {
-                    BoostData boostData = _boosts.First(x => x.BoostTypeId == BoostTypeId.BallSlowdown);
+                    BoostData boostData = _boosts.First(x => x.BoostTypeId == firstType);
                     _boosts.Remove(boostData);
                 }
 
-                _boosts.Add(new(BoostTypeId.BallAcceleration, _boostsSettings.BallSpeedDuration));
+                _boosts.Add(new(secondType, duration));
             }
         }
 

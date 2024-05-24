@@ -2,6 +2,7 @@
 using App.Scripts.Scenes.GameScene.Features.Boosts.Interfaces;
 using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.Helpers;
+using App.Scripts.Scenes.GameScene.Features.PlayerShape;
 using App.Scripts.Scenes.GameScene.Features.Settings;
 using UnityEngine;
 
@@ -13,6 +14,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts
         private readonly IBoostContainer _boostContainer;
         private readonly IBallFreeFlightMover _ballMover;
         private readonly BoostsSettings _boostsSettings;
+        private readonly PlayerView _playerView;
 
         private float _initialBallSpeed;
 
@@ -20,12 +22,14 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts
             SimpleDestroyService simpleDestroyService,
             IBoostContainer boostContainer,
             IBallFreeFlightMover ballMover,
-            BoostsSettings boostsSettings)
+            BoostsSettings boostsSettings,
+            PlayerView playerView)
         {
             _simpleDestroyService = simpleDestroyService;
             _boostContainer = boostContainer;
             _ballMover = ballMover;
             _boostsSettings = boostsSettings;
+            _playerView = playerView;
 
             _boostContainer.BoostEnded += OnBoostEnded;
             _initialBallSpeed = ballMover.GeneralSpeed;
@@ -45,6 +49,11 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts
             {
                 _ballMover.SetSpeed(_initialBallSpeed);
             }
+            else if (boostId is BoostTypeId.PlayerShapeMinusSize or BoostTypeId.PlayerShapeAddSize)
+            {
+                _playerView.SpriteRenderer.sprite = _boostsSettings.PlayerShapeSprites[BoostTypeId.None];
+                _playerView.transform.localScale = Vector3.one;
+            }
         }
 
         private void UseBoost(BoostTypeId boostId)
@@ -56,6 +65,16 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts
             else if (boostId is BoostTypeId.BallSlowdown)
             {
                 _ballMover.SetSpeed(_initialBallSpeed * _boostsSettings.SlowDownPercentFromAll);
+            }
+            else if (boostId is BoostTypeId.PlayerShapeAddSize)
+            {
+                _playerView.transform.localScale = Vector3.one * _boostsSettings.AddPercent;
+                _playerView.SpriteRenderer.sprite = _boostsSettings.PlayerShapeSprites[BoostTypeId.PlayerShapeAddSize];
+            }
+            else if (boostId is BoostTypeId.PlayerShapeMinusSize)
+            {
+                _playerView.transform.localScale = Vector3.one * _boostsSettings.MinusPercent;
+                _playerView.SpriteRenderer.sprite = _boostsSettings.PlayerShapeSprites[BoostTypeId.PlayerShapeMinusSize];
             }
         }
     }

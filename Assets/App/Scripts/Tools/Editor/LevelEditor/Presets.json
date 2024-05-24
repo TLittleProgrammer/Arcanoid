@@ -27,6 +27,14 @@
     "RedBlock_LowBalSpeed":
     {
       "blockKey": "7"
+    },
+    "GreenBlock_MaxSize":
+    {
+      "blockKey": "8"
+    },
+    "GreenBlock_MinSize":
+    {
+      "blockKey": "9"
     }
   }
 }
