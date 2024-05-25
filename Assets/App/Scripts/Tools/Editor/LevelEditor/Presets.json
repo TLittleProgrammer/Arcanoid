@@ -51,6 +51,14 @@
     "RedBlock_MinusHealth":
     {
       "blockKey": "13"
+    },
+    "HorizontalBomb":
+    {
+      "blockKey": "14"
+    },
+    "VerticalBomb":
+    {
+      "blockKey": "15"
     }
   }
 }

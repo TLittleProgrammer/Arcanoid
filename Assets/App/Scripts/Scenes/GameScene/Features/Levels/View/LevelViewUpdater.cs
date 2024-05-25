@@ -60,7 +60,10 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.View
                     IEntityView entityView = entityViews.First(x => x.GridPositionX == i && x.GridPositionY == j);
                     
                     if (entityView.BoostTypeId is not BoostTypeId.Bomb &&
-                        entityView.BoostTypeId is not  BoostTypeId.None)
+                        entityView.BoostTypeId is not  BoostTypeId.None &&
+                        entityView.BoostTypeId is not  BoostTypeId.HorizontalBomb &&
+                        entityView.BoostTypeId is not  BoostTypeId.VerticalBomb
+                        )
                     {
                         _itemViewService.AddBoostSprite(entityView, _levelGridItemData[i, j], entityView.BoostTypeId);
                     }
