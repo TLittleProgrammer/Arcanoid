@@ -56,6 +56,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.View
                     _levelGridItemData[i, j].CurrentHealth = entityStage.MaxHealthCounter;
                     _levelGridItemData[i, j].BoostTypeId   = entityStage.BoostTypeId;
                     _levelGridItemData[i, j].Damage        = entityStage.Damage;
+                    _levelGridItemData[i, j].CanGetDamage  = entityStage.ICanGetDamage;
 
                     IEntityView entityView = entityViews.First(x => x.GridPositionX == i && x.GridPositionY == j);
                     

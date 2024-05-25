@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e8708079ad64275a5e6a4a88f2c2b6c, type: 3}
   m_Name: GreenBlock
   m_EditorClassIdentifier: 
-  EntityTypeId: 0
+  BoostTypeId: 0
+  Damage: 0
   Sprite: {fileID: 21300000, guid: a0a5a1449edfcc24484e9d990239890c, type: 3}
-  MaxHealthCounter: 4
+  MaxHealthCounter: 1
   ICanGetDamage: 1
   AddSpritesOnMainByHp:
   - Healthes: 1

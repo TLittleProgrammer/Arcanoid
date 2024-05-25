@@ -10,7 +10,8 @@
         "GameStateMachine",
         "UserData",
         "Initialization",
-        "UniTask"
+        "UniTask",
+        "UniTask.DOTween"
     ],
     "includePlatforms": [
         "Android",

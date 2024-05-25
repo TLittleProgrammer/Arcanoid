@@ -14,7 +14,6 @@ using App.Scripts.Scenes.MainMenuScene.Factories.Levels;
 using App.Scripts.Scenes.MainMenuScene.LevelPacks;
 using App.Scripts.Scenes.MainMenuScene.LevelPacks.MonoBehaviours;
 using App.Scripts.Scenes.MainMenuScene.LocaleView;
-using Sirenix.Serialization;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -31,6 +30,7 @@ namespace App.Scripts.Scenes.MainMenuScene.Installers
         [SerializeField] public Button BackButton;
         [SerializeField] public GameObject InitialScreen;
         [SerializeField] public GameObject LevelPacksScreen;
+        [SerializeField] public Image ScreenTransitionIamge;
 
         [Inject] private RootUIViewProvider _rootUIView;
         
@@ -53,7 +53,7 @@ namespace App.Scripts.Scenes.MainMenuScene.Installers
             Container
                 .BindInterfacesAndSelfTo<ActivateScreensService>()
                 .AsSingle()
-                .WithArguments(PlayButton, BackButton, InitialScreen, LevelPacksScreen);
+                .WithArguments(PlayButton, BackButton, InitialScreen, LevelPacksScreen, ScreenTransitionIamge);
             
             Container
                 .BindFactory<int, LevelPack, ILevelItemView, ILevelItemView.Factory>()

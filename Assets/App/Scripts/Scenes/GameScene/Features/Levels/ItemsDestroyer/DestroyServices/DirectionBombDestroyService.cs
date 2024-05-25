@@ -52,6 +52,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroySer
         {
             int maxSize = Math.Max(firstEntityDatas.Count, secondEntityDatas.Count);
 
+            currentBlock.GridItemData.CurrentHealth = -1;
+
             await _animatedDestroyService.Animate(new List<EntityData> { currentBlock });
             _simpleDestroyService.Destroy(currentBlock.GridItemData, currentBlock.EntityView);
             
@@ -80,6 +82,11 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroySer
                 GridItemData gridItemData = _levelViewUpdater.LevelGridItemData[new Vector2Int(position.x, position.y)];
                 IEntityView entityView = _levelLoader.Entities.First(x => x.GridPositionX == position.x && x.GridPositionY == position.y);
 
+                if (!entityView.BoxCollider2D.enabled)
+                {
+                    continue;
+                }
+                
                 entityView.BoxCollider2D.enabled = false;
                 result.Add(new()
                 {

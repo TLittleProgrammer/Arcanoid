@@ -17,7 +17,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.Helpers
             _boostContainer = boostContainer;
             _ballMover = ballMover;
             _boostsSettings = boostsSettings;
-            _initialBallSpeed = ballMover.GeneralSpeed;
 
             _boostContainer.BoostEnded += OnBoostEnded;
         }
@@ -26,11 +25,11 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.Helpers
         {
             if (boostTypeId is BoostTypeId.BallAcceleration)
             {
-                _ballMover.SetSpeed(_initialBallSpeed * _boostsSettings.AcceleratePercentFromAll);
+                _ballMover.SetSpeed(_ballMover.ConstantSpeed * _boostsSettings.AcceleratePercentFromAll);
             }
             else
             {
-                _ballMover.SetSpeed(_initialBallSpeed * _boostsSettings.SlowDownPercentFromAll);
+                _ballMover.SetSpeed(_ballMover.ConstantSpeed * _boostsSettings.SlowDownPercentFromAll);
             }
         }
 
@@ -38,7 +37,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.Helpers
         {
             if (boostType is BoostTypeId.BallAcceleration or BoostTypeId.BallSlowdown)
             {
-                _ballMover.SetSpeed(_initialBallSpeed);
+                _ballMover.SetSpeed(_ballMover.ConstantSpeed);
             }
         }
     }

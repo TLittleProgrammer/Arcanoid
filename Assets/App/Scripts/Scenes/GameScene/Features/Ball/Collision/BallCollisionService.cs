@@ -1,10 +1,12 @@
 ﻿using System;
+using App.Scripts.Scenes.GameScene.Features.Blocks;
 using App.Scripts.Scenes.GameScene.Features.Components;
 using App.Scripts.Scenes.GameScene.Features.Effects;
 using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.Healthes;
 using App.Scripts.Scenes.GameScene.Features.Levels.View;
 using App.Scripts.Scenes.GameScene.Features.ScreenInfo;
+using DG.Tweening;
 using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Ball.Collision
@@ -16,6 +18,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Collision
         private readonly CircleEffect.Factory _circleEffectFactory;
         private readonly ILevelViewUpdater _levelViewUpdater;
         private readonly IScreenInfoProvider _screenInfoProvider;
+        private readonly IBlockShakeService _blockShakeService;
         private readonly float _minBallYPosition;
 
         public BallCollisionService(
@@ -23,13 +26,15 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Collision
             IHealthContainer healthContainer,
             CircleEffect.Factory circleEffectFactory,
             ILevelViewUpdater levelViewUpdater,
-            IScreenInfoProvider screenInfoProvider)
+            IScreenInfoProvider screenInfoProvider,
+            IBlockShakeService blockShakeService)
         {
             _ball = ball;
             _healthContainer = healthContainer;
             _circleEffectFactory = circleEffectFactory;
             _levelViewUpdater = levelViewUpdater;
             _screenInfoProvider = screenInfoProvider;
+            _blockShakeService = blockShakeService;
 
             _minBallYPosition = ball.SpriteRenderer.bounds.size.y -
                                 _screenInfoProvider.HeightInWorld / 2f + 0.25f;
@@ -46,6 +51,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Collision
             else if (collider.TryGetComponent(out EntityView entityView))
             {
                 PlayEffects(entityView);
+
+                _blockShakeService.Shake(entityView);
 
                 _levelViewUpdater.UpdateVisual(entityView, 1);
             }

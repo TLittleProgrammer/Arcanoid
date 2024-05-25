@@ -40,6 +40,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
                 BuildDestroyDataService(BoostTypeId.AddHealth, _ballSpeedBoostsDestroyer),
                 BuildDestroyDataService(BoostTypeId.MinusHealth, _ballSpeedBoostsDestroyer),
                 BuildDestroyDataService(BoostTypeId.Fireball, _ballSpeedBoostsDestroyer),
+                BuildDestroyDataService(BoostTypeId.StickyPlatform, _ballSpeedBoostsDestroyer),
                 BuildDestroyDataService(BoostTypeId.HorizontalBomb, _directionBombDestroyService),
                 BuildDestroyDataService(BoostTypeId.VerticalBomb, _directionBombDestroyService),
             });

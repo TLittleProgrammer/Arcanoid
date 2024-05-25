@@ -10,7 +10,18 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.Data
     {
         public BoostTypeId BoostTypeId;
         public int Damage;
+        public bool CanGetDamage;
         public int CurrentHealth;
         public List<OnTopSprites> Sprites = new();
+
+        public GridItemData()
+        {
+            
+        }
+        
+        public GridItemData(int health)
+        {
+            CurrentHealth = health;
+        }
     }
 }
