@@ -3,6 +3,7 @@ using App.Scripts.Scenes.GameScene.Features.Boosts.Interfaces;
 using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.Helpers;
 using App.Scripts.Scenes.GameScene.Features.PlayerShape;
+using App.Scripts.Scenes.GameScene.Features.PositionChecker;
 using App.Scripts.Scenes.GameScene.Features.Settings;
 using UnityEngine;
 
@@ -15,6 +16,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts
         private readonly IBallFreeFlightMover _ballMover;
         private readonly BoostsSettings _boostsSettings;
         private readonly PlayerView _playerView;
+        private readonly IShapePositionChecker _shapePositionChecker;
 
         private float _initialBallSpeed;
 
@@ -23,13 +25,15 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts
             IBoostContainer boostContainer,
             IBallFreeFlightMover ballMover,
             BoostsSettings boostsSettings,
-            PlayerView playerView)
+            PlayerView playerView,
+            IShapePositionChecker shapePositionChecker)
         {
             _simpleDestroyService = simpleDestroyService;
             _boostContainer = boostContainer;
             _ballMover = ballMover;
             _boostsSettings = boostsSettings;
             _playerView = playerView;
+            _shapePositionChecker = shapePositionChecker;
 
             _boostContainer.BoostEnded += OnBoostEnded;
             _initialBallSpeed = ballMover.GeneralSpeed;
@@ -52,6 +56,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts
             else if (boostId is BoostTypeId.PlayerShapeMinusSize or BoostTypeId.PlayerShapeAddSize)
             {
                 _playerView.SpriteRenderer.sprite = _boostsSettings.PlayerShapeSprites[BoostTypeId.None];
+                
+                _shapePositionChecker.ChangeShapeScale(1f);
                 _playerView.transform.localScale = Vector3.one;
             }
         }
@@ -68,13 +74,17 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts
             }
             else if (boostId is BoostTypeId.PlayerShapeAddSize)
             {
-                _playerView.transform.localScale = Vector3.one * _boostsSettings.AddPercent;
                 _playerView.SpriteRenderer.sprite = _boostsSettings.PlayerShapeSprites[BoostTypeId.PlayerShapeAddSize];
+                
+                _shapePositionChecker.ChangeShapeScale(_boostsSettings.AddPercent);
+                _playerView.transform.localScale = Vector3.one * _boostsSettings.AddPercent;
             }
             else if (boostId is BoostTypeId.PlayerShapeMinusSize)
             {
-                _playerView.transform.localScale = Vector3.one * _boostsSettings.MinusPercent;
                 _playerView.SpriteRenderer.sprite = _boostsSettings.PlayerShapeSprites[BoostTypeId.PlayerShapeMinusSize];
+                
+                _shapePositionChecker.ChangeShapeScale(_boostsSettings.MinusPercent);
+                _playerView.transform.localScale = Vector3.one * _boostsSettings.MinusPercent;
             }
         }
     }

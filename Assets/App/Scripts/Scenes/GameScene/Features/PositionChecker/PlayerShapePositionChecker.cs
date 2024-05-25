@@ -6,20 +6,33 @@ namespace App.Scripts.Scenes.GameScene.Features.PositionChecker
 {
     public sealed class PlayerShapePositionChecker : IShapePositionChecker
     {
-        private readonly float _minXPosition;
-        private readonly float _maxXPosition;
+        private readonly ISpriteRenderable _spriteRenderable;
+        private readonly IScreenInfoProvider _screenInfoProvider;
+
+        private float _minXPosition;
+        private float _maxXPosition;
 
         public PlayerShapePositionChecker(ISpriteRenderable spriteRenderable, IScreenInfoProvider screenInfoProvider)
         {
-            float spriteSize = spriteRenderable.SpriteRenderer.bounds.size.x / 2f;
+            _spriteRenderable = spriteRenderable;
+            _screenInfoProvider = screenInfoProvider;
 
-            _minXPosition = -screenInfoProvider.WidthInWorld / 2f + spriteSize;
-            _maxXPosition = screenInfoProvider.WidthInWorld / 2f - spriteSize;
+            ChangeShapeScale(1f);
         }
-        
-        public bool CanChangePositionTo(Vector2 targetPosition)
+
+        public float MinX => _minXPosition;
+        public float MaxX => _maxXPosition;
+
+        public void ChangeShapeScale(float targetScale)
         {
-            if (targetPosition.x < _minXPosition || targetPosition.x > _maxXPosition)
+            var bounds = _spriteRenderable.SpriteRenderer.sprite.bounds;
+            _minXPosition = -_screenInfoProvider.WidthInWorld / 2f + bounds.size.x / 2f * targetScale;
+            _maxXPosition = _screenInfoProvider.WidthInWorld / 2f - bounds.size.x / 2f * targetScale;
+        }
+
+        public bool CanChangePositionTo(Vector2 to)
+        {
+            if (to.x < _minXPosition || to.x > _maxXPosition)
             {
                 return false;
             }

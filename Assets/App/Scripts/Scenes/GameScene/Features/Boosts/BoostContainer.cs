@@ -88,6 +88,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts
             {
                 BoostTypeId.BallAcceleration => _boostsSettings.BallSpeedDuration,
                 BoostTypeId.BallSlowdown => _boostsSettings.BallSpeedDuration,
+                BoostTypeId.PlayerShapeAddSize => _boostsSettings.ShapeSizeDuration,
+                BoostTypeId.PlayerShapeMinusSize => _boostsSettings.ShapeSizeDuration,
 
                 _ => 0f
             };

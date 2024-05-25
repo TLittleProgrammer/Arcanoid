@@ -50,6 +50,16 @@ namespace App.Scripts.Scenes.GameScene.Features.PlayerShape.Move
             {
                 _playerPositionable.Position = targetPosition;
             }
+            else
+            {
+                float targetXPosition = _playerPositionable.Position.x < 0f ? _positionChecker.MinX : _positionChecker.MaxX;
+                
+                _playerPositionable.Position = new Vector3(
+                    targetXPosition,
+                    _playerPositionable.Position.y,
+                    0f
+                );
+            }
         }
 
         private Vector2 CalculateTargetPosition()

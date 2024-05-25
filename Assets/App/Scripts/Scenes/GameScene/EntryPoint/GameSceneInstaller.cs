@@ -77,7 +77,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             
             Container.Bind<IGridPositionResolver>().To<GridPositionResolver>().AsSingle().WithArguments(_header);
             Container.Bind<IBallSpeedUpdater>().To<BallSpeedUpdater>().AsSingle();
-            Container.Bind<IShapePositionChecker>().To<PlayerShapePositionChecker>().AsTransient().WithArguments(_playerShape);
+            Container.Bind<IShapePositionChecker>().To<PlayerShapePositionChecker>().AsSingle().WithArguments(_playerShape);
             Container.Bind<PlayerCollisionService>().AsSingle().WithArguments(_playerShape).NonLazy();
             
             BindPlayerMoving();
