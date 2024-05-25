@@ -18,6 +18,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Movement.MoveVariants
 
         private Vector3 _previousVelocity;
         private float _speed;
+        private float _constantSpeed;
 
         public BallFreeFlight(BallView ballView, BallFlyingSettings settings, ITimeProvider timeProvider)
         {
@@ -30,6 +31,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Movement.MoveVariants
             _timeProvider.TimeScaleChanged += OnTimeScaleChanged;
 
             _speed = _settings.Speed;
+            _constantSpeed = _speed;
             _maxSecondAngle = (180f - _settings.MaxAngle);
             _minSecondAngle = (180f - _settings.MinAngle);
         }
@@ -50,10 +52,12 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Movement.MoveVariants
 
         public float VelocitySpeed => _ballRigidbody.Rigidbody2D.velocity.magnitude;
         public float GeneralSpeed => _speed;
+        public float ConstantSpeed => _constantSpeed;
 
         public void UpdateSpeed(float addValue)
         {
             _speed += addValue;
+            _constantSpeed += addValue;
 
             _ballRigidbody.Rigidbody2D.simulated = _speed != 0f;
 
