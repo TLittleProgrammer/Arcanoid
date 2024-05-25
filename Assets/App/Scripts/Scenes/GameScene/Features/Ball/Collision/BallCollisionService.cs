@@ -5,6 +5,7 @@ using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.Healthes;
 using App.Scripts.Scenes.GameScene.Features.Levels.View;
 using App.Scripts.Scenes.GameScene.Features.ScreenInfo;
+using DG.Tweening;
 using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Ball.Collision
@@ -46,6 +47,15 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Collision
             else if (collider.TryGetComponent(out EntityView entityView))
             {
                 PlayEffects(entityView);
+
+                Vector2 position = entityView.transform.position;
+                entityView
+                    .transform
+                    .DOShakePosition(1f, 0.075f)
+                    .OnComplete(() =>
+                    {
+                        entityView.transform.position = position;
+                    });
 
                 _levelViewUpdater.UpdateVisual(entityView, 1);
             }
