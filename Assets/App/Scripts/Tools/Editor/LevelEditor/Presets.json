@@ -59,6 +59,10 @@
     "VerticalBomb":
     {
       "blockKey": "15"
+    },
+    "Greenblock_FireBall":
+    {
+      "blockKey": "16"
     }
   }
 }

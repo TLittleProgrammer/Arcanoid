@@ -18,5 +18,7 @@
         
         HorizontalBomb   = 10,
         VerticalBomb     = 11,
+        
+        Fireball     = 12,
     }
 }

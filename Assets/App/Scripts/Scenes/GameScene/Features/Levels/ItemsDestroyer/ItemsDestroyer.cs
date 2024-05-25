@@ -32,6 +32,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer
 
         public async void Destroy(GridItemData gridItemData, IEntityView entityView)
         {
+            entityView.BoxCollider2D.enabled = false;
             if (_destroyServices.ContainsKey(gridItemData.BoostTypeId))
             {
                 _destroyServices[gridItemData.BoostTypeId].Destroy(gridItemData, entityView);

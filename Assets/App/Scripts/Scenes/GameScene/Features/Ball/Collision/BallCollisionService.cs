@@ -1,4 +1,5 @@
-﻿using App.Scripts.Scenes.GameScene.Features.Components;
+﻿using System;
+using App.Scripts.Scenes.GameScene.Features.Components;
 using App.Scripts.Scenes.GameScene.Features.Effects;
 using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.Healthes;
@@ -10,7 +11,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Collision
 {
     public class BallCollisionService : IBallCollisionService
     {
-        private readonly IRigidablebody _ball;
+        private readonly BallView _ball;
         private readonly IHealthContainer _healthContainer;
         private readonly CircleEffect.Factory _circleEffectFactory;
         private readonly ILevelViewUpdater _levelViewUpdater;
@@ -18,7 +19,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Collision
         private readonly float _minBallYPosition;
 
         public BallCollisionService(
-            IRigidablebody ball,
+            BallView ball,
             IHealthContainer healthContainer,
             CircleEffect.Factory circleEffectFactory,
             ILevelViewUpdater levelViewUpdater,
@@ -30,7 +31,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Collision
             _levelViewUpdater = levelViewUpdater;
             _screenInfoProvider = screenInfoProvider;
 
-            _minBallYPosition = (_ball as ISpriteRenderable).SpriteRenderer.bounds.size.y -
+            _minBallYPosition = ball.SpriteRenderer.bounds.size.y -
                                 _screenInfoProvider.HeightInWorld / 2f + 0.25f;
 
             _ball.Collidered += OnCollidered;
@@ -45,7 +46,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Collision
             else if (collider.TryGetComponent(out EntityView entityView))
             {
                 PlayEffects(entityView);
-                _levelViewUpdater.UpdateVisual(entityView);
+
+                _levelViewUpdater.UpdateVisual(entityView, 1);
             }
         }
 

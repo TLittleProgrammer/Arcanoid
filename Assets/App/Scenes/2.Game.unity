@@ -213,6 +213,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -1980280356, guid: 1a1d8ed8e06d91a4f97aa2521cf5f462, type: 3}
+    - target: {fileID: 1376574120769152760, guid: 47e573d43d2df6846b43223a3844087e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 5.623047
+      objectReference: {fileID: 0}
     - target: {fileID: 2311412409436705393, guid: 47e573d43d2df6846b43223a3844087e, type: 3}
       propertyPath: _localeKey
       value: Menu
@@ -637,7 +641,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _camera: {fileID: 519420031}
   _header: {fileID: 333490954}
-  _levelData: {fileID: 4900000, guid: e0a2a6237681a7b409658cb799f680db, type: 3}
+  _levelData: {fileID: 4900000, guid: 07d404e454d65f24091a9d8f723eb304, type: 3}
   _playerShape: {fileID: 206752683}
   _ballView: {fileID: 4526333472807322575}
   _levelPackInfoView: {fileID: 333490955}
@@ -873,23 +877,7 @@ PrefabInstance:
       value: BallView
       objectReference: {fileID: 0}
     - target: {fileID: 7073774114340189019, guid: da9f09be41c91414ba6532d0675dd16e, type: 3}
-      propertyPath: m_BodyType
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7073774114340189019, guid: da9f09be41c91414ba6532d0675dd16e, type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 6200000, guid: 8407c45b3aa89284a944e987bca8d034, type: 2}
-    - target: {fileID: 7073774114340189019, guid: da9f09be41c91414ba6532d0675dd16e, type: 3}
-      propertyPath: m_Constraints
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 7073774114340189019, guid: da9f09be41c91414ba6532d0675dd16e, type: 3}
-      propertyPath: m_Interpolate
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7073774114340189019, guid: da9f09be41c91414ba6532d0675dd16e, type: 3}
-      propertyPath: m_GravityScale
+      propertyPath: m_AngularDrag
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

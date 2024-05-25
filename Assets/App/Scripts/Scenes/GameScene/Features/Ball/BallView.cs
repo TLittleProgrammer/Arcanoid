@@ -8,6 +8,9 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball
     public class BallView : MonoBehaviour, IRigidablebody, ISpriteRenderable
     {
         public event Action<Collider2D> Collidered;
+
+        public GameObject RedBall;
+        public CircleCollider2D Collider2D;
         
         private SpriteRenderer _spriteRenderer;
         private Rigidbody2D _rigidbody2D;
