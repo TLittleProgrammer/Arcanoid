@@ -52,6 +52,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroySer
         {
             int maxSize = Math.Max(firstEntityDatas.Count, secondEntityDatas.Count);
 
+            currentBlock.GridItemData.CurrentHealth = -1;
+
             await _animatedDestroyService.Animate(new List<EntityData> { currentBlock });
             _simpleDestroyService.Destroy(currentBlock.GridItemData, currentBlock.EntityView);
             
