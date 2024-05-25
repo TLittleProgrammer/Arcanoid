@@ -61,5 +61,14 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Movement
         {
             _ballFreeFlightMover.UpdateSpeed(addValue);
         }
+
+        public void Sticky()
+        {
+            _ballFreeFlightMover.Restart();
+
+            _ballFollowMover = _ballFollowFollowMover;
+            _ballFollowMover.Restart();
+            _clickDetector.MouseUp += OnMouseUp;
+        }
     }
 }

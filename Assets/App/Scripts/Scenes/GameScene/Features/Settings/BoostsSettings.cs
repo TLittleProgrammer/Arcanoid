@@ -37,5 +37,9 @@ namespace App.Scripts.Scenes.GameScene.Features.Settings
         
         [BoxGroup("Fireeball")]
         public float FireballDuration;
+        
+        
+        [BoxGroup("Sticly")]
+        public float StickyDuration = 5f;
     }
 }

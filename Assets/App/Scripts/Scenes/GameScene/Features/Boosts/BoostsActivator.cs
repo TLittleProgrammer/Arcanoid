@@ -21,7 +21,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts
             PlayerShapeBoostSize playerShapeBoostSize,
             ShapeBoostSpeed shapeBoostSpeed,
             HealthAndDeathBoost healthAndDeathBoost,
-            FireballBoostActivator fireballBoostActivator)
+            FireballBoostActivator fireballBoostActivator,
+            StickyBoostActivator stickyBoostActivator)
         {
             _simpleDestroyService = simpleDestroyService;
             _boostContainer = boostContainer;
@@ -37,6 +38,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts
                 [BoostTypeId.AddHealth] = healthAndDeathBoost,
                 [BoostTypeId.MinusHealth] = healthAndDeathBoost,
                 [BoostTypeId.Fireball] = fireballBoostActivator,
+                [BoostTypeId.StickyPlatform] = stickyBoostActivator,
             };
         }
 

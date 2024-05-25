@@ -60,9 +60,13 @@
     {
       "blockKey": "15"
     },
-    "Greenblock_FireBall":
+    "GreenBlock_FireBall":
     {
       "blockKey": "16"
+    },
+    "RedBlock_Sticky":
+    {
+      "blockKey": "17"
     }
   }
 }

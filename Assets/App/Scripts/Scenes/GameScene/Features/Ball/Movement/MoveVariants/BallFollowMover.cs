@@ -1,4 +1,5 @@
-﻿using App.Scripts.Scenes.GameScene.Features.Components;
+﻿using App.Scripts.General.Infrastructure;
+using App.Scripts.Scenes.GameScene.Features.Components;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -8,13 +9,14 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Movement.MoveVariants
     {
         private readonly IPositionable _ballPositionable;
         private readonly IPositionable _targetPositionable;
-        private Vector3 _offset;
+        private Vector3 _initialOffset;
+        private Vector3 _stickyOffset;
 
         public BallFollowMover(IPositionable ballPositionable, IPositionable targetPositionable)
         {
             _ballPositionable = ballPositionable;
             _targetPositionable = targetPositionable;
-            _offset = ballPositionable.Position - targetPositionable.Position;
+            _initialOffset = _stickyOffset = ballPositionable.Position - targetPositionable.Position;
         }
 
         public async UniTask AsyncInitialize()
@@ -22,8 +24,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Movement.MoveVariants
             _ballPositionable.Position =
                 new Vector3
                 (
-                    _targetPositionable.Position.x + _offset.x,
-                    _targetPositionable.Position.y + _offset.y,
+                    _targetPositionable.Position.x + _initialOffset.x,
+                    _targetPositionable.Position.y + _initialOffset.y,
                     0f
                 );
             
@@ -35,10 +37,15 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Movement.MoveVariants
             _ballPositionable.Position =
                 new Vector3
                 (
-                    _targetPositionable.Position.x,
+                    _targetPositionable.Position.x + _stickyOffset.x,
                     _ballPositionable.Position.y,
                     0f
                 );
+        }
+
+        public void Restart()
+        {
+            _stickyOffset = _ballPositionable.Position - _targetPositionable.Position;
         }
     }
 }

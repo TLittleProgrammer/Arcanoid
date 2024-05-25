@@ -91,7 +91,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.Helpers
                             view.BoxCollider2D.enabled = false;
 
                             GridItemData gridItemData = _levelViewUpdater.LevelGridItemData[view.GridPositionX, view.GridPositionY];
-                            
+                            gridItemData.CurrentHealth = -1;
                             _itemsDestroyable.Destroy(gridItemData, view);
                         }
                     }

@@ -20,5 +20,6 @@
         VerticalBomb     = 11,
         
         Fireball     = 12,
+        StickyPlatform = 13,
     }
 }

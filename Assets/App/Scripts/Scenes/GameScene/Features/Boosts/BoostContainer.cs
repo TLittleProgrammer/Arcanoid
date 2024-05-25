@@ -68,26 +68,34 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts
 
         private void CheckBallSpeedBoost(BoostTypeId boostTypeId)
         {
-            if (boostTypeId is BoostTypeId.Fireball)
-            {
-                if (_boosts.Count(x => x.BoostTypeId == BoostTypeId.Fireball) != 0)
-                {
-                    UpdateBoostDuration(BoostTypeId.Fireball);
-                }
-                else
-                {
-                    _boosts.Add(new(BoostTypeId.Fireball, _boostsSettings.FireballDuration));
-                    CreateUiBoost(BoostTypeId.Fireball);
-                }
-                
-                return;
-            }
+            if (UpdateDurationForBoosts(boostTypeId, BoostTypeId.Fireball)) return;
+            if (UpdateDurationForBoosts(boostTypeId, BoostTypeId.StickyPlatform)) return;
             
             BallSpeed(boostTypeId, BoostTypeId.BallAcceleration, BoostTypeId.BallSlowdown, _boostsSettings.BallSpeedDuration);
             BallSpeed(boostTypeId, BoostTypeId.PlayerShapeAddSize, BoostTypeId.PlayerShapeMinusSize, _boostsSettings.ShapeSizeDuration);
             BallSpeed(boostTypeId, BoostTypeId.PlayerShapeAddSpeed, BoostTypeId.PlayerShapeMinusSpeed, _boostsSettings.ShapeSpeedDuration);
         }
-        
+
+        private bool UpdateDurationForBoosts(BoostTypeId boostTypeId, BoostTypeId checkBoost)
+        {
+            if (boostTypeId == checkBoost)
+            {
+                if (_boosts.Count(x => x.BoostTypeId == checkBoost) != 0)
+                {
+                    UpdateBoostDuration(checkBoost);
+                }
+                else
+                {
+                    _boosts.Add(new(checkBoost, _boostsSettings.FireballDuration));
+                    CreateUiBoost(checkBoost);
+                }
+
+                return true;
+            }
+
+            return false;
+        }
+
         private void BallSpeed(BoostTypeId boostTypeId, BoostTypeId firstType, BoostTypeId secondType, float duration)
         {
             if (boostTypeId == firstType)
@@ -149,6 +157,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts
                 BoostTypeId.PlayerShapeAddSpeed => _boostsSettings.ShapeSpeedDuration,
                 BoostTypeId.PlayerShapeMinusSpeed => _boostsSettings.ShapeSpeedDuration,
                 BoostTypeId.Fireball => _boostsSettings.FireballDuration,
+                BoostTypeId.StickyPlatform => _boostsSettings.StickyDuration,
 
                 _ => 0f
             };
