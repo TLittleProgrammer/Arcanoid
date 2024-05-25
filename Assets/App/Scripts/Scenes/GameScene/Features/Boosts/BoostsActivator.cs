@@ -3,6 +3,7 @@ using App.Scripts.Scenes.GameScene.Features.Boosts.Interfaces;
 using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.Helpers;
 using App.Scripts.Scenes.GameScene.Features.PlayerShape;
+using App.Scripts.Scenes.GameScene.Features.PlayerShape.Move;
 using App.Scripts.Scenes.GameScene.Features.PositionChecker;
 using App.Scripts.Scenes.GameScene.Features.Settings;
 using UnityEngine;
@@ -17,6 +18,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts
         private readonly BoostsSettings _boostsSettings;
         private readonly PlayerView _playerView;
         private readonly IShapePositionChecker _shapePositionChecker;
+        private readonly IPlayerShapeMover _playerShapeMover;
 
         private float _initialBallSpeed;
 
@@ -26,7 +28,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts
             IBallFreeFlightMover ballMover,
             BoostsSettings boostsSettings,
             PlayerView playerView,
-            IShapePositionChecker shapePositionChecker)
+            IShapePositionChecker shapePositionChecker,
+            IPlayerShapeMover playerShapeMover)
         {
             _simpleDestroyService = simpleDestroyService;
             _boostContainer = boostContainer;
@@ -34,6 +37,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts
             _boostsSettings = boostsSettings;
             _playerView = playerView;
             _shapePositionChecker = shapePositionChecker;
+            _playerShapeMover = playerShapeMover;
 
             _boostContainer.BoostEnded += OnBoostEnded;
             _initialBallSpeed = ballMover.GeneralSpeed;
@@ -60,6 +64,10 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts
                 _shapePositionChecker.ChangeShapeScale(1f);
                 _playerView.transform.localScale = Vector3.one;
             }
+            else if (boostId is BoostTypeId.PlayerShapeAddSpeed or BoostTypeId.PlayerShapeMinusSpeed)
+            {
+                _playerShapeMover.ChangeSpeed(1f);
+            }
         }
 
         private void UseBoost(BoostTypeId boostId)
@@ -85,6 +93,14 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts
                 
                 _shapePositionChecker.ChangeShapeScale(_boostsSettings.MinusPercent);
                 _playerView.transform.localScale = Vector3.one * _boostsSettings.MinusPercent;
+            }
+            else if (boostId is BoostTypeId.PlayerShapeAddSpeed)
+            {
+                _playerShapeMover.ChangeSpeed(_boostsSettings.AddPercentSpeed);
+            }
+            else if (boostId is BoostTypeId.PlayerShapeMinusSpeed)
+            {
+                _playerShapeMover.ChangeSpeed(_boostsSettings.MinusPercentSpeed);
             }
         }
     }

@@ -55,6 +55,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts
         {
             BallSpeed(boostTypeId, BoostTypeId.BallAcceleration, BoostTypeId.BallSlowdown, _boostsSettings.BallSpeedDuration);
             BallSpeed(boostTypeId, BoostTypeId.PlayerShapeAddSize, BoostTypeId.PlayerShapeMinusSize, _boostsSettings.ShapeSizeDuration);
+            BallSpeed(boostTypeId, BoostTypeId.PlayerShapeAddSpeed, BoostTypeId.PlayerShapeMinusSpeed, _boostsSettings.ShapeSpeedDuration);
         }
         
         private void BallSpeed(BoostTypeId boostTypeId, BoostTypeId firstType, BoostTypeId secondType, float duration)
@@ -90,6 +91,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts
                 BoostTypeId.BallSlowdown => _boostsSettings.BallSpeedDuration,
                 BoostTypeId.PlayerShapeAddSize => _boostsSettings.ShapeSizeDuration,
                 BoostTypeId.PlayerShapeMinusSize => _boostsSettings.ShapeSizeDuration,
+                BoostTypeId.PlayerShapeAddSpeed => _boostsSettings.ShapeSpeedDuration,
+                BoostTypeId.PlayerShapeMinusSpeed => _boostsSettings.ShapeSpeedDuration,
 
                 _ => 0f
             };

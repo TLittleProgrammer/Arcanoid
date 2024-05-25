@@ -22,5 +22,12 @@ namespace App.Scripts.Scenes.GameScene.Features.Settings
         [BoxGroup("Player Shape size")]
         public float MinusPercent;
         public Dictionary<BoostTypeId, Sprite> PlayerShapeSprites;
+        
+        [BoxGroup("Player Shape speed")]
+        public float ShapeSpeedDuration;
+        [BoxGroup("Player Shape speed")]
+        public float AddPercentSpeed;
+        [BoxGroup("Player Shape speed")]
+        public float MinusPercentSpeed;
     }
 }

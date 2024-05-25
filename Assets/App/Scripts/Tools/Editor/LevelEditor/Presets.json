@@ -35,6 +35,14 @@
     "GreenBlock_MinSize":
     {
       "blockKey": "9"
+    },
+    "YellowBlock_MinusShapeSpeed":
+    {
+      "blockKey": "11"
+    },
+    "YellowBlock_AddShapeSpeed":
+    {
+      "blockKey": "10"
     }
   }
 }

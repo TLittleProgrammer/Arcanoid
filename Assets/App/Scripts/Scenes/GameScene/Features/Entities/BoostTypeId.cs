@@ -9,5 +9,8 @@
         BallSlowdown     = 3,
         PlayerShapeAddSize   = 4,
         PlayerShapeMinusSize = 5,
+        
+        PlayerShapeAddSpeed   = 6,
+        PlayerShapeMinusSpeed = 7,
     }
 }

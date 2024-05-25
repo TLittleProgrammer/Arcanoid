@@ -16,6 +16,7 @@ namespace App.Scripts.Scenes.GameScene.Features.PlayerShape.Move
         private ShapeMoverSettings _shapeMoverSettings;
         private readonly IRectMousePositionChecker _rectMousePositionChecker;
         private Vector3 _initialPosition;
+        private float _speed;
 
         public PlayerShapeMover(
             IPositionable playerPositionable,
@@ -32,6 +33,8 @@ namespace App.Scripts.Scenes.GameScene.Features.PlayerShape.Move
             _shapeMoverSettings = shapeMoverSettings;
             _rectMousePositionChecker = rectMousePositionChecker;
             _initialPosition = _playerPositionable.Position;
+
+            _speed = _shapeMoverSettings.Speed;
         }
         
         public void Tick()
@@ -68,13 +71,18 @@ namespace App.Scripts.Scenes.GameScene.Features.PlayerShape.Move
             (
                 _playerPositionable.Position,
                 new(_inputService.CurrentMousePosition.x, _playerPositionable.Position.y),
-                _timeProvider.DeltaTime * _shapeMoverSettings.Speed
+                _timeProvider.DeltaTime * _speed
             );
         }
 
         public void Restart()
         {
             _playerPositionable.Position = _initialPosition;
+        }
+
+        public void ChangeSpeed(float speedScale)
+        {
+            _speed = _shapeMoverSettings.Speed * speedScale;
         }
     }
 }

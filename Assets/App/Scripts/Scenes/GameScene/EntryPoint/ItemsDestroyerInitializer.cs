@@ -51,6 +51,18 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
                     BoostTypeId = BoostTypeId.PlayerShapeMinusSize,
                     BlockDestroyService = _ballSpeedBoostsDestroyer
                 }
+                ,
+                new DestroyServiceData()
+                {
+                    BoostTypeId = BoostTypeId.PlayerShapeAddSpeed,
+                    BlockDestroyService = _ballSpeedBoostsDestroyer
+                }
+                ,
+                new DestroyServiceData()
+                {
+                    BoostTypeId = BoostTypeId.PlayerShapeMinusSpeed,
+                    BlockDestroyService = _ballSpeedBoostsDestroyer
+                }
             });
         }
     }

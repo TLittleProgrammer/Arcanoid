@@ -92,3 +92,6 @@ MonoBehaviour:
   ShapeSizeDuration: 3
   AddPercent: 1.5
   MinusPercent: 0.5
+  ShapeSpeedDuration: 3
+  AddPercentSpeed: 1.5
+  MinusPercentSpeed: 0.5
