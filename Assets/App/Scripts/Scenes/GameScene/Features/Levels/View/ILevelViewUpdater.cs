@@ -11,6 +11,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.View
         Grid<GridItemData> LevelGridItemData { get; }
         void SetGrid(Grid<int> grid, List<IEntityView> entityViews);
         EntityStage GetEntityStage(IEntityView entityView);
-        void UpdateVisual(IEntityView entityView);
+        void UpdateVisual(IEntityView entityView, int damage);
     }
 }

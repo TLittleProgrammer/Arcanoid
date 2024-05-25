@@ -15,5 +15,10 @@
         
         AddHealth   = 8,
         MinusHealth = 9,
+        
+        HorizontalBomb   = 10,
+        VerticalBomb     = 11,
+        
+        Fireball     = 12,
     }
 }

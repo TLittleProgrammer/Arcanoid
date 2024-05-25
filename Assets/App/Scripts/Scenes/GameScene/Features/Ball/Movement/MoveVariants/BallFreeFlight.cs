@@ -1,4 +1,5 @@
 ﻿using App.Scripts.Scenes.GameScene.Features.Components;
+using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.Settings;
 using App.Scripts.Scenes.GameScene.Features.Time;
 using Cysharp.Threading.Tasks;
@@ -11,15 +12,17 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Movement.MoveVariants
         private readonly BallFlyingSettings _settings;
         private readonly ITimeProvider _timeProvider;
         private readonly IRigidablebody _ballRigidbody;
+        private readonly BallView _ballView;
         private readonly float _maxSecondAngle;
         private readonly float _minSecondAngle;
 
         private Vector3 _previousVelocity;
         private float _speed;
 
-        public BallFreeFlight(IRigidablebody ballRigidbody, BallFlyingSettings settings, ITimeProvider timeProvider)
+        public BallFreeFlight(BallView ballView, BallFlyingSettings settings, ITimeProvider timeProvider)
         {
-            _ballRigidbody = ballRigidbody;
+            _ballRigidbody = ballView;
+            _ballView = ballView;
             _settings = settings;
             _timeProvider = timeProvider;
             
@@ -83,6 +86,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Movement.MoveVariants
         private async void OnCollidered(Collider2D collider)
         {
             await UniTask.WaitForFixedUpdate();
+            
             ChangeAngleForDirection();
         }
 
@@ -103,6 +107,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Movement.MoveVariants
             {
                 UpdateVelocity(currentAngle > 0 ? _minSecondAngle : -_minSecondAngle);
             }
+            
+            _previousVelocity = Velocity;
         }
 
         private void UpdateVelocity(float targetAngle)
@@ -113,8 +119,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Movement.MoveVariants
                 x = speed * Mathf.Cos(targetAngle * Mathf.Deg2Rad),
                 y = speed * Mathf.Sin(targetAngle * Mathf.Deg2Rad)
             };
-
-            _previousVelocity = Velocity;
         }
     }
 }

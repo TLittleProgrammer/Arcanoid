@@ -34,5 +34,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Settings
         public int AddHealth;
         [BoxGroup("Health")]
         public int MinusHealth;
+        
+        [BoxGroup("Fireeball")]
+        public float FireballDuration;
     }
 }

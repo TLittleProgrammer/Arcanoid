@@ -5,6 +5,7 @@ using App.Scripts.Scenes.GameScene.Features.Boosts.Interfaces;
 using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.Settings;
 using App.Scripts.Scenes.GameScene.Features.Time;
+using Codice.Client.Commands.WkTree;
 
 namespace App.Scripts.Scenes.GameScene.Features.Boosts
 {
@@ -53,6 +54,20 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts
 
         private void CheckBallSpeedBoost(BoostTypeId boostTypeId)
         {
+            if (boostTypeId is BoostTypeId.Fireball)
+            {
+                if (_boosts.Count(x => x.BoostTypeId == BoostTypeId.Fireball) != 0)
+                {
+                    UpdateBoostDuration(BoostTypeId.Fireball);
+                }
+                else
+                {
+                    _boosts.Add(new(BoostTypeId.Fireball, _boostsSettings.FireballDuration));
+                }
+                
+                return;
+            }
+            
             BallSpeed(boostTypeId, BoostTypeId.BallAcceleration, BoostTypeId.BallSlowdown, _boostsSettings.BallSpeedDuration);
             BallSpeed(boostTypeId, BoostTypeId.PlayerShapeAddSize, BoostTypeId.PlayerShapeMinusSize, _boostsSettings.ShapeSizeDuration);
             BallSpeed(boostTypeId, BoostTypeId.PlayerShapeAddSpeed, BoostTypeId.PlayerShapeMinusSpeed, _boostsSettings.ShapeSpeedDuration);
@@ -93,6 +108,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts
                 BoostTypeId.PlayerShapeMinusSize => _boostsSettings.ShapeSizeDuration,
                 BoostTypeId.PlayerShapeAddSpeed => _boostsSettings.ShapeSpeedDuration,
                 BoostTypeId.PlayerShapeMinusSpeed => _boostsSettings.ShapeSpeedDuration,
+                BoostTypeId.Fireball => _boostsSettings.FireballDuration,
 
                 _ => 0f
             };

@@ -24,19 +24,22 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroySer
         private readonly IAnimatedDestroyService _animatedDestroyService;
         private readonly IAddVisualDamage _addVisualDamage;
         private readonly SimpleDestroyService _simpleDestroyService;
+        private readonly IItemsDestroyable _itemsDestroyable;
 
         public BombDestroyService(
             ILevelViewUpdater levelViewUpdater,
             ILevelLoader levelLoader,
             IAnimatedDestroyService animatedDestroyService,
             IAddVisualDamage addVisualDamage,
-            SimpleDestroyService simpleDestroyService)
+            SimpleDestroyService simpleDestroyService,
+            IItemsDestroyable itemsDestroyable)
         {
             _levelViewUpdater = levelViewUpdater;
             _levelLoader = levelLoader;
             _animatedDestroyService = animatedDestroyService;
             _addVisualDamage = addVisualDamage;
             _simpleDestroyService = simpleDestroyService;
+            _itemsDestroyable = itemsDestroyable;
         }
         
         public async void Destroy(GridItemData gridItemData, IEntityView iEntityView)
@@ -86,8 +89,21 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroySer
                     EntityView = bomb
                 }
             });
-            await _animatedDestroyService.Animate(immediateEntityDatas);
-            await _animatedDestroyService.Animate(diagonalsEntityDatas);
+
+            foreach (EntityData data in immediateEntityDatas)
+            {
+                _itemsDestroyable.Destroy(data.GridItemData, data.EntityView);
+            }
+
+            await UniTask.Delay(350);
+
+            
+            foreach (EntityData data in diagonalsEntityDatas)
+            {
+                _itemsDestroyable.Destroy(data.GridItemData, data.EntityView);
+            }
+            
+            await UniTask.Delay(350);
         }
 
         private void DestroyAllEntites(EntityData bomb, List<EntityData> immediateDatas, List<EntityData> diagonalDatas)

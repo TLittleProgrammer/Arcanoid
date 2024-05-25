@@ -10,16 +10,19 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
         private readonly IItemsDestroyable _itemsDestroyable;
         private readonly BombDestroyService _bombDestroyService;
         private readonly BallSpeedBoostsDestroyer _ballSpeedBoostsDestroyer;
+        private readonly DirectionBombDestroyService _directionBombDestroyService;
 
         public ItemsDestroyerInitializer(
             IItemsDestroyable itemsDestroyable,
             BombDestroyService bombDestroyService,
-            BallSpeedBoostsDestroyer ballSpeedBoostsDestroyer
+            BallSpeedBoostsDestroyer ballSpeedBoostsDestroyer,
+            DirectionBombDestroyService directionBombDestroyService
             )
         {
             _itemsDestroyable = itemsDestroyable;
             _bombDestroyService = bombDestroyService;
             _ballSpeedBoostsDestroyer = ballSpeedBoostsDestroyer;
+            _directionBombDestroyService = directionBombDestroyService;
         }
         
         public void Initialize()
@@ -36,6 +39,9 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
                 BuildDestroyDataService(BoostTypeId.PlayerShapeMinusSpeed, _ballSpeedBoostsDestroyer),
                 BuildDestroyDataService(BoostTypeId.AddHealth, _ballSpeedBoostsDestroyer),
                 BuildDestroyDataService(BoostTypeId.MinusHealth, _ballSpeedBoostsDestroyer),
+                BuildDestroyDataService(BoostTypeId.Fireball, _ballSpeedBoostsDestroyer),
+                BuildDestroyDataService(BoostTypeId.HorizontalBomb, _directionBombDestroyService),
+                BuildDestroyDataService(BoostTypeId.VerticalBomb, _directionBombDestroyService),
             });
         }
 

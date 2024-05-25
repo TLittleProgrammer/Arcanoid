@@ -102,6 +102,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
         {
             Container.Bind<TextAsset>().FromInstance(_levelData).AsSingle();
             Container.Bind<PlayerView>().FromInstance(_playerShape).AsSingle();
+            Container.Bind<BallView>().FromInstance(_ballView).AsSingle();
         }
 
         private void BindHealthPointService()

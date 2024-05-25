@@ -20,6 +20,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
             
             Container.Bind<BombDestroyService>().AsSingle();
             Container.Bind<BallSpeedBoostsDestroyer>().AsSingle();
+            Container.Bind<DirectionBombDestroyService>().AsSingle();
 
             Container.Bind<IItemsDestroyable>().To<ItemsDestroyer>().AsSingle();
         }
@@ -34,6 +35,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
             Container.Bind<PlayerShapeBoostSize>().AsSingle();
             Container.Bind<ShapeBoostSpeed>().AsSingle();
             Container.Bind<HealthAndDeathBoost>().AsSingle();
+            Container.BindInterfacesAndSelfTo<FireballBoostActivator>().AsSingle();
 
             Container.BindInterfacesAndSelfTo<BoostsActivator>().AsSingle();
         }

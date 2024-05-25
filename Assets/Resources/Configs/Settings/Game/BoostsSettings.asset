@@ -97,3 +97,4 @@ MonoBehaviour:
   MinusPercentSpeed: 0.5
   AddHealth: 1
   MinusHealth: 2
+  FireballDuration: 4
