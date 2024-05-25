@@ -16,4 +16,9 @@ namespace App.Scripts.External.GameStateMachine
     {
         UniTask Enter(TParam param, TSecondParam secondParam);
     }
+    
+    public interface IState<TParam, TSecondParam, TThirdParam> : IExitableState
+    {
+        UniTask Enter(TParam param, TSecondParam secondParam, TThirdParam thirdParam);
+    }
 }

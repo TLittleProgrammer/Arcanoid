@@ -58,16 +58,17 @@ namespace App.Scripts.General.Popup
             await UniTask.CompletedTask;
         }
 
-        public async UniTask CloseAll()
+        public UniTask CloseAll()
         {
             foreach (IPopupView view in _popupsList)
             {
-                await view.Close();
                 Object.Destroy(view.GameObject);
             }
             
             UpdateRaycastTargetForBackPanel(false);
             _popupsList.Clear();
+            
+            return UniTask.CompletedTask;
         }
 
         public void Restart()

@@ -221,6 +221,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameScreen
       objectReference: {fileID: 0}
+    - target: {fileID: 7038307695405581418, guid: 47e573d43d2df6846b43223a3844087e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.00048828125
+      objectReference: {fileID: 0}
     - target: {fileID: 8733624423913300678, guid: 47e573d43d2df6846b43223a3844087e, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -633,7 +637,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _camera: {fileID: 519420031}
   _header: {fileID: 333490954}
-  _levelData: {fileID: 4900000, guid: 06b32051799e3224ca9756ff3dbffe22, type: 3}
+  _levelData: {fileID: 4900000, guid: 3600ef352697b044ab589b3e3a3264d1, type: 3}
   _playerShape: {fileID: 206752683}
   _ballView: {fileID: 4526333472807322575}
   _levelPackInfoView: {fileID: 333490955}
@@ -751,6 +755,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1242099201}
     m_Modifications:
+    - target: {fileID: 371375698742683314, guid: 29a22f99607127643af70e61f42375af, type: 3}
+      propertyPath: m_BodyType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 371375698742683314, guid: 29a22f99607127643af70e61f42375af, type: 3}
+      propertyPath: m_Constraints
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 4285311820993786691, guid: 29a22f99607127643af70e61f42375af, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -798,6 +810,10 @@ PrefabInstance:
     - target: {fileID: 4285311820993786692, guid: 29a22f99607127643af70e61f42375af, type: 3}
       propertyPath: m_Name
       value: PlayerShape
+      objectReference: {fileID: 0}
+    - target: {fileID: 4285311820993786692, guid: 29a22f99607127643af70e61f42375af, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 29a22f99607127643af70e61f42375af, type: 3}

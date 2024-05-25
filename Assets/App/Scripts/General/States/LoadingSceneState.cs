@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.External.SceneManagment;
 using App.Scripts.General.LoadingScreen;
@@ -6,7 +7,7 @@ using Cysharp.Threading.Tasks;
 
 namespace App.Scripts.General.States
 {
-    public class LoadingSceneState : IState<string, bool>
+    public class LoadingSceneState : IState<string, bool, Action>
     {
         private readonly ILoadingScreen _loadingScreen;
         private readonly ISceneManagementService _sceneManagementService;
@@ -18,10 +19,16 @@ namespace App.Scripts.General.States
             _sceneManagementService = sceneManagementService;
         }
 
-        public async UniTask Enter(string sceneName, bool showQuickly)
+        public async UniTask Enter(string sceneName, bool showQuickly, Action sceneLoaded = null)
         {
             await _loadingScreen.Show(showQuickly);
             await _sceneManagementService.LoadSceneAsync(sceneName);
+
+            if (sceneLoaded is not null)
+            {
+                sceneLoaded.Invoke();
+            }
+            
             await _loadingScreen.Hide();
         }
 

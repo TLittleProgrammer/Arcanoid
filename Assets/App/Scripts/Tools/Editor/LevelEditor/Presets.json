@@ -11,6 +11,46 @@
     "YellowBlock_01":
     {
       "blockKey": "3"
+    },
+    "GranitBlock":
+    {
+      "blockKey": "4"
+    },
+    "BombBlock":
+    {
+      "blockKey": "5"
+    },
+    "RedBlock_UpBallSpeed":
+    {
+      "blockKey": "6"
+    },
+    "RedBlock_LowBalSpeed":
+    {
+      "blockKey": "7"
+    },
+    "GreenBlock_MaxSize":
+    {
+      "blockKey": "8"
+    },
+    "GreenBlock_MinSize":
+    {
+      "blockKey": "9"
+    },
+    "YellowBlock_MinusShapeSpeed":
+    {
+      "blockKey": "11"
+    },
+    "YellowBlock_AddShapeSpeed":
+    {
+      "blockKey": "10"
+    },
+    "RedBlock_Addhealth":
+    {
+      "blockKey": "12"
+    },
+    "RedBlock_MinusHealth":
+    {
+      "blockKey": "13"
     }
   }
 }

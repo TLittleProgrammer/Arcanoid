@@ -1,0 +1,99 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c306e0bd4a534ad48adcc6d80d356421, type: 3}
+  m_Name: BoostsSettings
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 21300000, guid: f879251016df6b54cabc92340f3fcc32, type: 3}
+    - {fileID: 21300000, guid: 409977d6f570a8e44b111e5ac6528922, type: 3}
+    - {fileID: 21300000, guid: 42cf08b5e06390e43b72c1befca37101, type: 3}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: PlayerShapeSprites
+      Entry: 7
+      Data: 0|System.Collections.Generic.Dictionary`2[[App.Scripts.Scenes.GameScene.Features.Entities.BoostTypeId,
+        Game],[UnityEngine.Sprite, UnityEngine.CoreModule]], mscorlib
+    - Name: comparer
+      Entry: 7
+      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[App.Scripts.Scenes.GameScene.Features.Entities.BoostTypeId,
+        Game]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 12
+      Data: 3
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 4
+    - Name: $v
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 5
+    - Name: $v
+      Entry: 10
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 0
+    - Name: $v
+      Entry: 10
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  BallSpeedDuration: 2
+  SlowDownPercentFromAll: 0.75
+  AcceleratePercentFromAll: 1.25
+  ShapeSizeDuration: 3
+  AddPercent: 1.5
+  MinusPercent: 0.5
+  ShapeSpeedDuration: 3
+  AddPercentSpeed: 1.5
+  MinusPercentSpeed: 0.5
+  AddHealth: 1
+  MinusHealth: 2

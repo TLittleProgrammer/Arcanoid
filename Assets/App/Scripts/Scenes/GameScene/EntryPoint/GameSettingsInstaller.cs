@@ -1,9 +1,9 @@
-﻿using App.Scripts.Scenes.GameScene.Levels.AssetManagement;
-using App.Scripts.Scenes.GameScene.Settings;
+﻿using App.Scripts.Scenes.GameScene.Features.Levels.AssetManagement;
+using App.Scripts.Scenes.GameScene.Features.Settings;
 using UnityEngine;
 using Zenject;
 
-namespace App.Scripts.Scenes.GameScene.Installers
+namespace App.Scripts.Scenes.GameScene.EntryPoint
 {
     [CreateAssetMenu(menuName = "Configs/Settings/Game Settings", fileName = "GameSettings")]
     public class GameSettingsInstaller : ScriptableObjectInstaller
@@ -16,6 +16,8 @@ namespace App.Scripts.Scenes.GameScene.Installers
         public StopGameSettings StopGameSettings;
         public WinContinueButtonAnimationSettings WinContinueButtonAnimationSettings;
         public BoxCollidersAroundScreenSettings BoxCollidersAroundScreenSettings;
+        public BoostViewProvider BoostViewProvider;
+        public BoostsSettings BoostsSettings;
 
         public override void InstallBindings()
         {
@@ -27,6 +29,8 @@ namespace App.Scripts.Scenes.GameScene.Installers
             Container.Bind<StopGameSettings>().FromInstance(StopGameSettings).IfNotBound();
             Container.Bind<WinContinueButtonAnimationSettings>().FromInstance(WinContinueButtonAnimationSettings).IfNotBound();
             Container.Bind<BoxCollidersAroundScreenSettings>().FromInstance(BoxCollidersAroundScreenSettings).IfNotBound();
+            Container.Bind<BoostViewProvider>().FromInstance(BoostViewProvider).IfNotBound();
+            Container.Bind<BoostsSettings>().FromInstance(BoostsSettings).IfNotBound();
         }
     }
 }

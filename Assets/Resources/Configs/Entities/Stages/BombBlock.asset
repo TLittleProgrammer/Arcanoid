@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e8708079ad64275a5e6a4a88f2c2b6c, type: 3}
+  m_Name: BombBlock
+  m_EditorClassIdentifier: 
+  BoostTypeId: 1
+  Damage: 2
+  Sprite: {fileID: 21300000, guid: ced56ed448d75654c95ed243c6d97a60, type: 3}
+  MaxHealthCounter: 2
+  ICanGetDamage: 1
+  AddSpritesOnMainByHp:
+  - Healthes: 1
+    Sprites:
+    - {fileID: 21300000, guid: b27b4338851fabe4eb5ae17791da562a, type: 3}

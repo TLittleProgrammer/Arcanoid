@@ -20,3 +20,5 @@ MonoBehaviour:
   StopGameSettings: {fileID: 11400000, guid: 3104198ab673b5c4382eb5d697fbbdbc, type: 2}
   WinContinueButtonAnimationSettings: {fileID: 11400000, guid: 669589d265073104595911b427c4064d, type: 2}
   BoxCollidersAroundScreenSettings: {fileID: 11400000, guid: c1d5b6a5fa8e5ee40ad236f970df9263, type: 2}
+  BoostViewProvider: {fileID: 11400000, guid: 4f79994be1e0ee840a2ca1eafea942f4, type: 2}
+  BoostsSettings: {fileID: 11400000, guid: ef5701660e48f98419e36f570f74ee14, type: 2}
