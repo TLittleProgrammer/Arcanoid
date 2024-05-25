@@ -9,6 +9,7 @@ using App.Scripts.Scenes.GameScene.Features.Ball;
 using App.Scripts.Scenes.GameScene.Features.Ball.Collision;
 using App.Scripts.Scenes.GameScene.Features.Ball.Movement;
 using App.Scripts.Scenes.GameScene.Features.Ball.Movement.MoveVariants;
+using App.Scripts.Scenes.GameScene.Features.Blocks;
 using App.Scripts.Scenes.GameScene.Features.Boosts;
 using App.Scripts.Scenes.GameScene.Features.Boosts.UI;
 using App.Scripts.Scenes.GameScene.Features.Camera;
@@ -68,6 +69,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             BindPools();
             
             Container.Bind<IPoolContainer>().To<PoolContainer>().AsSingle();
+            Container.Bind<IBlockShakeService>().To<BlockShakeService>().AsSingle();
             FactoriesInstaller.Install(Container, _rootUIView, _boostItemViewPrefab);
             
             Container.Bind<IRectMousePositionChecker>().To<RectMousePositionChecker>().AsSingle().WithArguments(_rectTransformableViews);

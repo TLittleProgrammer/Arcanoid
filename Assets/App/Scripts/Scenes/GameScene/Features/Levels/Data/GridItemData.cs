@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.TopSprites;
 
@@ -11,6 +10,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.Data
     {
         public BoostTypeId BoostTypeId;
         public int Damage;
+        public bool CanGetDamage;
         public int CurrentHealth;
         public List<OnTopSprites> Sprites = new();
 

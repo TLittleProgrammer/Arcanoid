@@ -2,6 +2,7 @@
 using App.Scripts.Scenes.GameScene.Features.Boosts;
 using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.LevelProgress;
+using App.Scripts.Scenes.GameScene.Features.Levels.AssetManagement;
 using App.Scripts.Scenes.GameScene.Features.Levels.Data;
 using App.Scripts.Scenes.GameScene.Features.Pools;
 using App.Scripts.Scenes.GameScene.Features.TopSprites;
@@ -13,8 +14,11 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.Helpers
         private readonly ILevelProgressService _levelProgressService;
         private readonly IPoolContainer _poolContainer;
         private readonly IBallSpeedUpdater _ballSpeedUpdater;
-        
-        public SimpleDestroyService(ILevelProgressService levelProgressService, IPoolContainer poolContainer, IBallSpeedUpdater ballSpeedUpdater)
+
+        public SimpleDestroyService(
+            ILevelProgressService levelProgressService,
+            IPoolContainer poolContainer,
+            IBallSpeedUpdater ballSpeedUpdater)
         {
             _levelProgressService = levelProgressService;
             _poolContainer = poolContainer;
@@ -23,7 +27,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.Helpers
         
         public void Destroy(GridItemData gridItemData, IEntityView entityView)
         {
-            if (gridItemData.CurrentHealth <= 0)
+            if (gridItemData.CurrentHealth <= 0 && gridItemData.CanGetDamage)
             {
                 _levelProgressService.TakeOneStep();
 
