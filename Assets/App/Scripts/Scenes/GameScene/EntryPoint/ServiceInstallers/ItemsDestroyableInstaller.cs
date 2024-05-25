@@ -33,6 +33,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
             Container.Bind<BallMoverBoostActivator>().AsSingle();
             Container.Bind<PlayerShapeBoostSize>().AsSingle();
             Container.Bind<ShapeBoostSpeed>().AsSingle();
+            Container.Bind<HealthAndDeathBoost>().AsSingle();
 
             Container.BindInterfacesAndSelfTo<BoostsActivator>().AsSingle();
         }

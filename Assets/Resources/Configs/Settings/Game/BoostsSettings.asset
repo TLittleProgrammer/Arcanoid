@@ -95,3 +95,5 @@ MonoBehaviour:
   ShapeSpeedDuration: 3
   AddPercentSpeed: 1.5
   MinusPercentSpeed: 0.5
+  AddHealth: 1
+  MinusHealth: 2

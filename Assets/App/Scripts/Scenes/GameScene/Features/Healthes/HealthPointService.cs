@@ -17,6 +17,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Healthes
 
         private int _maxHealthCount;
         private int _currentHealthCount;
+        private int _currentHealthIndex;
         private bool _isAnimated;
         private Queue<int> _queriesToChangeHealth;
 
@@ -39,9 +40,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Healthes
 
         public void UpdateHealth(int healthCount)
         {
-            if (_currentHealthCount + healthCount < -1)
-                return;
-            
             _queriesToChangeHealth.Enqueue(healthCount);
             
             if (!_isAnimated)
@@ -59,15 +57,26 @@ namespace App.Scripts.Scenes.GameScene.Features.Healthes
                 int currentHealthOffset = _queriesToChangeHealth.Dequeue();
                 int step = currentHealthOffset > 0 ? 1 : -1;
 
-                float from;
-                float to;
-
-                SetFromAndToByStep(step, out to, out from);
+                SetFromAndToByStep(step, out var to, out var from);
 
                 currentHealthOffset = Mathf.Abs(currentHealthOffset);
 
                 for (int i = 0; i < currentHealthOffset; i++)
                 {
+                    if (step > 0f)
+                    {
+                        _currentHealthIndex = _currentHealthCount + 1;
+                    }
+                    else
+                    {
+                        _currentHealthIndex = _currentHealthCount;
+                    }
+                    
+                    if (_healthPointViews.Count <= _currentHealthIndex || _currentHealthIndex < 0)
+                    {
+                        break;
+                    }
+                    
                     await DOVirtual.Float(from, to, 0.25f, UpdateCurrentHealthImage).ToUniTask();
 
                     _currentHealthCount += step;
@@ -93,7 +102,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Healthes
 
         private void UpdateCurrentHealthImage(float value)
         {
-            _healthPointViews[_currentHealthCount].Image.fillAmount = value;
+            _healthPointViews[_currentHealthIndex].Image.fillAmount = value;
         }
 
         private void InstallAllViews()

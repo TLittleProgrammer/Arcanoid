@@ -19,7 +19,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts
             IBoostContainer boostContainer,
             BallMoverBoostActivator ballMoverBoostActivator,
             PlayerShapeBoostSize playerShapeBoostSize,
-            ShapeBoostSpeed shapeBoostSpeed)
+            ShapeBoostSpeed shapeBoostSpeed,
+            HealthAndDeathBoost healthAndDeathBoost)
         {
             _simpleDestroyService = simpleDestroyService;
             _boostContainer = boostContainer;
@@ -32,14 +33,21 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts
                 [BoostTypeId.PlayerShapeMinusSize] = playerShapeBoostSize,
                 [BoostTypeId.PlayerShapeAddSpeed] = shapeBoostSpeed,
                 [BoostTypeId.PlayerShapeMinusSpeed] = shapeBoostSpeed,
+                [BoostTypeId.AddHealth] = healthAndDeathBoost,
+                [BoostTypeId.MinusHealth] = healthAndDeathBoost,
             };
         }
 
         public void Activate(BoostView view)
         {
-            _activators[view.BoostTypeId].Activate(view.BoostTypeId);
+            BoostTypeId boostTypeId = view.BoostTypeId;
             
-            _boostContainer.AddActive(view.BoostTypeId);
+            _activators[boostTypeId].Activate(boostTypeId);
+
+            if (boostTypeId is not BoostTypeId.AddHealth && boostTypeId is not BoostTypeId.MinusHealth)
+            {
+                _boostContainer.AddActive(view.BoostTypeId);
+            }
             _simpleDestroyService.Destroy(view);
         }
     }

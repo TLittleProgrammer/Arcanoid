@@ -26,44 +26,26 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
         {
             _itemsDestroyable.AsyncInitialize(new []
             {
-                new DestroyServiceData
-                {
-                    BoostTypeId = BoostTypeId.Bomb,
-                    BlockDestroyService = _bombDestroyService
-                },
-                new DestroyServiceData()
-                {
-                    BoostTypeId = BoostTypeId.BallAcceleration,
-                    BlockDestroyService = _ballSpeedBoostsDestroyer
-                },
-                new DestroyServiceData()
-                {
-                    BoostTypeId = BoostTypeId.BallSlowdown,
-                    BlockDestroyService = _ballSpeedBoostsDestroyer
-                },
-                new DestroyServiceData()
-                {
-                    BoostTypeId = BoostTypeId.PlayerShapeAddSize,
-                    BlockDestroyService = _ballSpeedBoostsDestroyer
-                },
-                new DestroyServiceData()
-                {
-                    BoostTypeId = BoostTypeId.PlayerShapeMinusSize,
-                    BlockDestroyService = _ballSpeedBoostsDestroyer
-                }
-                ,
-                new DestroyServiceData()
-                {
-                    BoostTypeId = BoostTypeId.PlayerShapeAddSpeed,
-                    BlockDestroyService = _ballSpeedBoostsDestroyer
-                }
-                ,
-                new DestroyServiceData()
-                {
-                    BoostTypeId = BoostTypeId.PlayerShapeMinusSpeed,
-                    BlockDestroyService = _ballSpeedBoostsDestroyer
-                }
+                BuildDestroyDataService(BoostTypeId.Bomb, _bombDestroyService),
+                
+                BuildDestroyDataService(BoostTypeId.BallAcceleration, _ballSpeedBoostsDestroyer),
+                BuildDestroyDataService(BoostTypeId.BallSlowdown, _ballSpeedBoostsDestroyer),
+                BuildDestroyDataService(BoostTypeId.PlayerShapeAddSize, _ballSpeedBoostsDestroyer),
+                BuildDestroyDataService(BoostTypeId.PlayerShapeMinusSize, _ballSpeedBoostsDestroyer),
+                BuildDestroyDataService(BoostTypeId.PlayerShapeAddSpeed, _ballSpeedBoostsDestroyer),
+                BuildDestroyDataService(BoostTypeId.PlayerShapeMinusSpeed, _ballSpeedBoostsDestroyer),
+                BuildDestroyDataService(BoostTypeId.AddHealth, _ballSpeedBoostsDestroyer),
+                BuildDestroyDataService(BoostTypeId.MinusHealth, _ballSpeedBoostsDestroyer),
             });
+        }
+
+        private DestroyServiceData BuildDestroyDataService(BoostTypeId boostTypeId, IBlockDestroyService blockDestroyService)
+        {
+            return new()
+            {
+                BoostTypeId = boostTypeId,
+                BlockDestroyService = blockDestroyService
+            };
         }
     }
 }

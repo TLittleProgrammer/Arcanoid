@@ -9,6 +9,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Healthes
     public interface IHealthContainer : IAsyncInitializable<LevelData, IEnumerable<IRestartable>>, IRestartable
     {
         event Action LivesAreWasted;
-        void UpdateHealth(int healthCount);
+        void UpdateHealth(int healthCount, bool needRestart = true);
     }
 }

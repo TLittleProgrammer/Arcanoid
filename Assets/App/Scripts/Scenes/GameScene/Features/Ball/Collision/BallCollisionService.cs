@@ -31,7 +31,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Collision
             _screenInfoProvider = screenInfoProvider;
 
             _minBallYPosition = (_ball as ISpriteRenderable).SpriteRenderer.bounds.size.y -
-                                _screenInfoProvider.HeightInWorld / 2f;
+                                _screenInfoProvider.HeightInWorld / 2f + 0.25f;
 
             _ball.Collidered += OnCollidered;
         }

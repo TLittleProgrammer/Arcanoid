@@ -12,5 +12,8 @@
         
         PlayerShapeAddSpeed   = 6,
         PlayerShapeMinusSpeed = 7,
+        
+        AddHealth   = 8,
+        MinusHealth = 9,
     }
 }

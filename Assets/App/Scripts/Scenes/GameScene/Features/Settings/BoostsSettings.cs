@@ -29,5 +29,10 @@ namespace App.Scripts.Scenes.GameScene.Features.Settings
         public float AddPercentSpeed;
         [BoxGroup("Player Shape speed")]
         public float MinusPercentSpeed;
+        
+        [BoxGroup("Health")]
+        public int AddHealth;
+        [BoxGroup("Health")]
+        public int MinusHealth;
     }
 }

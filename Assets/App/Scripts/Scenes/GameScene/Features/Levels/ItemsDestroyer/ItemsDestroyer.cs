@@ -1,13 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using App.Scripts.Scenes.GameScene.Features.Ball;
 using App.Scripts.Scenes.GameScene.Features.Entities;
-using App.Scripts.Scenes.GameScene.Features.LevelProgress;
 using App.Scripts.Scenes.GameScene.Features.Levels.Data;
 using App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroyServices;
 using App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.Helpers;
-using App.Scripts.Scenes.GameScene.Features.Pools;
-using App.Scripts.Scenes.GameScene.Features.TopSprites;
 using Cysharp.Threading.Tasks;
 
 namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer

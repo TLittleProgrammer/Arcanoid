@@ -30,18 +30,34 @@ namespace App.Scripts.Scenes.GameScene.Features.Healthes
             await UniTask.CompletedTask;
         }
 
-        public void UpdateHealth(int healthCount)
+        public void UpdateHealth(int healthCount, bool needRestart = true)
         {
-            _healthPointService.UpdateHealth(healthCount);
-
-            UpdateHealthCounter(healthCount);
-            RestartServicesIfNeed(healthCount);
+            if (_currentHealthCounter + healthCount > _maxHealthCounter)
+            {
+                _currentHealthCounter = _maxHealthCounter;
+                
+                _healthPointService.UpdateHealth(_maxHealthCounter - healthCount);
+            }
+            else
+            {
+                _currentHealthCounter += healthCount;
+                if (_currentHealthCounter < -1)
+                {
+                    _currentHealthCounter = -1;
+                }
+                
+                if (needRestart)
+                {
+                    UpdateHealthCounter();
+                    RestartServicesIfNeed(healthCount);
+                }
+                
+                _healthPointService.UpdateHealth(healthCount);
+            }    
         }
 
-        private void UpdateHealthCounter(int healthCount)
+        private void UpdateHealthCounter()
         {
-            _currentHealthCounter += healthCount;
-
             if (_currentHealthCounter < 0)
             {
                 LivesAreWasted?.Invoke();

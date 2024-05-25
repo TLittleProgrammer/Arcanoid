@@ -43,6 +43,14 @@
     "YellowBlock_AddShapeSpeed":
     {
       "blockKey": "10"
+    },
+    "RedBlock_Addhealth":
+    {
+      "blockKey": "12"
+    },
+    "RedBlock_MinusHealth":
+    {
+      "blockKey": "13"
     }
   }
 }
