@@ -23,15 +23,18 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.Helpers
         
         public void Destroy(GridItemData gridItemData, IEntityView entityView)
         {
-            _levelProgressService.TakeOneStep();
-
-            _poolContainer.RemoveItem(PoolTypeId.EntityView, entityView as EntityView);
-            foreach (OnTopSprites sprite in gridItemData.Sprites)
+            if (gridItemData.CurrentHealth <= 0)
             {
-                _poolContainer.RemoveItem(PoolTypeId.OnTopSprite, sprite);
-            }
+                _levelProgressService.TakeOneStep();
 
-            _ballSpeedUpdater.UpdateSpeed();
+                _poolContainer.RemoveItem(PoolTypeId.EntityView, entityView as EntityView);
+                foreach (OnTopSprites sprite in gridItemData.Sprites)
+                {
+                    _poolContainer.RemoveItem(PoolTypeId.OnTopSprite, sprite);
+                }
+
+                _ballSpeedUpdater.UpdateSpeed();
+            }
         }
 
         public void Destroy(BoostView view)

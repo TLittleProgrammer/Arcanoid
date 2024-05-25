@@ -44,6 +44,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroySer
                     EntityView = entityView
                 }
             });
+            gridItemData.CurrentHealth = 0;
             
             _simpleDestroyService.Destroy(gridItemData, entityView);
         }
