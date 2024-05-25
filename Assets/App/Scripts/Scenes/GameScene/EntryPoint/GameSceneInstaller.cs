@@ -10,6 +10,7 @@ using App.Scripts.Scenes.GameScene.Features.Ball.Collision;
 using App.Scripts.Scenes.GameScene.Features.Ball.Movement;
 using App.Scripts.Scenes.GameScene.Features.Ball.Movement.MoveVariants;
 using App.Scripts.Scenes.GameScene.Features.Boosts;
+using App.Scripts.Scenes.GameScene.Features.Boosts.UI;
 using App.Scripts.Scenes.GameScene.Features.Camera;
 using App.Scripts.Scenes.GameScene.Features.Effects;
 using App.Scripts.Scenes.GameScene.Features.Entities;
@@ -45,6 +46,8 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
         [SerializeField] private HealthPointViewParent _healthParent;
         [SerializeField] private List<RectTransformableView> _rectTransformableViews;
         [SerializeField] private WallView _wallPrefab;
+        [SerializeField] private BoostItemView _boostItemViewPrefab;
+        [SerializeField] private BoostsViewContainer _boostsViewContainer;
 
         [Inject] private PoolProviders _poolProviders;
         [Inject] private IStateMachine _projectStateMachine;
@@ -65,7 +68,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             BindPools();
             
             Container.Bind<IPoolContainer>().To<PoolContainer>().AsSingle();
-            FactoriesInstaller.Install(Container, _rootUIView);
+            FactoriesInstaller.Install(Container, _rootUIView, _boostItemViewPrefab);
             
             Container.Bind<IRectMousePositionChecker>().To<RectMousePositionChecker>().AsSingle().WithArguments(_rectTransformableViews);
             Container.BindInterfacesAndSelfTo<LevelProgressService>().AsSingle().WithArguments(_levelPackInfoView, _levelPackBackground);
@@ -103,6 +106,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.Bind<TextAsset>().FromInstance(_levelData).AsSingle();
             Container.Bind<PlayerView>().FromInstance(_playerShape).AsSingle();
             Container.Bind<BallView>().FromInstance(_ballView).AsSingle();
+            Container.Bind<BoostsViewContainer>().FromInstance(_boostsViewContainer).AsSingle();
         }
 
         private void BindHealthPointService()
