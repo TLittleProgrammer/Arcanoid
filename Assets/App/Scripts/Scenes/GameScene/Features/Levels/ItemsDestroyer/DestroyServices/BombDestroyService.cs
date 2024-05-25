@@ -133,7 +133,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroySer
                 GridItemData gridItemData = _levelViewUpdater.LevelGridItemData[new Vector2Int(position.x, position.y)];
                 IEntityView entityView = _levelLoader.Entities.First(x => x.GridPositionX == position.x && x.GridPositionY == position.y);
                 
-                if (gridItemData.CurrentHealth - damage <= 0)
+                if (gridItemData.CurrentHealth - damage <= 0 && entityView.BoxCollider2D.enabled)
                 {
                     entityView.BoxCollider2D.enabled = false;
                     result.Add(new()
