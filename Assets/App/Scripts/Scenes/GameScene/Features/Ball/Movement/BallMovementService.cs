@@ -50,7 +50,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Movement
 
         public void Restart()
         {
-            _ballFreeFlightMover.Restart();
+            _ballFreeFlightMover.Reset();
 
             _ballFollowMover = _ballFollowFollowMover;
             _ballFollowMover.AsyncInitialize();

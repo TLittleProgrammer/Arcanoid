@@ -32,6 +32,7 @@ using App.Scripts.Scenes.GameScene.Features.Settings;
 using App.Scripts.Scenes.GameScene.Features.TopSprites;
 using App.Scripts.Scenes.GameScene.Features.Walls;
 using UnityEngine;
+using UnityEngine.UI;
 using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.EntryPoint
@@ -50,6 +51,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
         [SerializeField] private WallView _wallPrefab;
         [SerializeField] private BoostItemView _boostItemViewPrefab;
         [SerializeField] private BoostsViewContainer _boostsViewContainer;
+        [SerializeField] private Image _menuButton;
 
         [Inject] private PoolProviders _poolProviders;
         [Inject] private IStateMachine _projectStateMachine;
@@ -98,6 +100,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.Bind<IRestartService>().To<RestartService>().AsSingle();
             Container.Bind<IItemViewService>().To<ItemViewService>().AsSingle();
             
+            ShowLevelAnimationInstaller.Install(Container);
             ItemsDestroyableInstaller.Install(Container);
             StateMachineInstaller.Install(Container, _gameLoopTickables, _projectStateMachine, _restartables, _levelPackInfoView, _restartablesForLoadNewLevel);
             
@@ -111,6 +114,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.Bind<TextAsset>().FromInstance(_levelData).AsSingle();
             Container.Bind<PlayerView>().FromInstance(_playerShape).AsSingle();
             Container.Bind<BallView>().FromInstance(_ballView).AsSingle();
+            Container.Bind<Image>().FromInstance(_menuButton).AsSingle();
             Container.Bind<BoostsViewContainer>().FromInstance(_boostsViewContainer).AsSingle();
         }
 
@@ -151,6 +155,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             BindPool<OnTopSprites, OnTopSprites.Pool>(PoolTypeId.OnTopSprite);
             BindPool<BoostView, BoostView.Pool>(PoolTypeId.Boosts);
             BindPool<BulletView, BulletView.Pool>(PoolTypeId.Bullets);
+            BindPool<BulletEffectView, BulletEffectView.Pool>(PoolTypeId.BulletEffect);
         }
 
         private void BindPool<TInstance, TPool>(PoolTypeId poolType) where TPool : IMemoryPool where TInstance : MonoBehaviour 

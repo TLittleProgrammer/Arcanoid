@@ -20,6 +20,9 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts
 
         public void Tick()
         {
+            if (!IsActive)
+                return;
+            
             foreach (BoostView view in _views)
             {
                 Vector3 delta = Vector2.down * _timeProvider.DeltaTime * BoostsConstants.BoostSpeed;
@@ -36,5 +39,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts
         {
             _views.Remove(boostView);
         }
+
+        public bool IsActive { get; set; }
     }
 }

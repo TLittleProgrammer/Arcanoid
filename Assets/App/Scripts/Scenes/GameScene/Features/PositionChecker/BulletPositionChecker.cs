@@ -32,6 +32,11 @@ namespace App.Scripts.Scenes.GameScene.Features.PositionChecker
             }
         }
 
+        public IEnumerable<BulletView> GetAll()
+        {
+            return _bullets;
+        }
+
         public void AddBullet(BulletView bulletView)
         {
             _bullets.Add(bulletView);
@@ -40,6 +45,16 @@ namespace App.Scripts.Scenes.GameScene.Features.PositionChecker
         public void RemoveBullet(BulletView bulletView)
         {
             _bullets.Remove(bulletView);
+        }
+
+        public void Restart()
+        {
+            foreach (BulletView bulletView in _bullets)
+            {
+                _bulletsPool.Despawn(bulletView);
+            }
+            
+            _bullets.Clear();
         }
     }
 }

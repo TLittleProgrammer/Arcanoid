@@ -1,8 +1,10 @@
-﻿namespace App.Scripts.Scenes.GameScene.Features.MiniGun
+﻿using App.Scripts.Scenes.GameScene.Features.Components;
+
+namespace App.Scripts.Scenes.GameScene.Features.MiniGun
 {
-    public interface IMiniGunService
+    public interface IMiniGunService : IActivable
     {
-        bool IsActive { get; set; }
+        bool ActiveMiniGun { get; set; }
         void RecalculateSpawnPositions();
     }
 }

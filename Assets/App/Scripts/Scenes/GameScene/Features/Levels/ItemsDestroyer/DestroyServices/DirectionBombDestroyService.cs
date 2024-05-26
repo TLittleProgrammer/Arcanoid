@@ -61,11 +61,13 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroySer
             {
                 if (i < firstEntityDatas.Count)
                 {
+                    firstEntityDatas[i].GridItemData.CurrentHealth = -1;
                     _itemsDestroyable.Destroy(firstEntityDatas[i].GridItemData, firstEntityDatas[i].EntityView);
                 }
                 
                 if (i < secondEntityDatas.Count)
                 {
+                    secondEntityDatas[i].GridItemData.CurrentHealth = -1;
                     _itemsDestroyable.Destroy(secondEntityDatas[i].GridItemData, secondEntityDatas[i].EntityView);
                 }
 

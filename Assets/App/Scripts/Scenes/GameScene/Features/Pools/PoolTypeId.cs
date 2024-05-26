@@ -8,5 +8,6 @@
         OnTopSprite     = 3,
         Boosts          = 4,
         Bullets         = 5,
+        BulletEffect    = 6,
     }
 }

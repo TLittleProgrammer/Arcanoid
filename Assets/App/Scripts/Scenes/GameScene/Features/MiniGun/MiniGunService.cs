@@ -19,9 +19,11 @@ namespace App.Scripts.Scenes.GameScene.Features.MiniGun
         private readonly IBulletPositionChecker _bulletPositionChecker;
         private readonly ILevelViewUpdater _levelViewUpdater;
         private readonly IBlockShakeService _shakeService;
+        private readonly BulletEffectView.Pool _bulletEffectsPool;
         private float _shapeWidth;
         private float _shapeHeight;
         private float _currentTime = 0f;
+        private bool _miniGunIsActive = false;
 
         public MiniGunService(
             PlayerView playerView,
@@ -30,7 +32,8 @@ namespace App.Scripts.Scenes.GameScene.Features.MiniGun
             ITimeProvider timeProvider,
             IBulletPositionChecker bulletPositionChecker,
             ILevelViewUpdater levelViewUpdater,
-            IBlockShakeService shakeService)
+            IBlockShakeService shakeService,
+            BulletEffectView.Pool bulletEffectsPool)
         {
             _playerView = playerView;
             _bulletsPool = bulletsPool;
@@ -39,12 +42,31 @@ namespace App.Scripts.Scenes.GameScene.Features.MiniGun
             _bulletPositionChecker = bulletPositionChecker;
             _levelViewUpdater = levelViewUpdater;
             _shakeService = shakeService;
+            _bulletEffectsPool = bulletEffectsPool;
 
             RecalculateSpawnPositions();
         }
 
-        public bool IsActive { get; set; }
-        
+        public bool ActiveMiniGun { get; set; }
+
+        public bool IsActive {
+            
+            get => _miniGunIsActive;
+            set
+            {
+                _miniGunIsActive = value;
+
+                if (_miniGunIsActive)
+                {
+                    UpdateVelocityForAllBullets(Vector2.up * _boostsSettings.BulletSpeed);
+                }
+                else
+                {
+                    UpdateVelocityForAllBullets(Vector2.zero);
+                }
+            }
+        }
+
         public void RecalculateSpawnPositions()
         {
             Bounds shapeBounds = _playerView.SpriteRenderer.bounds;
@@ -54,7 +76,7 @@ namespace App.Scripts.Scenes.GameScene.Features.MiniGun
 
         public void Tick()
         {
-            if (!IsActive)
+            if (!ActiveMiniGun || !IsActive)
                 return;
 
             _currentTime += _timeProvider.DeltaTime;
@@ -84,12 +106,24 @@ namespace App.Scripts.Scenes.GameScene.Features.MiniGun
             _bulletPositionChecker.AddBullet(secondBullet);
         }
 
+        private void UpdateVelocityForAllBullets(Vector2 value)
+        {
+            foreach (BulletView view in _bulletPositionChecker.GetAll())
+            {
+                view.Rigidbody2D.velocity = value;
+            }
+        }
+
         private void OnBulletCollided(BulletView bulletView, Collision2D collider)
         {
             if (collider.transform.TryGetComponent(out EntityView entity))
             {
                 _bulletPositionChecker.RemoveBullet(bulletView);
                 _bulletsPool.Despawn(bulletView);
+
+                BulletEffectView bulletEffectView = _bulletEffectsPool.Spawn();
+                bulletEffectView.transform.position = bulletView.transform.position + Vector3.down * 0.25f;
+                bulletEffectView.ParticleSystem.Play();
                 
                 _shakeService.Shake(entity.transform);
                 _levelViewUpdater.UpdateVisual(entity, _boostsSettings.BulletDamage);

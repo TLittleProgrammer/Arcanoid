@@ -76,8 +76,10 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroySer
                     EntityView = bomb
                 }
             });
+
+            GridItemData gridItemData = _levelViewUpdater.LevelGridItemData[bomb.GridPositionX, bomb.GridPositionY];
             
-            _simpleDestroyService.Destroy(new(-1), bomb);
+            _simpleDestroyService.Destroy(gridItemData, bomb);
 
             foreach (EntityData data in immediateEntityDatas)
             {

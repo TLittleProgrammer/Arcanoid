@@ -54,7 +54,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.Load
                     IEntityView spawnedBlock = _entityFactory.Create(index.ToString());
                 
                     spawnedBlock.Position = targetPosition;
-                    spawnedBlock.Scale = _gridPositionResolver.GetCellSize();
+                    spawnedBlock.Scale = Vector3.zero;
                     spawnedBlock.GridPositionX = j;
                     spawnedBlock.GridPositionY = i;
                     spawnedBlock.BoxCollider2D.enabled = true;

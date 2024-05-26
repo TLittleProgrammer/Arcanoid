@@ -8,6 +8,7 @@ using App.Scripts.Scenes.GameScene.Features.Dotween;
 using App.Scripts.Scenes.GameScene.Features.Grid;
 using App.Scripts.Scenes.GameScene.Features.LevelProgress;
 using App.Scripts.Scenes.GameScene.Features.Levels;
+using App.Scripts.Scenes.GameScene.Features.Levels.Animations;
 using App.Scripts.Scenes.GameScene.Features.Levels.Load;
 using App.Scripts.Scenes.GameScene.Features.Levels.View;
 using App.Scripts.Scenes.GameScene.Features.LevelView;
@@ -31,6 +32,7 @@ namespace App.Scripts.Scenes.GameScene.Features.States
         private readonly ILevelProgressService _levelProgressService;
         private readonly ITweenersLocator _tweenersLocator;
         private readonly ILevelPackInfoService _levelPackInfoService;
+        private readonly IShowLevelAnimation _showLevelAnimation;
         private readonly ILevelViewUpdater _levelViewUpdater;
         
 
@@ -45,7 +47,8 @@ namespace App.Scripts.Scenes.GameScene.Features.States
             IGridPositionResolver gridPositionResolver,
             ILevelProgressService levelProgressService,
             ITweenersLocator tweenersLocator,
-            ILevelPackInfoService levelPackInfoService)
+            ILevelPackInfoService levelPackInfoService,
+            IShowLevelAnimation showLevelAnimation)
         {
             _loadingScreen = loadingScreen;
             _restartables = restartables;
@@ -58,6 +61,7 @@ namespace App.Scripts.Scenes.GameScene.Features.States
             _levelProgressService = levelProgressService;
             _tweenersLocator = tweenersLocator;
             _levelPackInfoService = levelPackInfoService;
+            _showLevelAnimation = showLevelAnimation;
         }
 
         public async UniTask Enter()
@@ -82,7 +86,8 @@ namespace App.Scripts.Scenes.GameScene.Features.States
                 Sprite = data.LevelPack.GalacticIcon,
                 TargetScore = 0
             });
-            
+
+            await _showLevelAnimation.Show();
             _gameStateMachine.Enter<GameLoopState>();
         }
 

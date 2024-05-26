@@ -28,6 +28,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Movement.MoveVariants
                     _targetPositionable.Position.y + _initialOffset.y,
                     0f
                 );
+
+            _stickyOffset = _initialOffset;
             
             await UniTask.CompletedTask;
         }

@@ -3,8 +3,11 @@ using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Popup;
 using App.Scripts.General.RootUI;
 using App.Scripts.Scenes.GameScene.Features.Ball.Movement.MoveVariants;
+using App.Scripts.Scenes.GameScene.Features.Boosts;
+using App.Scripts.Scenes.GameScene.Features.Boosts.Interfaces;
 using App.Scripts.Scenes.GameScene.Features.Healthes;
 using App.Scripts.Scenes.GameScene.Features.LevelProgress;
+using App.Scripts.Scenes.GameScene.Features.MiniGun;
 using App.Scripts.Scenes.GameScene.Features.Popups;
 using App.Scripts.Scenes.GameScene.Features.Time;
 using Cysharp.Threading.Tasks;
@@ -22,6 +25,9 @@ namespace App.Scripts.Scenes.GameScene.Features.States
         private readonly ILevelProgressService _levelProgressService;
         private readonly IBallFreeFlightMover _ballFreeFlightMover;
         private readonly RootUIViewProvider _rootUIViewProvider;
+        private readonly IBoostContainer _boostContainer;
+        private readonly IBoostMoveService _boostMoveService;
+        private readonly IMiniGunService _miniGunService;
 
         private bool _stateIsEntered = false;
         private float _lastBallSpeed;
@@ -34,7 +40,10 @@ namespace App.Scripts.Scenes.GameScene.Features.States
             IStateMachine stateMachine,
             ILevelProgressService levelProgressService,
             IBallFreeFlightMover ballFreeFlightMover,
-            RootUIViewProvider rootUIViewProvider)
+            RootUIViewProvider rootUIViewProvider,
+            IBoostContainer boostContainer,
+            IBoostMoveService boostMoveService,
+            IMiniGunService miniGunService)
         {
             _tickables = tickables;
             _healthContainer = healthContainer;
@@ -44,27 +53,34 @@ namespace App.Scripts.Scenes.GameScene.Features.States
             _levelProgressService = levelProgressService;
             _ballFreeFlightMover = ballFreeFlightMover;
             _rootUIViewProvider = rootUIViewProvider;
+            _boostContainer = boostContainer;
+            _boostMoveService = boostMoveService;
+            _miniGunService = miniGunService;
         }
         
         public async UniTask Enter()
         {
+            _boostMoveService.IsActive = true;
+            _boostContainer.IsActive = true;
+            _miniGunService.IsActive = true;
             _stateIsEntered = true;
+            _ballFreeFlightMover.Continue();
+            
             _healthContainer.LivesAreWasted   += OnLivesAreWasted;
             _levelProgressService.LevelPassed += OnLevelPassed;
-
-            if (_ballFreeFlightMover.GeneralSpeed == 0f)
-            {
-                _ballFreeFlightMover.UpdateSpeed(_lastBallSpeed);
-            }
             
             await UniTask.CompletedTask;
         }
 
         public async UniTask Exit()
         {
+            _boostMoveService.IsActive = false;
+            _boostContainer.IsActive = false;
+            _miniGunService.IsActive = false;
             _stateIsEntered = false;
             _lastBallSpeed = _ballFreeFlightMover.VelocitySpeed;
-            _ballFreeFlightMover.UpdateSpeed(-_lastBallSpeed);
+            _ballFreeFlightMover.Reset();
+            
             _healthContainer.LivesAreWasted   -= OnLivesAreWasted;
             _levelProgressService.LevelPassed -= OnLevelPassed;
             

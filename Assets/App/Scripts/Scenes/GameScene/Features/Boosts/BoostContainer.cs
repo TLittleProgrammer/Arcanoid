@@ -19,6 +19,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts
         private readonly List<BoostData> _boosts;
         private Dictionary<BoostTypeId, BoostItemView> _viewsDictionary = new();
 
+        public bool IsActive { get; set; }
         public event Action<BoostTypeId> BoostEnded;
 
         public BoostContainer(
@@ -37,6 +38,11 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts
 
         public void Tick()
         {
+            if (!IsActive)
+            {
+                return;
+            }
+            
             for (int i = 0; i < _boosts.Count; i++)
             {
                 _boosts[i].Duration -= _timeProvider.DeltaTime;
@@ -163,6 +169,18 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts
 
                 _ => 0f
             };
+        }
+
+        public void Restart()
+        {
+            IsActive = false;
+            foreach (BoostData boostData in _boosts)
+            {
+                RemoveItem(boostData.BoostTypeId);
+                BoostEnded?.Invoke(boostData.BoostTypeId);
+            }
+            
+            _boosts.Clear();
         }
     }
 }
