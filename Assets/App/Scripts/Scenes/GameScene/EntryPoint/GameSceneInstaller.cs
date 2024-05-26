@@ -151,6 +151,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             BindPool<OnTopSprites, OnTopSprites.Pool>(PoolTypeId.OnTopSprite);
             BindPool<BoostView, BoostView.Pool>(PoolTypeId.Boosts);
             BindPool<BulletView, BulletView.Pool>(PoolTypeId.Bullets);
+            BindPool<BulletEffectView, BulletEffectView.Pool>(PoolTypeId.BulletEffect);
         }
 
         private void BindPool<TInstance, TPool>(PoolTypeId poolType) where TPool : IMemoryPool where TInstance : MonoBehaviour 

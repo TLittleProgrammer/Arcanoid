@@ -19,6 +19,7 @@ namespace App.Scripts.Scenes.GameScene.Features.MiniGun
         private readonly IBulletPositionChecker _bulletPositionChecker;
         private readonly ILevelViewUpdater _levelViewUpdater;
         private readonly IBlockShakeService _shakeService;
+        private readonly BulletEffectView.Pool _bulletEffectsPool;
         private float _shapeWidth;
         private float _shapeHeight;
         private float _currentTime = 0f;
@@ -31,7 +32,8 @@ namespace App.Scripts.Scenes.GameScene.Features.MiniGun
             ITimeProvider timeProvider,
             IBulletPositionChecker bulletPositionChecker,
             ILevelViewUpdater levelViewUpdater,
-            IBlockShakeService shakeService)
+            IBlockShakeService shakeService,
+            BulletEffectView.Pool bulletEffectsPool)
         {
             _playerView = playerView;
             _bulletsPool = bulletsPool;
@@ -40,6 +42,7 @@ namespace App.Scripts.Scenes.GameScene.Features.MiniGun
             _bulletPositionChecker = bulletPositionChecker;
             _levelViewUpdater = levelViewUpdater;
             _shakeService = shakeService;
+            _bulletEffectsPool = bulletEffectsPool;
 
             RecalculateSpawnPositions();
         }
@@ -118,6 +121,10 @@ namespace App.Scripts.Scenes.GameScene.Features.MiniGun
             {
                 _bulletPositionChecker.RemoveBullet(bulletView);
                 _bulletsPool.Despawn(bulletView);
+
+                BulletEffectView bulletEffectView = _bulletEffectsPool.Spawn();
+                bulletEffectView.transform.position = bulletView.transform.position + Vector3.down * 0.25f;
+                bulletEffectView.ParticleSystem.Play();
                 
                 _shakeService.Shake(entity.transform);
                 _levelViewUpdater.UpdateVisual(entity, _boostsSettings.BulletDamage);
