@@ -44,8 +44,10 @@ namespace App.Scripts.Scenes.GameScene.Features.MiniGun
             RecalculateSpawnPositions();
         }
 
-        public bool ActiveMiniGun
-        {
+        public bool ActiveMiniGun { get; set; }
+
+        public bool IsActive {
+            
             get => _miniGunIsActive;
             set
             {
@@ -53,25 +55,16 @@ namespace App.Scripts.Scenes.GameScene.Features.MiniGun
 
                 if (_miniGunIsActive)
                 {
-                    UpdateVelocity(Vector2.up * _boostsSettings.BulletSpeed);
+                    UpdateVelocityForAllBullets(Vector2.up * _boostsSettings.BulletSpeed);
                 }
                 else
                 {
-                    UpdateVelocity(Vector2.zero);
+                    UpdateVelocityForAllBullets(Vector2.zero);
                 }
             }
+            
         }
 
-        private void UpdateVelocity(Vector2 value)
-        {
-            foreach (BulletView view in _bulletsPool.InactiveItems)
-            {
-                view.Rigidbody2D.velocity = value;
-            }
-        }
-
-        public bool IsActive { get; set; }
-        
         public void RecalculateSpawnPositions()
         {
             Bounds shapeBounds = _playerView.SpriteRenderer.bounds;
@@ -109,6 +102,14 @@ namespace App.Scripts.Scenes.GameScene.Features.MiniGun
             
             _bulletPositionChecker.AddBullet(firstBullet);
             _bulletPositionChecker.AddBullet(secondBullet);
+        }
+
+        private void UpdateVelocityForAllBullets(Vector2 value)
+        {
+            foreach (BulletView view in _bulletPositionChecker.GetAll())
+            {
+                view.Rigidbody2D.velocity = value;
+            }
         }
 
         private void OnBulletCollided(BulletView bulletView, Collision2D collider)

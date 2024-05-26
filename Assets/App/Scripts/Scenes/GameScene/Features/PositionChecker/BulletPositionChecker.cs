@@ -32,6 +32,11 @@ namespace App.Scripts.Scenes.GameScene.Features.PositionChecker
             }
         }
 
+        public IEnumerable<BulletView> GetAll()
+        {
+            return _bullets;
+        }
+
         public void AddBullet(BulletView bulletView)
         {
             _bullets.Add(bulletView);
