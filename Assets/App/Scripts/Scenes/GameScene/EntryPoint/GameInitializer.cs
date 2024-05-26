@@ -135,7 +135,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             
             _levelProgressService.CalculateStepByLevelData(levelData);
             await _healthPointService.AsyncInitialize(levelData);
-            await _healthContainer.AsyncInitialize(levelData, new IRestartable[] {_ballMovementService, _playerShapeMover});
+            await _healthContainer.AsyncInitialize(levelData, new IRestartable[] {_playerShapeMover, _ballMovementService});
         }
     }
 }

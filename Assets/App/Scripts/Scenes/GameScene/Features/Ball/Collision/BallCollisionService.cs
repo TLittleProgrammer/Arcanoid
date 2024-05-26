@@ -1,12 +1,9 @@
-﻿using System;
-using App.Scripts.Scenes.GameScene.Features.Blocks;
-using App.Scripts.Scenes.GameScene.Features.Components;
+﻿using App.Scripts.Scenes.GameScene.Features.Blocks;
 using App.Scripts.Scenes.GameScene.Features.Effects;
 using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.Healthes;
 using App.Scripts.Scenes.GameScene.Features.Levels.View;
 using App.Scripts.Scenes.GameScene.Features.ScreenInfo;
-using DG.Tweening;
 using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Ball.Collision
@@ -53,7 +50,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Collision
                 PlayEffects(entityView);
 
                 _blockShakeService.Shake(entityView);
-
                 _levelViewUpdater.UpdateVisual(entityView, 1);
             }
         }
