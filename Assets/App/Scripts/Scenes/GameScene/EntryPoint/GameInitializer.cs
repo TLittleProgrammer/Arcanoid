@@ -9,6 +9,7 @@ using App.Scripts.Scenes.GameScene.Features.Grid;
 using App.Scripts.Scenes.GameScene.Features.Healthes;
 using App.Scripts.Scenes.GameScene.Features.LevelProgress;
 using App.Scripts.Scenes.GameScene.Features.Levels;
+using App.Scripts.Scenes.GameScene.Features.Levels.Animations;
 using App.Scripts.Scenes.GameScene.Features.Levels.Load;
 using App.Scripts.Scenes.GameScene.Features.PlayerShape.Move;
 using App.Scripts.Scenes.GameScene.Features.States;
@@ -41,6 +42,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
         private readonly PopupState _popupState;
         private readonly LooseState _looseState;
         private readonly IStateMachine _stateMachine;
+        private readonly IShowLevelAnimation _showLevelAnimation;
 
         public GameInitializer(
             IGridPositionResolver gridPositionResolver,
@@ -62,7 +64,8 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             LoadNextLevelState loadNextLevelState,
             PopupState popupState,
             LooseState looseState,
-            IStateMachine stateMachine)
+            IStateMachine stateMachine,
+            IShowLevelAnimation showLevelAnimation)
         {
             _gridPositionResolver = gridPositionResolver;
             _popupProvider = popupProvider;
@@ -84,6 +87,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             _popupState = popupState;
             _looseState = looseState;
             _stateMachine = stateMachine;
+            _showLevelAnimation = showLevelAnimation;
         }
         
         public async void Initialize()
@@ -100,7 +104,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             InitializeStateMachine();
         }
 
-        private void InitializeStateMachine()
+        private async void InitializeStateMachine()
         {
             IExitableState[] states =
             {
@@ -113,7 +117,8 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
                 _looseState,
             };
 
-            _stateMachine.AsyncInitialize(states);
+            await _stateMachine.AsyncInitialize(states);
+            await _showLevelAnimation.Show();
             
             _stateMachine.Enter<GameLoopState>();
         }

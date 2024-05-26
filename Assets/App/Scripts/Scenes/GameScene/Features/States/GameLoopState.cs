@@ -68,12 +68,7 @@ namespace App.Scripts.Scenes.GameScene.Features.States
             
             _healthContainer.LivesAreWasted   += OnLivesAreWasted;
             _levelProgressService.LevelPassed += OnLevelPassed;
-
-       /*     if (_ballFreeFlightMover.GeneralSpeed == 0f)
-            {
-                _ballFreeFlightMover.UpdateSpeed(_lastBallSpeed);
-            }
-         */   
+            
             await UniTask.CompletedTask;
         }
 

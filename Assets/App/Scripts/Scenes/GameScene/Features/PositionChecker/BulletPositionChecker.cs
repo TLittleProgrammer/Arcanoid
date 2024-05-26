@@ -46,5 +46,15 @@ namespace App.Scripts.Scenes.GameScene.Features.PositionChecker
         {
             _bullets.Remove(bulletView);
         }
+
+        public void Restart()
+        {
+            foreach (BulletView bulletView in _bullets)
+            {
+                _bulletsPool.Despawn(bulletView);
+            }
+            
+            _bullets.Clear();
+        }
     }
 }
