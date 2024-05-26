@@ -38,6 +38,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
             Container.Bind<HealthAndDeathBoost>().AsSingle();
             Container.BindInterfacesAndSelfTo<StickyBoostActivator>().AsSingle();
             Container.BindInterfacesAndSelfTo<FireballBoostActivator>().AsSingle();
+            Container.BindInterfacesAndSelfTo<MiniGunBoostActivator>().AsSingle();
 
             Container.BindInterfacesAndSelfTo<BoostsActivator>().AsSingle();
         }

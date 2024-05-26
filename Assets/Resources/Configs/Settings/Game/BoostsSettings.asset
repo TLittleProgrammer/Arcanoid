@@ -98,3 +98,8 @@ MonoBehaviour:
   AddHealth: 1
   MinusHealth: 2
   FireballDuration: 4
+  StickyDuration: 5
+  MiniGunDuration: 7
+  BulletTimeOffset: 0.75
+  BulletDamage: 1
+  BulletSpeed: 5

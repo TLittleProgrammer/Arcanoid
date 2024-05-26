@@ -23,5 +23,6 @@
         StickyPlatform = 13,
         
         ChainBomb = 14,
+        MiniGun   = 15,
     }
 }

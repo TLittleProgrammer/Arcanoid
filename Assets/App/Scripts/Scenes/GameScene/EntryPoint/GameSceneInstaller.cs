@@ -21,6 +21,7 @@ using App.Scripts.Scenes.GameScene.Features.Healthes.View;
 using App.Scripts.Scenes.GameScene.Features.LevelProgress;
 using App.Scripts.Scenes.GameScene.Features.Levels;
 using App.Scripts.Scenes.GameScene.Features.LevelView;
+using App.Scripts.Scenes.GameScene.Features.MiniGun;
 using App.Scripts.Scenes.GameScene.Features.PlayerShape;
 using App.Scripts.Scenes.GameScene.Features.PlayerShape.Collisions;
 using App.Scripts.Scenes.GameScene.Features.PlayerShape.Move;
@@ -74,6 +75,8 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             
             Container.Bind<IRectMousePositionChecker>().To<RectMousePositionChecker>().AsSingle().WithArguments(_rectTransformableViews);
             Container.BindInterfacesAndSelfTo<LevelProgressService>().AsSingle().WithArguments(_levelPackInfoView, _levelPackBackground);
+            Container.BindInterfacesAndSelfTo<BulletPositionChecker>().AsSingle();
+            Container.BindInterfacesAndSelfTo<MiniGunService>().AsSingle();
             Container.Bind<ICameraService>().To<CameraService>().AsSingle().WithArguments(_camera);
 
             ScreenInfoProviderInstaller.Install(Container);
@@ -147,6 +150,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             BindPool<HealthPointView, HealthPointView.Pool>(PoolTypeId.HealthPointView);
             BindPool<OnTopSprites, OnTopSprites.Pool>(PoolTypeId.OnTopSprite);
             BindPool<BoostView, BoostView.Pool>(PoolTypeId.Boosts);
+            BindPool<BulletView, BulletView.Pool>(PoolTypeId.Bullets);
         }
 
         private void BindPool<TInstance, TPool>(PoolTypeId poolType) where TPool : IMemoryPool where TInstance : MonoBehaviour 

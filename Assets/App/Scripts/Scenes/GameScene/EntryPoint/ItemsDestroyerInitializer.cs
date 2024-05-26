@@ -45,6 +45,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
                 BuildDestroyDataService(BoostTypeId.Fireball, _ballSpeedBoostsDestroyer),
                 BuildDestroyDataService(BoostTypeId.ChainBomb, _chainDestroyer),
                 BuildDestroyDataService(BoostTypeId.StickyPlatform, _ballSpeedBoostsDestroyer),
+                BuildDestroyDataService(BoostTypeId.MiniGun, _ballSpeedBoostsDestroyer),
                 BuildDestroyDataService(BoostTypeId.HorizontalBomb, _directionBombDestroyService),
                 BuildDestroyDataService(BoostTypeId.VerticalBomb, _directionBombDestroyService),
             });

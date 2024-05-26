@@ -71,6 +71,10 @@
     "ChainBomb":
     {
       "blockKey": "18"
+    },
+    "MiniGun":
+    {
+      "blockKey": "19"
     }
   }
 }

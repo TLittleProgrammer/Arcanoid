@@ -68,15 +68,16 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts
 
         private void CheckBallSpeedBoost(BoostTypeId boostTypeId)
         {
-            if (UpdateDurationForBoosts(boostTypeId, BoostTypeId.Fireball)) return;
-            if (UpdateDurationForBoosts(boostTypeId, BoostTypeId.StickyPlatform)) return;
+            if (UpdateDurationForBoosts(boostTypeId, BoostTypeId.Fireball, _boostsSettings.FireballDuration)) return;
+            if (UpdateDurationForBoosts(boostTypeId, BoostTypeId.StickyPlatform, _boostsSettings.StickyDuration)) return;
+            if (UpdateDurationForBoosts(boostTypeId, BoostTypeId.MiniGun, _boostsSettings.MiniGunDuration)) return;
             
             BallSpeed(boostTypeId, BoostTypeId.BallAcceleration, BoostTypeId.BallSlowdown, _boostsSettings.BallSpeedDuration);
             BallSpeed(boostTypeId, BoostTypeId.PlayerShapeAddSize, BoostTypeId.PlayerShapeMinusSize, _boostsSettings.ShapeSizeDuration);
             BallSpeed(boostTypeId, BoostTypeId.PlayerShapeAddSpeed, BoostTypeId.PlayerShapeMinusSpeed, _boostsSettings.ShapeSpeedDuration);
         }
 
-        private bool UpdateDurationForBoosts(BoostTypeId boostTypeId, BoostTypeId checkBoost)
+        private bool UpdateDurationForBoosts(BoostTypeId boostTypeId, BoostTypeId checkBoost, float duration)
         {
             if (boostTypeId == checkBoost)
             {
@@ -86,7 +87,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts
                 }
                 else
                 {
-                    _boosts.Add(new(checkBoost, _boostsSettings.FireballDuration));
+                    _boosts.Add(new(checkBoost, duration));
                     CreateUiBoost(checkBoost);
                 }
 
@@ -158,6 +159,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts
                 BoostTypeId.PlayerShapeMinusSpeed => _boostsSettings.ShapeSpeedDuration,
                 BoostTypeId.Fireball => _boostsSettings.FireballDuration,
                 BoostTypeId.StickyPlatform => _boostsSettings.StickyDuration,
+                BoostTypeId.MiniGun => _boostsSettings.MiniGunDuration,
 
                 _ => 0f
             };

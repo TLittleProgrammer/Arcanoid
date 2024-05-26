@@ -14,10 +14,10 @@ TagManager:
   - Popups
   - BallCollisioned
   - PlayerView
-  - 
-  - 
-  - 
-  - 
+  - Ball
+  - Bullet
+  - Walls
+  - BoostView
   - 
   - 
   - 
