@@ -7,30 +7,30 @@ namespace App.Scripts.Scenes.GameScene.Features.Blocks
 {
     public sealed class BlockShakeService : IBlockShakeService
     {
-        private Dictionary<IEntityView, Sequence> _sequences = new();
+        private Dictionary<Transform, Sequence> _sequences = new();
 
-        public void Shake(IEntityView entityView)
+        public void Shake(Transform transform)
         {
-            if (_sequences.ContainsKey(entityView))
+            if (_sequences.ContainsKey(transform))
             {
-                _sequences[entityView].Restart();
+                _sequences[transform].Restart();
                 return;
             }
 
             Sequence sequence = DOTween.Sequence();
 
-            Vector2 initialPoint = entityView.Position;
+            Vector3 initialPoint = transform.position;
             
             sequence
-                .Append(entityView.GameObject.transform.DOShakePosition(0.5f, 0.15f))
+                .Append(transform.DOShakePosition(0.5f, 0.15f))
                 .OnComplete(() =>
                 {
-                    entityView.Position = initialPoint;
+                    transform.position = initialPoint;
                     sequence.Kill();
-                    _sequences.Remove(entityView);
+                    _sequences.Remove(transform);
                 });
             
-            _sequences.Add(entityView, sequence);
+            _sequences.Add(transform, sequence);
         }
     }
 }

@@ -11,6 +11,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Camera
             _camera = camera;
         }
 
+        public UnityEngine.Camera Camera => _camera;
+
         public Vector2 ScreenToWorldPoint(Vector2 screenPoint)
         {
             return _camera.ScreenToWorldPoint(screenPoint);
