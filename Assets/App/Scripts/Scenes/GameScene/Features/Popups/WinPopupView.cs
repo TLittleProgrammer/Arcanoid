@@ -23,6 +23,9 @@ namespace App.Scripts.Scenes.GameScene.Features.Popups
         [SerializeField] private RectTransform _textFalling;
         [SerializeField] private RectTransform _targetPositionForTextFalling;
         [SerializeField] private EnergyView _energyView;
+        [SerializeField] private TMP_Text _winText;
+        [SerializeField] private Transform _garbargePoint;
+        [SerializeField] private Transform _buttonInitialPoint;
 
         private WinContinueButtonAnimationSettings _winContinueButtonAnimationSettings;
         private ITweenersLocator _tweenersLocator;
@@ -45,10 +48,18 @@ namespace App.Scripts.Scenes.GameScene.Features.Popups
 
         public override async UniTask Show()
         {
-            await transform.DOScale(Vector3.one, 1f).From(Vector3.zero);
+            Vector2 initialTextPosition = _winText.transform.position;
+            Vector2 initialButtonPosition = _continueButton.transform.position;
+            UpdatePositions();
+
+
+            await transform.DOScale(Vector3.one, 0.5f).From(Vector3.zero);
 
             _textFalling.DOMoveY(_targetPositionForTextFalling.transform.position.y, 0.5f).SetEase(Ease.OutBounce).ToUniTask().Forget();
-
+            
+            _winText.transform.DOMove(initialTextPosition, 2f).SetEase(Ease.InOutElastic).SetDelay(0.25f).ToUniTask().Forget();
+            _continueButton.transform.DOMove(initialButtonPosition, 2f).SetEase(Ease.InOutElastic).SetDelay(0.75f).ToUniTask().Forget();
+            
             Sequence sequence = DOTween.Sequence();
 
             sequence.Append(
@@ -64,6 +75,12 @@ namespace App.Scripts.Scenes.GameScene.Features.Popups
 
 
             _tweenersLocator.AddSequence(sequence);
+        }
+
+        private void UpdatePositions()
+        {
+            _winText.transform.position = _garbargePoint.position;
+            _continueButton.transform.position = _buttonInitialPoint.position;
         }
 
         public override UniTask Close()
