@@ -91,7 +91,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Popups
                 .Append(_restartButton.transform.DOScale(Vector3.zero, 0.25f).From(Vector3.one).SetEase(Ease.OutBounce))
                 .Append(transform.DOScale(Vector3.zero, 1f).From(Vector3.one)));
 
-            await UniTask.CompletedTask;
+            await _sequence.ToUniTask();
         }
     }
 }
