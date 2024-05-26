@@ -1,0 +1,21 @@
+{
+  "HealthCount": 3,
+  "GridSize": {
+    "x": 2,
+    "y": 1
+  },
+  "OffsetBetweenCells": {
+    "x": 0,
+    "y": 0
+  },
+  "HorizontalOffset": 0,
+  "TopOffset": 0,
+  "Grid": [
+    [
+      1
+    ],
+    [
+      1
+    ]
+  ]
+}

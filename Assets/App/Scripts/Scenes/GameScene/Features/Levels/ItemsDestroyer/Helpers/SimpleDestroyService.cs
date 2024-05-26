@@ -2,10 +2,10 @@
 using App.Scripts.Scenes.GameScene.Features.Boosts;
 using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.LevelProgress;
-using App.Scripts.Scenes.GameScene.Features.Levels.AssetManagement;
 using App.Scripts.Scenes.GameScene.Features.Levels.Data;
 using App.Scripts.Scenes.GameScene.Features.Pools;
 using App.Scripts.Scenes.GameScene.Features.TopSprites;
+using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.Helpers
 {
@@ -29,6 +29,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.Helpers
         {
             if (gridItemData.CurrentHealth <= 0 && gridItemData.CanGetDamage)
             {
+                entityView.BoxCollider2D.enabled = false;
                 _levelProgressService.TakeOneStep();
 
                 _poolContainer.RemoveItem(PoolTypeId.EntityView, entityView as EntityView);

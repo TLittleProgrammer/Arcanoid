@@ -19,7 +19,9 @@
         HorizontalBomb   = 10,
         VerticalBomb     = 11,
         
-        Fireball     = 12,
+        Fireball       = 12,
         StickyPlatform = 13,
+        
+        ChainBomb = 14,
     }
 }
