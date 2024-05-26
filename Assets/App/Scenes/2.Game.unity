@@ -217,6 +217,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 5.623047
       objectReference: {fileID: 0}
+    - target: {fileID: 1376574120967130573, guid: 47e573d43d2df6846b43223a3844087e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2311412409436705393, guid: 47e573d43d2df6846b43223a3844087e, type: 3}
       propertyPath: _localeKey
       value: Menu
@@ -755,7 +759,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _camera: {fileID: 519420031}
   _header: {fileID: 333490954}
-  _levelData: {fileID: 4900000, guid: 47cd837f452f75f47a6c24454c967444, type: 3}
+  _levelData: {fileID: 4900000, guid: 50d936abb811c904bb9d05c338750152, type: 3}
   _playerShape: {fileID: 206752683}
   _ballView: {fileID: 4526333472807322575}
   _levelPackInfoView: {fileID: 333490955}
@@ -945,6 +949,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1242099201}
     m_Modifications:
+    - target: {fileID: 2728415224844519704, guid: da9f09be41c91414ba6532d0675dd16e, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 4526333473040182193, guid: da9f09be41c91414ba6532d0675dd16e, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -992,6 +1000,10 @@ PrefabInstance:
     - target: {fileID: 4526333473040182195, guid: da9f09be41c91414ba6532d0675dd16e, type: 3}
       propertyPath: m_Name
       value: BallView
+      objectReference: {fileID: 0}
+    - target: {fileID: 4526333473040182195, guid: da9f09be41c91414ba6532d0675dd16e, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 7073774114340189019, guid: da9f09be41c91414ba6532d0675dd16e, type: 3}
       propertyPath: m_AngularDrag

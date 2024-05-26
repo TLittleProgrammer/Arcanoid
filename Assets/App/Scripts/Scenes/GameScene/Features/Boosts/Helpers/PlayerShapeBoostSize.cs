@@ -1,5 +1,6 @@
 ﻿using App.Scripts.Scenes.GameScene.Features.Boosts.Interfaces;
 using App.Scripts.Scenes.GameScene.Features.Entities;
+using App.Scripts.Scenes.GameScene.Features.MiniGun;
 using App.Scripts.Scenes.GameScene.Features.PlayerShape;
 using App.Scripts.Scenes.GameScene.Features.PositionChecker;
 using App.Scripts.Scenes.GameScene.Features.Settings;
@@ -13,17 +14,20 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.Helpers
         private readonly IShapePositionChecker _shapePositionChecker;
         private readonly BoostsSettings _boostsSettings;
         private readonly IBoostContainer _boostContainer;
+        private readonly IMiniGunService _miniGunService;
 
         public PlayerShapeBoostSize(
             PlayerView playerView,
             IShapePositionChecker shapePositionChecker,
             BoostsSettings boostsSettings,
-            IBoostContainer boostContainer)
+            IBoostContainer boostContainer,
+            IMiniGunService miniGunService)
         {
             _playerView = playerView;
             _shapePositionChecker = shapePositionChecker;
             _boostsSettings = boostsSettings;
             _boostContainer = boostContainer;
+            _miniGunService = miniGunService;
 
             _boostContainer.BoostEnded += OnBoostEnded;
         }
@@ -36,6 +40,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.Helpers
                 
                 _shapePositionChecker.ChangeShapeScale(_boostsSettings.AddPercent);
                 _playerView.transform.localScale = Vector3.one * _boostsSettings.AddPercent;
+                
+                _miniGunService.RecalculateSpawnPositions();
             }
             else
             {
@@ -43,6 +49,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.Helpers
                 
                 _shapePositionChecker.ChangeShapeScale(_boostsSettings.MinusPercent);
                 _playerView.transform.localScale = Vector3.one * _boostsSettings.MinusPercent;
+                
+                _miniGunService.RecalculateSpawnPositions();
             }
         }
 
@@ -54,6 +62,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.Helpers
                 
                 _shapePositionChecker.ChangeShapeScale(1f);
                 _playerView.transform.localScale = Vector3.one;
+                
+                _miniGunService.RecalculateSpawnPositions();
             }
         }
     }

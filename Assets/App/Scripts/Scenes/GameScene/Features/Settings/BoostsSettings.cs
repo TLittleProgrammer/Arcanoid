@@ -41,5 +41,14 @@ namespace App.Scripts.Scenes.GameScene.Features.Settings
         
         [BoxGroup("Sticly")]
         public float StickyDuration = 5f;
+        
+        [BoxGroup("MiniGun")]
+        public float MiniGunDuration;
+        [BoxGroup("MiniGun")]
+        public float BulletTimeOffset = 0.25f;
+        [BoxGroup("MiniGun")]
+        public int BulletDamage = 1;
+        [BoxGroup("MiniGun")]
+        public float BulletSpeed = 1f;
     }
 }

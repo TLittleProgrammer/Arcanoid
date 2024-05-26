@@ -10,6 +10,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities
         Sprite MainSprite { get; set; }
         Sprite OnTopSprite { get; set; }
         BoostTypeId BoostTypeId { get; set; }
+        int EntityId { get; set; }
         
         public class Factory : PlaceholderFactory<string, IEntityView>
         {

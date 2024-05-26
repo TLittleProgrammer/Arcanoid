@@ -26,6 +26,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities
         }
 
         public BoostTypeId BoostTypeId { get; set; }
+        public int EntityId { get; set; }
 
         public Vector3 Position
         {

@@ -12,7 +12,7 @@ using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroyServices
 {
-    public class DirectionBombDestroyService : IBlockDestroyService
+    public class DirectionBombDestroyService : DestroyService
     {
         private readonly ILevelViewUpdater _levelViewUpdater;
         private readonly IItemsDestroyable _itemsDestroyable;
@@ -25,7 +25,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroySer
             IItemsDestroyable itemsDestroyable,
             ILevelLoader levelLoader,
             SimpleDestroyService simpleDestroyService,
-            IAnimatedDestroyService animatedDestroyService)
+            IAnimatedDestroyService animatedDestroyService) : base(levelViewUpdater)
         {
             _levelViewUpdater = levelViewUpdater;
             _itemsDestroyable = itemsDestroyable;
@@ -34,13 +34,13 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroySer
             _animatedDestroyService = animatedDestroyService;
         }
         
-        public void Destroy(GridItemData gridItemData, IEntityView entityView)
+        public override void Destroy(GridItemData gridItemData, IEntityView entityView)
         {
             GetDirection(entityView, out Direction firstDirection, out Direction secondDirection);
 
             int2 initialPoint = new int2(entityView.GridPositionX, entityView.GridPositionY);
-            int2[] firstDirectionPoints = GetAllPoints(initialPoint, firstDirection);
-            int2[] secondDirectionPoints = GetAllPoints(initialPoint, secondDirection);
+            int2[] firstDirectionPoints = GetAllPointsByDirection(initialPoint, firstDirection);
+            int2[] secondDirectionPoints = GetAllPointsByDirection(initialPoint, secondDirection);
 
             List<EntityData> firstEntityDatas = GetEntityDatas(firstDirectionPoints);
             List<EntityData> secondEntityDatas = GetEntityDatas(secondDirectionPoints);
@@ -96,27 +96,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroySer
             }
 
             return result;
-        }
-
-
-
-        private int2[] GetAllPoints(int2 initialPoint, Direction direction)
-        {
-            List<int2> result = new();
-
-            initialPoint += direction.ToVector();
-            
-            while (initialPoint.x >= 0 &&
-                   initialPoint.y >= 0 &&
-                   initialPoint.x < _levelViewUpdater.LevelGridItemData.Width &&
-                   initialPoint.y < _levelViewUpdater.LevelGridItemData.Height)
-            {
-                result.Add(initialPoint);
-                initialPoint += direction.ToVector();
-            }
-
-
-            return result.ToArray();
         }
 
         private void GetDirection(IEntityView entityView, out Direction firstDirection, out Direction secondDirection)

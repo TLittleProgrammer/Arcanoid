@@ -67,6 +67,14 @@
     "RedBlock_Sticky":
     {
       "blockKey": "17"
+    },
+    "ChainBomb":
+    {
+      "blockKey": "18"
+    },
+    "MiniGun":
+    {
+      "blockKey": "19"
     }
   }
 }

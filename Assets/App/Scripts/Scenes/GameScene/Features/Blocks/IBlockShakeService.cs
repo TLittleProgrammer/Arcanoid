@@ -1,10 +1,9 @@
-﻿using App.Scripts.Scenes.GameScene.Features.Entities;
-using Zenject.ReflectionBaking.Mono.CompilerServices.SymbolWriter;
+﻿using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Blocks
 {
     public interface IBlockShakeService
     {
-        void Shake(IEntityView entityView);
+        void Shake(Transform transform);
     }
 }

@@ -58,6 +58,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.Load
                     spawnedBlock.GridPositionX = j;
                     spawnedBlock.GridPositionY = i;
                     spawnedBlock.BoxCollider2D.enabled = true;
+                    spawnedBlock.EntityId = index;
 
 
                     _entityViews.Add(spawnedBlock);

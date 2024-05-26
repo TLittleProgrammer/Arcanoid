@@ -11,18 +11,21 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
         private readonly BombDestroyService _bombDestroyService;
         private readonly BallSpeedBoostsDestroyer _ballSpeedBoostsDestroyer;
         private readonly DirectionBombDestroyService _directionBombDestroyService;
+        private readonly ChainDestroyer _chainDestroyer;
 
         public ItemsDestroyerInitializer(
             IItemsDestroyable itemsDestroyable,
             BombDestroyService bombDestroyService,
             BallSpeedBoostsDestroyer ballSpeedBoostsDestroyer,
-            DirectionBombDestroyService directionBombDestroyService
+            DirectionBombDestroyService directionBombDestroyService,
+            ChainDestroyer chainDestroyer
             )
         {
             _itemsDestroyable = itemsDestroyable;
             _bombDestroyService = bombDestroyService;
             _ballSpeedBoostsDestroyer = ballSpeedBoostsDestroyer;
             _directionBombDestroyService = directionBombDestroyService;
+            _chainDestroyer = chainDestroyer;
         }
         
         public void Initialize()
@@ -40,7 +43,9 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
                 BuildDestroyDataService(BoostTypeId.AddHealth, _ballSpeedBoostsDestroyer),
                 BuildDestroyDataService(BoostTypeId.MinusHealth, _ballSpeedBoostsDestroyer),
                 BuildDestroyDataService(BoostTypeId.Fireball, _ballSpeedBoostsDestroyer),
+                BuildDestroyDataService(BoostTypeId.ChainBomb, _chainDestroyer),
                 BuildDestroyDataService(BoostTypeId.StickyPlatform, _ballSpeedBoostsDestroyer),
+                BuildDestroyDataService(BoostTypeId.MiniGun, _ballSpeedBoostsDestroyer),
                 BuildDestroyDataService(BoostTypeId.HorizontalBomb, _directionBombDestroyService),
                 BuildDestroyDataService(BoostTypeId.VerticalBomb, _directionBombDestroyService),
             });

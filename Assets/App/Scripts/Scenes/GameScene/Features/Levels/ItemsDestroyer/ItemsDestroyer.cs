@@ -39,10 +39,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer
                 return;
             }
 
-            await _animatedDestroyService.Animate(new()
-            {
-                new(gridItemData, entityView)
-            });
+            await _animatedDestroyService.Animate(entityView);
             _simpleDestroyService.Destroy(gridItemData, entityView);
         }
     }

@@ -60,16 +60,21 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.View
 
                     IEntityView entityView = entityViews.First(x => x.GridPositionX == i && x.GridPositionY == j);
                     
-                    if (entityView.BoostTypeId is not BoostTypeId.Bomb &&
-                        entityView.BoostTypeId is not  BoostTypeId.None &&
-                        entityView.BoostTypeId is not  BoostTypeId.HorizontalBomb &&
-                        entityView.BoostTypeId is not  BoostTypeId.VerticalBomb
-                        )
+                    if (IsActiveBoost(entityView, entityStage))
                     {
                         _itemViewService.AddBoostSprite(entityView, _levelGridItemData[i, j], entityView.BoostTypeId);
                     }
                 }
             }
+        }
+
+        private static bool IsActiveBoost(IEntityView entityView, EntityStage entityStage)
+        {
+            return entityView.BoostTypeId is not BoostTypeId.Bomb &&
+                   entityView.BoostTypeId is not  BoostTypeId.None &&
+                   entityView.BoostTypeId is not  BoostTypeId.HorizontalBomb &&
+                   entityView.BoostTypeId is not  BoostTypeId.VerticalBomb &&
+                   entityStage.BoostTypeId is not BoostTypeId.ChainBomb;
         }
 
         public void UpdateVisual(IEntityView entityView, int damage)

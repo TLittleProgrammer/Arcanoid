@@ -82,10 +82,8 @@ namespace App.Scripts.Scenes.GameScene.Features.States
             }
         }
 
-        private async void OnLivesAreWasted()
+        private void OnLivesAreWasted()
         {
-            await AnimateTimeScaleTo(0f);
-            
             _stateMachine.Enter<LooseState>();
             _popupService.Show<LoosePopupView>(_rootUIViewProvider.PopupUpViewProvider);
         }
