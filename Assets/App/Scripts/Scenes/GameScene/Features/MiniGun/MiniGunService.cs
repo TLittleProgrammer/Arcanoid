@@ -22,6 +22,7 @@ namespace App.Scripts.Scenes.GameScene.Features.MiniGun
         private float _shapeWidth;
         private float _shapeHeight;
         private float _currentTime = 0f;
+        private bool _miniGunIsActive = false;
 
         public MiniGunService(
             PlayerView playerView,
@@ -43,6 +44,32 @@ namespace App.Scripts.Scenes.GameScene.Features.MiniGun
             RecalculateSpawnPositions();
         }
 
+        public bool ActiveMiniGun
+        {
+            get => _miniGunIsActive;
+            set
+            {
+                _miniGunIsActive = value;
+
+                if (_miniGunIsActive)
+                {
+                    UpdateVelocity(Vector2.up * _boostsSettings.BulletSpeed);
+                }
+                else
+                {
+                    UpdateVelocity(Vector2.zero);
+                }
+            }
+        }
+
+        private void UpdateVelocity(Vector2 value)
+        {
+            foreach (BulletView view in _bulletsPool.InactiveItems)
+            {
+                view.Rigidbody2D.velocity = value;
+            }
+        }
+
         public bool IsActive { get; set; }
         
         public void RecalculateSpawnPositions()
@@ -54,7 +81,7 @@ namespace App.Scripts.Scenes.GameScene.Features.MiniGun
 
         public void Tick()
         {
-            if (!IsActive)
+            if (!ActiveMiniGun || !IsActive)
                 return;
 
             _currentTime += _timeProvider.DeltaTime;

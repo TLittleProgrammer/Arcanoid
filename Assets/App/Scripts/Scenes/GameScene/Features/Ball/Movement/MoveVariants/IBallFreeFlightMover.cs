@@ -11,5 +11,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Movement.MoveVariants
         float ConstantSpeed { get; }
         void UpdateSpeed(float addValue);
         void SetSpeed(float targetValue);
+        void Reset();
+        void Continue();
     }
 }

@@ -1,7 +1,7 @@
 ﻿namespace App.Scripts.Scenes.GameScene.Features.Components
 {
-    public class IActivable
+    public interface IActivable
     {
-        
+        bool IsActive { get; set; }
     }
 }

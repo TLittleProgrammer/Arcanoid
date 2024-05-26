@@ -16,14 +16,14 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.Helpers
 
         public void Activate(BoostTypeId boostTypeId)
         {
-            _miniGunService.IsActive = true;
+            _miniGunService.ActiveMiniGun = true;
         }
 
         private void OnBoostEnded(BoostTypeId boostType)
         {
             if (boostType is BoostTypeId.MiniGun)
             {
-                _miniGunService.IsActive = false;
+                _miniGunService.ActiveMiniGun = false;
             }
         }
     }

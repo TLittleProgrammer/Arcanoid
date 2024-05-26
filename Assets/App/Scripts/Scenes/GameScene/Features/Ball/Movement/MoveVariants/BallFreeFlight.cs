@@ -19,6 +19,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Movement.MoveVariants
         private Vector3 _previousVelocity;
         private float _speed;
         private float _constantSpeed;
+        private Vector2 _lastDirection;
 
         public BallFreeFlight(BallView ballView, BallFlyingSettings settings, ITimeProvider timeProvider)
         {
@@ -73,6 +74,17 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Movement.MoveVariants
         {
             _speed = targetValue;
             Velocity = Velocity.normalized * _speed;
+        }
+
+        public void Reset()
+        {
+            _lastDirection = Velocity.normalized;
+            Velocity = Vector2.zero;
+        }
+
+        public void Continue()
+        {
+            Velocity = _lastDirection * _speed;
         }
 
         public void Restart()
