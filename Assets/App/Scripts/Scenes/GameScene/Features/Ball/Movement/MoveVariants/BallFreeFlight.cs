@@ -79,6 +79,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Movement.MoveVariants
         public void Reset()
         {
             _lastDirection = Velocity.normalized;
+            _speed = _settings.Speed;
             Velocity = Vector2.zero;
         }
 

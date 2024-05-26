@@ -65,7 +65,6 @@ namespace App.Scripts.Scenes.GameScene.Features.MiniGun
                     UpdateVelocityForAllBullets(Vector2.zero);
                 }
             }
-            
         }
 
         public void RecalculateSpawnPositions()

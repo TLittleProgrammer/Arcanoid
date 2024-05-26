@@ -2,6 +2,7 @@
 using App.Scripts.General.Infrastructure;
 using App.Scripts.General.Popup;
 using App.Scripts.Scenes.GameScene.Features.Ball.Movement;
+using App.Scripts.Scenes.GameScene.Features.Boosts.Interfaces;
 using App.Scripts.Scenes.GameScene.Features.Grid;
 using App.Scripts.Scenes.GameScene.Features.Healthes;
 using App.Scripts.Scenes.GameScene.Features.Input;
@@ -31,6 +32,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
         private readonly IGridPositionResolver _gridPositionResolver;
         private readonly IClickDetector _clickDetector;
         private readonly IInputService _inputService;
+        private readonly IBoostContainer _boostContainer;
 
         public InitializeAllRestartableAnsTickablesLists(
             List<IRestartable> generalRestartables,
@@ -47,7 +49,8 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             ITimeProvider timeProvider,
             IGridPositionResolver gridPositionResolver,
             IClickDetector clickDetector,
-            IInputService inputService)
+            IInputService inputService,
+            IBoostContainer boostContainer)
         {
             _generalRestartables = generalRestartables;
             _restartablesForLoadNewLevel = restartablesForLoadNewLevel;
@@ -64,6 +67,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             _gridPositionResolver = gridPositionResolver;
             _clickDetector = clickDetector;
             _inputService = inputService;
+            _boostContainer = boostContainer;
         }
 
         public void Initialize()
@@ -83,6 +87,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
 
         private void InitializeRestartablesListForNewLevel()
         {
+            _restartablesForLoadNewLevel.Add(_boostContainer);
             _restartablesForLoadNewLevel.Add(_levelProgressService);
             _restartablesForLoadNewLevel.Add(_playerShapeMover);
             _restartablesForLoadNewLevel.Add(_ballMovementService);
@@ -95,6 +100,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
 
         private void InitializeGeneralList()
         {
+            _generalRestartables.Add(_boostContainer);
             _generalRestartables.Add(_gridPositionResolver);
             _generalRestartables.Add(_levelProgressService);
             _generalRestartables.Add(_playerShapeMover);

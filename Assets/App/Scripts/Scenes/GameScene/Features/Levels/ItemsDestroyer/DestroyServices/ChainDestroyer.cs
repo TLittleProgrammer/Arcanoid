@@ -91,8 +91,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroySer
                 foreach (IEntityView entity in needDestroyEntities)
                 {
                     GridItemData destroyableGridData = LevelViewUpdater.LevelGridItemData[entity.GridPositionX, entity.GridPositionY];
-                    destroyableGridData.CurrentHealth = -1;
-                    
+
                     SimpleDestroy(destroyableGridData, entity).Forget();
                 }
 
@@ -109,6 +108,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroySer
         {
             await _animatedDestroyService.Animate(entityView);
 
+            gridItemData.CurrentHealth = -1;
             _simpleDestroyService.Destroy(gridItemData, entityView);
         }
 

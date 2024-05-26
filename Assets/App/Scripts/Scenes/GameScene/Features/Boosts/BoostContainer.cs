@@ -170,5 +170,17 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts
                 _ => 0f
             };
         }
+
+        public void Restart()
+        {
+            IsActive = false;
+            foreach (BoostData boostData in _boosts)
+            {
+                RemoveItem(boostData.BoostTypeId);
+                BoostEnded?.Invoke(boostData.BoostTypeId);
+            }
+            
+            _boosts.Clear();
+        }
     }
 }
