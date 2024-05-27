@@ -39,7 +39,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
             Container.Bind<LoadSceneFromMainMenuState>().AsSingle().WithArguments(_projectStateMachine);
             Container.Bind<RestartState>().AsSingle().WithArguments(_restartables, stateMachine);
             Container.Bind<LoadNextLevelState>().AsSingle().WithArguments(_levelPackInfoView, _restartablesForLoadNewLevel, stateMachine);
-            Container.Bind<PopupState>().AsSingle();
+            Container.Bind<MenuPopupState>().AsSingle();
             Container.Bind<LooseState>().AsSingle();
 
             Container

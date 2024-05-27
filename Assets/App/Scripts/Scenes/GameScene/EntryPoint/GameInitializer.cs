@@ -39,7 +39,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
         private readonly LoadSceneFromMainMenuState _loadSceneFromMainMenuState;
         private readonly RestartState _restartState;
         private readonly LoadNextLevelState _loadNextLevelState;
-        private readonly PopupState _popupState;
+        private readonly MenuPopupState _menuPopupState;
         private readonly LooseState _looseState;
         private readonly IStateMachine _stateMachine;
         private readonly IShowLevelAnimation _showLevelAnimation;
@@ -62,7 +62,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             LoadSceneFromMainMenuState loadSceneFromMainMenuState,
             RestartState restartState,
             LoadNextLevelState loadNextLevelState,
-            PopupState popupState,
+            MenuPopupState menuPopupState,
             LooseState looseState,
             IStateMachine stateMachine,
             IShowLevelAnimation showLevelAnimation)
@@ -84,7 +84,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             _loadSceneFromMainMenuState = loadSceneFromMainMenuState;
             _restartState = restartState;
             _loadNextLevelState = loadNextLevelState;
-            _popupState = popupState;
+            _menuPopupState = menuPopupState;
             _looseState = looseState;
             _stateMachine = stateMachine;
             _showLevelAnimation = showLevelAnimation;
@@ -113,7 +113,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
                 _loadSceneFromMainMenuState,
                 _restartState,
                 _loadNextLevelState,
-                _popupState,
+                _menuPopupState,
                 _looseState,
             };
 
