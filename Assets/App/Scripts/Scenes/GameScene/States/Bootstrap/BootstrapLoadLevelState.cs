@@ -2,6 +2,7 @@
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Infrastructure;
 using App.Scripts.General.LevelPackInfoService;
+using App.Scripts.Scenes.GameScene.Features.Ball;
 using App.Scripts.Scenes.GameScene.Features.Ball.Movement;
 using App.Scripts.Scenes.GameScene.Features.Ball.Movement.MoveVariants;
 using App.Scripts.Scenes.GameScene.Features.Grid;
@@ -40,7 +41,8 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             IViewHealthPointService viewHealthPointService,
             IHealthContainer healthContainer,
             IPlayerShapeMover playerShapeMover,
-            IBallMovementService ballMovementService)
+            IBallMovementService ballMovementService
+            )
         {
             _stateMachine = stateMachine;
             _levelPackInfoService = levelPackInfoService;

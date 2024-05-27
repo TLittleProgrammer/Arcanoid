@@ -18,6 +18,8 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
         private readonly IBallSpeedUpdater _ballSpeedUpdater;
         private readonly IBallMovementService _ballMovementService;
         private readonly IShowLevelAnimation _showLevelAnimation;
+        private readonly BallView _ballView;
+        private readonly IBallsService _ballsService;
 
         public BootstrapInitializeOtherServicesState(
             IStateMachine stateMachine,
@@ -25,7 +27,9 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             IPopupProvider popupProvider,
             IBallSpeedUpdater ballSpeedUpdater,
             IBallMovementService ballMovementService,
-            IShowLevelAnimation showLevelAnimation)
+            IShowLevelAnimation showLevelAnimation,
+            BallView ballView,
+            IBallsService ballsService)
         {
             _stateMachine = stateMachine;
             _wallLoader = wallLoader;
@@ -33,6 +37,8 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             _ballSpeedUpdater = ballSpeedUpdater;
             _ballMovementService = ballMovementService;
             _showLevelAnimation = showLevelAnimation;
+            _ballView = ballView;
+            _ballsService = ballsService;
         }
         
         public async UniTask Enter()
@@ -41,6 +47,7 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             await _popupProvider.AsyncInitialize(Pathes.PathToPopups);
             await _ballSpeedUpdater.AsyncInitialize(_ballMovementService);
             await _showLevelAnimation.Show();
+            _ballsService.AddBall(_ballView);
 
             _stateMachine.Enter<BootstrapInitializeAllRestartablesAndTickablesListsState>();
             

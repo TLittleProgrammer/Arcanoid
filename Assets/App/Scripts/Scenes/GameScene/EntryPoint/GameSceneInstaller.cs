@@ -104,6 +104,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.Bind<IRestartService>().To<RestartService>().AsSingle();
             Container.Bind<IItemViewService>().To<ItemViewService>().AsSingle();
             Container.Bind<IServicesActivator>().To<ServiceActivator>().AsSingle();
+            Container.BindInterfacesAndSelfTo<BallsService>().AsSingle();
             
             ShowLevelAnimationInstaller.Install(Container);
             ItemsDestroyableInstaller.Install(Container);

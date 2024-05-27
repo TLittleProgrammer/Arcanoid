@@ -9,17 +9,18 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Movement
     {
         private readonly IBallFreeFlightMover _ballFreeFlightMover;
         private readonly IPositionable _ballPositionable;
+        private readonly IBallsService _ballsService;
         private readonly IClickDetector _clickDetector;
 
         private IBallFollowMover _ballFollowMover;
-        private Vector2 _previousBallPosition;
         private IBallFollowMover _ballFollowFollowMover;
 
         public BallMovementService(
             IClickDetector clickDetector,
             IBallFollowMover ballFollowFollowMover,
             IBallFreeFlightMover ballFreeFlightMover,
-            IPositionable ballPositionable
+            IPositionable ballPositionable,
+            IBallsService ballsService
         )
         {
             _clickDetector = clickDetector;
@@ -27,6 +28,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Movement
             _ballFollowMover = _ballFollowFollowMover;
             _ballFreeFlightMover = ballFreeFlightMover;
             _ballPositionable = ballPositionable;
+            _ballsService = ballsService;
 
             _clickDetector.MouseUp += OnMouseUp;
         }
@@ -36,7 +38,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Movement
             if (_ballFollowMover is null)
                 return;
 
-            _previousBallPosition = _ballPositionable.Position;
             _ballFollowMover.Tick();
         }
 
@@ -55,6 +56,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Movement
             _ballFollowMover = _ballFollowFollowMover;
             _ballFollowMover.AsyncInitialize();
             _clickDetector.MouseUp += OnMouseUp;
+
+            _ballsService.AddBall(_ballPositionable);
         }
 
         public void UpdateSpeed(float addValue)
