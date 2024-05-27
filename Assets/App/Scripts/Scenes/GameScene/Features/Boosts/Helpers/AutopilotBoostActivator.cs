@@ -3,7 +3,6 @@ using App.Scripts.Scenes.GameScene.Features.Boosts.Interfaces;
 using App.Scripts.Scenes.GameScene.Features.Components;
 using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.PlayerShape.Move;
-using UnityEngine;
 using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.Features.Boosts.Helpers

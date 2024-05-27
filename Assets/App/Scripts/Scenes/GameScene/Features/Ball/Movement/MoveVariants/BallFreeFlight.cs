@@ -1,5 +1,4 @@
 ﻿using App.Scripts.Scenes.GameScene.Features.Components;
-using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.Settings;
 using App.Scripts.Scenes.GameScene.Features.Time;
 using Cysharp.Threading.Tasks;

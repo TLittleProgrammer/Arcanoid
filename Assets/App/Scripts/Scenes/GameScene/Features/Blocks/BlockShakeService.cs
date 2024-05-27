@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using App.Scripts.Scenes.GameScene.Features.Entities;
 using DG.Tweening;
 using UnityEngine;
 

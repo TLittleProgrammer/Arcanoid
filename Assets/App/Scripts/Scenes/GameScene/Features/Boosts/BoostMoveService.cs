@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using App.Scripts.Scenes.GameScene.Features.Constants;
 using App.Scripts.Scenes.GameScene.Features.Time;
-using Cysharp.Threading.Tasks.Triggers;
 using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Boosts

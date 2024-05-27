@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using App.Scripts.General.Infrastructure;
 using App.Scripts.Scenes.GameScene.Features.MiniGun;
 

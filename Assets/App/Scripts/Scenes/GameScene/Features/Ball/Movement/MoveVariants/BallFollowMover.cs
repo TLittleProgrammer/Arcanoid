@@ -1,5 +1,4 @@
-﻿using App.Scripts.General.Infrastructure;
-using App.Scripts.Scenes.GameScene.Features.Components;
+﻿using App.Scripts.Scenes.GameScene.Features.Components;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
