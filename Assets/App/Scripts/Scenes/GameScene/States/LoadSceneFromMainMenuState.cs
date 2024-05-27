@@ -6,7 +6,7 @@ using App.Scripts.Scenes.GameScene.Features.Dotween;
 using Cysharp.Threading.Tasks;
 using Action = System.Action;
 
-namespace App.Scripts.Scenes.GameScene.Features.States
+namespace App.Scripts.Scenes.GameScene.States
 {
     public class LoadSceneFromMainMenuState : IState<string>
     {

@@ -4,7 +4,7 @@ using App.Scripts.General.Popup;
 using App.Scripts.Scenes.GameScene.Features.Popups;
 using Cysharp.Threading.Tasks;
 
-namespace App.Scripts.Scenes.GameScene.Features.States
+namespace App.Scripts.Scenes.GameScene.States
 {
     public class MenuPopupState : IState<ITransformable>
     {

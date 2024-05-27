@@ -2,7 +2,7 @@
 using App.Scripts.General.LevelPackInfoService;
 using App.Scripts.General.Levels;
 using App.Scripts.General.UserData.Energy;
-using App.Scripts.Scenes.GameScene.Features.States;
+using App.Scripts.Scenes.GameScene.States;
 
 namespace App.Scripts.Scenes.GameScene.Features.Restart
 {

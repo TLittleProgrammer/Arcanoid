@@ -17,7 +17,7 @@ using App.Scripts.Scenes.GameScene.Features.Time;
 using Cysharp.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace App.Scripts.Scenes.GameScene.Features.States
+namespace App.Scripts.Scenes.GameScene.States
 {
     public class LoadNextLevelState : IState
     {

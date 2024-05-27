@@ -2,7 +2,7 @@
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Infrastructure;
 using App.Scripts.Scenes.GameScene.Features.LevelView;
-using App.Scripts.Scenes.GameScene.Features.States;
+using App.Scripts.Scenes.GameScene.States;
 using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers

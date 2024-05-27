@@ -3,7 +3,7 @@ using App.Scripts.General.Constants;
 using App.Scripts.General.Popup;
 using App.Scripts.Scenes.GameScene.Features.Dotween;
 using App.Scripts.Scenes.GameScene.Features.Restart;
-using App.Scripts.Scenes.GameScene.Features.States;
+using App.Scripts.Scenes.GameScene.States;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;

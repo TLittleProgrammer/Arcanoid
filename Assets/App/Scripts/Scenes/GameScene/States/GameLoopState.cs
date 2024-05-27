@@ -3,19 +3,18 @@ using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Popup;
 using App.Scripts.General.RootUI;
 using App.Scripts.Scenes.GameScene.Features.Ball.Movement.MoveVariants;
-using App.Scripts.Scenes.GameScene.Features.Boosts;
-using App.Scripts.Scenes.GameScene.Features.Boosts.Interfaces;
+using App.Scripts.Scenes.GameScene.Features.Components;
 using App.Scripts.Scenes.GameScene.Features.Healthes;
 using App.Scripts.Scenes.GameScene.Features.LevelProgress;
-using App.Scripts.Scenes.GameScene.Features.MiniGun;
 using App.Scripts.Scenes.GameScene.Features.Popups;
+using App.Scripts.Scenes.GameScene.Features.ServiceActivator;
 using App.Scripts.Scenes.GameScene.Features.Time;
 using Cysharp.Threading.Tasks;
 using Zenject;
 
-namespace App.Scripts.Scenes.GameScene.Features.States
+namespace App.Scripts.Scenes.GameScene.States
 {
-    public class GameLoopState : IState, ITickable
+    public class GameLoopState : IState, ITickable, IActivable
     {
         private readonly IEnumerable<ITickable> _tickables;
         private readonly IHealthContainer _healthContainer;
@@ -25,13 +24,10 @@ namespace App.Scripts.Scenes.GameScene.Features.States
         private readonly ILevelProgressService _levelProgressService;
         private readonly IBallFreeFlightMover _ballFreeFlightMover;
         private readonly RootUIViewProvider _rootUIViewProvider;
-        private readonly IBoostContainer _boostContainer;
-        private readonly IBoostMoveService _boostMoveService;
-        private readonly IMiniGunService _miniGunService;
+        private readonly IServicesActivator _servicesActivator;
 
-        private bool _stateIsEntered = false;
-        private float _lastBallSpeed;
-        
+        public bool IsActive { get; set; }
+
         public GameLoopState(
             IEnumerable<ITickable> tickables,
             IHealthContainer healthContainer,
@@ -41,9 +37,7 @@ namespace App.Scripts.Scenes.GameScene.Features.States
             ILevelProgressService levelProgressService,
             IBallFreeFlightMover ballFreeFlightMover,
             RootUIViewProvider rootUIViewProvider,
-            IBoostContainer boostContainer,
-            IBoostMoveService boostMoveService,
-            IMiniGunService miniGunService)
+            IServicesActivator servicesActivator)
         {
             _tickables = tickables;
             _healthContainer = healthContainer;
@@ -53,17 +47,12 @@ namespace App.Scripts.Scenes.GameScene.Features.States
             _levelProgressService = levelProgressService;
             _ballFreeFlightMover = ballFreeFlightMover;
             _rootUIViewProvider = rootUIViewProvider;
-            _boostContainer = boostContainer;
-            _boostMoveService = boostMoveService;
-            _miniGunService = miniGunService;
+            _servicesActivator = servicesActivator;
         }
-        
+
         public async UniTask Enter()
         {
-            _boostMoveService.IsActive = true;
-            _boostContainer.IsActive = true;
-            _miniGunService.IsActive = true;
-            _stateIsEntered = true;
+            _servicesActivator.SetActiveToServices(true);
             _ballFreeFlightMover.Continue();
             
             _healthContainer.LivesAreWasted   += OnLivesAreWasted;
@@ -74,11 +63,7 @@ namespace App.Scripts.Scenes.GameScene.Features.States
 
         public async UniTask Exit()
         {
-            _boostMoveService.IsActive = false;
-            _boostContainer.IsActive = false;
-            _miniGunService.IsActive = false;
-            _stateIsEntered = false;
-            _lastBallSpeed = _ballFreeFlightMover.VelocitySpeed;
+            _servicesActivator.SetActiveToServices(false);
             _ballFreeFlightMover.Reset();
             
             _healthContainer.LivesAreWasted   -= OnLivesAreWasted;
@@ -89,7 +74,7 @@ namespace App.Scripts.Scenes.GameScene.Features.States
 
         public void Tick()
         {
-            if (_stateIsEntered is false)
+            if (IsActive is false)
                 return;
 
             foreach (ITickable tickable in _tickables)

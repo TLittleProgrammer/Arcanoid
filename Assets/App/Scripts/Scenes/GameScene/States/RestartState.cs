@@ -6,7 +6,7 @@ using App.Scripts.Scenes.GameScene.Features.Dotween;
 using App.Scripts.Scenes.GameScene.Features.Levels.Animations;
 using Cysharp.Threading.Tasks;
 
-namespace App.Scripts.Scenes.GameScene.Features.States
+namespace App.Scripts.Scenes.GameScene.States
 {
     public class RestartState : IState
     {

@@ -28,6 +28,7 @@ using App.Scripts.Scenes.GameScene.Features.PlayerShape.Move;
 using App.Scripts.Scenes.GameScene.Features.Pools;
 using App.Scripts.Scenes.GameScene.Features.PositionChecker;
 using App.Scripts.Scenes.GameScene.Features.Restart;
+using App.Scripts.Scenes.GameScene.Features.ServiceActivator;
 using App.Scripts.Scenes.GameScene.Features.Settings;
 using App.Scripts.Scenes.GameScene.Features.TopSprites;
 using App.Scripts.Scenes.GameScene.Features.Walls;
@@ -39,7 +40,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
 {
     public class GameSceneInstaller : MonoInstaller
     {
-        [SerializeField] private UnityEngine.Camera _camera;
+        [SerializeField] private Camera _camera;
         [SerializeField] private RectTransform _header;
         [SerializeField] private TextAsset _levelData;
         [SerializeField] private PlayerView _playerShape;
@@ -99,12 +100,14 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.Bind<IWallLoader>().To<WallLoader>().AsSingle().WithArguments(_wallPrefab);
             Container.Bind<IRestartService>().To<RestartService>().AsSingle();
             Container.Bind<IItemViewService>().To<ItemViewService>().AsSingle();
+            Container.Bind<IServicesActivator>().To<ServiceActivator>().AsSingle();
             
             ShowLevelAnimationInstaller.Install(Container);
             ItemsDestroyableInstaller.Install(Container);
             BehaviourTreeInstaller.Install(Container);
             StateMachineInstaller.Install(Container, _gameLoopTickables, _projectStateMachine, _restartables, _levelPackInfoView, _restartablesForLoadNewLevel);
             
+            Container.BindInterfacesTo<ServiceActivatorInitializer>().AsSingle();
             Container.BindInterfacesTo<BehaviourTreeInitializer>().AsSingle();
             Container.BindInterfacesTo<ItemsDestroyerInitializer>().AsSingle();
             Container.BindInterfacesTo<GameInitializer>().AsSingle();

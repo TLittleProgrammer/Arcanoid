@@ -2,7 +2,7 @@
 using App.Scripts.Scenes.GameScene.Features.Time;
 using Cysharp.Threading.Tasks;
 
-namespace App.Scripts.Scenes.GameScene.Features.States
+namespace App.Scripts.Scenes.GameScene.States
 {
     public class LooseState : IState
     {
