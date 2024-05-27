@@ -12,7 +12,7 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
         private readonly IStateMachine _stateMachine;
         private readonly IItemsDestroyable _itemsDestroyable;
         private readonly BombDestroyService _bombDestroyService;
-        private readonly BallSpeedBoostsDestroyer _ballSpeedBoostsDestroyer;
+        private readonly BoostBlockDestroyer _boostBlockDestroyer;
         private readonly DirectionBombDestroyService _directionBombDestroyService;
         private readonly ChainDestroyer _chainDestroyer;
 
@@ -20,7 +20,7 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             IStateMachine stateMachine,
             IItemsDestroyable itemsDestroyable,
             BombDestroyService bombDestroyService,
-            BallSpeedBoostsDestroyer ballSpeedBoostsDestroyer,
+            BoostBlockDestroyer boostBlockDestroyer,
             DirectionBombDestroyService directionBombDestroyService,
             ChainDestroyer chainDestroyer
         )
@@ -28,7 +28,7 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             _stateMachine = stateMachine;
             _itemsDestroyable = itemsDestroyable;
             _bombDestroyService = bombDestroyService;
-            _ballSpeedBoostsDestroyer = ballSpeedBoostsDestroyer;
+            _boostBlockDestroyer = boostBlockDestroyer;
             _directionBombDestroyService = directionBombDestroyService;
             _chainDestroyer = chainDestroyer;
         }
@@ -48,19 +48,19 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             {
                 BuildDestroyDataService(BoostTypeId.Bomb, _bombDestroyService),
 
-                BuildDestroyDataService(BoostTypeId.BallAcceleration, _ballSpeedBoostsDestroyer),
-                BuildDestroyDataService(BoostTypeId.BallSlowdown, _ballSpeedBoostsDestroyer),
-                BuildDestroyDataService(BoostTypeId.PlayerShapeAddSize, _ballSpeedBoostsDestroyer),
-                BuildDestroyDataService(BoostTypeId.PlayerShapeMinusSize, _ballSpeedBoostsDestroyer),
-                BuildDestroyDataService(BoostTypeId.PlayerShapeAddSpeed, _ballSpeedBoostsDestroyer),
-                BuildDestroyDataService(BoostTypeId.PlayerShapeMinusSpeed, _ballSpeedBoostsDestroyer),
-                BuildDestroyDataService(BoostTypeId.AddHealth, _ballSpeedBoostsDestroyer),
-                BuildDestroyDataService(BoostTypeId.MinusHealth, _ballSpeedBoostsDestroyer),
-                BuildDestroyDataService(BoostTypeId.Fireball, _ballSpeedBoostsDestroyer),
+                BuildDestroyDataService(BoostTypeId.BallAcceleration, _boostBlockDestroyer),
+                BuildDestroyDataService(BoostTypeId.BallSlowdown, _boostBlockDestroyer),
+                BuildDestroyDataService(BoostTypeId.PlayerShapeAddSize, _boostBlockDestroyer),
+                BuildDestroyDataService(BoostTypeId.PlayerShapeMinusSize, _boostBlockDestroyer),
+                BuildDestroyDataService(BoostTypeId.PlayerShapeAddSpeed, _boostBlockDestroyer),
+                BuildDestroyDataService(BoostTypeId.PlayerShapeMinusSpeed, _boostBlockDestroyer),
+                BuildDestroyDataService(BoostTypeId.AddHealth, _boostBlockDestroyer),
+                BuildDestroyDataService(BoostTypeId.MinusHealth, _boostBlockDestroyer),
+                BuildDestroyDataService(BoostTypeId.Fireball, _boostBlockDestroyer),
                 BuildDestroyDataService(BoostTypeId.ChainBomb, _chainDestroyer),
-                BuildDestroyDataService(BoostTypeId.StickyPlatform, _ballSpeedBoostsDestroyer),
-                BuildDestroyDataService(BoostTypeId.MiniGun, _ballSpeedBoostsDestroyer),
-                BuildDestroyDataService(BoostTypeId.Autopilot, _ballSpeedBoostsDestroyer),
+                BuildDestroyDataService(BoostTypeId.StickyPlatform, _boostBlockDestroyer),
+                BuildDestroyDataService(BoostTypeId.MiniGun, _boostBlockDestroyer),
+                BuildDestroyDataService(BoostTypeId.Autopilot, _boostBlockDestroyer),
                 BuildDestroyDataService(BoostTypeId.HorizontalBomb, _directionBombDestroyService),
                 BuildDestroyDataService(BoostTypeId.VerticalBomb, _directionBombDestroyService),
             });

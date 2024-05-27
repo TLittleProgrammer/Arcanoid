@@ -19,7 +19,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
             BoostsBind();
             
             Container.Bind<BombDestroyService>().AsSingle();
-            Container.Bind<BallSpeedBoostsDestroyer>().AsSingle();
+            Container.Bind<BoostBlockDestroyer>().AsSingle();
             Container.Bind<DirectionBombDestroyService>().AsSingle();
             Container.Bind<ChainDestroyer>().AsSingle();
 
