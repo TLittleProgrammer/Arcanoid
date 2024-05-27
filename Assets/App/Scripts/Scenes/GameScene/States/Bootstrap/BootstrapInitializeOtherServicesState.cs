@@ -42,7 +42,7 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             await _ballSpeedUpdater.AsyncInitialize(_ballMovementService);
             await _showLevelAnimation.Show();
 
-            _stateMachine.Enter<GameLoopState>();
+            _stateMachine.Enter<BootstrapInitializeAllRestartablesAndTickablesListsState>();
             
             await UniTask.CompletedTask;
         }

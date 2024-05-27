@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Infrastructure;
 using App.Scripts.General.Popup;
 using App.Scripts.Scenes.GameScene.Features.Ball.Movement;
@@ -12,12 +13,14 @@ using App.Scripts.Scenes.GameScene.Features.PlayerShape.Move;
 using App.Scripts.Scenes.GameScene.Features.Pools;
 using App.Scripts.Scenes.GameScene.Features.PositionChecker;
 using App.Scripts.Scenes.GameScene.Features.Time;
+using Cysharp.Threading.Tasks;
 using Zenject;
 
-namespace App.Scripts.Scenes.GameScene.EntryPoint
+namespace App.Scripts.Scenes.GameScene.States.Bootstrap
 {
-    public class InitializeAllRestartableAnsTickablesLists : IInitializable
+    public class BootstrapInitializeAllRestartablesAndTickablesListsState : IState
     {
+        private readonly IStateMachine _stateMachine;
         private readonly List<IRestartable> _generalRestartables;
         private readonly List<IRestartable> _restartablesForLoadNewLevel;
         private readonly List<ITickable> _gameLoopTickables;
@@ -36,7 +39,8 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
         private readonly IBoostContainer _boostContainer;
         private readonly IBulletPositionChecker _bulletPositionChecker;
 
-        public InitializeAllRestartableAnsTickablesLists(
+        public BootstrapInitializeAllRestartablesAndTickablesListsState(
+            IStateMachine stateMachine,
             List<IRestartable> generalRestartables,
             List<IRestartable> restartablesForLoadNewLevel,
             List<ITickable> gameLoopTickables,
@@ -55,6 +59,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             IBoostContainer boostContainer,
             IBulletPositionChecker bulletPositionChecker)
         {
+            _stateMachine = stateMachine;
             _generalRestartables = generalRestartables;
             _restartablesForLoadNewLevel = restartablesForLoadNewLevel;
             _gameLoopTickables = gameLoopTickables;
@@ -73,12 +78,21 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             _boostContainer = boostContainer;
             _bulletPositionChecker = bulletPositionChecker;
         }
-
-        public void Initialize()
+        
+        public async UniTask Enter()
         {
             InitializeGeneralList();
             InitializeRestartablesListForNewLevel();
             InitializeTickablesList();
+            
+            _stateMachine.Enter<GameLoopState>();
+
+            await UniTask.CompletedTask;
+        }
+
+        public async UniTask Exit()
+        {
+            await UniTask.CompletedTask;
         }
 
         private void InitializeTickablesList()

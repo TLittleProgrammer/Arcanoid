@@ -68,9 +68,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
         public override void InstallBindings()
         {
             BindInitializeDependencies();
-
-
-
+            
             TweenersLocatorInstaller.Install(Container);
             TimeProviderInstaller.Install(Container);
             ScoreAnimationServiceInstaller.Install(Container);
@@ -113,8 +111,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             StateMachineInstaller.Install(Container, _gameLoopTickables, _projectStateMachine, _restartables, _levelPackInfoView, _restartablesForLoadNewLevel);
             
             Container.Bind<List<IActivable>>().FromMethod(ctx => ctx.Container.ResolveAll<IActivable>().ToList()).AsSingle();
-
-            Container.BindInterfacesTo<InitializeAllRestartableAnsTickablesLists>().AsSingle().WithArguments(_restartables, _restartablesForLoadNewLevel, _gameLoopTickables);
+            
             Container.BindInterfacesTo<GameBootstrapper>().AsSingle();
         }
 
