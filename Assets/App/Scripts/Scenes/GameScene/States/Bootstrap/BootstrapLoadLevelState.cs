@@ -1,4 +1,5 @@
-﻿using App.Scripts.External.GameStateMachine;
+﻿using System.Collections.Generic;
+using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Infrastructure;
 using App.Scripts.General.LevelPackInfoService;
 using App.Scripts.Scenes.GameScene.Features.Ball.Movement;
@@ -23,7 +24,7 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
         private readonly IGridPositionResolver _gridPositionResolver;
         private readonly ILevelLoader _levelLoader;
         private readonly ILevelProgressService _levelProgressService;
-        private readonly IHealthPointService _healthPointService;
+        private readonly IViewHealthPointService _viewHealthPointService;
         private readonly IHealthContainer _healthContainer;
         private readonly IPlayerShapeMover _playerShapeMover;
         private readonly IBallMovementService _ballMovementService;
@@ -36,7 +37,7 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             IGridPositionResolver gridPositionResolver,
             ILevelLoader levelLoader,
             ILevelProgressService levelProgressService,
-            IHealthPointService healthPointService,
+            IViewHealthPointService viewHealthPointService,
             IHealthContainer healthContainer,
             IPlayerShapeMover playerShapeMover,
             IBallMovementService ballMovementService)
@@ -47,7 +48,7 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             _gridPositionResolver = gridPositionResolver;
             _levelLoader = levelLoader;
             _levelProgressService = levelProgressService;
-            _healthPointService = healthPointService;
+            _viewHealthPointService = viewHealthPointService;
             _healthContainer = healthContainer;
             _playerShapeMover = playerShapeMover;
             _ballMovementService = ballMovementService;
@@ -76,8 +77,8 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             _levelLoader.LoadLevel(levelData);
             
             _levelProgressService.CalculateStepByLevelData(levelData);
-            await _healthPointService.AsyncInitialize(levelData);
-            await _healthContainer.AsyncInitialize(levelData, new IRestartable[] {_playerShapeMover, _ballMovementService});
+            await _viewHealthPointService.AsyncInitialize(levelData);
+            await _healthContainer.AsyncInitialize(levelData, new List<IRestartable> {_playerShapeMover, _ballMovementService});
         }
         
         private LevelData ChooseLevelData()

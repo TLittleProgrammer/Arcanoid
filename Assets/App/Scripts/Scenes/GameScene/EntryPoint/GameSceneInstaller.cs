@@ -126,7 +126,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
 
         private void BindHealthPointService()
         {
-            Container.Bind<IHealthPointService>().To<HealthPointService>().AsSingle().WithArguments(_healthParent as ITransformable);
+            Container.Bind<IViewHealthPointService>().To<ViewHealthPointService>().AsSingle().WithArguments(_healthParent as ITransformable);
             Container.Bind<IHealthContainer>().To<HealthContainer>().AsSingle();
         }
 

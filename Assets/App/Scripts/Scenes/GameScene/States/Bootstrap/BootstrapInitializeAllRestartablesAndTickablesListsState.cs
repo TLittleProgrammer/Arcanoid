@@ -24,7 +24,7 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
         private readonly List<IRestartable> _generalRestartables;
         private readonly List<IRestartable> _restartablesForLoadNewLevel;
         private readonly List<ITickable> _gameLoopTickables;
-        private readonly IHealthPointService _healthPointService;
+        private readonly IViewHealthPointService _viewHealthPointService;
         private readonly IHealthContainer _healthContainer;
         private readonly ILevelProgressService _levelProgressService;
         private readonly IPlayerShapeMover _playerShapeMover;
@@ -44,7 +44,7 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             List<IRestartable> generalRestartables,
             List<IRestartable> restartablesForLoadNewLevel,
             List<ITickable> gameLoopTickables,
-            IHealthPointService healthPointService,
+            IViewHealthPointService viewHealthPointService,
             IHealthContainer healthContainer,
             ILevelProgressService levelProgressService,
             IPlayerShapeMover playerShapeMover,
@@ -63,7 +63,7 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             _generalRestartables = generalRestartables;
             _restartablesForLoadNewLevel = restartablesForLoadNewLevel;
             _gameLoopTickables = gameLoopTickables;
-            _healthPointService = healthPointService;
+            _viewHealthPointService = viewHealthPointService;
             _healthContainer = healthContainer;
             _levelProgressService = levelProgressService;
             _playerShapeMover = playerShapeMover;
@@ -113,7 +113,7 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             _restartablesForLoadNewLevel.Add(_poolContainer);
             _restartablesForLoadNewLevel.Add(_timeProvider);
             _restartablesForLoadNewLevel.Add(_popupService as IRestartable);
-            _restartablesForLoadNewLevel.Add(_healthPointService);
+            _restartablesForLoadNewLevel.Add(_viewHealthPointService);
             _restartablesForLoadNewLevel.Add(_healthContainer);
         }
 
@@ -129,7 +129,7 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             _generalRestartables.Add(_levelLoader);
             _generalRestartables.Add(_timeProvider);
             _generalRestartables.Add(_popupService as IRestartable);
-            _generalRestartables.Add(_healthPointService);
+            _generalRestartables.Add(_viewHealthPointService);
             _generalRestartables.Add(_healthContainer);
         }
     }

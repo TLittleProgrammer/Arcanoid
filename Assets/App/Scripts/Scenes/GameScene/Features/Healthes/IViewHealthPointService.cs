@@ -4,7 +4,7 @@ using App.Scripts.Scenes.GameScene.Features.Levels;
 
 namespace App.Scripts.Scenes.GameScene.Features.Healthes
 {
-    public interface IHealthPointService : IAsyncInitializable<LevelData>, IRestartable
+    public interface IViewHealthPointService : IAsyncInitializable<LevelData>, IRestartable
     {
         void UpdateHealth(int healthCount);
     }

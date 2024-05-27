@@ -10,20 +10,20 @@ namespace App.Scripts.Scenes.GameScene.Features.Healthes
 {
     public sealed class HealthContainer : IHealthContainer
     {
-        private readonly IHealthPointService _healthPointService;
+        private readonly IViewHealthPointService _viewHealthPointService;
 
-        private IEnumerable<IRestartable> _restartables;
+        private List<IRestartable> _restartables;
         private int _currentHealthCounter;
         private int _maxHealthCounter;
 
-        public HealthContainer(IHealthPointService healthPointService)
+        public HealthContainer(IViewHealthPointService viewHealthPointService)
         {
-            _healthPointService = healthPointService;
+            _viewHealthPointService = viewHealthPointService;
         }
 
         public event Action LivesAreWasted;
 
-        public async UniTask AsyncInitialize(LevelData param, IEnumerable<IRestartable> restartables)
+        public async UniTask AsyncInitialize(LevelData param, List<IRestartable> restartables)
         {
             _currentHealthCounter = _maxHealthCounter = param.HealthCount == 0 ? GameConstants.DefaultHealthCount : param.HealthCount;
             _restartables = restartables;
@@ -37,7 +37,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Healthes
             {
                 _currentHealthCounter = _maxHealthCounter;
                 
-                _healthPointService.UpdateHealth(_maxHealthCounter - healthCount);
+                _viewHealthPointService.UpdateHealth(_maxHealthCounter - healthCount);
             }
             else
             {
@@ -53,7 +53,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Healthes
                     RestartServicesIfNeed(healthCount);
                 }
                 
-                _healthPointService.UpdateHealth(healthCount);
+                _viewHealthPointService.UpdateHealth(healthCount);
             }    
         }
 

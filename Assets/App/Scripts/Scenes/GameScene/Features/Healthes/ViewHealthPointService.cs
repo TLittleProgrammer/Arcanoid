@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Healthes
 {
-    public sealed class HealthPointService : IHealthPointService
+    public sealed class ViewHealthPointService : IViewHealthPointService
     {
         private readonly List<IHealthPointView> _healthPointViews;
         private readonly IHealthPointView.Factory _healthPointViewFactory;
@@ -21,7 +21,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Healthes
         private bool _isAnimated;
         private Queue<int> _queriesToChangeHealth;
 
-        public HealthPointService(ITransformable parent, IHealthPointView.Factory healthPointViewFactory)
+        public ViewHealthPointService(ITransformable parent, IHealthPointView.Factory healthPointViewFactory)
         {
             _healthPointViewFactory = healthPointViewFactory;
             _parent = parent;
