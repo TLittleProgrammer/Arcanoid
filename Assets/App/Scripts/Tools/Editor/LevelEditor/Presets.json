@@ -75,6 +75,10 @@
     "MiniGun":
     {
       "blockKey": "19"
+    },
+    "Autopilot":
+    {
+      "blockKey": "20"
     }
   }
 }

@@ -19,7 +19,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             BallSpeedBoostsDestroyer ballSpeedBoostsDestroyer,
             DirectionBombDestroyService directionBombDestroyService,
             ChainDestroyer chainDestroyer
-            )
+        )
         {
             _itemsDestroyable = itemsDestroyable;
             _bombDestroyService = bombDestroyService;
@@ -46,6 +46,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
                 BuildDestroyDataService(BoostTypeId.ChainBomb, _chainDestroyer),
                 BuildDestroyDataService(BoostTypeId.StickyPlatform, _ballSpeedBoostsDestroyer),
                 BuildDestroyDataService(BoostTypeId.MiniGun, _ballSpeedBoostsDestroyer),
+                BuildDestroyDataService(BoostTypeId.Autopilot, _ballSpeedBoostsDestroyer),
                 BuildDestroyDataService(BoostTypeId.HorizontalBomb, _directionBombDestroyService),
                 BuildDestroyDataService(BoostTypeId.VerticalBomb, _directionBombDestroyService),
             });

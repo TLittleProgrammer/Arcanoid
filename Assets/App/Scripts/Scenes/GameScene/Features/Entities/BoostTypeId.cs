@@ -24,5 +24,6 @@
         
         ChainBomb = 14,
         MiniGun   = 15,
+        Autopilot = 16,
     }
 }

@@ -50,5 +50,9 @@ namespace App.Scripts.Scenes.GameScene.Features.Settings
         public int BulletDamage = 1;
         [BoxGroup("MiniGun")]
         public float BulletSpeed = 1f;
+        
+        
+        [BoxGroup("Autopilot")]
+        public float AutopilotDuration = 10f;
     }
 }
