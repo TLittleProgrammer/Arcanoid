@@ -1,19 +1,23 @@
-﻿using App.Scripts.Scenes.GameScene.Features.Entities;
+﻿using App.Scripts.External.GameStateMachine;
+using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer;
 using App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroyServices;
-using Zenject;
+using Cysharp.Threading.Tasks;
+using UnityEngine;
 
-namespace App.Scripts.Scenes.GameScene.EntryPoint
+namespace App.Scripts.Scenes.GameScene.States.Bootstrap
 {
-    public class ItemsDestroyerInitializer : IInitializable
+    public class BootstrapItemsDestroyerState : IState
     {
+        private readonly IStateMachine _stateMachine;
         private readonly IItemsDestroyable _itemsDestroyable;
         private readonly BombDestroyService _bombDestroyService;
         private readonly BallSpeedBoostsDestroyer _ballSpeedBoostsDestroyer;
         private readonly DirectionBombDestroyService _directionBombDestroyService;
         private readonly ChainDestroyer _chainDestroyer;
 
-        public ItemsDestroyerInitializer(
+        public BootstrapItemsDestroyerState(
+            IStateMachine stateMachine,
             IItemsDestroyable itemsDestroyable,
             BombDestroyService bombDestroyService,
             BallSpeedBoostsDestroyer ballSpeedBoostsDestroyer,
@@ -21,6 +25,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             ChainDestroyer chainDestroyer
         )
         {
+            _stateMachine = stateMachine;
             _itemsDestroyable = itemsDestroyable;
             _bombDestroyService = bombDestroyService;
             _ballSpeedBoostsDestroyer = ballSpeedBoostsDestroyer;
@@ -28,12 +33,21 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             _chainDestroyer = chainDestroyer;
         }
         
-        public void Initialize()
+        public async UniTask Enter()
         {
-            _itemsDestroyable.AsyncInitialize(new []
+            InitializeItemsDestroyable();
+
+            _stateMachine.Enter<BootstrapLoadLevelState>();
+            
+            await UniTask.CompletedTask;
+        }
+
+        private void InitializeItemsDestroyable()
+        {
+            _itemsDestroyable.AsyncInitialize(new[]
             {
                 BuildDestroyDataService(BoostTypeId.Bomb, _bombDestroyService),
-                
+
                 BuildDestroyDataService(BoostTypeId.BallAcceleration, _ballSpeedBoostsDestroyer),
                 BuildDestroyDataService(BoostTypeId.BallSlowdown, _ballSpeedBoostsDestroyer),
                 BuildDestroyDataService(BoostTypeId.PlayerShapeAddSize, _ballSpeedBoostsDestroyer),
@@ -52,6 +66,11 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             });
         }
 
+        public async UniTask Exit()
+        {
+            await UniTask.CompletedTask;
+        }
+        
         private DestroyServiceData BuildDestroyDataService(BoostTypeId boostTypeId, IBlockDestroyService blockDestroyService)
         {
             return new()

@@ -11,17 +11,6 @@ namespace App.Scripts.External.GameStateMachine
 
         private IExitableState _activeState;
 
-        public StateMachine()
-        {
-            
-        }
-
-        public StateMachine(List<IExitableState> states)
-        {
-            _states = states
-                .ToDictionary(x => x.GetType(), x => x);
-        }
-
         public UniTask AsyncInitialize(IEnumerable<IExitableState> param)
         {
             _states = param

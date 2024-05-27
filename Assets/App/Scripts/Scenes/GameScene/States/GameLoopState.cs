@@ -10,6 +10,7 @@ using App.Scripts.Scenes.GameScene.Features.Popups;
 using App.Scripts.Scenes.GameScene.Features.ServiceActivator;
 using App.Scripts.Scenes.GameScene.Features.Time;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.States
@@ -39,6 +40,7 @@ namespace App.Scripts.Scenes.GameScene.States
             RootUIViewProvider rootUIViewProvider,
             IServicesActivator servicesActivator)
         {
+            
             _tickables = tickables;
             _healthContainer = healthContainer;
             _popupService = popupService;

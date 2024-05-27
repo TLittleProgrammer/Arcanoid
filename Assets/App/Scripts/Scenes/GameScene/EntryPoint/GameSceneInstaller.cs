@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using App.Scripts.External.Components;
 using App.Scripts.External.Extensions.ZenjectExtensions;
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Infrastructure;
 using App.Scripts.General.RootUI;
+using App.Scripts.Scenes.GameScene.EntryPoint.Bootstrap;
 using App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers;
 using App.Scripts.Scenes.GameScene.Features.Ball;
 using App.Scripts.Scenes.GameScene.Features.Ball.Collision;
@@ -13,6 +15,7 @@ using App.Scripts.Scenes.GameScene.Features.Blocks;
 using App.Scripts.Scenes.GameScene.Features.Boosts;
 using App.Scripts.Scenes.GameScene.Features.Boosts.UI;
 using App.Scripts.Scenes.GameScene.Features.Camera;
+using App.Scripts.Scenes.GameScene.Features.Components;
 using App.Scripts.Scenes.GameScene.Features.Effects;
 using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.Grid;
@@ -65,7 +68,9 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
         public override void InstallBindings()
         {
             BindInitializeDependencies();
-            
+
+
+
             TweenersLocatorInstaller.Install(Container);
             TimeProviderInstaller.Install(Container);
             ScoreAnimationServiceInstaller.Install(Container);
@@ -107,11 +112,10 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             BehaviourTreeInstaller.Install(Container);
             StateMachineInstaller.Install(Container, _gameLoopTickables, _projectStateMachine, _restartables, _levelPackInfoView, _restartablesForLoadNewLevel);
             
-            Container.BindInterfacesTo<ServiceActivatorInitializer>().AsSingle();
-            Container.BindInterfacesTo<BehaviourTreeInitializer>().AsSingle();
-            Container.BindInterfacesTo<ItemsDestroyerInitializer>().AsSingle();
-            Container.BindInterfacesTo<GameInitializer>().AsSingle();
+            Container.Bind<List<IActivable>>().FromMethod(ctx => ctx.Container.ResolveAll<IActivable>().ToList()).AsSingle();
+
             Container.BindInterfacesTo<InitializeAllRestartableAnsTickablesLists>().AsSingle().WithArguments(_restartables, _restartablesForLoadNewLevel, _gameLoopTickables);
+            Container.BindInterfacesTo<GameBootstrapper>().AsSingle();
         }
 
         private void BindInitializeDependencies()
