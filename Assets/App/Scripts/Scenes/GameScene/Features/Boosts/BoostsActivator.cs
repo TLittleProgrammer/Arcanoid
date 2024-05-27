@@ -23,7 +23,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts
             HealthAndDeathBoost healthAndDeathBoost,
             FireballBoostActivator fireballBoostActivator,
             StickyBoostActivator stickyBoostActivator,
-            MiniGunBoostActivator miniGunBoostActivator)
+            MiniGunBoostActivator miniGunBoostActivator,
+            AutopilotBoostActivator autopilotBoostActivator)
         {
             _simpleDestroyService = simpleDestroyService;
             _boostContainer = boostContainer;
@@ -41,6 +42,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts
                 [BoostTypeId.Fireball] = fireballBoostActivator,
                 [BoostTypeId.StickyPlatform] = stickyBoostActivator,
                 [BoostTypeId.MiniGun] = miniGunBoostActivator,
+                [BoostTypeId.Autopilot] = autopilotBoostActivator,
             };
         }
 

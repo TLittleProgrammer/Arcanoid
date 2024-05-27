@@ -35,10 +35,16 @@ namespace App.Scripts.Scenes.GameScene.Features.PlayerShape.Move
             _initialPosition = _playerPositionable.Position;
 
             _speed = _shapeMoverSettings.Speed;
+            IsActive = true;
         }
-        
+
+        public bool IsActive { get; set; }
+
         public void Tick()
         {
+            if (!IsActive)
+                return;
+            
             if (_inputService.UserClickDown && _rectMousePositionChecker.MouseOnRect(_inputService.CurrentMousePosition))
             {
                 Vector2 targetPosition = CalculateTargetPosition();
@@ -78,6 +84,12 @@ namespace App.Scripts.Scenes.GameScene.Features.PlayerShape.Move
         public void Restart()
         {
             _playerPositionable.Position = _initialPosition;
+        }
+
+        public float Speed
+        {
+            get => _speed;
+            set => _speed = value;
         }
 
         public void ChangeSpeed(float speedScale)

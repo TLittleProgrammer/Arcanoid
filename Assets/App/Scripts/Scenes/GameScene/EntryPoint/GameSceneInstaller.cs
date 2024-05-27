@@ -102,8 +102,10 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             
             ShowLevelAnimationInstaller.Install(Container);
             ItemsDestroyableInstaller.Install(Container);
+            BehaviourTreeInstaller.Install(Container);
             StateMachineInstaller.Install(Container, _gameLoopTickables, _projectStateMachine, _restartables, _levelPackInfoView, _restartablesForLoadNewLevel);
             
+            Container.BindInterfacesTo<BehaviourTreeInitializer>().AsSingle();
             Container.BindInterfacesTo<ItemsDestroyerInitializer>().AsSingle();
             Container.BindInterfacesTo<GameInitializer>().AsSingle();
             Container.BindInterfacesTo<InitializeAllRestartableAnsTickablesLists>().AsSingle().WithArguments(_restartables, _restartablesForLoadNewLevel, _gameLoopTickables);

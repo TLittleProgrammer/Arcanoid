@@ -77,6 +77,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts
             if (UpdateDurationForBoosts(boostTypeId, BoostTypeId.Fireball, _boostsSettings.FireballDuration)) return;
             if (UpdateDurationForBoosts(boostTypeId, BoostTypeId.StickyPlatform, _boostsSettings.StickyDuration)) return;
             if (UpdateDurationForBoosts(boostTypeId, BoostTypeId.MiniGun, _boostsSettings.MiniGunDuration)) return;
+            if (UpdateDurationForBoosts(boostTypeId, BoostTypeId.Autopilot, _boostsSettings.AutopilotDuration)) return;
             
             BallSpeed(boostTypeId, BoostTypeId.BallAcceleration, BoostTypeId.BallSlowdown, _boostsSettings.BallSpeedDuration);
             BallSpeed(boostTypeId, BoostTypeId.PlayerShapeAddSize, BoostTypeId.PlayerShapeMinusSize, _boostsSettings.ShapeSizeDuration);
@@ -166,6 +167,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts
                 BoostTypeId.Fireball => _boostsSettings.FireballDuration,
                 BoostTypeId.StickyPlatform => _boostsSettings.StickyDuration,
                 BoostTypeId.MiniGun => _boostsSettings.MiniGunDuration,
+                BoostTypeId.Autopilot => _boostsSettings.AutopilotDuration,
 
                 _ => 0f
             };
