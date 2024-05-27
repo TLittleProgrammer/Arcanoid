@@ -34,13 +34,6 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
         private readonly IWallLoader _wallLoader;
         private readonly TextAsset _levelData;
         private readonly ILevelPackInfoService _levelPackInfoService;
-        private readonly GameLoopState _gameLoopState;
-        private readonly WinState _winState;
-        private readonly LoadSceneFromMainMenuState _loadSceneFromMainMenuState;
-        private readonly RestartState _restartState;
-        private readonly LoadNextLevelState _loadNextLevelState;
-        private readonly MenuPopupState _menuPopupState;
-        private readonly LooseState _looseState;
         private readonly IStateMachine _stateMachine;
         private readonly IShowLevelAnimation _showLevelAnimation;
 
@@ -57,13 +50,6 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             IWallLoader wallLoader,
             TextAsset levelData,
             ILevelPackInfoService levelPackInfoService,
-            GameLoopState gameLoopState,
-            WinState winState,
-            LoadSceneFromMainMenuState loadSceneFromMainMenuState,
-            RestartState restartState,
-            LoadNextLevelState loadNextLevelState,
-            MenuPopupState menuPopupState,
-            LooseState looseState,
             IStateMachine stateMachine,
             IShowLevelAnimation showLevelAnimation)
         {
@@ -79,13 +65,6 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             _wallLoader = wallLoader;
             _levelData = levelData;
             _levelPackInfoService = levelPackInfoService;
-            _gameLoopState = gameLoopState;
-            _winState = winState;
-            _loadSceneFromMainMenuState = loadSceneFromMainMenuState;
-            _restartState = restartState;
-            _loadNextLevelState = loadNextLevelState;
-            _menuPopupState = menuPopupState;
-            _looseState = looseState;
             _stateMachine = stateMachine;
             _showLevelAnimation = showLevelAnimation;
         }
@@ -103,21 +82,9 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
 
             InitializeStateMachine();
         }
-
+        
         private async void InitializeStateMachine()
         {
-            IExitableState[] states =
-            {
-                _gameLoopState,
-                _winState,
-                _loadSceneFromMainMenuState,
-                _restartState,
-                _loadNextLevelState,
-                _menuPopupState,
-                _looseState,
-            };
-
-            await _stateMachine.AsyncInitialize(states);
             await _showLevelAnimation.Show();
             
             _stateMachine.Enter<GameLoopState>();

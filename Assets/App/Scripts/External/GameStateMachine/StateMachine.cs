@@ -16,7 +16,7 @@ namespace App.Scripts.External.GameStateMachine
             
         }
 
-        public StateMachine(IEnumerable<IExitableState> states)
+        public StateMachine(List<IExitableState> states)
         {
             _states = states
                 .ToDictionary(x => x.GetType(), x => x);

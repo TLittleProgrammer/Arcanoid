@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Infrastructure;
 using App.Scripts.Scenes.GameScene.Features.LevelView;
 using App.Scripts.Scenes.GameScene.States;
 using Zenject;
+using Zenject.ReflectionBaking.Mono.CompilerServices.SymbolWriter;
 
 namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
 {
@@ -34,18 +36,23 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
         {
             IStateMachine stateMachine = new StateMachine();
 
-            Container.BindInterfacesAndSelfTo<GameLoopState>().AsSingle().WithArguments(_gameLoopTickables, stateMachine);
-            Container.Bind<WinState>().AsSingle().WithArguments(stateMachine);
-            Container.Bind<LoadSceneFromMainMenuState>().AsSingle().WithArguments(_projectStateMachine);
-            Container.Bind<RestartState>().AsSingle().WithArguments(_restartables, stateMachine);
-            Container.Bind<LoadNextLevelState>().AsSingle().WithArguments(_levelPackInfoView, _restartablesForLoadNewLevel, stateMachine);
-            Container.Bind<MenuPopupState>().AsSingle();
-            Container.Bind<LooseState>().AsSingle();
+            Container.Bind<IStateMachine>().To<StateMachine>().AsSingle();
+            
+            Container.Bind(typeof(IExitableState), typeof(ITickable), typeof(GameLoopState)).To<GameLoopState>().AsSingle().WithArguments(_gameLoopTickables, stateMachine);
+            Container.Bind(typeof(IExitableState), typeof(WinState)).To<WinState>().AsSingle().WithArguments(stateMachine);
+            Container.Bind(typeof(IExitableState), typeof(LoadSceneFromMainMenuState)).To<LoadSceneFromMainMenuState>().AsSingle().WithArguments(_projectStateMachine);
+            Container.Bind(typeof(IExitableState), typeof(RestartState)).To<RestartState>().AsSingle().WithArguments(_restartables, stateMachine);
+            Container.Bind(typeof(IExitableState), typeof(LoadNextLevelState)).To<LoadNextLevelState>().AsSingle().WithArguments(_levelPackInfoView, _restartablesForLoadNewLevel, stateMachine);
+            Container.Bind(typeof(IExitableState), typeof(MenuPopupState)).To<MenuPopupState>().AsSingle();
+            Container.Bind(typeof(IExitableState), typeof(LooseState)).To<LooseState>().AsSingle();
+            
+            Container.Bind<List<IExitableState>>().FromMethod(ctx => ctx.Container.ResolveAll<IExitableState>().ToList()).AsSingle();
 
-            Container
-                .Bind<IStateMachine>()
-                .FromInstance(stateMachine)
-                .AsSingle();
+            Container.Rebind<IStateMachine>().FromMethod(ctx =>
+            {
+                var services = ctx.Container.Resolve<List<IExitableState>>();
+                return new StateMachine(services);
+            }).AsSingle();
         }
     }
 }
