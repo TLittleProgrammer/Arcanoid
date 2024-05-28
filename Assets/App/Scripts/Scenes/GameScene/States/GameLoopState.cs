@@ -5,6 +5,7 @@ using App.Scripts.General.RootUI;
 using App.Scripts.Scenes.GameScene.Features.Ball.Movement.MoveVariants;
 using App.Scripts.Scenes.GameScene.Features.Components;
 using App.Scripts.Scenes.GameScene.Features.Healthes;
+using App.Scripts.Scenes.GameScene.Features.Helpers;
 using App.Scripts.Scenes.GameScene.Features.LevelProgress;
 using App.Scripts.Scenes.GameScene.Features.Popups;
 using App.Scripts.Scenes.GameScene.Features.ServiceActivator;
@@ -26,6 +27,7 @@ namespace App.Scripts.Scenes.GameScene.States
         private readonly IBallFreeFlightMover _ballFreeFlightMover;
         private readonly RootUIViewProvider _rootUIViewProvider;
         private readonly IServicesActivator _servicesActivator;
+        private readonly GameLoopSubscriber _gameLoopSubscriber;
 
         public bool IsActive { get; set; }
 
@@ -38,7 +40,8 @@ namespace App.Scripts.Scenes.GameScene.States
             ILevelProgressService levelProgressService,
             IBallFreeFlightMover ballFreeFlightMover,
             RootUIViewProvider rootUIViewProvider,
-            IServicesActivator servicesActivator)
+            IServicesActivator servicesActivator,
+            GameLoopSubscriber gameLoopSubscriber)
         {
             
             _tickables = tickables;
@@ -50,13 +53,15 @@ namespace App.Scripts.Scenes.GameScene.States
             _ballFreeFlightMover = ballFreeFlightMover;
             _rootUIViewProvider = rootUIViewProvider;
             _servicesActivator = servicesActivator;
+            _gameLoopSubscriber = gameLoopSubscriber;
         }
 
         public async UniTask Enter()
         {
             _servicesActivator.SetActiveToServices(true);
             _ballFreeFlightMover.Continue();
-            
+
+            _gameLoopSubscriber.SubscribeAll();
             _healthContainer.LivesAreWasted   += OnLivesAreWasted;
             _levelProgressService.LevelPassed += OnLevelPassed;
             
@@ -68,6 +73,7 @@ namespace App.Scripts.Scenes.GameScene.States
             _servicesActivator.SetActiveToServices(false);
             _ballFreeFlightMover.Reset();
             
+            _gameLoopSubscriber.DescribeAll();
             _healthContainer.LivesAreWasted   -= OnLivesAreWasted;
             _levelProgressService.LevelPassed -= OnLevelPassed;
             

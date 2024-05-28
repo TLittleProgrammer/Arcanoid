@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using App.Scripts.Scenes.GameScene.Features.Ball.PositionChecker;
-using App.Scripts.Scenes.GameScene.Features.Blocks;
-using App.Scripts.Scenes.GameScene.Features.Camera;
 using App.Scripts.Scenes.GameScene.Features.Components;
-using App.Scripts.Scenes.GameScene.Features.Healthes;
+using App.Scripts.Scenes.GameScene.Features.Damage;
 using App.Scripts.Scenes.GameScene.Features.ScreenInfo;
 using Cysharp.Threading.Tasks;
 using Zenject;
@@ -13,22 +11,15 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball
 {
     public class BallsService : IBallsService, ITickable
     {
-        private readonly IHealthContainer _healthContainer;
-        private readonly IBlockShakeService _blockShakeService;
-        private readonly ICameraService _cameraService;
+        private readonly IGetDamageService _getDamageService;
+
         private readonly float _minBallYPosition;
 
         private List<IBallPositionChecker> _ballsPositionCheckers = new();
         
-        public BallsService(
-            IScreenInfoProvider screenInfoProvider,
-            IHealthContainer healthContainer,
-            IBlockShakeService blockShakeService,
-            ICameraService cameraService)
+        public BallsService(IScreenInfoProvider screenInfoProvider, IGetDamageService getDamageService)
         {
-            _healthContainer = healthContainer;
-            _blockShakeService = blockShakeService;
-            _cameraService = cameraService;
+            _getDamageService = getDamageService;
             _minBallYPosition = -screenInfoProvider.HeightInWorld / 2f;
         }
         
@@ -38,6 +29,11 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball
             ballPositionChecker.BallFallen += OnBallFallen;
                
             _ballsPositionCheckers.Add(ballPositionChecker);
+        }
+
+        public void UpdateSpeedByProgress(float progress)
+        {
+            
         }
 
         public void Tick()
@@ -55,14 +51,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball
 
             if (_ballsPositionCheckers.Count == 0)
             {
-                GetDamage();
+                _getDamageService.GetDamage(1);
             } 
-        }
-
-        private void GetDamage()
-        {
-            _healthContainer.UpdateHealth(-1);
-            _blockShakeService.Shake(_cameraService.Camera.transform);
         }
     }
 }

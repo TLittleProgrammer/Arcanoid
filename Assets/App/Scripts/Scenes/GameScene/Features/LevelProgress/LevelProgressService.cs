@@ -1,5 +1,6 @@
 ﻿using System;
 using App.Scripts.General.LevelPackInfoService;
+using App.Scripts.Scenes.GameScene.Features.Ball;
 using App.Scripts.Scenes.GameScene.Features.Levels;
 using App.Scripts.Scenes.GameScene.Features.Levels.AssetManagement;
 using App.Scripts.Scenes.GameScene.Features.LevelView;
@@ -22,6 +23,7 @@ namespace App.Scripts.Scenes.GameScene.Features.LevelProgress
         private int _destroyedBlockCounter;
         private int _targetScore;
 
+        public event Action<float> ProgressChanged;
         public event Action LevelPassed;
         
         public LevelProgressService(
@@ -72,6 +74,8 @@ namespace App.Scripts.Scenes.GameScene.Features.LevelProgress
             _progress += _step;
             _targetScore = (int)Math.Round(_progress * 100f);
             
+            ProgressChanged?.Invoke(_progress);
+            
             AnimateScore(_levelPackInfoView.LevelPassProgress, (int)((_progress - _step) * 100), _targetScore, _levelPackInfoView.UpdateProgressText);
         }
 
@@ -89,7 +93,6 @@ namespace App.Scripts.Scenes.GameScene.Features.LevelProgress
                     }
                 }
             }
-
 
             _allBlockCounter = damagableCounter;
             _step = 1f / damagableCounter;

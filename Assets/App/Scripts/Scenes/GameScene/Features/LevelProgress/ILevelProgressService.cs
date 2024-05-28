@@ -7,6 +7,7 @@ namespace App.Scripts.Scenes.GameScene.Features.LevelProgress
 {
     public interface ILevelProgressService : IInitializable, IRestartable
     {
+        event Action<float> ProgressChanged; 
         event Action LevelPassed;
         void CalculateStepByLevelData(LevelData levelData);
         void TakeOneStep();

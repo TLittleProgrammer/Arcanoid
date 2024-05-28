@@ -18,7 +18,7 @@ namespace App.Scripts.Scenes.GameScene.Features.MiniGun
         private readonly ITimeProvider _timeProvider;
         private readonly IBulletPositionChecker _bulletPositionChecker;
         private readonly ILevelViewUpdater _levelViewUpdater;
-        private readonly IBlockShakeService _shakeService;
+        private readonly IShakeService _shakeService;
         private readonly BulletEffectView.Pool _bulletEffectsPool;
         private float _shapeWidth;
         private float _shapeHeight;
@@ -32,7 +32,7 @@ namespace App.Scripts.Scenes.GameScene.Features.MiniGun
             ITimeProvider timeProvider,
             IBulletPositionChecker bulletPositionChecker,
             ILevelViewUpdater levelViewUpdater,
-            IBlockShakeService shakeService,
+            IShakeService shakeService,
             BulletEffectView.Pool bulletEffectsPool)
         {
             _playerView = playerView;
