@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Infrastructure;
 using App.Scripts.Scenes.GameScene.Features.LevelView;
-using App.Scripts.Scenes.GameScene.Features.States;
+using App.Scripts.Scenes.GameScene.States;
+using App.Scripts.Scenes.GameScene.States.Bootstrap;
 using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
@@ -33,19 +35,42 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
         public override void InstallBindings()
         {
             IStateMachine stateMachine = new StateMachine();
+            
+            BindStates(stateMachine);
+            RebindStateMachine(stateMachine);
+        }
 
-            Container.BindInterfacesAndSelfTo<GameLoopState>().AsSingle().WithArguments(_gameLoopTickables, stateMachine);
-            Container.Bind<WinState>().AsSingle().WithArguments(stateMachine);
-            Container.Bind<LoadSceneFromMainMenuState>().AsSingle().WithArguments(_projectStateMachine);
-            Container.Bind<RestartState>().AsSingle().WithArguments(_restartables, stateMachine);
-            Container.Bind<LoadNextLevelState>().AsSingle().WithArguments(_levelPackInfoView, _restartablesForLoadNewLevel, stateMachine);
-            Container.Bind<PopupState>().AsSingle();
-            Container.Bind<LooseState>().AsSingle();
+        private void RebindStateMachine(IStateMachine stateMachine)
+        {
+            Container.Rebind<IStateMachine>().FromMethod(ctx =>
+            {
+                var services = ctx.Container.Resolve<List<IExitableState>>();
 
-            Container
-                .Bind<IStateMachine>()
-                .FromInstance(stateMachine)
-                .AsSingle();
+                stateMachine.AsyncInitialize(services);
+                return stateMachine;
+            }).AsSingle();
+        }
+
+        private void BindStates(IStateMachine stateMachine)
+        {
+            Container.BindInterfacesTo<BootstrapState>().AsSingle().WithArguments(stateMachine);
+            Container.BindInterfacesTo<BootstrapServiceActivatorState>().AsSingle().WithArguments(stateMachine);
+            Container.BindInterfacesTo<BootstrapBehaviourTreeState>().AsSingle().WithArguments(stateMachine);
+            Container.BindInterfacesTo<BootstrapLoadLevelState>().AsSingle().WithArguments(stateMachine);
+            Container.BindInterfacesTo<BootstrapItemsDestroyerState>().AsSingle().WithArguments(stateMachine);
+            Container.BindInterfacesTo<BootstrapInitializeAllRestartablesAndTickablesListsState>().AsSingle().WithArguments(stateMachine, _restartables, _restartablesForLoadNewLevel, _gameLoopTickables);
+            Container.BindInterfacesTo<BootstrapInitializeOtherServicesState>().AsSingle().WithArguments(stateMachine);
+            
+            Container.BindInterfacesTo<GameLoopState>().AsSingle().WithArguments(_gameLoopTickables, stateMachine);
+            Container.BindInterfacesTo<WinState>().AsSingle().WithArguments(stateMachine);
+            Container.BindInterfacesTo<LoadSceneFromMainMenuState>().AsSingle().WithArguments(_projectStateMachine);
+            Container.BindInterfacesTo<RestartState>().AsSingle().WithArguments(_restartables, stateMachine);
+            Container.BindInterfacesTo<LoadNextLevelState>().AsSingle().WithArguments(_levelPackInfoView, _restartablesForLoadNewLevel, stateMachine);
+            Container.BindInterfacesTo<MenuPopupState>().AsSingle();
+            Container.BindInterfacesTo<LooseState>().AsSingle();
+            
+            Container.Bind<List<IExitableState>>().FromMethod(ctx => ctx.Container.ResolveAll<IExitableState>().ToList()).AsSingle();
+
         }
     }
 }

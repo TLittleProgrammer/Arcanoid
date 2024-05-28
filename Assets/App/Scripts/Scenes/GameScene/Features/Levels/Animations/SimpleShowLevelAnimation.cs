@@ -6,7 +6,6 @@ using App.Scripts.Scenes.GameScene.Features.Grid;
 using App.Scripts.Scenes.GameScene.Features.Levels.Load;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
-using UnityEngine;
 using UnityEngine.UI;
 
 namespace App.Scripts.Scenes.GameScene.Features.Levels.Animations

@@ -2,7 +2,7 @@
 
 namespace App.Scripts.Scenes.GameScene.Features.PositionChecker
 {
-    public interface IShapePositionChecker : IPositionChecker
+    public interface IShapePositionChecker
     {
         float MinX { get; }
         float MaxX { get; }

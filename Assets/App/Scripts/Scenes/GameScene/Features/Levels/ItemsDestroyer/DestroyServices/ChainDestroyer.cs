@@ -9,7 +9,6 @@ using App.Scripts.Scenes.GameScene.Features.Levels.Load;
 using App.Scripts.Scenes.GameScene.Features.Levels.View;
 using Cysharp.Threading.Tasks;
 using Unity.Mathematics;
-using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroyServices
 {

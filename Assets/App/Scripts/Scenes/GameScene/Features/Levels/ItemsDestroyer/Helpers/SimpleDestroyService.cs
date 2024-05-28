@@ -5,7 +5,6 @@ using App.Scripts.Scenes.GameScene.Features.LevelProgress;
 using App.Scripts.Scenes.GameScene.Features.Levels.Data;
 using App.Scripts.Scenes.GameScene.Features.Pools;
 using App.Scripts.Scenes.GameScene.Features.TopSprites;
-using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.Helpers
 {

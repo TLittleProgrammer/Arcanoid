@@ -5,7 +5,6 @@ using App.Scripts.Scenes.GameScene.Features.Levels.AssetManagement;
 using App.Scripts.Scenes.GameScene.Features.LevelView;
 using App.Scripts.Scenes.GameScene.Features.ScoreAnimation;
 using TMPro;
-using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.LevelProgress
 {

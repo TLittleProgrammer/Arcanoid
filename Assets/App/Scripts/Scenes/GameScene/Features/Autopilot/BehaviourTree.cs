@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using UnityEngine.Tilemaps;
-
-namespace App.Scripts.Scenes.GameScene.Features.Autopilot
+﻿namespace App.Scripts.Scenes.GameScene.Features.Autopilot
 {
     public class BehaviourTree : Node
     {

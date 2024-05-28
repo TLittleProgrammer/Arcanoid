@@ -3,6 +3,6 @@
     public static class GameConstants
     {
         public static int DefaultHealthCount = 3;
-        public static float ShowLevelDuration = 3f;
+        public static float ShowLevelDuration = 0.5f;
     }
 }

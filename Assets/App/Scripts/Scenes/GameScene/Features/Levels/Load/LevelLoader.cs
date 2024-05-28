@@ -3,7 +3,6 @@ using App.Scripts.External.Grid;
 using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.Grid;
 using App.Scripts.Scenes.GameScene.Features.Levels.View;
-using App.Scripts.Scenes.GameScene.Features.Settings;
 using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Levels.Load
