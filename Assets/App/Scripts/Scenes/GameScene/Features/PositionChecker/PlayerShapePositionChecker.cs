@@ -17,17 +17,17 @@ namespace App.Scripts.Scenes.GameScene.Features.PositionChecker
             _spriteRenderable = spriteRenderable;
             _screenInfoProvider = screenInfoProvider;
 
-            ChangeShapeScale(1f);
+            ChangeShapeScale();
         }
 
         public float MinX => _minXPosition;
         public float MaxX => _maxXPosition;
 
-        public void ChangeShapeScale(float targetScale)
+        public void ChangeShapeScale()
         {
-            var bounds = _spriteRenderable.SpriteRenderer.sprite.bounds;
-            _minXPosition = -_screenInfoProvider.WidthInWorld / 2f + bounds.size.x / 2f * targetScale;
-            _maxXPosition = _screenInfoProvider.WidthInWorld / 2f - bounds.size.x / 2f * targetScale;
+            var bounds = _spriteRenderable.SpriteRenderer.size;
+            _minXPosition = -_screenInfoProvider.WidthInWorld / 2f + bounds.x / 2f;
+            _maxXPosition = _screenInfoProvider.WidthInWorld / 2f - bounds.x / 2f;
         }
 
         public bool CanChangePositionTo(Vector2 to)

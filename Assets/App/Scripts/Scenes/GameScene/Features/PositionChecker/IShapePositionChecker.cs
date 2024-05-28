@@ -7,7 +7,7 @@ namespace App.Scripts.Scenes.GameScene.Features.PositionChecker
         float MinX { get; }
         float MaxX { get; }
         
-        void ChangeShapeScale(float targetScale);
+        void ChangeShapeScale();
         bool CanChangePositionTo(Vector2 targetPosition);
     }
 }

@@ -4,6 +4,8 @@ using App.Scripts.Scenes.GameScene.Features.MiniGun;
 using App.Scripts.Scenes.GameScene.Features.PlayerShape;
 using App.Scripts.Scenes.GameScene.Features.PositionChecker;
 using App.Scripts.Scenes.GameScene.Features.Settings;
+using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Boosts.Helpers
@@ -32,36 +34,45 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.Helpers
             _boostContainer.BoostEnded += OnBoostEnded;
         }
 
-        public void Activate(BoostTypeId boostTypeId)
+        public async void Activate(BoostTypeId boostTypeId)
         {
             if (boostTypeId is BoostTypeId.PlayerShapeAddSize)
             {
-                _playerView.SpriteRenderer.sprite = _boostsSettings.PlayerShapeSprites[BoostTypeId.PlayerShapeAddSize];
-                
-                _shapePositionChecker.ChangeShapeScale(_boostsSettings.AddPercent);
-                _playerView.transform.localScale = Vector3.one * _boostsSettings.AddPercent;
+                float currentWidth = _playerView.SpriteRenderer.size.x;
+                await DOVirtual.Float(currentWidth, _boostsSettings.AddPercent, 0.5f, UpdateSpriteWidth);
+                _shapePositionChecker.ChangeShapeScale();
                 
                 _miniGunService.RecalculateSpawnPositions();
             }
             else
             {
-                _playerView.SpriteRenderer.sprite = _boostsSettings.PlayerShapeSprites[BoostTypeId.PlayerShapeMinusSize];
-                
-                _shapePositionChecker.ChangeShapeScale(_boostsSettings.MinusPercent);
-                _playerView.transform.localScale = Vector3.one * _boostsSettings.MinusPercent;
+                float currentWidth = _playerView.SpriteRenderer.size.x;
+                await DOVirtual.Float(currentWidth, _boostsSettings.MinusPercent, 0.5f, UpdateSpriteWidth);
+                _shapePositionChecker.ChangeShapeScale();
                 
                 _miniGunService.RecalculateSpawnPositions();
             }
+        }
+
+        private void UpdateSpriteWidth(float value)
+        {
+            var spriteRendererSize = _playerView.SpriteRenderer.size;
+            spriteRendererSize.x = value;
+
+            _playerView.SpriteRenderer.size = spriteRendererSize;
+            _playerView.BoxCollider2D.size = spriteRendererSize;
+            
+            _shapePositionChecker.ChangeShapeScale();
         }
 
         private void OnBoostEnded(BoostTypeId boostType)
         {
             if (boostType is BoostTypeId.PlayerShapeMinusSize or BoostTypeId.PlayerShapeAddSize)
             {
-                _playerView.SpriteRenderer.sprite = _boostsSettings.PlayerShapeSprites[BoostTypeId.None];
+                float currentWidth = _playerView.SpriteRenderer.size.x;
+                DOVirtual.Float(currentWidth, 1.5f, 0.5f, UpdateSpriteWidth);
                 
-                _shapePositionChecker.ChangeShapeScale(1f);
-                _playerView.transform.localScale = Vector3.one;
+                _shapePositionChecker.ChangeShapeScale();
                 
                 _miniGunService.RecalculateSpawnPositions();
             }

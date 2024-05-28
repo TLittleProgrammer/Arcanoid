@@ -724,7 +724,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AspectMode: 4
-  m_AspectRatio: 1
+  m_AspectRatio: 0.58
 --- !u!1 &1761831209
 GameObject:
   m_ObjectHideFlags: 0
@@ -805,7 +805,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _camera: {fileID: 519420031}
   _header: {fileID: 333490954}
-  _levelData: {fileID: 4900000, guid: 4d7e465e5a324fb41af019f30ea380ef, type: 3}
+  _levelData: {fileID: 4900000, guid: a1b3ee94663432048ac2798cdd0c8790, type: 3}
   _playerShape: {fileID: 206752683}
   _ballView: {fileID: 4526333472807322575}
   _levelPackInfoView: {fileID: 333490955}
@@ -945,7 +945,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4285311820993786691, guid: 29a22f99607127643af70e61f42375af, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.99
+      value: -3.721
       objectReference: {fileID: 0}
     - target: {fileID: 4285311820993786691, guid: 29a22f99607127643af70e61f42375af, type: 3}
       propertyPath: m_LocalPosition.z
