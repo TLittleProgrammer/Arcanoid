@@ -15,39 +15,33 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
         private readonly IStateMachine _stateMachine;
         private readonly IWallLoader _wallLoader;
         private readonly IPopupProvider _popupProvider;
-        private readonly IBallSpeedUpdater _ballSpeedUpdater;
-        private readonly IBallMovementService _ballMovementService;
         private readonly IShowLevelAnimation _showLevelAnimation;
-        private readonly BallView _ballView;
         private readonly IBallsService _ballsService;
+        private readonly BallView.Factory _ballViewFactory;
 
         public BootstrapInitializeOtherServicesState(
             IStateMachine stateMachine,
             IWallLoader wallLoader,
             IPopupProvider popupProvider,
-            IBallSpeedUpdater ballSpeedUpdater,
-            IBallMovementService ballMovementService,
             IShowLevelAnimation showLevelAnimation,
-            BallView ballView,
-            IBallsService ballsService)
+            IBallsService ballsService,
+            BallView.Factory ballViewFactory)
         {
             _stateMachine = stateMachine;
             _wallLoader = wallLoader;
             _popupProvider = popupProvider;
-            _ballSpeedUpdater = ballSpeedUpdater;
-            _ballMovementService = ballMovementService;
             _showLevelAnimation = showLevelAnimation;
-            _ballView = ballView;
             _ballsService = ballsService;
+            _ballViewFactory = ballViewFactory;
         }
         
         public async UniTask Enter()
         {
+            _ballsService.AddBall(_ballViewFactory.Create());
+            
             await _wallLoader.AsyncInitialize();
             await _popupProvider.AsyncInitialize(Pathes.PathToPopups);
-            await _ballSpeedUpdater.AsyncInitialize(_ballMovementService);
             await _showLevelAnimation.Show();
-            _ballsService.AddBall(_ballView);
 
             _stateMachine.Enter<BootstrapInitializeAllRestartablesAndTickablesListsState>();
             

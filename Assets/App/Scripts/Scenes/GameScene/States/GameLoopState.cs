@@ -24,7 +24,6 @@ namespace App.Scripts.Scenes.GameScene.States
         private readonly ITimeScaleAnimator _timeScaleAnimator;
         private readonly IStateMachine _stateMachine;
         private readonly ILevelProgressService _levelProgressService;
-        private readonly IBallFreeFlightMover _ballFreeFlightMover;
         private readonly RootUIViewProvider _rootUIViewProvider;
         private readonly IServicesActivator _servicesActivator;
         private readonly GameLoopSubscriber _gameLoopSubscriber;
@@ -38,7 +37,6 @@ namespace App.Scripts.Scenes.GameScene.States
             ITimeScaleAnimator timeScaleAnimator,
             IStateMachine stateMachine,
             ILevelProgressService levelProgressService,
-            IBallFreeFlightMover ballFreeFlightMover,
             RootUIViewProvider rootUIViewProvider,
             IServicesActivator servicesActivator,
             GameLoopSubscriber gameLoopSubscriber)
@@ -50,7 +48,6 @@ namespace App.Scripts.Scenes.GameScene.States
             _timeScaleAnimator = timeScaleAnimator;
             _stateMachine = stateMachine;
             _levelProgressService = levelProgressService;
-            _ballFreeFlightMover = ballFreeFlightMover;
             _rootUIViewProvider = rootUIViewProvider;
             _servicesActivator = servicesActivator;
             _gameLoopSubscriber = gameLoopSubscriber;
@@ -59,7 +56,6 @@ namespace App.Scripts.Scenes.GameScene.States
         public async UniTask Enter()
         {
             _servicesActivator.SetActiveToServices(true);
-            _ballFreeFlightMover.Continue();
 
             _gameLoopSubscriber.SubscribeAll();
             _healthContainer.LivesAreWasted   += OnLivesAreWasted;
@@ -71,7 +67,6 @@ namespace App.Scripts.Scenes.GameScene.States
         public async UniTask Exit()
         {
             _servicesActivator.SetActiveToServices(false);
-            _ballFreeFlightMover.Reset();
             
             _gameLoopSubscriber.DescribeAll();
             _healthContainer.LivesAreWasted   -= OnLivesAreWasted;

@@ -1,6 +1,7 @@
 ﻿using System;
 using App.Scripts.Scenes.GameScene.Features.Components;
 using UnityEngine;
+using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.Features.Ball
 {
@@ -27,6 +28,15 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball
         private void OnCollisionEnter2D(Collision2D collision)
         {
             Collidered?.Invoke(collision.collider);
+        }
+
+        public class Pool : MonoMemoryPool<BallView>
+        {
+            
+        }
+
+        public class Factory : PlaceholderFactory<BallView>
+        {
         }
     }
 }

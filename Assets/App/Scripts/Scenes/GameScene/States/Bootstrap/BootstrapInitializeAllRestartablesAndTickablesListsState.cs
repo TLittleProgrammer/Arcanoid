@@ -28,7 +28,6 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
         private readonly IHealthContainer _healthContainer;
         private readonly ILevelProgressService _levelProgressService;
         private readonly IPlayerShapeMover _playerShapeMover;
-        private readonly IBallMovementService _ballMovementService;
         private readonly IPopupService _popupService;
         private readonly IPoolContainer _poolContainer;
         private readonly ILevelLoader _levelLoader;
@@ -48,7 +47,6 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             IHealthContainer healthContainer,
             ILevelProgressService levelProgressService,
             IPlayerShapeMover playerShapeMover,
-            IBallMovementService ballMovementService,
             IPopupService popupService,
             IPoolContainer poolContainer,
             ILevelLoader levelLoader,
@@ -67,7 +65,6 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             _healthContainer = healthContainer;
             _levelProgressService = levelProgressService;
             _playerShapeMover = playerShapeMover;
-            _ballMovementService = ballMovementService;
             _popupService = popupService;
             _poolContainer = poolContainer;
             _levelLoader = levelLoader;
@@ -100,7 +97,6 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             _gameLoopTickables.Add(_playerShapeMover);
             _gameLoopTickables.Add(_clickDetector);
             _gameLoopTickables.Add(_inputService);
-            _gameLoopTickables.Add(_ballMovementService);
         }
 
         private void InitializeRestartablesListForNewLevel()
@@ -109,7 +105,6 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             _restartablesForLoadNewLevel.Add(_bulletPositionChecker);
             _restartablesForLoadNewLevel.Add(_levelProgressService);
             _restartablesForLoadNewLevel.Add(_playerShapeMover);
-            _restartablesForLoadNewLevel.Add(_ballMovementService);
             _restartablesForLoadNewLevel.Add(_poolContainer);
             _restartablesForLoadNewLevel.Add(_timeProvider);
             _restartablesForLoadNewLevel.Add(_popupService as IRestartable);
@@ -124,7 +119,6 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             _generalRestartables.Add(_gridPositionResolver);
             _generalRestartables.Add(_levelProgressService);
             _generalRestartables.Add(_playerShapeMover);
-            _generalRestartables.Add(_ballMovementService);
             _generalRestartables.Add(_poolContainer);
             _generalRestartables.Add(_levelLoader);
             _generalRestartables.Add(_timeProvider);

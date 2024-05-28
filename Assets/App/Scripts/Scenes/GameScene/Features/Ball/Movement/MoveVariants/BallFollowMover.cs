@@ -15,7 +15,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Movement.MoveVariants
         {
             _ballPositionable = ballPositionable;
             _targetPositionable = targetPositionable;
-            _initialOffset = _stickyOffset = ballPositionable.Position - targetPositionable.Position;
+            _initialOffset = _stickyOffset = new Vector3(0f, 0.5f, 0f);
         }
 
         public async UniTask AsyncInitialize()

@@ -1,6 +1,5 @@
 ﻿using App.Scripts.Scenes.GameScene.Features.Ball.Movement.MoveVariants;
-using App.Scripts.Scenes.GameScene.Features.Components;
-using App.Scripts.Scenes.GameScene.Features.Input;
+using App.Scripts.Scenes.GameScene.Features.Constants;
 using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Ball.Movement
@@ -8,30 +7,20 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Movement
     public sealed class BallMovementService : IBallMovementService
     {
         private readonly IBallFreeFlightMover _ballFreeFlightMover;
-        private readonly IPositionable _ballPositionable;
-        private readonly IBallsService _ballsService;
-        private readonly IClickDetector _clickDetector;
 
         private IBallFollowMover _ballFollowMover;
         private IBallFollowMover _ballFollowFollowMover;
 
-        public BallMovementService(
-            IClickDetector clickDetector,
-            IBallFollowMover ballFollowFollowMover,
-            IBallFreeFlightMover ballFreeFlightMover,
-            IPositionable ballPositionable,
-            IBallsService ballsService
-        )
+        public BallMovementService(IBallFollowMover ballFollowFollowMover, IBallFreeFlightMover ballFreeFlightMover)
         {
-            _clickDetector = clickDetector;
             _ballFollowFollowMover = ballFollowFollowMover;
             _ballFollowMover = _ballFollowFollowMover;
+            
             _ballFreeFlightMover = ballFreeFlightMover;
-            _ballPositionable = ballPositionable;
-            _ballsService = ballsService;
-
-            _clickDetector.MouseUp += OnMouseUp;
+            IsFreeFlight = false;
         }
+
+        public bool IsFreeFlight { get; set; }
 
         public void Tick()
         {
@@ -41,28 +30,25 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Movement
             _ballFollowMover.Tick();
         }
 
-        private void OnMouseUp()
-        {
-            _clickDetector.MouseUp -= OnMouseUp;
-
-            _ballFreeFlightMover.AsyncInitialize(Vector2.up);
-            _ballFollowMover = null;
-        }
-
         public void Restart()
         {
             _ballFreeFlightMover.Reset();
 
             _ballFollowMover = _ballFollowFollowMover;
             _ballFollowMover.AsyncInitialize();
-            _clickDetector.MouseUp += OnMouseUp;
-
-            _ballsService.AddBall(_ballPositionable);
+            IsFreeFlight = false;
         }
 
-        public void UpdateSpeed(float addValue)
+        public void UpdateSpeed(float progress)
         {
-            _ballFreeFlightMover.UpdateSpeed(addValue);
+            _ballFreeFlightMover.SetSpeed(Mathf.Lerp(5f, GameConstants.MaxBallSpeed, progress));
+        }
+
+        public void GoFly()
+        {
+            IsFreeFlight = true;
+            _ballFreeFlightMover.AsyncInitialize(Vector2.up);
+            _ballFollowMover = null;
         }
 
         public void Sticky()
@@ -71,7 +57,11 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Movement
 
             _ballFollowMover = _ballFollowFollowMover;
             _ballFollowMover.Restart();
-            _clickDetector.MouseUp += OnMouseUp;
+        }
+
+        public void SetSpeedMultiplier(float speedMultiplier)
+        {
+            _ballFreeFlightMover.SetSpeedMultiplier(speedMultiplier);
         }
     }
 }

@@ -12,7 +12,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.Activators
 {
     public class FireballBoostActivator : IConcreteBoostActivator, ITickable
     {
-        private readonly BallView _ballView;
         private readonly IBoostContainer _boostContainer;
         private readonly ILevelLoader _levelLoader;
         private readonly IItemsDestroyable _itemsDestroyable;
@@ -20,13 +19,11 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.Activators
         private bool _isActive = false;
         
         public FireballBoostActivator(
-            BallView ballView,
             IBoostContainer boostContainer,
             ILevelLoader levelLoader,
             IItemsDestroyable itemsDestroyable,
             ILevelViewUpdater levelViewUpdater)
         {
-            _ballView = ballView;
             _boostContainer = boostContainer;
             _levelLoader = levelLoader;
             _itemsDestroyable = itemsDestroyable;
@@ -37,7 +34,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.Activators
 
         public void Activate(BoostTypeId boostTypeId)
         {
-            _ballView.RedBall.SetActive(true);
+            //_ballView.RedBall.SetActive(true);
             _isActive = true;
 
             foreach (IEntityView view in _levelLoader.Entities)
@@ -59,7 +56,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.Activators
                 }
 
                 _isActive = false;
-                _ballView.RedBall.SetActive(false);
+            //    _ballView.RedBall.SetActive(false);
             }
         }
 
@@ -75,7 +72,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.Activators
 
         private void CheckCollisions()
         {
-            foreach (IEntityView view in _levelLoader.Entities)
+            /*foreach (IEntityView view in _levelLoader.Entities)
             {
                 if (view.GameObject.activeSelf)
                 {
@@ -95,7 +92,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.Activators
                         }
                     }
                 }
-            }
+            }*/
         }
     }
 }

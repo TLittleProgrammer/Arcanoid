@@ -9,5 +9,6 @@
         Boosts          = 4,
         Bullets         = 5,
         BulletEffect    = 6,
+        BallView        = 7,
     }
 }

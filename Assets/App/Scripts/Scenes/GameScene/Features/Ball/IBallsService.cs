@@ -1,10 +1,15 @@
-﻿using App.Scripts.Scenes.GameScene.Features.Components;
+﻿using System.Collections.Generic;
+using App.Scripts.Scenes.GameScene.Features.Ball.Movement;
 
 namespace App.Scripts.Scenes.GameScene.Features.Ball
 {
     public interface IBallsService
     {
-        void AddBall(IPositionable positionable);
+        Dictionary<BallView, IBallMovementService> Balls { get; set; }
+
+        void AddBall(BallView ballView, bool isFreeFlight = false);
         void UpdateSpeedByProgress(float progress);
+        void Reset();
+        void SetSpeedMultiplier(float multiplier);
     }
 }

@@ -11,19 +11,13 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.Activators
     public class StickyBoostActivator : IConcreteBoostActivator, ITickable
     {
         private readonly PlayerView _playerView;
-        private readonly BallView _ballView;
-        private readonly IBallMovementService _ballMovementService;
         private bool _isActive = false;
         
         public StickyBoostActivator(
             PlayerView playerView,
-            BallView ballView,
-            IBoostContainer boostContainer,
-            IBallMovementService ballMovementService)
+            IBoostContainer boostContainer)
         {
             _playerView = playerView;
-            _ballView = ballView;
-            _ballMovementService = ballMovementService;
 
             boostContainer.BoostEnded += OnBoostEnded;
         }
@@ -45,13 +39,14 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.Activators
                 return;
             }
 
+            /*
             Bounds playerBounds = _playerView.BoxCollider2D.bounds;
             Bounds ballBounds   = _ballView.Collider2D.bounds;
 
             if (playerBounds.Intersects(ballBounds))
             {
-                _ballMovementService.Sticky();
-            }
+                //_ballMovementService.Sticky();
+            }*/
         }
     }
 }

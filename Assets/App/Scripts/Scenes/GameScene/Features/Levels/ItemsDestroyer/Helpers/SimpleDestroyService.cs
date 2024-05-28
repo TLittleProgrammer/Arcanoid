@@ -1,5 +1,4 @@
-﻿using App.Scripts.Scenes.GameScene.Features.Ball;
-using App.Scripts.Scenes.GameScene.Features.Boosts;
+﻿using App.Scripts.Scenes.GameScene.Features.Boosts;
 using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.LevelProgress;
 using App.Scripts.Scenes.GameScene.Features.Levels.Data;
@@ -12,16 +11,11 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.Helpers
     {
         private readonly ILevelProgressService _levelProgressService;
         private readonly IPoolContainer _poolContainer;
-        private readonly IBallSpeedUpdater _ballSpeedUpdater;
 
-        public SimpleDestroyService(
-            ILevelProgressService levelProgressService,
-            IPoolContainer poolContainer,
-            IBallSpeedUpdater ballSpeedUpdater)
+        public SimpleDestroyService(ILevelProgressService levelProgressService, IPoolContainer poolContainer)
         {
             _levelProgressService = levelProgressService;
             _poolContainer = poolContainer;
-            _ballSpeedUpdater = ballSpeedUpdater;
         }
         
         public void Destroy(GridItemData gridItemData, IEntityView entityView)
@@ -36,8 +30,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.Helpers
                 {
                     _poolContainer.RemoveItem(PoolTypeId.OnTopSprite, sprite);
                 }
-
-                _ballSpeedUpdater.UpdateSpeed();
             }
         }
 

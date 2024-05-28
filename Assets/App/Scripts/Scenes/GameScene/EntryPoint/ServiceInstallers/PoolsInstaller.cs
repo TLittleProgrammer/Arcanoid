@@ -1,4 +1,5 @@
 ﻿using App.Scripts.External.Extensions.ZenjectExtensions;
+using App.Scripts.Scenes.GameScene.Features.Ball;
 using App.Scripts.Scenes.GameScene.Features.Boosts;
 using App.Scripts.Scenes.GameScene.Features.Effects;
 using App.Scripts.Scenes.GameScene.Features.Entities;
@@ -30,6 +31,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
             BindPool<BoostView, BoostView.Pool>(PoolTypeId.Boosts);
             BindPool<BulletView, BulletView.Pool>(PoolTypeId.Bullets);
             BindPool<BulletEffectView, BulletEffectView.Pool>(PoolTypeId.BulletEffect);
+            BindPool<BallView, BallView.Pool>(PoolTypeId.BallView);
             
             Container.Bind<IPoolContainer>().To<PoolContainer>().AsSingle();
         }
