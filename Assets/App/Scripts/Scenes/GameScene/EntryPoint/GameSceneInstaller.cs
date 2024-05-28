@@ -16,6 +16,7 @@ using App.Scripts.Scenes.GameScene.Features.Boosts;
 using App.Scripts.Scenes.GameScene.Features.Boosts.UI;
 using App.Scripts.Scenes.GameScene.Features.Camera;
 using App.Scripts.Scenes.GameScene.Features.Components;
+using App.Scripts.Scenes.GameScene.Features.Dotween;
 using App.Scripts.Scenes.GameScene.Features.Effects;
 using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.Grid;
@@ -23,6 +24,7 @@ using App.Scripts.Scenes.GameScene.Features.Healthes;
 using App.Scripts.Scenes.GameScene.Features.Healthes.View;
 using App.Scripts.Scenes.GameScene.Features.LevelProgress;
 using App.Scripts.Scenes.GameScene.Features.Levels;
+using App.Scripts.Scenes.GameScene.Features.Levels.Animations;
 using App.Scripts.Scenes.GameScene.Features.LevelView;
 using App.Scripts.Scenes.GameScene.Features.MiniGun;
 using App.Scripts.Scenes.GameScene.Features.PlayerShape;
@@ -31,6 +33,8 @@ using App.Scripts.Scenes.GameScene.Features.PlayerShape.Move;
 using App.Scripts.Scenes.GameScene.Features.Pools;
 using App.Scripts.Scenes.GameScene.Features.PositionChecker;
 using App.Scripts.Scenes.GameScene.Features.Restart;
+using App.Scripts.Scenes.GameScene.Features.ScoreAnimation;
+using App.Scripts.Scenes.GameScene.Features.ScreenInfo;
 using App.Scripts.Scenes.GameScene.Features.ServiceActivator;
 using App.Scripts.Scenes.GameScene.Features.Settings;
 using App.Scripts.Scenes.GameScene.Features.TopSprites;
@@ -69,9 +73,9 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
         {
             BindInitializeDependencies();
             
-            TweenersLocatorInstaller.Install(Container);
             TimeProviderInstaller.Install(Container);
-            ScoreAnimationServiceInstaller.Install(Container);
+            Container.Bind<ITweenersLocator>().To<TweenersLocator>().AsSingle();
+            Container.Bind<IScoreAnimationService>().To<ScoreAnimationService>().AsSingle();
             
             BindPools();
             
@@ -80,12 +84,12 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             FactoriesInstaller.Install(Container, _rootUIView, _boostItemViewPrefab);
             
             Container.Bind<IRectMousePositionChecker>().To<RectMousePositionChecker>().AsSingle().WithArguments(_rectTransformableViews);
+            Container.Bind<ICameraService>().To<CameraService>().AsSingle().WithArguments(_camera);
             Container.BindInterfacesAndSelfTo<LevelProgressService>().AsSingle().WithArguments(_levelPackInfoView, _levelPackBackground);
             Container.BindInterfacesAndSelfTo<BulletPositionChecker>().AsSingle();
             Container.BindInterfacesAndSelfTo<MiniGunService>().AsSingle();
-            Container.Bind<ICameraService>().To<CameraService>().AsSingle().WithArguments(_camera);
 
-            ScreenInfoProviderInstaller.Install(Container);
+            Container.Bind<IScreenInfoProvider>().To<ScreenInfoProvider>().AsSingle();
             InputInstaller.Install(Container);
             LevelServicesInstaller.Install(Container);
             
@@ -104,9 +108,9 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.Bind<IRestartService>().To<RestartService>().AsSingle();
             Container.Bind<IItemViewService>().To<ItemViewService>().AsSingle();
             Container.Bind<IServicesActivator>().To<ServiceActivator>().AsSingle();
+            Container.Bind<IShowLevelAnimation>().To<SimpleShowLevelAnimation>().AsSingle();
             Container.BindInterfacesAndSelfTo<BallsService>().AsSingle();
             
-            ShowLevelAnimationInstaller.Install(Container);
             ItemsDestroyableInstaller.Install(Container);
             BehaviourTreeInstaller.Install(Container);
             StateMachineInstaller.Install(Container, _gameLoopTickables, _projectStateMachine, _restartables, _levelPackInfoView, _restartablesForLoadNewLevel);
