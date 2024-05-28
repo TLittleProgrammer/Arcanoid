@@ -50,7 +50,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball
 
         private async void OnBallFallen(IPositionable ball)
         {
-            await UniTask.WaitForEndOfFrame();
+            await UniTask.Yield(PlayerLoopTiming.LastUpdate);
             _ballsPositionCheckers.Remove(_ballsPositionCheckers.First(x => x.BallPositionable.Equals(ball)));
 
             if (_ballsPositionCheckers.Count == 0)
