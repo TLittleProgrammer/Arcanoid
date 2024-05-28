@@ -121,6 +121,10 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball
 
             if (!movementService.IsFreeFlight)
             {
+                if (_speedMultiplier > 1f)
+                {
+                    view.TrailRenderer.enabled = true;
+                }
                 movementService.GoFly();
             }
         }
@@ -129,18 +133,30 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball
         {
             _speedMultiplier = multiplier;
 
-            foreach ((var garbarge, IBallMovementService movementService) in Balls)
+            bool needTrail = _speedMultiplier > 1f;
+            
+            foreach ((BallView view, IBallMovementService movementService) in Balls)
             {
+                if (movementService.IsFreeFlight)
+                {
+                    view.TrailRenderer.enabled = needTrail;
+                }
+                
                 movementService.SetSpeedMultiplier(_speedMultiplier);
             }
         }
 
         private void OnMouseUp()
         {
-            foreach ((var garbarge, IBallMovementService movementService) in Balls)
+            foreach ((BallView view, IBallMovementService movementService) in Balls)
             {
                 if (!movementService.IsFreeFlight)
                 {
+                    if (_speedMultiplier > 1f)
+                    {
+                        view.TrailRenderer.enabled = true;
+                    }
+                    
                     movementService.GoFly();
                 }
             }
@@ -158,7 +174,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball
         {
             BallView ballView = _ballViewPool.Spawn();
             var ballData = Balls.First(x => x.Key.Equals(ballView));
-            
+
+            ballView.TrailRenderer.enabled = false;
             ballData.Key.gameObject.SetActive(true);
             ballData.Value.Restart();
             
