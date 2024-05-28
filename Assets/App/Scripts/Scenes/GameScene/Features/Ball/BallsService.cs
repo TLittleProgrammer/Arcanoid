@@ -20,6 +20,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball
 
         private List<IBallPositionChecker> _ballsPositionCheckers = new();
         private float _speedMultiplier;
+        private float _levelProgress;
 
         public BallsService(
             IScreenInfoProvider screenInfoProvider,
@@ -31,6 +32,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball
             _ballViewPool = ballViewPool;
             _minBallYPosition = -screenInfoProvider.HeightInWorld / 2f;
             _speedMultiplier = 1f;
+            _levelProgress = 0f;
             
             Balls = new();
             clickDetector.MouseUp += OnMouseUp;
@@ -44,6 +46,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball
 
             if (isFreeFlight)
             {
+                Balls[ballView].UpdateSpeed(_levelProgress);
                 Balls[ballView].SetSpeedMultiplier(_speedMultiplier);
                 Balls[ballView].GoFly();
             }
@@ -51,7 +54,12 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball
 
         public void UpdateSpeedByProgress(float progress)
         {
-            
+            _levelProgress = progress;
+
+            foreach ((var garbarge, IBallMovementService movementService) in Balls)
+            {
+                movementService.UpdateSpeed(_levelProgress);
+            }
         }
 
         public void Reset()
