@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using App.Scripts.Scenes.GameScene.EntryPoint.Utilities;
 using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.Levels.AssetManagement;
 using App.Scripts.Scenes.GameScene.Features.Levels.Data;
@@ -32,73 +32,211 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroySer
         public override void Destroy(GridItemData gridItemData, IEntityView entityView)
         {
             int2 initialPoint = new(entityView.GridPositionX, entityView.GridPositionY);
-            
-            int2[] left  = GetAllPointsByDirection(initialPoint, Direction.Left);
-            int2[] right = GetAllPointsByDirection(initialPoint, Direction.Right);
-            int2[] down  = GetAllPointsByDirection(initialPoint, Direction.Down);
-            int2[] up    = GetAllPointsByDirection(initialPoint, Direction.Up);
 
-            ChainData chainData = GetChainData(left, right, down, up);
+            Dictionary<int, List<EntityData>> allPoints = GetPoints(initialPoint);
 
-            if (chainData.EntityType == Int32.MinValue)
+            if (allPoints.Count == 0)
             {
-                DestroyOnlyCurrentBlock(gridItemData, entityView);
+                DestroyOnlyCurrentBlock(gridItemData, entityView).Forget();
             }
             else
             {
-                DestroyCurrentBlockAndChains(gridItemData, entityView, chainData, left, right, up, down);
+                DestroyChains(gridItemData, entityView, allPoints, initialPoint).Forget();
             }
         }
 
-        private async void DestroyCurrentBlockAndChains(GridItemData gridItemData, IEntityView entityView, ChainData chainData, int2[] left, int2[] right, int2[] up, int2[] down)
+        private async UniTask DestroyChains(GridItemData gridItemData, IEntityView entityView, Dictionary<int, List<EntityData>> needDestroyPoints, int2 initialPoint)
         {
-            await SimpleDestroy(gridItemData, entityView);
+            await DestroyOnlyCurrentBlock(gridItemData, entityView);
+            await DestroyOtherBlocks(needDestroyPoints, initialPoint);
+        }
 
-            int maxLength = Math.Max(left.Length, Math.Max(right.Length, Math.Max(down.Length, up.Length)));
+        private async UniTask DestroyOtherBlocks(Dictionary<int, List<EntityData>> needDestroyPoints, int2 initialPoint)
+        {
+            int id = GetEntityDataIdThatNeedDestroy(needDestroyPoints);
 
-            List<int2[]> checkedChains = new List<int2[]>()
+            List<int2> usablePoints = new();
+
+            Queue<int2> pointsQueue = new Queue<int2>();
+            Queue<int2> subPointsQueue = new Queue<int2>();
+            List<int2> aroundInitialPoint = GetAroundPoints(initialPoint);
+
+            pointsQueue.Enqueue(aroundInitialPoint[0]);
+            pointsQueue.Enqueue(aroundInitialPoint[1]);
+            pointsQueue.Enqueue(aroundInitialPoint[2]);
+            pointsQueue.Enqueue(aroundInitialPoint[3]);
+
+            usablePoints.Add(initialPoint);
+
+            while (true)
             {
-                left, right, down, up
-            };
+                if (await CheckMainQueue(pointsQueue, subPointsQueue)) break;
 
-            for (int i = 0; i < maxLength; i++)
-            {
-                List<IEntityView> needDestroyEntities = new();
-                
-                for (int j = 0; j < checkedChains.Count; j++)
+                int2 currentPoint = pointsQueue.Dequeue();
+
+                if (!PointOnMap(currentPoint))
+                    continue;
+
+                IEntityView entity = _levelLoader.Entities.GetByCoordinates(currentPoint);
+                EntityStage entityStage = LevelViewUpdater.GetEntityStage(entity);
+
+                if (ThisBlockIsNotSimple(entityStage, entity) || usablePoints.Contains(currentPoint) || entity.EntityId != id)
                 {
-                    int2[] currentChain = checkedChains[j];
-                    if (i >= currentChain.Length)
-                    {
-                        checkedChains.Remove(currentChain);
-                        j--;
-                        continue;
-                    }
-                    
-                    IEntityView entity = _levelLoader.Entities.First(x => x.GridPositionX == currentChain[i].x && x.GridPositionY == currentChain[i].y);
-
-                    if (chainData.EntityType != entity.EntityId)
-                    {
-                        checkedChains.Remove(currentChain);
-                        j--;
-                        continue;
-                    }
-                    
-                    needDestroyEntities.Add(entity);
+                    continue;
                 }
 
-                foreach (IEntityView entity in needDestroyEntities)
-                {
-                    GridItemData destroyableGridData = LevelViewUpdater.LevelGridItemData[entity.GridPositionX, entity.GridPositionY];
+                usablePoints.Add(currentPoint);
 
-                    SimpleDestroy(destroyableGridData, entity).Forget();
+                SimpleDestroy(LevelViewUpdater.LevelGridItemData[entity.GridPositionX, entity.GridPositionY], entity).Forget();
+                AddPointsToQueue(currentPoint, usablePoints, subPointsQueue);
+            }
+        }
+
+        private async UniTask<bool> CheckMainQueue(Queue<int2> pointsQueue, Queue<int2> subPointsQueue)
+        {
+            if (pointsQueue.Count == 0)
+            {
+                if (subPointsQueue.Count == 0)
+                {
+                    return true;
+                }
+
+                while (subPointsQueue.Count != 0)
+                {
+                    pointsQueue.Enqueue(subPointsQueue.Dequeue());
                 }
 
                 await UniTask.Delay(350);
             }
+
+            return false;
         }
 
-        private async void DestroyOnlyCurrentBlock(GridItemData gridItemData, IEntityView entityView)
+        private void AddPointsToQueue(int2 currentPoint, List<int2> usablePoints, Queue<int2> subPointsQueue)
+        {
+            List<int2> aroundPoints = GetAroundPoints(currentPoint);
+
+            foreach (int2 point in aroundPoints)
+            {
+                if (!usablePoints.Contains(point))
+                {
+                    subPointsQueue.Enqueue(point);
+                }
+            }
+        }
+
+        private int GetEntityDataIdThatNeedDestroy(Dictionary<int,List<EntityData>> needDestroyPoints)
+        {
+            int max = -1;
+            List<EntityData> result = null;
+
+            foreach (KeyValuePair<int,List<EntityData>> point in needDestroyPoints)
+            {
+                if (point.Value.Count > max)
+                {
+                    result = point.Value;
+                    max = point.Value.Count;
+                }
+            }
+
+            return result[0].EntityView.EntityId;
+        }
+
+        private Dictionary<int, List<EntityData>> GetPoints(int2 initialPoint)
+        {
+            List<int2> usablePoints = new();
+            Dictionary<int, List<EntityData>> counter = new();
+
+            Queue<KeyValuePair<int2, int>> points = new Queue<KeyValuePair<int2, int>>();
+            List<int2> aroundInitialPoint = GetAroundPoints(initialPoint);
+            
+            points.Enqueue(new(aroundInitialPoint[0], -1));
+            points.Enqueue(new(aroundInitialPoint[1], -1));
+            points.Enqueue(new(aroundInitialPoint[2], -1));
+            points.Enqueue(new(aroundInitialPoint[3], -1));
+            
+            usablePoints.Add(initialPoint);
+
+            while (points.Count != 0)
+            {
+                KeyValuePair<int2, int> currentPoint = points.Dequeue();
+                
+                if(!PointOnMap(currentPoint.Key))
+                    continue;
+
+                IEntityView entity = _levelLoader.Entities.First(x => x.GridPositionX == currentPoint.Key.x && x.GridPositionY == currentPoint.Key.y);
+                EntityStage entityStage = LevelViewUpdater.GetEntityStage(entity);
+
+                if (ThisBlockIsNotSimple(entityStage, entity) || PreviousEntityNotEqualsCurrent(currentPoint, entity) || usablePoints.Contains(currentPoint.Key))
+                {
+                    continue;
+                }
+                
+                usablePoints.Add(currentPoint.Key);
+
+                EntityData entityData = CreateEntityData(entity);
+
+                UpdateCounter(counter, entity, entityData);
+                AddAroundCurrentPoints(currentPoint.Key, usablePoints, points, entityData);
+            }
+            
+            return counter;
+        }
+
+        private EntityData CreateEntityData(IEntityView entity)
+        {
+            EntityData entityData = new EntityData();
+            entityData.GridItemData = LevelViewUpdater.LevelGridItemData[entity.GridPositionX, entity.GridPositionY];
+            entityData.EntityView = entity;
+
+            return entityData;
+        }
+
+        private bool PreviousEntityNotEqualsCurrent(KeyValuePair<int2, int> currentPoint, IEntityView entity)
+        {
+            if (currentPoint.Value != -1)
+            {
+                if (currentPoint.Value != entity.EntityId)
+                    return true;
+            }
+
+            return false;
+        }
+
+        private void AddAroundCurrentPoints(int2 currentPoint, List<int2> usablePoints, Queue<KeyValuePair<int2, int>> points, EntityData entityData)
+        {
+            List<int2> aroundPoints = GetAroundPoints(currentPoint);
+
+            foreach (int2 point in aroundPoints)
+            {
+                if (!usablePoints.Contains(point))
+                {
+                    points.Enqueue(new(point, entityData.EntityView.EntityId));
+                }
+            }
+        }
+
+        private void UpdateCounter(Dictionary<int, List<EntityData>> counter, IEntityView entity, EntityData entityData)
+        {
+            if (!counter.ContainsKey(entity.EntityId))
+            {
+                counter.Add(entity.EntityId, new()
+                {
+                    entityData
+                });
+            }
+            else
+            {
+                counter[entity.EntityId].Add(entityData);
+            }
+        }
+
+        private bool ThisBlockIsNotSimple(EntityStage entityStage, IEntityView entity)
+        {
+            return entityStage.ICanGetDamage is false || entityStage.BoostTypeId != BoostTypeId.None || entity.BoxCollider2D.enabled == false;
+        }
+
+        private async UniTask DestroyOnlyCurrentBlock(GridItemData gridItemData, IEntityView entityView)
         {
             await SimpleDestroy(gridItemData, entityView);
         }
@@ -109,74 +247,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroySer
 
             gridItemData.CurrentHealth = -1;
             _simpleDestroyService.Destroy(gridItemData, entityView);
-        }
-
-        private ChainData GetChainData(int2[] left, int2[] right, int2[] down, int2[] up)
-        {
-            Dictionary<int, int> chainCounter = new();
-
-            GoThroughPoints(ref chainCounter, left);
-            GoThroughPoints(ref chainCounter, right);
-            GoThroughPoints(ref chainCounter, down);
-            GoThroughPoints(ref chainCounter, up);
-
-            int max = Int32.MinValue;
-            ChainData chainData = new();
-
-            foreach (KeyValuePair<int,int> pair in chainCounter)
-            {
-                if (pair.Value >= max)
-                {
-                    max = pair.Value;
-                    chainData.EntityType = pair.Key;
-                }
-            }
-
-            return chainData;
-        }
-
-        private void GoThroughPoints(ref Dictionary<int,int> chainCounter, int2[] chain)
-        {
-            if (chain.Length == 0)
-                return;
-
-            int2 startPoint = chain[0];
-            int counter = 1;
-            IEntityView entity = _levelLoader.Entities.First(x => x.GridPositionX == startPoint.x && x.GridPositionY == startPoint.y);
-            EntityStage entityStage = LevelViewUpdater.GetEntityStage(entity);
-
-            if (entityStage.ICanGetDamage is false || entityStage.BoostTypeId != BoostTypeId.None || entity.BoxCollider2D.enabled == false)
-                return;
-
-            for (int i = 1; i < chain.Length; i++)
-            {
-                int2 nextPoint = chain[i];
-                IEntityView nextEntity = _levelLoader.Entities.First(x => x.GridPositionX == nextPoint.x && x.GridPositionY == nextPoint.y);
-
-                if (nextEntity.BoxCollider2D.enabled == false)
-                {
-                    break;
-                }
-                
-                if (nextEntity.EntityId == entity.EntityId)
-                {
-                    counter++;
-                }
-            }
-
-            if (chainCounter.ContainsKey(entity.EntityId))
-            {
-                chainCounter[entity.EntityId] += counter;
-            }
-            else
-            {
-                chainCounter.Add(entity.EntityId, counter);
-            }
-        }
-
-        private sealed class ChainData
-        {
-            public int EntityType = Int32.MinValue;
         }
     }
 }

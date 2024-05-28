@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
 using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.Levels.Data;
 using App.Scripts.Scenes.GameScene.Features.Levels.View;
@@ -23,10 +24,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroySer
 
             initialPoint += direction.ToVector();
             
-            while (initialPoint.x >= 0 &&
-                   initialPoint.y >= 0 &&
-                   initialPoint.x < LevelViewUpdater.LevelGridItemData.Width &&
-                   initialPoint.y < LevelViewUpdater.LevelGridItemData.Height)
+            while (PointOnMap(initialPoint))
             {
                 result.Add(initialPoint);
                 initialPoint += direction.ToVector();
@@ -34,6 +32,25 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroySer
 
 
             return result.ToArray();
+        }
+
+        protected bool PointOnMap(int2 point)
+        {
+            return point.x >= 0 &&
+                   point.y >= 0 &&
+                   point.x < LevelViewUpdater.LevelGridItemData.Width &&
+                   point.y < LevelViewUpdater.LevelGridItemData.Height;
+        }
+        
+        protected List<int2> GetAroundPoints(int2 initialPoint)
+        {
+            return new()
+            {
+                initialPoint + Direction.Up.ToVector(),
+                initialPoint + Direction.Right.ToVector(),
+                initialPoint + Direction.Down.ToVector(),
+                initialPoint + Direction.Left.ToVector(),
+            };
         }
     }
 }
