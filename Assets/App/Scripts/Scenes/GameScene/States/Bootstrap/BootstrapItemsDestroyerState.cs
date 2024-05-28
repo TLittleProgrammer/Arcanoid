@@ -14,6 +14,7 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
         private readonly BombDestroyService _bombDestroyService;
         private readonly BoostBlockDestroyer _boostBlockDestroyer;
         private readonly DirectionBombDestroyService _directionBombDestroyService;
+        private readonly CaptiveDestroyService _captiveDestroyService;
         private readonly ChainDestroyer _chainDestroyer;
 
         public BootstrapItemsDestroyerState(
@@ -22,6 +23,7 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             BombDestroyService bombDestroyService,
             BoostBlockDestroyer boostBlockDestroyer,
             DirectionBombDestroyService directionBombDestroyService,
+            CaptiveDestroyService captiveDestroyService,
             ChainDestroyer chainDestroyer
         )
         {
@@ -30,6 +32,7 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             _bombDestroyService = bombDestroyService;
             _boostBlockDestroyer = boostBlockDestroyer;
             _directionBombDestroyService = directionBombDestroyService;
+            _captiveDestroyService = captiveDestroyService;
             _chainDestroyer = chainDestroyer;
         }
         
@@ -63,6 +66,7 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
                 BuildDestroyDataService(BoostTypeId.Autopilot, _boostBlockDestroyer),
                 BuildDestroyDataService(BoostTypeId.HorizontalBomb, _directionBombDestroyService),
                 BuildDestroyDataService(BoostTypeId.VerticalBomb, _directionBombDestroyService),
+                BuildDestroyDataService(BoostTypeId.CaptiveBall, _captiveDestroyService),
             });
         }
 

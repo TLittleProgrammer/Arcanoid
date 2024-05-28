@@ -74,6 +74,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.View
                    entityView.BoostTypeId is not  BoostTypeId.None &&
                    entityView.BoostTypeId is not  BoostTypeId.HorizontalBomb &&
                    entityView.BoostTypeId is not  BoostTypeId.VerticalBomb &&
+                   entityView.BoostTypeId is not  BoostTypeId.CaptiveBall &&
                    entityStage.BoostTypeId is not BoostTypeId.ChainBomb;
         }
 

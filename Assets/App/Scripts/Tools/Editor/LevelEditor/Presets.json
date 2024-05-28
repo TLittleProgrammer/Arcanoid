@@ -79,6 +79,10 @@
     "Autopilot":
     {
       "blockKey": "20"
+    },
+    "CaptiveBlock":
+    {
+      "blockKey": "21"
     }
   }
 }
