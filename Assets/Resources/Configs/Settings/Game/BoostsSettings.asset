@@ -90,8 +90,8 @@ MonoBehaviour:
   SlowDownPercentFromAll: 0.75
   AcceleratePercentFromAll: 1.25
   ShapeSizeDuration: 3
-  AddPercent: 1.5
-  MinusPercent: 0.5
+  AddPercent: 2
+  MinusPercent: 1
   ShapeSpeedDuration: 3
   AddPercentSpeed: 1.5
   MinusPercentSpeed: 0.5
