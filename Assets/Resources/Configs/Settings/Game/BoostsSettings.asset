@@ -96,10 +96,11 @@ MonoBehaviour:
   AddPercentSpeed: 1.5
   MinusPercentSpeed: 0.5
   AddHealth: 1
-  MinusHealth: 2
+  MinusHealth: 1
   FireballDuration: 4
   StickyDuration: 5
   MiniGunDuration: 7
   BulletTimeOffset: 0.75
   BulletDamage: 1
   BulletSpeed: 5
+  AutopilotDuration: 10

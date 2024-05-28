@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Blocks
 {
-    public sealed class BlockShakeService : IBlockShakeService
+    public sealed class ShakeService : IShakeService
     {
         private Dictionary<Transform, Sequence> _sequences = new();
 

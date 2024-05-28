@@ -11,19 +11,19 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Collision
         private readonly BallView _ball;
         private readonly CircleEffect.Factory _circleEffectFactory;
         private readonly ILevelViewUpdater _levelViewUpdater;
-        private readonly IBlockShakeService _blockShakeService;
+        private readonly IShakeService _shakeService;
         private readonly float _minBallYPosition;
 
         public BallCollisionService(
             BallView ball,
             CircleEffect.Factory circleEffectFactory,
             ILevelViewUpdater levelViewUpdater,
-            IBlockShakeService blockShakeService)
+            IShakeService shakeService)
         {
             _ball = ball;
             _circleEffectFactory = circleEffectFactory;
             _levelViewUpdater = levelViewUpdater;
-            _blockShakeService = blockShakeService;
+            _shakeService = shakeService;
 
 
             _ball.Collidered += OnCollidered;
@@ -35,7 +35,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Collision
             {
                 PlayEffects(entityView);
 
-                _blockShakeService.Shake(entityView.transform);
+                _shakeService.Shake(entityView.transform);
                 _levelViewUpdater.UpdateVisual(entityView, 1);
             }
         }

@@ -16,12 +16,14 @@ using App.Scripts.Scenes.GameScene.Features.Boosts;
 using App.Scripts.Scenes.GameScene.Features.Boosts.UI;
 using App.Scripts.Scenes.GameScene.Features.Camera;
 using App.Scripts.Scenes.GameScene.Features.Components;
+using App.Scripts.Scenes.GameScene.Features.Damage;
 using App.Scripts.Scenes.GameScene.Features.Dotween;
 using App.Scripts.Scenes.GameScene.Features.Effects;
 using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.Grid;
 using App.Scripts.Scenes.GameScene.Features.Healthes;
 using App.Scripts.Scenes.GameScene.Features.Healthes.View;
+using App.Scripts.Scenes.GameScene.Features.Helpers;
 using App.Scripts.Scenes.GameScene.Features.LevelProgress;
 using App.Scripts.Scenes.GameScene.Features.Levels;
 using App.Scripts.Scenes.GameScene.Features.Levels.Animations;
@@ -72,24 +74,21 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
         public override void InstallBindings()
         {
             BindInitializeDependencies();
-            
-            TimeProviderInstaller.Install(Container);
+
             Container.Bind<ITweenersLocator>().To<TweenersLocator>().AsSingle();
             Container.Bind<IScoreAnimationService>().To<ScoreAnimationService>().AsSingle();
+            Container.Bind<IShakeService>().To<ShakeService>().AsSingle();
             
-            BindPools();
-            
-            Container.Bind<IPoolContainer>().To<PoolContainer>().AsSingle();
-            Container.Bind<IBlockShakeService>().To<BlockShakeService>().AsSingle();
+            TimeProviderInstaller.Install(Container);
+            PoolsInstaller.Install(Container, _poolProviders);
             FactoriesInstaller.Install(Container, _rootUIView, _boostItemViewPrefab);
             
-            Container.Bind<IRectMousePositionChecker>().To<RectMousePositionChecker>().AsSingle().WithArguments(_rectTransformableViews);
+            Container.Bind<IRectMousePositionChecker>().To<RectMousePositionChecker>().AsSingle().WithArguments(_rectTransformableViews.ToList());
             Container.Bind<ICameraService>().To<CameraService>().AsSingle().WithArguments(_camera);
-            Container.BindInterfacesAndSelfTo<LevelProgressService>().AsSingle().WithArguments(_levelPackInfoView, _levelPackBackground);
+            Container.Bind<IScreenInfoProvider>().To<ScreenInfoProvider>().AsSingle();
             Container.BindInterfacesAndSelfTo<BulletPositionChecker>().AsSingle();
             Container.BindInterfacesAndSelfTo<MiniGunService>().AsSingle();
 
-            Container.Bind<IScreenInfoProvider>().To<ScreenInfoProvider>().AsSingle();
             InputInstaller.Install(Container);
             LevelServicesInstaller.Install(Container);
             
@@ -109,7 +108,10 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.Bind<IItemViewService>().To<ItemViewService>().AsSingle();
             Container.Bind<IServicesActivator>().To<ServiceActivator>().AsSingle();
             Container.Bind<IShowLevelAnimation>().To<SimpleShowLevelAnimation>().AsSingle();
+            Container.Bind<IGetDamageService>().To<GetDamageService>().AsSingle();
             Container.BindInterfacesAndSelfTo<BallsService>().AsSingle();
+            Container.BindInterfacesAndSelfTo<LevelProgressService>().AsSingle().WithArguments(_levelPackInfoView, _levelPackBackground);
+            Container.Bind<GameLoopSubscriber>().AsSingle();
             
             ItemsDestroyableInstaller.Install(Container);
             BehaviourTreeInstaller.Install(Container);
@@ -156,22 +158,6 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             shapeMoverSettings.Speed = 5f;
             
             Container.Bind<IPlayerShapeMover>().To<PlayerShapeMover>().AsSingle().WithArguments(_playerShape, shapeMoverSettings);
-        }
-
-        private void BindPools()
-        {
-            BindPool<EntityView, EntityView.Pool>(PoolTypeId.EntityView);
-            BindPool<CircleEffect, IEffect<CircleEffect>.Pool>(PoolTypeId.CircleEffect);
-            BindPool<HealthPointView, HealthPointView.Pool>(PoolTypeId.HealthPointView);
-            BindPool<OnTopSprites, OnTopSprites.Pool>(PoolTypeId.OnTopSprite);
-            BindPool<BoostView, BoostView.Pool>(PoolTypeId.Boosts);
-            BindPool<BulletView, BulletView.Pool>(PoolTypeId.Bullets);
-            BindPool<BulletEffectView, BulletEffectView.Pool>(PoolTypeId.BulletEffect);
-        }
-
-        private void BindPool<TInstance, TPool>(PoolTypeId poolType) where TPool : IMemoryPool where TInstance : MonoBehaviour 
-        {
-            Container.BindPool<TInstance, TPool>(_poolProviders.Pools[poolType].InitialSize, _poolProviders.Pools[poolType].View.GetComponent<TInstance>(), _poolProviders.Pools[poolType].ParentName);
         }
     }
 }

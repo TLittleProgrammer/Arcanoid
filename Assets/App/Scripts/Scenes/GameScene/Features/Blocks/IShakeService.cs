@@ -2,7 +2,7 @@
 
 namespace App.Scripts.Scenes.GameScene.Features.Blocks
 {
-    public interface IBlockShakeService
+    public interface IShakeService
     {
         void Shake(Transform transform);
     }

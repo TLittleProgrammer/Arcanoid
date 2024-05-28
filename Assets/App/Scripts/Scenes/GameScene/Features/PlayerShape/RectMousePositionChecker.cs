@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
 using App.Scripts.External.Components;
+using App.Scripts.Scenes.GameScene.Features.LevelView;
 using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.PlayerShape
 {
     public sealed class RectMousePositionChecker : IRectMousePositionChecker
     {
-        private readonly IEnumerable<IRectTransformable> _rects;
-
-        public RectMousePositionChecker(IEnumerable<IRectTransformable> rects)
+        private readonly List<RectTransformableView> _rects;
+        
+        public RectMousePositionChecker(List<RectTransformableView> rects)
         {
             _rects = rects;
         }        

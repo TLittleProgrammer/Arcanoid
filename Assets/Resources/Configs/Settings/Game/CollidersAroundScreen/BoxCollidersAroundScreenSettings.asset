@@ -17,10 +17,6 @@ MonoBehaviour:
     VerticalSize: 1
     HorizontalCenter: -0.1
     VerticalCenter: 0.5
-  - HorizontalSize: 1
-    VerticalSize: 0.2
-    HorizontalCenter: 0.5
-    VerticalCenter: -0.1
   - HorizontalSize: 0.2
     VerticalSize: 1
     HorizontalCenter: 1.1
