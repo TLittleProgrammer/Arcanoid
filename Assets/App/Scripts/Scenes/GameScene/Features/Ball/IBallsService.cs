@@ -8,6 +8,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball
     {
         Dictionary<BallView, IBallMovementService> Balls { get; set; }
         event Action<BallView> BallAdded;
+        float SpeedMultiplier { get; }
 
         void AddBall(BallView ballView, bool isFreeFlight = false);
         void UpdateSpeedByProgress(float progress);

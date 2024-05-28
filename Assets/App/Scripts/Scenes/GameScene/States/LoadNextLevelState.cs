@@ -4,6 +4,7 @@ using App.Scripts.General.Infrastructure;
 using App.Scripts.General.LevelPackInfoService;
 using App.Scripts.General.LoadingScreen;
 using App.Scripts.General.Popup;
+using App.Scripts.Scenes.GameScene.Features.Ball;
 using App.Scripts.Scenes.GameScene.Features.Dotween;
 using App.Scripts.Scenes.GameScene.Features.Grid;
 using App.Scripts.Scenes.GameScene.Features.LevelProgress;
@@ -33,9 +34,10 @@ namespace App.Scripts.Scenes.GameScene.States
         private readonly ITweenersLocator _tweenersLocator;
         private readonly ILevelPackInfoService _levelPackInfoService;
         private readonly IShowLevelAnimation _showLevelAnimation;
+        private readonly IBallsService _ballsService;
+        private readonly BallView.Pool _ballViewPool;
         private readonly ILevelViewUpdater _levelViewUpdater;
         
-
         public LoadNextLevelState(
             ILoadingScreen loadingScreen,
             IEnumerable<IRestartable> restartables,
@@ -48,7 +50,9 @@ namespace App.Scripts.Scenes.GameScene.States
             ILevelProgressService levelProgressService,
             ITweenersLocator tweenersLocator,
             ILevelPackInfoService levelPackInfoService,
-            IShowLevelAnimation showLevelAnimation)
+            IShowLevelAnimation showLevelAnimation,
+            IBallsService ballsService,
+            BallView.Pool ballViewPool)
         {
             _loadingScreen = loadingScreen;
             _restartables = restartables;
@@ -62,6 +66,8 @@ namespace App.Scripts.Scenes.GameScene.States
             _tweenersLocator = tweenersLocator;
             _levelPackInfoService = levelPackInfoService;
             _showLevelAnimation = showLevelAnimation;
+            _ballsService = ballsService;
+            _ballViewPool = ballViewPool;
         }
 
         public async UniTask Enter()
@@ -86,6 +92,16 @@ namespace App.Scripts.Scenes.GameScene.States
                 Sprite = data.LevelPack.GalacticIcon,
                 TargetScore = 0
             });
+
+            foreach ((BallView view, var movementService) in _ballsService.Balls)
+            {
+                if (view.gameObject.activeSelf)
+                {
+                    _ballViewPool.Despawn(view);
+                }
+            }
+            
+            _ballsService.Reset();
 
             await _showLevelAnimation.Show();
             _gameStateMachine.Enter<GameLoopState>();

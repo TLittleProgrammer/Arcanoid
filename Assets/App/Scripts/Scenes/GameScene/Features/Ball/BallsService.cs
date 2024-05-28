@@ -43,6 +43,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball
         public Dictionary<BallView, IBallMovementService> Balls { get; set; }
         public event Action<BallView> BallAdded;
 
+        public float SpeedMultiplier => _speedMultiplier;
+
         public void AddBall(BallView ballView, bool isFreeFlight = false)
         {
             AddBallPositionChecker(ballView);
