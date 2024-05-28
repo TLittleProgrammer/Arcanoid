@@ -35,6 +35,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
             BindPool<BallView, BallView.Pool>(PoolTypeId.BallView);
             BindPool<LaserEffect, LaserEffect.Pool>(PoolTypeId.Laser);
             BindPool<PlazmaEffect, PlazmaEffect.Pool>(PoolTypeId.Plazma);
+            BindPool<ExplosionEffect, ExplosionEffect.Pool>(PoolTypeId.Explosion);
             
             Container.Bind<IPoolContainer>().To<PoolContainer>().AsSingle();
         }
