@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using App.Scripts.Scenes.GameScene.Features.Ball.Movement;
 using App.Scripts.Scenes.GameScene.Features.Ball.PositionChecker;
@@ -40,10 +41,12 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball
         }
 
         public Dictionary<BallView, IBallMovementService> Balls { get; set; }
+        public event Action<BallView> BallAdded;
 
         public void AddBall(BallView ballView, bool isFreeFlight = false)
         {
             AddBallPositionChecker(ballView);
+            BallAdded?.Invoke(ballView);
 
             if (isFreeFlight)
             {
@@ -103,6 +106,21 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball
             foreach ((BallView view, var garbarge) in Balls)
             {
                 view.RedBall.gameObject.SetActive(activated);
+            }
+        }
+
+        public void SetSticky(BallView view)
+        {
+            Balls[view].Sticky();
+        }
+
+        public void Fly(BallView view)
+        {
+            IBallMovementService movementService = Balls[view];
+
+            if (!movementService.IsFreeFlight)
+            {
+                movementService.GoFly();
             }
         }
 

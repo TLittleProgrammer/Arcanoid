@@ -87,7 +87,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Movement.MoveVariants
             Velocity = Velocity.normalized * Speed * _timeProvider.TimeScale;
         }
 
-        private async void OnCollidered(Collider2D collider)
+        private async void OnCollidered(BallView view, Collider2D collider)
         {
             await UniTask.WaitForFixedUpdate();
             

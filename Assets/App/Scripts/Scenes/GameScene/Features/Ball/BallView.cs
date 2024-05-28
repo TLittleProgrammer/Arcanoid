@@ -8,7 +8,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball
     [RequireComponent(typeof(SpriteRenderer), typeof(Rigidbody2D))]
     public class BallView : MonoBehaviour, IRigidablebody, ISpriteRenderable
     {
-        public event Action<Collider2D> Collidered;
+        public event Action<BallView, Collider2D> Collidered;
 
         public GameObject RedBall;
         public CircleCollider2D Collider2D;
@@ -27,7 +27,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            Collidered?.Invoke(collision.collider);
+            Collidered?.Invoke(this, collision.collider);
         }
 
         public class Pool : MonoMemoryPool<BallView>

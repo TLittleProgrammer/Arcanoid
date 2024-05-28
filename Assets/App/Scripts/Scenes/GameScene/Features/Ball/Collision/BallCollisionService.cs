@@ -25,11 +25,10 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Collision
             _levelViewUpdater = levelViewUpdater;
             _shakeService = shakeService;
 
-
             _ball.Collidered += OnCollidered;
         }
 
-        private void OnCollidered(Collider2D collider)
+        private void OnCollidered(BallView view, Collider2D collider)
         {
             if (collider.TryGetComponent(out EntityView entityView))
             {

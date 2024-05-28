@@ -57,6 +57,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Movement
 
             _ballFollowMover = _ballFollowFollowMover;
             _ballFollowMover.Restart();
+
+            IsFreeFlight = false;
         }
 
         public void SetSpeedMultiplier(float speedMultiplier)
