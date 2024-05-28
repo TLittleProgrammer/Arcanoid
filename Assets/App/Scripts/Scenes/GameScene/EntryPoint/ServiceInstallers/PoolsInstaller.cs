@@ -2,6 +2,7 @@
 using App.Scripts.Scenes.GameScene.Features.Ball;
 using App.Scripts.Scenes.GameScene.Features.Boosts;
 using App.Scripts.Scenes.GameScene.Features.Effects;
+using App.Scripts.Scenes.GameScene.Features.Effects.Bombs;
 using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.Healthes.View;
 using App.Scripts.Scenes.GameScene.Features.MiniGun;
@@ -32,6 +33,8 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
             BindPool<BulletView, BulletView.Pool>(PoolTypeId.Bullets);
             BindPool<BulletEffectView, BulletEffectView.Pool>(PoolTypeId.BulletEffect);
             BindPool<BallView, BallView.Pool>(PoolTypeId.BallView);
+            BindPool<LaserEffect, LaserEffect.Pool>(PoolTypeId.Laser);
+            BindPool<PlazmaEffect, PlazmaEffect.Pool>(PoolTypeId.Plazma);
             
             Container.Bind<IPoolContainer>().To<PoolContainer>().AsSingle();
         }
