@@ -1,11 +1,12 @@
 ﻿using System;
+using App.Scripts.Scenes.GameScene.Features.Ball;
 using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Components
 {
     public interface IRigidablebody : IPositionable
     {
-        event Action<Collider2D> Collidered;
+        event Action<BallView, Collider2D> Collidered;
         Rigidbody2D Rigidbody2D { get; }
     }
 }

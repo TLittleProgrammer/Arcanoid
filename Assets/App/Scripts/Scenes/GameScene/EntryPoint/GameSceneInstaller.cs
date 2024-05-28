@@ -1,25 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using App.Scripts.External.Components;
-using App.Scripts.External.Extensions.ZenjectExtensions;
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Infrastructure;
 using App.Scripts.General.RootUI;
 using App.Scripts.Scenes.GameScene.EntryPoint.Bootstrap;
 using App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers;
 using App.Scripts.Scenes.GameScene.Features.Ball;
-using App.Scripts.Scenes.GameScene.Features.Ball.Collision;
-using App.Scripts.Scenes.GameScene.Features.Ball.Movement;
-using App.Scripts.Scenes.GameScene.Features.Ball.Movement.MoveVariants;
 using App.Scripts.Scenes.GameScene.Features.Blocks;
-using App.Scripts.Scenes.GameScene.Features.Boosts;
 using App.Scripts.Scenes.GameScene.Features.Boosts.UI;
 using App.Scripts.Scenes.GameScene.Features.Camera;
 using App.Scripts.Scenes.GameScene.Features.Components;
 using App.Scripts.Scenes.GameScene.Features.Damage;
 using App.Scripts.Scenes.GameScene.Features.Dotween;
-using App.Scripts.Scenes.GameScene.Features.Effects;
-using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.Grid;
 using App.Scripts.Scenes.GameScene.Features.Healthes;
 using App.Scripts.Scenes.GameScene.Features.Healthes.View;
@@ -32,14 +25,12 @@ using App.Scripts.Scenes.GameScene.Features.MiniGun;
 using App.Scripts.Scenes.GameScene.Features.PlayerShape;
 using App.Scripts.Scenes.GameScene.Features.PlayerShape.Collisions;
 using App.Scripts.Scenes.GameScene.Features.PlayerShape.Move;
-using App.Scripts.Scenes.GameScene.Features.Pools;
 using App.Scripts.Scenes.GameScene.Features.PositionChecker;
 using App.Scripts.Scenes.GameScene.Features.Restart;
 using App.Scripts.Scenes.GameScene.Features.ScoreAnimation;
 using App.Scripts.Scenes.GameScene.Features.ScreenInfo;
 using App.Scripts.Scenes.GameScene.Features.ServiceActivator;
 using App.Scripts.Scenes.GameScene.Features.Settings;
-using App.Scripts.Scenes.GameScene.Features.TopSprites;
 using App.Scripts.Scenes.GameScene.Features.Walls;
 using UnityEngine;
 using UnityEngine.UI;
@@ -53,7 +44,6 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
         [SerializeField] private RectTransform _header;
         [SerializeField] private TextAsset _levelData;
         [SerializeField] private PlayerView _playerShape;
-        [SerializeField] private BallView _ballView;
         [SerializeField] private LevelPackInfoView _levelPackInfoView;
         [SerializeField] private LevelPackBackgroundView _levelPackBackground;
         [SerializeField] private HealthPointViewParent _healthParent;
@@ -93,16 +83,12 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             LevelServicesInstaller.Install(Container);
             
             Container.Bind<IGridPositionResolver>().To<GridPositionResolver>().AsSingle().WithArguments(_header);
-            Container.Bind<IBallSpeedUpdater>().To<BallSpeedUpdater>().AsSingle();
             Container.Bind<IShapePositionChecker>().To<PlayerShapePositionChecker>().AsSingle().WithArguments(_playerShape);
             Container.Bind<PlayerCollisionService>().AsSingle().WithArguments(_playerShape).NonLazy();
             
             BindPlayerMoving();
             BindHealthPointService();
-            BindBallMovers();
             
-            Container.Bind<IBallMovementService>().To<BallMovementService>().AsSingle().WithArguments(_ballView);
-            Container.Bind<IBallCollisionService>().To<BallCollisionService>().AsSingle().WithArguments(_ballView).NonLazy();
             Container.Bind<IWallLoader>().To<WallLoader>().AsSingle().WithArguments(_wallPrefab);
             Container.Bind<IRestartService>().To<RestartService>().AsSingle();
             Container.Bind<IItemViewService>().To<ItemViewService>().AsSingle();
@@ -126,7 +112,6 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
         {
             Container.Bind<TextAsset>().FromInstance(_levelData).AsSingle();
             Container.Bind<PlayerView>().FromInstance(_playerShape).AsSingle();
-            Container.Bind<BallView>().FromInstance(_ballView).AsSingle();
             Container.Bind<Image>().FromInstance(_menuButton).AsSingle();
             Container.Bind<BoostsViewContainer>().FromInstance(_boostsViewContainer).AsSingle();
         }
@@ -135,21 +120,6 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
         {
             Container.Bind<IViewHealthPointService>().To<ViewHealthPointService>().AsSingle().WithArguments(_healthParent as ITransformable);
             Container.Bind<IHealthContainer>().To<HealthContainer>().AsSingle();
-        }
-
-        private void BindBallMovers()
-        {
-            Container
-                .Bind<IBallFollowMover>()
-                .To<BallFollowMover>()
-                .AsSingle()
-                .WithArguments(_ballView, _playerShape);
-            
-            Container
-                .Bind<IBallFreeFlightMover>()
-                .To<BallFreeFlight>()
-                .AsSingle()
-                .WithArguments(_ballView);
         }
 
         private void BindPlayerMoving()

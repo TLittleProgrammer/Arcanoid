@@ -28,7 +28,6 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
         private readonly IViewHealthPointService _viewHealthPointService;
         private readonly IHealthContainer _healthContainer;
         private readonly IPlayerShapeMover _playerShapeMover;
-        private readonly IBallMovementService _ballMovementService;
         private readonly IBallMover _ballMover;
 
         public BootstrapLoadLevelState(
@@ -40,8 +39,7 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             ILevelProgressService levelProgressService,
             IViewHealthPointService viewHealthPointService,
             IHealthContainer healthContainer,
-            IPlayerShapeMover playerShapeMover,
-            IBallMovementService ballMovementService
+            IPlayerShapeMover playerShapeMover
             )
         {
             _stateMachine = stateMachine;
@@ -53,7 +51,6 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             _viewHealthPointService = viewHealthPointService;
             _healthContainer = healthContainer;
             _playerShapeMover = playerShapeMover;
-            _ballMovementService = ballMovementService;
         }
         
         public async UniTask Enter()
@@ -80,7 +77,7 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             
             _levelProgressService.CalculateStepByLevelData(levelData);
             await _viewHealthPointService.AsyncInitialize(levelData);
-            await _healthContainer.AsyncInitialize(levelData, new List<IRestartable> {_playerShapeMover, _ballMovementService});
+            await _healthContainer.AsyncInitialize(levelData, new List<IRestartable> {_playerShapeMover});
         }
         
         private LevelData ChooseLevelData()

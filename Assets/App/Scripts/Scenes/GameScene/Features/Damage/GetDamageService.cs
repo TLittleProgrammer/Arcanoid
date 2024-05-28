@@ -10,7 +10,10 @@ namespace App.Scripts.Scenes.GameScene.Features.Damage
         private readonly IShakeService _shakeService;
         private readonly ICameraService _cameraService;
 
-        public GetDamageService(IHealthContainer healthContainer, IShakeService shakeService, ICameraService cameraService)
+        public GetDamageService(
+            IHealthContainer healthContainer,
+            IShakeService shakeService, 
+            ICameraService cameraService)
         {
             _healthContainer = healthContainer;
             _shakeService = shakeService;

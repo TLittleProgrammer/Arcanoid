@@ -11,19 +11,17 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Movement.MoveVariants
         private readonly BallFlyingSettings _settings;
         private readonly ITimeProvider _timeProvider;
         private readonly IRigidablebody _ballRigidbody;
-        private readonly BallView _ballView;
         private readonly float _maxSecondAngle;
         private readonly float _minSecondAngle;
 
-        private Vector3 _previousVelocity;
         private float _speed;
+        private float _multiplier;
         private float _constantSpeed;
         private Vector2 _lastDirection;
 
         public BallFreeFlight(BallView ballView, BallFlyingSettings settings, ITimeProvider timeProvider)
         {
             _ballRigidbody = ballView;
-            _ballView = ballView;
             _settings = settings;
             _timeProvider = timeProvider;
             
@@ -31,15 +29,15 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Movement.MoveVariants
             _timeProvider.TimeScaleChanged += OnTimeScaleChanged;
 
             _speed = _settings.Speed;
-            _constantSpeed = _speed;
-            _maxSecondAngle = (180f - _settings.MaxAngle);
-            _minSecondAngle = (180f - _settings.MinAngle);
+            _multiplier = 1f;
+            _constantSpeed  = _speed;
+            _maxSecondAngle = 180f - _settings.MaxAngle;
+            _minSecondAngle = 180f - _settings.MinAngle;
         }
 
         public async UniTask AsyncInitialize(Vector2 param)
         {
-            Velocity = param.normalized * _speed;
-            _previousVelocity = Velocity;
+            Velocity = param.normalized * Speed;
             
             await UniTask.CompletedTask;
         }
@@ -50,56 +48,46 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Movement.MoveVariants
             set => _ballRigidbody.Rigidbody2D.velocity = value;
         }
 
-        public float VelocitySpeed => _ballRigidbody.Rigidbody2D.velocity.magnitude;
-        public float GeneralSpeed => _speed;
+        private float Speed => _speed * _multiplier;
+        
         public float ConstantSpeed => _constantSpeed;
-
-        public void UpdateSpeed(float addValue)
-        {
-            _speed += addValue;
-            _constantSpeed += addValue;
-
-            _ballRigidbody.Rigidbody2D.simulated = _speed != 0f;
-
-            if (_speed == 0f)
-            {
-                return;
-            }
-
-            Velocity = Velocity.normalized * _speed;
-        }
 
         public void SetSpeed(float targetValue)
         {
             _speed = targetValue;
-            Velocity = Velocity.normalized * _speed;
+            Velocity = Velocity.normalized * Speed;
         }
 
         public void Reset()
         {
             _lastDirection = Velocity.normalized;
-            _speed = _settings.Speed;
             Velocity = Vector2.zero;
         }
 
         public void Continue()
         {
-            Velocity = _lastDirection * _speed;
+            Velocity = _lastDirection * Speed;
+        }
+
+        public void SetSpeedMultiplier(float speedMultiplier)
+        {
+            _multiplier = speedMultiplier;
+
+            Velocity = Velocity.normalized * Speed;
         }
 
         public void Restart()
         {
             Velocity = Vector2.zero;
-            _speed = _settings.Speed;
             _ballRigidbody.Rigidbody2D.simulated = true;
         }
 
         private void OnTimeScaleChanged()
         {
-            Velocity = Velocity.normalized * _speed * _timeProvider.TimeScale;
+            Velocity = Velocity.normalized * Speed * _timeProvider.TimeScale;
         }
 
-        private async void OnCollidered(Collider2D collider)
+        private async void OnCollidered(BallView view, Collider2D collider)
         {
             await UniTask.WaitForFixedUpdate();
             
@@ -123,8 +111,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Movement.MoveVariants
             {
                 UpdateVelocity(currentAngle > 0 ? _minSecondAngle : -_minSecondAngle);
             }
-            
-            _previousVelocity = Velocity;
         }
 
         private void UpdateVelocity(float targetAngle)

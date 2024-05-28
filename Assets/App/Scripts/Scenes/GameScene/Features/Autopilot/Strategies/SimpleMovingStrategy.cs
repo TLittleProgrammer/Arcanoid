@@ -12,20 +12,17 @@ namespace App.Scripts.Scenes.GameScene.Features.Autopilot.Strategies
     public class SimpleMovingStrategy : IStrategy
     {
         private readonly IPositionable _playerView;
-        private readonly IPositionable _ballView;
         private readonly IShapePositionChecker _shapePositionChecker;
         private readonly IPlayerShapeMover _playerShapeMover;
         private readonly ITimeProvider _timeProvider;
 
         public SimpleMovingStrategy(
             PlayerView playerView,
-            BallView ballView,
             IShapePositionChecker shapePositionChecker,
             IPlayerShapeMover playerShapeMover,
             ITimeProvider timeProvider)
         {
             _playerView = playerView;
-            _ballView = ballView;
             _shapePositionChecker = shapePositionChecker;
             _playerShapeMover = playerShapeMover;
             _timeProvider = timeProvider;
@@ -33,10 +30,10 @@ namespace App.Scripts.Scenes.GameScene.Features.Autopilot.Strategies
         
         public NodeStatus Process()
         {
-            if (Mathf.Abs(_playerView.Position.x - _ballView.Position.x) <= BehaviourTreeConstants.Epsilon)
+            /*if (Mathf.Abs(_playerView.Position.x - _ballView.Position.x) <= BehaviourTreeConstants.Epsilon)
             {
                 return NodeStatus.Success;
-            }
+            }*/
 
             Move();
 
@@ -78,7 +75,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Autopilot.Strategies
             return Vector2.MoveTowards
             (
                 _playerView.Position,
-                new(_ballView.Position.x, _playerView.Position.y),
+                new(0f, _playerView.Position.y),
                 _timeProvider.DeltaTime * _playerShapeMover.Speed
             );
         }
