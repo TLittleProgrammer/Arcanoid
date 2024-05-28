@@ -10,5 +10,7 @@
         Bullets         = 5,
         BulletEffect    = 6,
         BallView        = 7,
+        Laser           = 8,
+        Plazma          = 9,
     }
 }

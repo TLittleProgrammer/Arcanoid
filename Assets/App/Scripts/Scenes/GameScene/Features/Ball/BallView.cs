@@ -10,6 +10,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball
     {
         public event Action<BallView, Collider2D> Collidered;
 
+        public TrailRenderer TrailRenderer;
         public GameObject RedBall;
         public CircleCollider2D Collider2D;
         
