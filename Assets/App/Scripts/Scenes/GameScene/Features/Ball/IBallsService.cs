@@ -11,5 +11,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball
         void UpdateSpeedByProgress(float progress);
         void Reset();
         void SetSpeedMultiplier(float multiplier);
+        void SetRedBall(bool activated);
     }
 }

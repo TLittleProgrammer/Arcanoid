@@ -1,4 +1,6 @@
-﻿using App.Scripts.Scenes.GameScene.Features.Ball;
+﻿using System.Collections.Generic;
+using System.Linq;
+using App.Scripts.Scenes.GameScene.Features.Ball;
 using App.Scripts.Scenes.GameScene.Features.Boosts.Interfaces;
 using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.Levels.Data;
@@ -16,25 +18,28 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.Activators
         private readonly ILevelLoader _levelLoader;
         private readonly IItemsDestroyable _itemsDestroyable;
         private readonly ILevelViewUpdater _levelViewUpdater;
+        private readonly IBallsService _ballsService;
         private bool _isActive = false;
         
         public FireballBoostActivator(
             IBoostContainer boostContainer,
             ILevelLoader levelLoader,
             IItemsDestroyable itemsDestroyable,
-            ILevelViewUpdater levelViewUpdater)
+            ILevelViewUpdater levelViewUpdater,
+            IBallsService ballsService)
         {
             _boostContainer = boostContainer;
             _levelLoader = levelLoader;
             _itemsDestroyable = itemsDestroyable;
             _levelViewUpdater = levelViewUpdater;
+            _ballsService = ballsService;
 
             _boostContainer.BoostEnded += OnBoostEnded;
         }
 
         public void Activate(BoostTypeId boostTypeId)
         {
-            //_ballView.RedBall.SetActive(true);
+            _ballsService.SetRedBall(true);
             _isActive = true;
 
             foreach (IEntityView view in _levelLoader.Entities)
@@ -56,7 +61,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.Activators
                 }
 
                 _isActive = false;
-            //    _ballView.RedBall.SetActive(false);
+                _ballsService.SetRedBall(false);
             }
         }
 
@@ -72,27 +77,39 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.Activators
 
         private void CheckCollisions()
         {
-            /*foreach (IEntityView view in _levelLoader.Entities)
+            foreach (IEntityView view in _levelLoader.Entities)
             {
-                if (view.GameObject.activeSelf)
+                if (view.GameObject.activeSelf && view.BoxCollider2D.isTrigger)
                 {
-                    if (view.BoxCollider2D.isTrigger)
-                    {
-                        Bounds viewBounds = view.BoxCollider2D.bounds;
-                        Bounds ballBounds = _ballView.Collider2D.bounds;
-
-                        if (viewBounds.Intersects(ballBounds))
-                        {
-                            view.BoxCollider2D.isTrigger = false;
-                            view.BoxCollider2D.enabled = false;
-
-                            GridItemData gridItemData = _levelViewUpdater.LevelGridItemData[view.GridPositionX, view.GridPositionY];
-                            gridItemData.CurrentHealth = -1;
-                            _itemsDestroyable.Destroy(gridItemData, view);
-                        }
-                    }
+                    GoThroughBallViews(view);
                 }
-            }*/
+            }
+        }
+
+        private void GoThroughBallViews(IEntityView view)
+        {
+            List<BallView> ballViews = _ballsService.Balls.Keys.ToList();
+            Bounds viewBounds = view.BoxCollider2D.bounds;
+
+            foreach (BallView ballView in ballViews)
+            {
+                Bounds ballBounds = ballView.Collider2D.bounds;
+
+                if (viewBounds.Intersects(ballBounds))
+                {
+                    DestroyView(view);
+                }
+            }
+        }
+
+        private void DestroyView(IEntityView view)
+        {
+            view.BoxCollider2D.isTrigger = false;
+            view.BoxCollider2D.enabled = false;
+
+            GridItemData gridItemData = _levelViewUpdater.LevelGridItemData[view.GridPositionX, view.GridPositionY];
+            gridItemData.CurrentHealth = -1;
+            _itemsDestroyable.Destroy(gridItemData, view);
         }
     }
 }

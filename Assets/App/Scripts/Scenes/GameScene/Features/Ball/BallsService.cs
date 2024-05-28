@@ -21,6 +21,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball
         private List<IBallPositionChecker> _ballsPositionCheckers = new();
         private float _speedMultiplier;
         private float _levelProgress;
+        private bool _redBallActivated;
 
         public BallsService(
             IScreenInfoProvider screenInfoProvider,
@@ -46,40 +47,10 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball
 
             if (isFreeFlight)
             {
+                ballView.RedBall.gameObject.SetActive(_redBallActivated);
                 Balls[ballView].UpdateSpeed(_levelProgress);
                 Balls[ballView].SetSpeedMultiplier(_speedMultiplier);
                 Balls[ballView].GoFly();
-            }
-        }
-
-        public void UpdateSpeedByProgress(float progress)
-        {
-            _levelProgress = progress;
-
-            foreach ((var garbarge, IBallMovementService movementService) in Balls)
-            {
-                movementService.UpdateSpeed(_levelProgress);
-            }
-        }
-
-        public void Reset()
-        {
-            BallView ballView = _ballViewPool.Spawn();
-            var ballData = Balls.First(x => x.Key.Equals(ballView));
-            
-            ballData.Key.gameObject.SetActive(true);
-            ballData.Value.Restart();
-            
-            AddBallPositionChecker(ballData.Key);
-        }
-
-        public void SetSpeedMultiplier(float multiplier)
-        {
-            _speedMultiplier = multiplier;
-
-            foreach ((var garbarge, IBallMovementService movementService) in Balls)
-            {
-                movementService.SetSpeedMultiplier(_speedMultiplier);
             }
         }
 
@@ -99,17 +70,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball
             }
         }
 
-        private void OnMouseUp()
-        {
-            foreach ((var garbarge, IBallMovementService movementService) in Balls)
-            {
-                if (!movementService.IsFreeFlight)
-                {
-                    movementService.GoFly();
-                }
-            }
-        }
-
         private async void OnBallFallen(IPositionable ball)
         {
             await UniTask.Yield(PlayerLoopTiming.LastUpdate);
@@ -126,12 +86,64 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball
             } 
         }
 
+        public void UpdateSpeedByProgress(float progress)
+        {
+            _levelProgress = progress;
+
+            foreach ((var garbarge, IBallMovementService movementService) in Balls)
+            {
+                movementService.UpdateSpeed(_levelProgress);
+            }
+        }
+        
+        public void SetRedBall(bool activated)
+        {
+            _redBallActivated = activated;
+            
+            foreach ((BallView view, var garbarge) in Balls)
+            {
+                view.RedBall.gameObject.SetActive(activated);
+            }
+        }
+
+        public void SetSpeedMultiplier(float multiplier)
+        {
+            _speedMultiplier = multiplier;
+
+            foreach ((var garbarge, IBallMovementService movementService) in Balls)
+            {
+                movementService.SetSpeedMultiplier(_speedMultiplier);
+            }
+        }
+
+        private void OnMouseUp()
+        {
+            foreach ((var garbarge, IBallMovementService movementService) in Balls)
+            {
+                if (!movementService.IsFreeFlight)
+                {
+                    movementService.GoFly();
+                }
+            }
+        }
+
         private void AddBallPositionChecker(BallView ballView)
         {
             var ballPositionChecker = new BallPositionChecker(ballView, _minBallYPosition);
             ballPositionChecker.BallFallen += OnBallFallen;
 
             _ballsPositionCheckers.Add(ballPositionChecker);
+        }
+
+        public void Reset()
+        {
+            BallView ballView = _ballViewPool.Spawn();
+            var ballData = Balls.First(x => x.Key.Equals(ballView));
+            
+            ballData.Key.gameObject.SetActive(true);
+            ballData.Value.Restart();
+            
+            AddBallPositionChecker(ballData.Key);
         }
     }
 }
