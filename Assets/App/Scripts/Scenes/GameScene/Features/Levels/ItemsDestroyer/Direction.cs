@@ -1,7 +1,7 @@
 ﻿using System;
 using Unity.Mathematics;
 
-namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroyServices
+namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer
 {
     public enum Direction
     {

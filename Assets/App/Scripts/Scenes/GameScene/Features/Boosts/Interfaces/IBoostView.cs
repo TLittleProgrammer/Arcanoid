@@ -2,7 +2,7 @@
 using App.Scripts.Scenes.GameScene.Features.Components;
 using App.Scripts.Scenes.GameScene.Features.Entities;
 
-namespace App.Scripts.Scenes.GameScene.Features.Boosts
+namespace App.Scripts.Scenes.GameScene.Features.Boosts.Interfaces
 {
     public interface IBoostView : ITransformable, ISpriteRenderable
     {

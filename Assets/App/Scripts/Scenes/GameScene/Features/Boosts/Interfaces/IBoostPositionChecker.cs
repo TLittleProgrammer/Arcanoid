@@ -1,6 +1,6 @@
 ﻿using Zenject;
 
-namespace App.Scripts.Scenes.GameScene.Features.Boosts
+namespace App.Scripts.Scenes.GameScene.Features.Boosts.Interfaces
 {
     public interface IBoostPositionChecker : ITickable
     {

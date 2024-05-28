@@ -2,7 +2,7 @@
 using App.Scripts.Scenes.GameScene.Features.Healthes;
 using App.Scripts.Scenes.GameScene.Features.Settings;
 
-namespace App.Scripts.Scenes.GameScene.Features.Boosts.Helpers
+namespace App.Scripts.Scenes.GameScene.Features.Boosts.Activators
 {
     public sealed class HealthAndDeathBoost : IConcreteBoostActivator
     {

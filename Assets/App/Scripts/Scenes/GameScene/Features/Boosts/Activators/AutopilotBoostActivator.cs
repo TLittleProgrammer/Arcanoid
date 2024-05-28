@@ -5,7 +5,7 @@ using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.PlayerShape.Move;
 using Zenject;
 
-namespace App.Scripts.Scenes.GameScene.Features.Boosts.Helpers
+namespace App.Scripts.Scenes.GameScene.Features.Boosts.Activators
 {
     public class AutopilotBoostActivator : IConcreteBoostActivator, ITickable, IActivable
     {

@@ -3,7 +3,7 @@ using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.PlayerShape.Move;
 using App.Scripts.Scenes.GameScene.Features.Settings;
 
-namespace App.Scripts.Scenes.GameScene.Features.Boosts.Helpers
+namespace App.Scripts.Scenes.GameScene.Features.Boosts.Activators
 {
     public sealed class ShapeBoostSpeed : IConcreteBoostActivator
     {

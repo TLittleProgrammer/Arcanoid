@@ -1,5 +1,5 @@
 ﻿using App.Scripts.Scenes.GameScene.Features.Boosts;
-using App.Scripts.Scenes.GameScene.Features.Boosts.Helpers;
+using App.Scripts.Scenes.GameScene.Features.Boosts.Activators;
 using App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer;
 using App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroyServices;
 using App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.Helpers;

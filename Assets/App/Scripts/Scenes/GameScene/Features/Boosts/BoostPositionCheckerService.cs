@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using App.Scripts.Scenes.GameScene.Features.Boosts.Interfaces;
 using App.Scripts.Scenes.GameScene.Features.Pools;
 using App.Scripts.Scenes.GameScene.Features.ScreenInfo;
 

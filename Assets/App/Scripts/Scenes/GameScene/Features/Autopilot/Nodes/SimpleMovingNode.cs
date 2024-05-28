@@ -1,4 +1,6 @@
-﻿namespace App.Scripts.Scenes.GameScene.Features.Autopilot.Nodes
+﻿using App.Scripts.Scenes.GameScene.Features.Autopilot.Strategies;
+
+namespace App.Scripts.Scenes.GameScene.Features.Autopilot.Nodes
 {
     public class SimpleMovingNode : Node
     {

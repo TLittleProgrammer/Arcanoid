@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using App.Scripts.Scenes.GameScene.EntryPoint.Utilities;
 using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.Levels.AssetManagement;
 using App.Scripts.Scenes.GameScene.Features.Levels.Data;
 using App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.Helpers;
 using App.Scripts.Scenes.GameScene.Features.Levels.Load;
 using App.Scripts.Scenes.GameScene.Features.Levels.View;
+using App.Scripts.Scenes.GameScene.Utilities;
 using Cysharp.Threading.Tasks;
 using Unity.Mathematics;
 

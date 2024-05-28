@@ -1,4 +1,6 @@
-﻿namespace App.Scripts.Scenes.GameScene.Features.Autopilot
+﻿using App.Scripts.Scenes.GameScene.Features.Autopilot.Nodes;
+
+namespace App.Scripts.Scenes.GameScene.Features.Autopilot
 {
     public class BehaviourTree : Node
     {

@@ -6,16 +6,14 @@ using App.Scripts.Scenes.GameScene.Features.PositionChecker;
 using App.Scripts.Scenes.GameScene.Features.Settings;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
-using UnityEngine;
 
-namespace App.Scripts.Scenes.GameScene.Features.Boosts.Helpers
+namespace App.Scripts.Scenes.GameScene.Features.Boosts.Activators
 {
     public sealed class PlayerShapeBoostSize : IConcreteBoostActivator
     {
         private readonly PlayerView _playerView;
         private readonly IShapePositionChecker _shapePositionChecker;
         private readonly BoostsSettings _boostsSettings;
-        private readonly IBoostContainer _boostContainer;
         private readonly IMiniGunService _miniGunService;
 
         public PlayerShapeBoostSize(
@@ -28,30 +26,30 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.Helpers
             _playerView = playerView;
             _shapePositionChecker = shapePositionChecker;
             _boostsSettings = boostsSettings;
-            _boostContainer = boostContainer;
             _miniGunService = miniGunService;
 
-            _boostContainer.BoostEnded += OnBoostEnded;
+            boostContainer.BoostEnded += OnBoostEnded;
         }
 
-        public async void Activate(BoostTypeId boostTypeId)
+        public void Activate(BoostTypeId boostTypeId)
         {
             if (boostTypeId is BoostTypeId.PlayerShapeAddSize)
             {
-                float currentWidth = _playerView.SpriteRenderer.size.x;
-                await DOVirtual.Float(currentWidth, _boostsSettings.AddPercent, 0.5f, UpdateSpriteWidth);
-                _shapePositionChecker.ChangeShapeScale();
-                
-                _miniGunService.RecalculateSpawnPositions();
+                UpdateWidth(_boostsSettings.AddPercent).Forget();
             }
             else
             {
-                float currentWidth = _playerView.SpriteRenderer.size.x;
-                await DOVirtual.Float(currentWidth, _boostsSettings.MinusPercent, 0.5f, UpdateSpriteWidth);
-                _shapePositionChecker.ChangeShapeScale();
-                
-                _miniGunService.RecalculateSpawnPositions();
+                UpdateWidth(_boostsSettings.MinusPercent).Forget();
             }
+        }
+
+        private async UniTask UpdateWidth(float to)
+        {
+            float currentWidth = _playerView.SpriteRenderer.size.x;
+            await DOVirtual.Float(currentWidth, to, 0.5f, UpdateSpriteWidth);
+            _shapePositionChecker.ChangeShapeScale();
+
+            _miniGunService.RecalculateSpawnPositions();
         }
 
         private void UpdateSpriteWidth(float value)
@@ -73,7 +71,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.Helpers
                 DOVirtual.Float(currentWidth, 1.5f, 0.5f, UpdateSpriteWidth);
                 
                 _shapePositionChecker.ChangeShapeScale();
-                
                 _miniGunService.RecalculateSpawnPositions();
             }
         }

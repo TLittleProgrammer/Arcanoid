@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using App.Scripts.Scenes.GameScene.Features.Boosts.Interfaces;
 using App.Scripts.Scenes.GameScene.Features.Constants;
 using App.Scripts.Scenes.GameScene.Features.Time;
 using UnityEngine;
