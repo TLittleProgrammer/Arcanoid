@@ -86,9 +86,9 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  BallSpeedDuration: 2
-  SlowDownPercentFromAll: 0.75
-  AcceleratePercentFromAll: 1.25
+  BallSpeedDuration: 4
+  SlowDownPercentFromAll: 0.25
+  AcceleratePercentFromAll: 2
   ShapeSizeDuration: 3
   AddPercent: 2
   MinusPercent: 1

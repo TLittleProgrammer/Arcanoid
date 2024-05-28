@@ -37,7 +37,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Movement.MoveVariants
 
         public async UniTask AsyncInitialize(Vector2 param)
         {
-            Velocity = param.normalized * _speed;
+            Velocity = param.normalized * Speed;
             
             await UniTask.CompletedTask;
         }
@@ -72,6 +72,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Movement.MoveVariants
         public void SetSpeedMultiplier(float speedMultiplier)
         {
             _multiplier = speedMultiplier;
+
+            Velocity = Velocity.normalized * Speed;
         }
 
         public void Restart()

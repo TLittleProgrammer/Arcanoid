@@ -40,7 +40,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Factories
                 
                 ballFollowMover.AsyncInitialize().Forget();
                 
-                IBallMovementService ballMovementService = _sceneContext.Instantiate<BallMovementService>(new object[] {ballView, ballFollowMover, ballFreeFlightMover});
+                IBallMovementService ballMovementService = _sceneContext.Instantiate<BallMovementService>(new object[] {ballFollowMover, ballFreeFlightMover});
 
                 _ballsService.Balls.Add(ballView, ballMovementService);
             }
