@@ -2,9 +2,8 @@
 using System.Linq;
 using App.Scripts.Scenes.GameScene.Features.Entities;
 using Unity.Mathematics;
-using UnityEngine;
 
-namespace App.Scripts.Scenes.GameScene.EntryPoint.Utilities
+namespace App.Scripts.Scenes.GameScene.Utilities
 {
     public static class ListExtensions
     {

@@ -1,4 +1,5 @@
-﻿using App.Scripts.Scenes.GameScene.Features.Ball;
+﻿using App.Scripts.Scenes.GameScene.Features.Autopilot.Nodes;
+using App.Scripts.Scenes.GameScene.Features.Ball;
 using App.Scripts.Scenes.GameScene.Features.Components;
 using App.Scripts.Scenes.GameScene.Features.PlayerShape;
 using App.Scripts.Scenes.GameScene.Features.PlayerShape.Move;

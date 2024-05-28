@@ -6,7 +6,7 @@ using App.Scripts.Scenes.GameScene.Features.PlayerShape;
 using UnityEngine;
 using Zenject;
 
-namespace App.Scripts.Scenes.GameScene.Features.Boosts.Helpers
+namespace App.Scripts.Scenes.GameScene.Features.Boosts.Activators
 {
     public class StickyBoostActivator : IConcreteBoostActivator, ITickable
     {

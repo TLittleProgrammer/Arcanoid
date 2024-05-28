@@ -8,7 +8,7 @@ using App.Scripts.Scenes.GameScene.Features.Levels.View;
 using UnityEngine;
 using Zenject;
 
-namespace App.Scripts.Scenes.GameScene.Features.Boosts.Helpers
+namespace App.Scripts.Scenes.GameScene.Features.Boosts.Activators
 {
     public class FireballBoostActivator : IConcreteBoostActivator, ITickable
     {

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using App.Scripts.Scenes.GameScene.Features.Boosts.Helpers;
+using App.Scripts.Scenes.GameScene.Features.Boosts.Activators;
 using App.Scripts.Scenes.GameScene.Features.Boosts.Interfaces;
 using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.Helpers;

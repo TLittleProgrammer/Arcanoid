@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace App.Scripts.Scenes.GameScene.Features.Autopilot
+namespace App.Scripts.Scenes.GameScene.Features.Autopilot.Nodes
 {
     public class Node
     {

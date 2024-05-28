@@ -1,4 +1,4 @@
-﻿namespace App.Scripts.Scenes.GameScene.Features.Autopilot
+﻿namespace App.Scripts.Scenes.GameScene.Features.Autopilot.Nodes
 {
     public enum NodeStatus
     {
