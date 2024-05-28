@@ -18,6 +18,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
 
             BoostsBind();
             
+            Container.Bind<CaptiveDestroyService>().AsSingle();
             Container.Bind<BombDestroyService>().AsSingle();
             Container.Bind<BoostBlockDestroyer>().AsSingle();
             Container.Bind<DirectionBombDestroyService>().AsSingle();

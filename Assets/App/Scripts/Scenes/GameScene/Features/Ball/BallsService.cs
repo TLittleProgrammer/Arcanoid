@@ -48,9 +48,10 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball
             AddBallPositionChecker(ballView);
             BallAdded?.Invoke(ballView);
 
+            ballView.RedBall.gameObject.SetActive(_redBallActivated);
+            
             if (isFreeFlight)
             {
-                ballView.RedBall.gameObject.SetActive(_redBallActivated);
                 Balls[ballView].UpdateSpeed(_levelProgress);
                 Balls[ballView].SetSpeedMultiplier(_speedMultiplier);
                 Balls[ballView].GoFly();

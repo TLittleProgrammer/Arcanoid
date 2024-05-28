@@ -60,7 +60,7 @@ namespace App.Scripts.Tools.Editor.LevelEditor
             CurrentEntityCellData = new();
             PresetsData = GetPresets();
             BrushingPresetName = PresetsData.PresetItems.First().Key;
-            EntitiesProvider = Resources.Load<EntityProvider>($"Configs/Entities/EntitiesProvider");
+            EntitiesProvider = Resources.Load<EntityProvider>($"Configs/Entities/EntitiesProvider_ResolveProblem");
 
             Grid = Grid.CopyWithNewSize(GridSize.x, GridSize.y);
         }
