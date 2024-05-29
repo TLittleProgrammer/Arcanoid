@@ -81,7 +81,19 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Movement.MoveVariants
                 return;
             }
 
-            Velocity = _lastDirection * Speed;
+            if (_lastDirection == Vector2.zero)
+            {
+                _lastDirection = Velocity.normalized;
+            }
+
+            if (Velocity.normalized == Vector2.zero)
+            {
+                Velocity = _lastDirection * Speed;
+            }
+            else
+            {
+                Velocity = Velocity.normalized * Speed;
+            }
         }
 
         public void Restart()
