@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using App.Scripts.Scenes.GameScene.Features.Effects;
 using App.Scripts.Scenes.GameScene.Features.Effects.Bombs;
 using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.Levels.Data;
@@ -11,6 +12,7 @@ using App.Scripts.Scenes.GameScene.Features.ScreenInfo;
 using Cysharp.Threading.Tasks;
 using Unity.Mathematics;
 using UnityEngine;
+using Zenject.SpaceFighter;
 
 namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroyServices
 {
@@ -23,6 +25,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroySer
         private readonly IAnimatedDestroyService _animatedDestroyService;
         private readonly IScreenInfoProvider _screenInfoProvider;
         private readonly LaserEffect.Pool _laserEffectPool;
+        private readonly ExplosionEffect.Pool _explosionsPool;
 
         public DirectionBombDestroyService(
             ILevelViewUpdater levelViewUpdater,
@@ -31,7 +34,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroySer
             SimpleDestroyService simpleDestroyService,
             IAnimatedDestroyService animatedDestroyService,
             IScreenInfoProvider screenInfoProvider,
-            LaserEffect.Pool laserEffectPool) : base(levelViewUpdater)
+            LaserEffect.Pool laserEffectPool,
+            ExplosionEffect.Pool explosionsPool) : base(levelViewUpdater)
         {
             _levelViewUpdater = levelViewUpdater;
             _itemsDestroyable = itemsDestroyable;
@@ -40,6 +44,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroySer
             _animatedDestroyService = animatedDestroyService;
             _screenInfoProvider = screenInfoProvider;
             _laserEffectPool = laserEffectPool;
+            _explosionsPool = explosionsPool;
         }
         
         public override async void Destroy(GridItemData gridItemData, IEntityView entityView)
@@ -207,12 +212,26 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroySer
                 {
                     firstEntityDatas[i].GridItemData.CurrentHealth = -1;
                     _itemsDestroyable.Destroy(firstEntityDatas[i].GridItemData, firstEntityDatas[i].EntityView);
+                    
+                    ExplosionEffect effect = _explosionsPool.Spawn();
+                    ParticleSystem.MainModule explosionMain = effect.Explosion.main;
+                    explosionMain.startSizeX = firstEntityDatas[i].EntityView.GameObject.transform.localScale.x * 1.431f;
+
+                    effect.transform.position = firstEntityDatas[i].EntityView.Position;
+                    effect.Explosion.Play();
                 }
                 
                 if (i < secondEntityDatas.Count)
                 {
                     secondEntityDatas[i].GridItemData.CurrentHealth = -1;
                     _itemsDestroyable.Destroy(secondEntityDatas[i].GridItemData, secondEntityDatas[i].EntityView);
+                    
+                    ExplosionEffect effect = _explosionsPool.Spawn();
+                    ParticleSystem.MainModule explosionMain = effect.Explosion.main;
+                    explosionMain.startSizeX = secondEntityDatas[i].EntityView.GameObject.transform.localScale.x * 1.431f;
+
+                    effect.transform.position = secondEntityDatas[i].EntityView.Position;
+                    effect.Explosion.Play();
                 }
 
                 await UniTask.Delay(350);
