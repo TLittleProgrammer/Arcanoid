@@ -10,6 +10,7 @@
   },
   "HorizontalOffset": 5,
   "TopOffset": 0,
+  "NeedBird": true,
   "Grid": [
     [
       1,

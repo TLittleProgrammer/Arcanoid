@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using App.Scripts.General.Infrastructure;
+using App.Scripts.Scenes.GameScene.Features.Ball;
 using App.Scripts.Scenes.GameScene.Features.Components;
 using App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer;
 using App.Scripts.Scenes.GameScene.Features.ScreenInfo;
@@ -11,7 +13,7 @@ using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.Features.Bird
 {
-    public class BirdsService : IBirdsService, ITickable, IActivable
+    public class BirdsService : IBirdsService, ITickable
     {
         private readonly IScreenInfoProvider _screenInfoProvider;
         private readonly BirdView.Pool _birdViewPool;
@@ -104,6 +106,14 @@ namespace App.Scripts.Scenes.GameScene.Features.Bird
 
             IBirdPositionChecker birdPositionChecker = _birdPositionCheckers.First(x => x.BirdView.Equals(birdView));
             _birdPositionCheckers.Remove(birdPositionChecker);
+        }
+
+        public void StopAll()
+        {
+            foreach ((BirdView view, IBirdMovement movement) in Birds)
+            {
+                movement.IsActive = false;
+            }
         }
 
         private async void OnBirdFlewAway(BirdView view, IBirdPositionChecker birdPositionChecker)
