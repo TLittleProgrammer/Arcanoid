@@ -3,7 +3,7 @@ using App.Scripts.General.Constants;
 using App.Scripts.General.Popup.AssetManagment;
 using App.Scripts.Scenes.GameScene.Features.Entities.Ball;
 using App.Scripts.Scenes.GameScene.Features.Entities.Walls;
-using App.Scripts.Scenes.GameScene.Features.Levels.Animations;
+using App.Scripts.Scenes.GameScene.Features.Levels.General.Animations;
 using Cysharp.Threading.Tasks;
 
 namespace App.Scripts.Scenes.GameScene.States.Bootstrap

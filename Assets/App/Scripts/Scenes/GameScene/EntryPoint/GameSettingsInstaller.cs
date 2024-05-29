@@ -1,4 +1,4 @@
-﻿using App.Scripts.Scenes.GameScene.Features.Levels.AssetManagement;
+﻿using App.Scripts.Scenes.GameScene.Features.Entities.AssetManagement;
 using App.Scripts.Scenes.GameScene.Features.Settings;
 using UnityEngine;
 using Zenject;

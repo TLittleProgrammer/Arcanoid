@@ -17,15 +17,15 @@ using App.Scripts.Scenes.GameScene.Features.Entities.Bird;
 using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape;
 using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.Collisions;
 using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.Move;
+using App.Scripts.Scenes.GameScene.Features.Entities.View;
 using App.Scripts.Scenes.GameScene.Features.Entities.Walls;
 using App.Scripts.Scenes.GameScene.Features.Grid;
 using App.Scripts.Scenes.GameScene.Features.Healthes;
 using App.Scripts.Scenes.GameScene.Features.Healthes.View;
 using App.Scripts.Scenes.GameScene.Features.Helpers;
-using App.Scripts.Scenes.GameScene.Features.LevelProgress;
-using App.Scripts.Scenes.GameScene.Features.Levels;
-using App.Scripts.Scenes.GameScene.Features.Levels.Animations;
-using App.Scripts.Scenes.GameScene.Features.LevelView;
+using App.Scripts.Scenes.GameScene.Features.Levels.General.Animations;
+using App.Scripts.Scenes.GameScene.Features.Levels.LevelProgress;
+using App.Scripts.Scenes.GameScene.Features.Levels.LevelView;
 using App.Scripts.Scenes.GameScene.Features.PositionChecker;
 using App.Scripts.Scenes.GameScene.Features.Restart;
 using App.Scripts.Scenes.GameScene.Features.ScoreAnimation;
@@ -97,7 +97,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             
             Container.Bind<IWallLoader>().To<WallLoader>().AsSingle().WithArguments(_wallPrefab);
             Container.Bind<IRestartService>().To<RestartService>().AsSingle();
-            Container.Bind<IItemViewService>().To<ItemViewService>().AsSingle();
+            Container.Bind<IEntityViewService>().To<EntityViewService>().AsSingle();
             Container.Bind<IServicesActivator>().To<ServiceActivator>().AsSingle();
             Container.Bind<IShowLevelAnimation>().To<SimpleShowLevelAnimation>().AsSingle();
             Container.Bind<IGetDamageService>().To<GetDamageService>().AsSingle();

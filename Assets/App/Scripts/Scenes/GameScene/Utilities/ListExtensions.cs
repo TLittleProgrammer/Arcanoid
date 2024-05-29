@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using App.Scripts.Scenes.GameScene.Features.Entities;
+using App.Scripts.Scenes.GameScene.Features.Entities.View;
 using Unity.Mathematics;
 
 namespace App.Scripts.Scenes.GameScene.Utilities

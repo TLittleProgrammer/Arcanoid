@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using App.Scripts.General.Infrastructure;
 using App.Scripts.Scenes.GameScene.Features.Constants;
-using App.Scripts.Scenes.GameScene.Features.Levels;
+using App.Scripts.Scenes.GameScene.Features.Levels.General;
 using Cysharp.Threading.Tasks;
 
 namespace App.Scripts.Scenes.GameScene.Features.Healthes

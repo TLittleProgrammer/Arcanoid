@@ -1,4 +1,5 @@
 ﻿using App.Scripts.Scenes.GameScene.Features.Entities;
+using App.Scripts.Scenes.GameScene.Features.Entities.View;
 using App.Scripts.Scenes.GameScene.Features.Pools;
 using Zenject;
 

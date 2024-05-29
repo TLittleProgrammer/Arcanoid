@@ -1,10 +1,10 @@
 ﻿using App.Scripts.Scenes.GameScene.Features.Boosts;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators;
-using App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer;
-using App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroyServices;
-using App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroyServices.BombDestroyers;
-using App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.Helpers;
+using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer;
+using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.DestroyServices;
+using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.DestroyServices.BombDestroyers;
+using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Helpers;
 using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
@@ -26,7 +26,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
             Container.Bind<DirectionBombDestroyService>().AsSingle();
             Container.Bind<ChainDestroyer>().AsSingle();
 
-            Container.Bind<IItemsDestroyable>().To<ItemsDestroyer>().AsSingle();
+            Container.Bind<IEntityDestroyable>().To<EntityDestroyer>().AsSingle();
         }
 
         private void BoostsBind()

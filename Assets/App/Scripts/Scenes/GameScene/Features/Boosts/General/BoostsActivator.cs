@@ -2,7 +2,7 @@
 using App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General.Interfaces;
 using App.Scripts.Scenes.GameScene.Features.Entities;
-using App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.Helpers;
+using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Helpers;
 
 namespace App.Scripts.Scenes.GameScene.Features.Boosts.General
 {

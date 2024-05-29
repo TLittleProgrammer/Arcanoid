@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using App.Scripts.External.Components;
-using App.Scripts.Scenes.GameScene.Features.LevelView;
+using App.Scripts.Scenes.GameScene.Features.Levels.LevelView;
 using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape

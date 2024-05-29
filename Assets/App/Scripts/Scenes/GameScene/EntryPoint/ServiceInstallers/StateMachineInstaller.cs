@@ -2,7 +2,7 @@
 using System.Linq;
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Infrastructure;
-using App.Scripts.Scenes.GameScene.Features.LevelView;
+using App.Scripts.Scenes.GameScene.Features.Levels.LevelView;
 using App.Scripts.Scenes.GameScene.States;
 using App.Scripts.Scenes.GameScene.States.Bootstrap;
 using Zenject;

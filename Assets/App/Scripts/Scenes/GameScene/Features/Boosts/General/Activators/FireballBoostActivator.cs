@@ -3,10 +3,11 @@ using System.Linq;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General.Interfaces;
 using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.Entities.Ball;
-using App.Scripts.Scenes.GameScene.Features.Levels.Data;
-using App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer;
-using App.Scripts.Scenes.GameScene.Features.Levels.Load;
-using App.Scripts.Scenes.GameScene.Features.Levels.View;
+using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer;
+using App.Scripts.Scenes.GameScene.Features.Entities.View;
+using App.Scripts.Scenes.GameScene.Features.Grid;
+using App.Scripts.Scenes.GameScene.Features.Levels.General.Load;
+using App.Scripts.Scenes.GameScene.Features.Levels.General.View;
 using UnityEngine;
 using Zenject;
 
@@ -16,7 +17,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
     {
         private readonly IBoostContainer _boostContainer;
         private readonly ILevelLoader _levelLoader;
-        private readonly IItemsDestroyable _itemsDestroyable;
+        private readonly IEntityDestroyable _entityDestroyable;
         private readonly ILevelViewUpdater _levelViewUpdater;
         private readonly IBallsService _ballsService;
         private bool _isActive = false;
@@ -24,13 +25,13 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
         public FireballBoostActivator(
             IBoostContainer boostContainer,
             ILevelLoader levelLoader,
-            IItemsDestroyable itemsDestroyable,
+            IEntityDestroyable entityDestroyable,
             ILevelViewUpdater levelViewUpdater,
             IBallsService ballsService)
         {
             _boostContainer = boostContainer;
             _levelLoader = levelLoader;
-            _itemsDestroyable = itemsDestroyable;
+            _entityDestroyable = entityDestroyable;
             _levelViewUpdater = levelViewUpdater;
             _ballsService = ballsService;
 
@@ -109,7 +110,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
 
             GridItemData gridItemData = _levelViewUpdater.LevelGridItemData[view.GridPositionX, view.GridPositionY];
             gridItemData.CurrentHealth = -1;
-            _itemsDestroyable.Destroy(gridItemData, view);
+            _entityDestroyable.Destroy(gridItemData, view);
         }
     }
 }

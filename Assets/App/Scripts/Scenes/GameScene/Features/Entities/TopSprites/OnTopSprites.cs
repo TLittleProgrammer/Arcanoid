@@ -1,4 +1,5 @@
 ﻿using App.Scripts.Scenes.GameScene.Features.Components;
+using App.Scripts.Scenes.GameScene.Features.Entities.View;
 using UnityEngine;
 using Zenject;
 

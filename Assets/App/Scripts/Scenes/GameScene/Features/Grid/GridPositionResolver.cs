@@ -1,5 +1,5 @@
 ﻿using App.Scripts.Scenes.GameScene.Features.Camera;
-using App.Scripts.Scenes.GameScene.Features.Levels;
+using App.Scripts.Scenes.GameScene.Features.Levels.General;
 using App.Scripts.Scenes.GameScene.Features.ScreenInfo;
 using Cysharp.Threading.Tasks;
 using Unity.Mathematics;

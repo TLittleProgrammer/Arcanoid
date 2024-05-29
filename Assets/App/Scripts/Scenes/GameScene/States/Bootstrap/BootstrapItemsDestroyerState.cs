@@ -1,8 +1,9 @@
 ﻿using App.Scripts.External.GameStateMachine;
+using App.Scripts.Scenes.GameScene.Features.Boosts.General;
 using App.Scripts.Scenes.GameScene.Features.Entities;
-using App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer;
-using App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroyServices;
-using App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroyServices.BombDestroyers;
+using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer;
+using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.DestroyServices;
+using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.DestroyServices.BombDestroyers;
 using Cysharp.Threading.Tasks;
 
 namespace App.Scripts.Scenes.GameScene.States.Bootstrap
@@ -10,7 +11,7 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
     public class BootstrapItemsDestroyerState : IState
     {
         private readonly IStateMachine _stateMachine;
-        private readonly IItemsDestroyable _itemsDestroyable;
+        private readonly IEntityDestroyable _entityDestroyable;
         private readonly BombDestroyService _bombDestroyService;
         private readonly BoostBlockDestroyer _boostBlockDestroyer;
         private readonly DirectionBombDestroyService _directionBombDestroyService;
@@ -19,7 +20,7 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
 
         public BootstrapItemsDestroyerState(
             IStateMachine stateMachine,
-            IItemsDestroyable itemsDestroyable,
+            IEntityDestroyable entityDestroyable,
             BombDestroyService bombDestroyService,
             BoostBlockDestroyer boostBlockDestroyer,
             DirectionBombDestroyService directionBombDestroyService,
@@ -28,7 +29,7 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
         )
         {
             _stateMachine = stateMachine;
-            _itemsDestroyable = itemsDestroyable;
+            _entityDestroyable = entityDestroyable;
             _bombDestroyService = bombDestroyService;
             _boostBlockDestroyer = boostBlockDestroyer;
             _directionBombDestroyService = directionBombDestroyService;
@@ -47,7 +48,7 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
 
         private void InitializeItemsDestroyable()
         {
-            _itemsDestroyable.AsyncInitialize(new[]
+            _entityDestroyable.AsyncInitialize(new[]
             {
                 BuildDestroyDataService(BoostTypeId.Bomb, _bombDestroyService),
 

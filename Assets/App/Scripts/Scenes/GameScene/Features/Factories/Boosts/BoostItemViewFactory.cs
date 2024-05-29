@@ -1,4 +1,5 @@
-﻿using App.Scripts.Scenes.GameScene.Features.Boosts.General.UI;
+﻿using App.Scripts.Scenes.GameScene.Features.Boosts.General;
+using App.Scripts.Scenes.GameScene.Features.Boosts.General.UI;
 using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.Settings;
 using UnityEngine;
