@@ -39,5 +39,10 @@ namespace App.Scripts.External.UserData
                 _saveLoadService.Save(savable);
             }
         }
+
+        public void FastSaveData<TSavable>(TSavable savable) where TSavable : ISavable
+        {
+            _saveLoadService.Save(savable);
+        }
     }
 }

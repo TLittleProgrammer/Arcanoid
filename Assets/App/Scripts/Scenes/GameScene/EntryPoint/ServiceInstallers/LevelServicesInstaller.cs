@@ -1,5 +1,6 @@
 ﻿using App.Scripts.Scenes.GameScene.Features.Levels.General.Load;
 using App.Scripts.Scenes.GameScene.Features.Levels.General.View;
+using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress;
 using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
@@ -8,8 +9,8 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
     {
         public override void InstallBindings()
         {
-            Container.Bind<ILevelViewUpdater>().To<LevelViewUpdater>().AsSingle();
-            Container.Bind<ILevelLoader>().To<LevelLoader>().AsSingle();
+            Container.Bind(typeof(ILevelViewUpdater), typeof(ILevelProgressSavable)).To<LevelViewUpdater>().AsSingle();
+            Container.Bind(typeof(ILevelLoader), typeof(ILevelProgressSavable)).To<LevelLoader>().AsSingle();
         }
     }
 }

@@ -1,13 +1,16 @@
 ﻿using System.Collections.Generic;
 using App.Scripts.External.Grid;
+using App.Scripts.Scenes.GameScene.Features.Entities;
+using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer;
 using App.Scripts.Scenes.GameScene.Features.Entities.View;
 using App.Scripts.Scenes.GameScene.Features.Grid;
 using App.Scripts.Scenes.GameScene.Features.Levels.General.View;
+using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress;
 using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Levels.General.Load
 {
-    public sealed class LevelLoader : ILevelLoader
+    public sealed class LevelLoader : ILevelLoader, ILevelProgressSavable
     {
         private readonly IGridPositionResolver _gridPositionResolver;
         private readonly IEntityView.Factory _entityFactory;
@@ -70,6 +73,22 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.General.Load
         public void Restart()
         {
             LoadLevel(_previousLevelData);
+        }
+
+        public void SaveProgress(LevelDataProgress levelDataProgress)
+        {
+            levelDataProgress.EntityDatas = new();
+            
+            foreach (IEntityView entity in Entities)
+            {
+                EntitySaveData entityData = new EntitySaveData();
+
+                entity.EntityId = entity.EntityId;
+                entity.GridPositionX = entity.GridPositionX;
+                entity.GridPositionY = entity.GridPositionY;
+
+                levelDataProgress.EntityDatas.Add(entityData);
+            }
         }
     }
 }

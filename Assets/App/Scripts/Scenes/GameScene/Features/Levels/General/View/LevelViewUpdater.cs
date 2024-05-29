@@ -6,11 +6,12 @@ using App.Scripts.Scenes.GameScene.Features.Entities.AssetManagement;
 using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer;
 using App.Scripts.Scenes.GameScene.Features.Entities.View;
 using App.Scripts.Scenes.GameScene.Features.Grid;
+using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress;
 using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Levels.General.View
 {
-    public class LevelViewUpdater : ILevelViewUpdater
+    public class LevelViewUpdater : ILevelViewUpdater, ILevelProgressSavable
     {
         private readonly EntityProvider _entityProvider;
         private readonly IEntityDestroyable _entityDestroyable;
@@ -121,6 +122,11 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.General.View
         private string GetIndexByEntityView(IEntityView entityView)
         {
             return _levelGrid[entityView.GridPositionX, entityView.GridPositionY].ToString();
+        }
+
+        public void SaveProgress(LevelDataProgress levelDataProgress)
+        {
+            levelDataProgress.EntityGridItemsData = LevelGridItemData;
         }
     }
 }

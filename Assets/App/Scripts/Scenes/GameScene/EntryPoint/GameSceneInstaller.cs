@@ -28,6 +28,7 @@ using App.Scripts.Scenes.GameScene.Features.Levels.General.Animations;
 using App.Scripts.Scenes.GameScene.Features.Levels.LevelProgress;
 using App.Scripts.Scenes.GameScene.Features.Levels.LevelView;
 using App.Scripts.Scenes.GameScene.Features.Levels.Loading;
+using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress;
 using App.Scripts.Scenes.GameScene.Features.Levels.SkipLevel;
 using App.Scripts.Scenes.GameScene.Features.PositionChecker;
 using App.Scripts.Scenes.GameScene.Features.Restart;
@@ -39,6 +40,7 @@ using App.Scripts.Scenes.GameScene.Features.Shake;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
+using LevelProgressSaveService = App.Scripts.Scenes.GameScene.Features.Levels.LevelProgressSaveService;
 
 namespace App.Scripts.Scenes.GameScene.EntryPoint
 {
@@ -112,6 +114,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.BindInterfacesAndSelfTo<LevelProgressService>().AsSingle().WithArguments(_levelPackInfoView, _levelPackBackground);
 
             Container.Bind<SkipLevelService>().AsSingle().WithArguments(_skipLevelButton).NonLazy();
+            Container.Bind<LevelProgressSaveService>().AsSingle().NonLazy();
             
             StateMachineInstaller.Install(Container, _gameLoopTickables, _projectStateMachine, _restartables, _levelPackInfoView, _restartablesForLoadNewLevel);
             
@@ -129,7 +132,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
         private void BindHealthPointService()
         {
             Container.Bind<IViewHealthPointService>().To<ViewHealthPointService>().AsSingle().WithArguments(_healthParent as ITransformable);
-            Container.Bind<IHealthContainer>().To<HealthContainer>().AsSingle();
+            Container.Bind(typeof(IHealthContainer), typeof(ILevelProgressSavable)).To<HealthContainer>().AsSingle();
         }
 
         private void BindPlayerMoving()
