@@ -1,5 +1,6 @@
 ﻿using App.Scripts.External.Extensions.ZenjectExtensions;
 using App.Scripts.Scenes.GameScene.Features.Ball;
+using App.Scripts.Scenes.GameScene.Features.Bird;
 using App.Scripts.Scenes.GameScene.Features.Boosts;
 using App.Scripts.Scenes.GameScene.Features.Effects;
 using App.Scripts.Scenes.GameScene.Features.Effects.Bombs;
@@ -36,6 +37,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
             BindPool<LaserEffect, LaserEffect.Pool>(PoolTypeId.Laser);
             BindPool<PlazmaEffect, PlazmaEffect.Pool>(PoolTypeId.Plazma);
             BindPool<ExplosionEffect, ExplosionEffect.Pool>(PoolTypeId.Explosion);
+            BindPool<BirdView, BirdView.Pool>(PoolTypeId.BirdView);
             
             Container.Bind<IPoolContainer>().To<PoolContainer>().AsSingle();
         }

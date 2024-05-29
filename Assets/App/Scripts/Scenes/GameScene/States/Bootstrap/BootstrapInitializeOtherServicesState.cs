@@ -3,6 +3,7 @@ using App.Scripts.General.Constants;
 using App.Scripts.General.Popup.AssetManagment;
 using App.Scripts.Scenes.GameScene.Features.Ball;
 using App.Scripts.Scenes.GameScene.Features.Ball.Movement;
+using App.Scripts.Scenes.GameScene.Features.Bird;
 using App.Scripts.Scenes.GameScene.Features.Levels.Animations;
 using App.Scripts.Scenes.GameScene.Features.Walls;
 using Cysharp.Threading.Tasks;
@@ -18,6 +19,8 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
         private readonly IShowLevelAnimation _showLevelAnimation;
         private readonly IBallsService _ballsService;
         private readonly BallView.Factory _ballViewFactory;
+        private readonly IBirdsService _birdsService;
+        private readonly BirdView.Factory _birdViewFactory;
 
         public BootstrapInitializeOtherServicesState(
             IStateMachine stateMachine,
@@ -25,7 +28,9 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             IPopupProvider popupProvider,
             IShowLevelAnimation showLevelAnimation,
             IBallsService ballsService,
-            BallView.Factory ballViewFactory)
+            BallView.Factory ballViewFactory,
+            IBirdsService birdsService,
+            BirdView.Factory birdViewFactory)
         {
             _stateMachine = stateMachine;
             _wallLoader = wallLoader;
@@ -33,12 +38,18 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             _showLevelAnimation = showLevelAnimation;
             _ballsService = ballsService;
             _ballViewFactory = ballViewFactory;
+            _birdsService = birdsService;
+            _birdViewFactory = birdViewFactory;
         }
         
         public async UniTask Enter()
         {
             _ballsService.AddBall(_ballViewFactory.Create());
-            
+
+            BirdView birdView = _birdViewFactory.Create();
+            _birdsService.AddBird(birdView);
+            _birdsService.GoFly(birdView);
+
             await _wallLoader.AsyncInitialize();
             await _popupProvider.AsyncInitialize(Pathes.PathToPopups);
             await _showLevelAnimation.Show();
