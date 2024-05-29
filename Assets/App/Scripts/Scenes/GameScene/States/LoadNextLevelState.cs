@@ -5,6 +5,7 @@ using App.Scripts.General.LevelPackInfoService;
 using App.Scripts.General.LoadingScreen;
 using App.Scripts.General.Popup;
 using App.Scripts.Scenes.GameScene.Features.Ball;
+using App.Scripts.Scenes.GameScene.Features.Bird;
 using App.Scripts.Scenes.GameScene.Features.Dotween;
 using App.Scripts.Scenes.GameScene.Features.Grid;
 using App.Scripts.Scenes.GameScene.Features.LevelProgress;
@@ -37,6 +38,8 @@ namespace App.Scripts.Scenes.GameScene.States
         private readonly IBallsService _ballsService;
         private readonly BallView.Pool _ballViewPool;
         private readonly ILevelViewUpdater _levelViewUpdater;
+        private readonly IBirdsService _birdsService;
+        private readonly BirdView.Factory _birdViewFactory;
         
         public LoadNextLevelState(
             ILoadingScreen loadingScreen,
@@ -52,7 +55,9 @@ namespace App.Scripts.Scenes.GameScene.States
             ILevelPackInfoService levelPackInfoService,
             IShowLevelAnimation showLevelAnimation,
             IBallsService ballsService,
-            BallView.Pool ballViewPool)
+            BallView.Pool ballViewPool,
+            IBirdsService birdsService,
+            BirdView.Factory birdViewFactory)
         {
             _loadingScreen = loadingScreen;
             _restartables = restartables;
@@ -68,6 +73,8 @@ namespace App.Scripts.Scenes.GameScene.States
             _showLevelAnimation = showLevelAnimation;
             _ballsService = ballsService;
             _ballViewPool = ballViewPool;
+            _birdsService = birdsService;
+            _birdViewFactory = birdViewFactory;
         }
 
         public async UniTask Enter()
@@ -81,6 +88,18 @@ namespace App.Scripts.Scenes.GameScene.States
             var data  = _levelPackInfoService.UpdateLevelPackTransferData();
             LevelData levelData = JsonConvert.DeserializeObject<LevelData>(data.LevelPack.Levels[data.LevelIndex].text);
 
+            if (levelData.NeedBird)
+            {
+                _birdsService.IsActive = true;
+                BirdView birdView = _birdViewFactory.Create();
+                _birdsService.AddBird(birdView);
+                _birdsService.GoFly(birdView);
+            }
+            else
+            {
+                _birdsService.StopAll();
+            }
+            
             await _gridPositionResolver.AsyncInitialize(levelData);
             _levelProgressService.CalculateStepByLevelData(levelData);
             

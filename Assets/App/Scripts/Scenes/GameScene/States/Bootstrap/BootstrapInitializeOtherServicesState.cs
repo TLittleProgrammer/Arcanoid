@@ -19,8 +19,6 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
         private readonly IShowLevelAnimation _showLevelAnimation;
         private readonly IBallsService _ballsService;
         private readonly BallView.Factory _ballViewFactory;
-        private readonly IBirdsService _birdsService;
-        private readonly BirdView.Factory _birdViewFactory;
 
         public BootstrapInitializeOtherServicesState(
             IStateMachine stateMachine,
@@ -28,9 +26,7 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             IPopupProvider popupProvider,
             IShowLevelAnimation showLevelAnimation,
             IBallsService ballsService,
-            BallView.Factory ballViewFactory,
-            IBirdsService birdsService,
-            BirdView.Factory birdViewFactory)
+            BallView.Factory ballViewFactory)
         {
             _stateMachine = stateMachine;
             _wallLoader = wallLoader;
@@ -38,17 +34,11 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             _showLevelAnimation = showLevelAnimation;
             _ballsService = ballsService;
             _ballViewFactory = ballViewFactory;
-            _birdsService = birdsService;
-            _birdViewFactory = birdViewFactory;
         }
         
         public async UniTask Enter()
         {
             _ballsService.AddBall(_ballViewFactory.Create());
-
-            BirdView birdView = _birdViewFactory.Create();
-            _birdsService.AddBird(birdView);
-            _birdsService.GoFly(birdView);
 
             await _wallLoader.AsyncInitialize();
             await _popupProvider.AsyncInitialize(Pathes.PathToPopups);

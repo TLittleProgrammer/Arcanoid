@@ -5,6 +5,7 @@ using App.Scripts.General.LevelPackInfoService;
 using App.Scripts.Scenes.GameScene.Features.Ball;
 using App.Scripts.Scenes.GameScene.Features.Ball.Movement;
 using App.Scripts.Scenes.GameScene.Features.Ball.Movement.MoveVariants;
+using App.Scripts.Scenes.GameScene.Features.Bird;
 using App.Scripts.Scenes.GameScene.Features.Grid;
 using App.Scripts.Scenes.GameScene.Features.Healthes;
 using App.Scripts.Scenes.GameScene.Features.LevelProgress;
@@ -29,6 +30,8 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
         private readonly IHealthContainer _healthContainer;
         private readonly IPlayerShapeMover _playerShapeMover;
         private readonly IBallMover _ballMover;
+        private readonly IBirdsService _birdsService;
+        private readonly BirdView.Factory _birdViewFactory;
 
         public BootstrapLoadLevelState(
             IStateMachine stateMachine,
@@ -39,7 +42,9 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             ILevelProgressService levelProgressService,
             IViewHealthPointService viewHealthPointService,
             IHealthContainer healthContainer,
-            IPlayerShapeMover playerShapeMover
+            IPlayerShapeMover playerShapeMover,
+            IBirdsService birdsService,
+            BirdView.Factory birdViewFactory
             )
         {
             _stateMachine = stateMachine;
@@ -51,6 +56,8 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             _viewHealthPointService = viewHealthPointService;
             _healthContainer = healthContainer;
             _playerShapeMover = playerShapeMover;
+            _birdsService = birdsService;
+            _birdViewFactory = birdViewFactory;
         }
         
         public async UniTask Enter()
@@ -60,6 +67,13 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             await _gridPositionResolver.AsyncInitialize(levelData);
 
             LoadLevel(levelData);
+
+            if (levelData.NeedBird)
+            {
+                BirdView birdView = _birdViewFactory.Create();
+                _birdsService.AddBird(birdView);
+                _birdsService.GoFly(birdView);
+            }
             
             _stateMachine.Enter<BootstrapInitializeOtherServicesState>();
             

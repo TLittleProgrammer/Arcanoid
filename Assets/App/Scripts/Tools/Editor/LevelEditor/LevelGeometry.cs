@@ -41,6 +41,8 @@ namespace App.Scripts.Tools.Editor.LevelEditor
         public int TopOffset = 0;
         [TabGroup("Editor", "Level Parameters", SdfIconType.Magic, TextColor = "orange")]
         public int HealthCount = 3;
+        [TabGroup("Editor", "Level Parameters", SdfIconType.Magic, TextColor = "orange")]
+        public bool NeedBird;
 
         private PresetsData PresetsData;
         private EntityProvider EntitiesProvider;
@@ -144,6 +146,7 @@ namespace App.Scripts.Tools.Editor.LevelEditor
                 levelData.TopOffset = TopOffset;
                 levelData.OffsetBetweenCells = OffsetBetweenCells;
                 levelData.HealthCount = HealthCount;
+                levelData.NeedBird = NeedBird;
                 
                 var json = JsonConvert.SerializeObject(levelData, Formatting.Indented, new Int2Converter());
                 
@@ -170,6 +173,7 @@ namespace App.Scripts.Tools.Editor.LevelEditor
                 OffsetBetweenCells = data.OffsetBetweenCells;
                 HorizontalOffset   = data.HorizontalOffset;
                 TopOffset          = data.TopOffset;
+                NeedBird           = data.NeedBird;
                 HealthCount        = data.HealthCount == 0 ? 3 : data.HealthCount;
 
                 Grid = data.Grid;

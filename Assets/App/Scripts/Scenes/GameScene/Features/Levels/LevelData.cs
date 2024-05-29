@@ -17,6 +17,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels
         public int HorizontalOffset;
         [JsonProperty("TopOffset")]
         public int TopOffset;
+        [JsonProperty("NeedBird")]
+        public bool NeedBird;
         [JsonProperty("Grid")]
         public int[,] Grid;
     }
