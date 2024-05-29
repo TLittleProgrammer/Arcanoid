@@ -1,6 +1,6 @@
 ﻿using System;
+using Newtonsoft.Json;
 using Unity.Mathematics;
-using Unity.Plastic.Newtonsoft.Json;
 
 namespace App.Scripts.Scenes.GameScene.Features.Levels
 {

@@ -15,13 +15,30 @@
         "UniTask.DOTween",
         "Unity.TextMeshPro",
         "UserData",
-        "Localisation"
+        "Localisation",
+        "Unity.PlasticSCM.Editor"
     ],
     "includePlatforms": [
         "Android",
         "Editor",
+        "EmbeddedLinux",
+        "GameCoreScarlett",
+        "GameCoreXboxOne",
+        "iOS",
+        "LinuxStandalone64",
+        "CloudRendering",
+        "Lumin",
+        "macOSStandalone",
+        "PS4",
+        "PS5",
+        "Stadia",
+        "Switch",
+        "tvOS",
+        "WSA",
+        "WebGL",
         "WindowsStandalone32",
-        "WindowsStandalone64"
+        "WindowsStandalone64",
+        "XboxOne"
     ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
