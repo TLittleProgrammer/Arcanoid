@@ -25,7 +25,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Destroy
         private readonly IAnimatedDestroyService _animatedDestroyService;
         private readonly IScreenInfoProvider _screenInfoProvider;
         private readonly LaserEffect.Pool _laserEffectPool;
-        private readonly ExplosionEffect.Pool _explosionsPool;
 
         public DirectionBombDestroyService(
             ILevelViewUpdater levelViewUpdater,
@@ -44,9 +43,14 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Destroy
             _animatedDestroyService = animatedDestroyService;
             _screenInfoProvider = screenInfoProvider;
             _laserEffectPool = laserEffectPool;
-            _explosionsPool = explosionsPool;
         }
-        
+
+        public override BoostTypeId[] ProccessingBoostTypes => new[]
+        {
+            BoostTypeId.HorizontalBomb,
+            BoostTypeId.VerticalBomb
+        };
+
         public override async void Destroy(GridItemData gridItemData, IEntityView entityView)
         {
             GetDirection(entityView, out Direction firstDirection, out Direction secondDirection);

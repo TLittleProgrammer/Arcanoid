@@ -26,7 +26,7 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
         {
             _behaviourTree.AddChild(CreateNode("SimpleMoving", _simpleMovingStrategy));
 
-            _stateMachine.Enter<BootstrapItemsDestroyerState>();
+            _stateMachine.Enter<BootstrapEntityDestroyerState>();
             
             await UniTask.CompletedTask;
         }

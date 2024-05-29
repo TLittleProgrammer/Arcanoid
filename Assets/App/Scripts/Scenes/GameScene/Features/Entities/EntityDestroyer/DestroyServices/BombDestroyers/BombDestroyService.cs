@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using App.Scripts.Scenes.GameScene.Features.Boosts.General;
 using App.Scripts.Scenes.GameScene.Features.Effects;
 using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Helpers;
 using App.Scripts.Scenes.GameScene.Features.Entities.View;
@@ -37,7 +38,12 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Destroy
             _entityDestroyable = entityDestroyable;
             _simpleDestroyService = simpleDestroyService;
         }
-        
+
+        public override BoostTypeId[] ProccessingBoostTypes => new[]
+        {
+            BoostTypeId.Bomb
+        };
+
         public override async void Destroy(GridItemData gridItemData, IEntityView iEntityView)
         {
             EntityView entityView = iEntityView as EntityView;

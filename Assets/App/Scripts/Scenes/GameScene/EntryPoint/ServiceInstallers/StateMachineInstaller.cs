@@ -57,7 +57,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
             Container.BindInterfacesTo<BootstrapServiceActivatorState>().AsSingle().WithArguments(stateMachine);
             Container.BindInterfacesTo<BootstrapBehaviourTreeState>().AsSingle().WithArguments(stateMachine);
             Container.BindInterfacesTo<BootstrapLoadLevelState>().AsSingle().WithArguments(stateMachine);
-            Container.BindInterfacesTo<BootstrapItemsDestroyerState>().AsSingle().WithArguments(stateMachine);
+            Container.BindInterfacesTo<BootstrapEntityDestroyerState>().AsSingle().WithArguments(stateMachine);
             Container.BindInterfacesTo<BootstrapInitializeAllRestartablesAndTickablesListsState>().AsSingle().WithArguments(stateMachine, _restartables, _restartablesForLoadNewLevel, _gameLoopTickables);
             Container.BindInterfacesTo<BootstrapInitializeOtherServicesState>().AsSingle().WithArguments(stateMachine);
             

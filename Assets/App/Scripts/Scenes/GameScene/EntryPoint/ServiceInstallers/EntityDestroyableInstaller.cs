@@ -9,7 +9,7 @@ using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
 {
-    public class ItemsDestroyableInstaller : Installer<ItemsDestroyableInstaller>
+    public class EntityDestroyableInstaller : Installer<EntityDestroyableInstaller>
     {
 
         public override void InstallBindings()
@@ -20,11 +20,11 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
 
             BoostsBind();
             
-            Container.Bind<CaptiveDestroyService>().AsSingle();
-            Container.Bind<BombDestroyService>().AsSingle();
-            Container.Bind<BoostBlockDestroyer>().AsSingle();
-            Container.Bind<DirectionBombDestroyService>().AsSingle();
-            Container.Bind<ChainDestroyer>().AsSingle();
+            Container.BindInterfacesAndSelfTo<CaptiveDestroyService>().AsSingle();
+            Container.BindInterfacesAndSelfTo<BombDestroyService>().AsSingle();
+            Container.BindInterfacesAndSelfTo<BoostBlockDestroyer>().AsSingle();
+            Container.BindInterfacesAndSelfTo<DirectionBombDestroyService>().AsSingle();
+            Container.BindInterfacesAndSelfTo<ChainDestroyer>().AsSingle();
 
             Container.Bind<IEntityDestroyable>().To<EntityDestroyer>().AsSingle();
         }

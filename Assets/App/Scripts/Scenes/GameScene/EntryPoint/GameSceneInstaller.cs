@@ -71,7 +71,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             FactoriesInstaller.Install(Container, _rootUIView, _boostItemViewPrefab);
             InputInstaller.Install(Container);
             LevelServicesInstaller.Install(Container);
-            ItemsDestroyableInstaller.Install(Container);
+            EntityDestroyableInstaller.Install(Container);
             BehaviourTreeInstaller.Install(Container);
             
             Container.Bind<List<IActivable>>().FromMethod(ctx => ctx.Container.ResolveAll<IActivable>().ToList()).AsSingle();

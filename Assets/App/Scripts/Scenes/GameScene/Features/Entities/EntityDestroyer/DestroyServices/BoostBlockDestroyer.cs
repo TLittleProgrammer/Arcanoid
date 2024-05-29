@@ -30,6 +30,25 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Destroy
             _boostPositionChecker = boostPositionChecker;
         }
 
+        public BoostTypeId[] ProccessingBoostTypes
+        {
+            get => new[]
+            {
+                BoostTypeId.BallAcceleration,
+                BoostTypeId.BallSlowdown,
+                BoostTypeId.PlayerShapeAddSize,
+                BoostTypeId.PlayerShapeMinusSize,
+                BoostTypeId.PlayerShapeAddSpeed,
+                BoostTypeId.PlayerShapeMinusSpeed,
+                BoostTypeId.AddHealth,
+                BoostTypeId.MinusHealth,
+                BoostTypeId.Fireball,
+                BoostTypeId.StickyPlatform,
+                BoostTypeId.MiniGun,
+                BoostTypeId.Autopilot,
+            };
+        }
+
         public void Destroy(GridItemData gridItemData, IEntityView entityView)
         {
             AddBoostOnMap(entityView);
