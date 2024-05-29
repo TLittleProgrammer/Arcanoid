@@ -66,14 +66,19 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
         {
             BindInitializeDependencies();
 
-            Container.Bind<ITweenersLocator>().To<TweenersLocator>().AsSingle();
-            Container.Bind<IScoreAnimationService>().To<ScoreAnimationService>().AsSingle();
-            Container.Bind<IShakeService>().To<ShakeService>().AsSingle();
-            
             TimeProviderInstaller.Install(Container);
             PoolsInstaller.Install(Container, _poolProviders);
             FactoriesInstaller.Install(Container, _rootUIView, _boostItemViewPrefab);
+            InputInstaller.Install(Container);
+            LevelServicesInstaller.Install(Container);
+            ItemsDestroyableInstaller.Install(Container);
+            BehaviourTreeInstaller.Install(Container);
             
+            Container.Bind<List<IActivable>>().FromMethod(ctx => ctx.Container.ResolveAll<IActivable>().ToList()).AsSingle();
+
+            Container.Bind<ITweenersLocator>().To<TweenersLocator>().AsSingle();
+            Container.Bind<IScoreAnimationService>().To<ScoreAnimationService>().AsSingle();
+            Container.Bind<IShakeService>().To<ShakeService>().AsSingle();
             Container.Bind<IRectMousePositionChecker>().To<RectMousePositionChecker>().AsSingle().WithArguments(_rectTransformableViews.ToList());
             Container.Bind<ICameraService>().To<CameraService>().AsSingle().WithArguments(_camera);
             Container.Bind<IScreenInfoProvider>().To<ScreenInfoProvider>().AsSingle();
@@ -83,9 +88,6 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.BindInterfacesAndSelfTo<BirdRespawnService>().AsSingle();
             Container.BindInterfacesAndSelfTo<BirdsHealthContainer>().AsSingle();
 
-            InputInstaller.Install(Container);
-            LevelServicesInstaller.Install(Container);
-            
             Container.Bind<IGridPositionResolver>().To<GridPositionResolver>().AsSingle().WithArguments(_header);
             Container.Bind<IShapePositionChecker>().To<PlayerShapePositionChecker>().AsSingle().WithArguments(_playerShape);
             Container.Bind<PlayerCollisionService>().AsSingle().WithArguments(_playerShape).NonLazy();
@@ -102,12 +104,8 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.BindInterfacesAndSelfTo<BallsService>().AsSingle();
             Container.BindInterfacesAndSelfTo<LevelProgressService>().AsSingle().WithArguments(_levelPackInfoView, _levelPackBackground);
             Container.Bind<GameLoopSubscriber>().AsSingle();
-            
-            ItemsDestroyableInstaller.Install(Container);
-            BehaviourTreeInstaller.Install(Container);
+
             StateMachineInstaller.Install(Container, _gameLoopTickables, _projectStateMachine, _restartables, _levelPackInfoView, _restartablesForLoadNewLevel);
-            
-            Container.Bind<List<IActivable>>().FromMethod(ctx => ctx.Container.ResolveAll<IActivable>().ToList()).AsSingle();
             
             Container.BindInterfacesTo<GameBootstrapper>().AsSingle();
         }
