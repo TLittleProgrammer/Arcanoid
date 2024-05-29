@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Infrastructure;
 using App.Scripts.General.LevelPackInfoService;
@@ -15,6 +16,7 @@ using App.Scripts.Scenes.GameScene.Features.Levels.General.Load;
 using App.Scripts.Scenes.GameScene.Features.Levels.General.View;
 using App.Scripts.Scenes.GameScene.Features.Levels.LevelProgress;
 using App.Scripts.Scenes.GameScene.Features.Levels.LevelView;
+using App.Scripts.Scenes.GameScene.Features.Levels.Loading;
 using App.Scripts.Scenes.GameScene.Features.Popups;
 using App.Scripts.Scenes.GameScene.Features.Time;
 using Cysharp.Threading.Tasks;
@@ -41,7 +43,8 @@ namespace App.Scripts.Scenes.GameScene.States
         private readonly ILevelViewUpdater _levelViewUpdater;
         private readonly IBirdsService _birdsService;
         private readonly BirdView.Factory _birdViewFactory;
-        
+        private readonly ILevelLoadService _levelLoadService;
+
         public LoadNextLevelState(
             ILoadingScreen loadingScreen,
             IEnumerable<IRestartable> restartables,
@@ -58,7 +61,8 @@ namespace App.Scripts.Scenes.GameScene.States
             IBallsService ballsService,
             BallView.Pool ballViewPool,
             IBirdsService birdsService,
-            BirdView.Factory birdViewFactory)
+            BirdView.Factory birdViewFactory,
+            ILevelLoadService levelLoadService)
         {
             _loadingScreen = loadingScreen;
             _restartables = restartables;
@@ -76,35 +80,23 @@ namespace App.Scripts.Scenes.GameScene.States
             _ballViewPool = ballViewPool;
             _birdsService = birdsService;
             _birdViewFactory = birdViewFactory;
+            _levelLoadService = levelLoadService;
         }
 
         public async UniTask Enter()
         {
             await _loadingScreen.Show(false);
 
-            RemoveTweeners();
+            _tweenersLocator.RemoveAll();
             RestartAll();
+            
             await ClosePopups();
+            LevelData level = await _levelLoadService.LoadLevelNextLevel();
 
-            var data  = _levelPackInfoService.UpdateLevelPackTransferData();
-            LevelData levelData = JsonConvert.DeserializeObject<LevelData>(data.LevelPack.Levels[data.LevelIndex].text);
-
-            if (levelData.NeedBird)
-            {
-                _birdsService.IsActive = true;
-                BirdView birdView = _birdViewFactory.Create();
-                _birdsService.AddBird(birdView);
-                _birdsService.GoFly(birdView);
-            }
-            else
-            {
-                _birdsService.StopAll();
-            }
+            var data = _levelPackInfoService.GetData();
             
-            await _gridPositionResolver.AsyncInitialize(levelData);
-            _levelProgressService.CalculateStepByLevelData(levelData);
+            _levelProgressService.CalculateStepByLevelData(level);
             
-            _levelLoader.LoadLevel(levelData);
             _levelPackInfoView.Initialize(new LevelPackInfoRecord
             {
                 AllLevelsCountFromPack = data.LevelPack.Levels.Count,
@@ -113,17 +105,11 @@ namespace App.Scripts.Scenes.GameScene.States
                 TargetScore = 0
             });
 
-            foreach ((BallView view, var movementService) in _ballsService.Balls)
-            {
-                if (view.gameObject.activeSelf)
-                {
-                    _ballViewPool.Despawn(view);
-                }
-            }
-            
-            _ballsService.Reset();
+            _ballsService.DespawnAll();
 
+            await _loadingScreen.Hide();
             await _showLevelAnimation.Show();
+            
             _gameStateMachine.Enter<GameLoopState>();
         }
 
@@ -131,11 +117,6 @@ namespace App.Scripts.Scenes.GameScene.States
         {
             await _popupService.Close<WinPopupView>();
             _timeProvider.TimeScale = 1f;
-        }
-
-        private void RemoveTweeners()
-        {
-            _tweenersLocator.RemoveAll();
         }
 
         private void RestartAll()
@@ -148,7 +129,7 @@ namespace App.Scripts.Scenes.GameScene.States
 
         public async UniTask Exit()
         {
-            await _loadingScreen.Hide();
+            await UniTask.CompletedTask;
         }
     }
 }

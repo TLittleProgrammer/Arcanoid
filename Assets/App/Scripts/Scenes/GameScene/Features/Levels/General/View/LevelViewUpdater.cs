@@ -4,7 +4,6 @@ using App.Scripts.External.Grid;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General;
 using App.Scripts.Scenes.GameScene.Features.Entities.AssetManagement;
 using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer;
-using App.Scripts.Scenes.GameScene.Features.Entities.TopSprites;
 using App.Scripts.Scenes.GameScene.Features.Entities.View;
 using App.Scripts.Scenes.GameScene.Features.Grid;
 using UnityEngine;
@@ -14,7 +13,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.General.View
     public class LevelViewUpdater : ILevelViewUpdater
     {
         private readonly EntityProvider _entityProvider;
-        private readonly OnTopSprites.Factory _spritesFactory;
         private readonly IEntityDestroyable _entityDestroyable;
         private readonly IEntityViewService _entityViewService;
 
@@ -23,12 +21,10 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.General.View
 
         public LevelViewUpdater(
             EntityProvider entityProvider,
-            OnTopSprites.Factory spritesFactory,
             IEntityDestroyable entityDestroyable,
             IEntityViewService entityViewService)
         {
             _entityProvider = entityProvider;
-            _spritesFactory = spritesFactory;
             _entityDestroyable = entityDestroyable;
             _entityViewService = entityViewService;
         }
@@ -87,6 +83,12 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.General.View
                 return;
             
             GridItemData itemData = _levelGridItemData[entityView.GridPositionX, entityView.GridPositionY];
+
+            if (itemData.CurrentHealth <= 0)
+            {
+                return;
+            }
+            
             itemData.CurrentHealth -= damage;
 
             if (ReturnIfCurrentHealthIsEqualsOrLessZero(entityView, itemData))

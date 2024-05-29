@@ -29,5 +29,11 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.Loading
             return JsonConvert.DeserializeObject<LevelData>(_choosedFromSceneLevelData.text);
 
         }
+
+        public LevelData GetNextLevelData()
+        {
+            var data = _levelPackInfoService.UpdateLevelPackTransferData();
+            return JsonConvert.DeserializeObject<LevelData>(data.LevelPack.Levels[data.LevelIndex].text);
+        }
     }
 }

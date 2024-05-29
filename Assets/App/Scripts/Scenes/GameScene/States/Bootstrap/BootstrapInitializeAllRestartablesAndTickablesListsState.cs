@@ -120,6 +120,7 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             _restartablesForLoadNewLevel.Add(_viewHealthPointService);
             _restartablesForLoadNewLevel.Add(_healthContainer);
             _restartablesForLoadNewLevel.Add(_birdsService);
+            _restartablesForLoadNewLevel.Add(_ballsService);
         }
 
         private void InitializeGeneralList()
@@ -136,6 +137,7 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             _generalRestartables.Add(_viewHealthPointService);
             _generalRestartables.Add(_healthContainer);
             _generalRestartables.Add(_birdsService);
+            _generalRestartables.Add(_ballsService);
         }
     }
 }

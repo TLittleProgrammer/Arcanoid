@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using App.Scripts.Scenes.GameScene.Features.Grid;
 using App.Scripts.Scenes.GameScene.Features.Levels.General;
 using App.Scripts.Scenes.GameScene.Features.Levels.General.Load;
@@ -31,9 +32,21 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.Loading
         {
             LevelData levelData = _levelDataChooser.GetLevelData();
             
+            return await LoadChoosedLevel(levelData);
+        }
+        
+        public async UniTask<LevelData> LoadLevelNextLevel()
+        {
+            LevelData levelData = _levelDataChooser.GetNextLevelData();
+
+            return await LoadChoosedLevel(levelData);
+        }
+
+        private async UniTask<LevelData> LoadChoosedLevel(LevelData levelData)
+        {
             await _gridPositionResolver.AsyncInitialize(levelData);
             _mechanicsByLevelActivator.ActivateByLevelData(levelData);
-            
+
             _levelLoader.LoadLevel(levelData);
 
             LevelLoaded?.Invoke(levelData);

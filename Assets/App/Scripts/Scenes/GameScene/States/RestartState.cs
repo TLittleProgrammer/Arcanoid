@@ -12,21 +12,19 @@ namespace App.Scripts.Scenes.GameScene.States
     public class RestartState : IState
     {
         private readonly ILoadingScreen _loadingScreen;
-        private readonly IEnumerable<IRestartable> _restartables;
+        private readonly List<IRestartable> _restartables;
         private readonly IStateMachine _gameStateMachine;
         private readonly ITweenersLocator _tweenersLocator;
         private readonly IShowLevelAnimation _showLevelAnimation;
         private readonly IBallsService _ballsService;
-        private readonly BallView.Pool _ballViewPool;
 
         public RestartState(
             ILoadingScreen loadingScreen,
-            IEnumerable<IRestartable> restartables,
+            List<IRestartable> restartables,
             IStateMachine gameStateMachine,
             ITweenersLocator tweenersLocator,
             IShowLevelAnimation showLevelAnimation,
-            IBallsService ballsService,
-            BallView.Pool ballViewPool
+            IBallsService ballsService
         )
         {
             _loadingScreen = loadingScreen;
@@ -35,7 +33,6 @@ namespace App.Scripts.Scenes.GameScene.States
             _tweenersLocator = tweenersLocator;
             _showLevelAnimation = showLevelAnimation;
             _ballsService = ballsService;
-            _ballViewPool = ballViewPool;
         }
         
         public async UniTask Enter()
@@ -49,18 +46,11 @@ namespace App.Scripts.Scenes.GameScene.States
                 restartable.Restart();
             }
             
-            foreach ((BallView view, var movementService) in _ballsService.Balls)
-            {
-                if (view.gameObject.activeSelf)
-                {
-                    _ballViewPool.Despawn(view);
-                }
-            }
-            
-            _ballsService.Reset();
+            _ballsService.DespawnAll();
 
             await _loadingScreen.Hide();
             await _showLevelAnimation.Show();
+            
             _gameStateMachine.Enter<GameLoopState>();
         }
 

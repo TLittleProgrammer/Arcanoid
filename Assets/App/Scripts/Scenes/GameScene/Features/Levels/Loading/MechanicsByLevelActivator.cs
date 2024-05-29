@@ -30,6 +30,10 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.Loading
                 _birdsService.AddBird(birdView);
                 _birdsService.GoFly(birdView);
             }
+            else
+            {
+                _birdsService.StopAll();
+            }
         }
     }
 }

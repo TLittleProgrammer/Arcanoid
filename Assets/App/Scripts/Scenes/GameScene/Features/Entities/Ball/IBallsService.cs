@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using App.Scripts.General.Infrastructure;
 using App.Scripts.Scenes.GameScene.Features.Entities.Ball.Movement;
 using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
 {
-    public interface IBallsService : ITickable
+    public interface IBallsService : ITickable, IRestartable
     {
         Dictionary<BallView, IBallMovementService> Balls { get; set; }
         event Action<BallView> BallAdded;
@@ -17,5 +18,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
         void SetRedBall(bool activated);
         void SetSticky(BallView view);
         void Fly(BallView view);
+        void DespawnAll();
     }
 }

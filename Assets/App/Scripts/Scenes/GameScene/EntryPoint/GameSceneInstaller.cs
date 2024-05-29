@@ -23,10 +23,12 @@ using App.Scripts.Scenes.GameScene.Features.Grid;
 using App.Scripts.Scenes.GameScene.Features.Healthes;
 using App.Scripts.Scenes.GameScene.Features.Healthes.View;
 using App.Scripts.Scenes.GameScene.Features.Helpers;
+using App.Scripts.Scenes.GameScene.Features.Levels;
 using App.Scripts.Scenes.GameScene.Features.Levels.General.Animations;
 using App.Scripts.Scenes.GameScene.Features.Levels.LevelProgress;
 using App.Scripts.Scenes.GameScene.Features.Levels.LevelView;
 using App.Scripts.Scenes.GameScene.Features.Levels.Loading;
+using App.Scripts.Scenes.GameScene.Features.Levels.SkipLevel;
 using App.Scripts.Scenes.GameScene.Features.PositionChecker;
 using App.Scripts.Scenes.GameScene.Features.Restart;
 using App.Scripts.Scenes.GameScene.Features.ScoreAnimation;
@@ -54,6 +56,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
         [SerializeField] private BoostItemView _boostItemViewPrefab;
         [SerializeField] private BoostsViewContainer _boostsViewContainer;
         [SerializeField] private Image _menuButton;
+        [SerializeField] private Button _skipLevelButton;
 
         [Inject] private PoolProviders _poolProviders;
         [Inject] private IStateMachine _projectStateMachine;
@@ -108,6 +111,8 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.Bind(typeof(IActivable), typeof(IBallsService)).To<BallsService>().AsSingle();
             Container.BindInterfacesAndSelfTo<LevelProgressService>().AsSingle().WithArguments(_levelPackInfoView, _levelPackBackground);
 
+            Container.Bind<SkipLevelService>().AsSingle().WithArguments(_skipLevelButton).NonLazy();
+            
             StateMachineInstaller.Install(Container, _gameLoopTickables, _projectStateMachine, _restartables, _levelPackInfoView, _restartablesForLoadNewLevel);
             
             Container.BindInterfacesTo<GameBootstrapper>().AsSingle();

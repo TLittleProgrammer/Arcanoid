@@ -155,6 +155,19 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
             }
         }
 
+        public void DespawnAll()
+        {
+            foreach ((BallView view, var movementService) in Balls)
+            {
+                if (view.gameObject.activeSelf)
+                {
+                    _ballViewPool.Despawn(view);
+                }
+            }
+            
+            Reset();
+        }
+
         public void SetSpeedMultiplier(float multiplier)
         {
             _speedMultiplier = multiplier;
@@ -206,6 +219,11 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
             ballData.Value.Restart();
             
             AddBallPositionChecker(ballData.Key);
+        }
+
+        public void Restart()
+        {
+            SetSpeedMultiplier(1f);
         }
     }
 }

@@ -9,5 +9,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.Loading
         event Action<LevelData> LevelLoaded;
         
         UniTask<LevelData> LoadLevel();
+        UniTask<LevelData> LoadLevelNextLevel();
     }
 }
