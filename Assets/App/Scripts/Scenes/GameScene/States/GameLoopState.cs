@@ -2,6 +2,7 @@
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Popup;
 using App.Scripts.General.RootUI;
+using App.Scripts.Scenes.GameScene.Features.Ball;
 using App.Scripts.Scenes.GameScene.Features.Ball.Movement.MoveVariants;
 using App.Scripts.Scenes.GameScene.Features.Components;
 using App.Scripts.Scenes.GameScene.Features.Healthes;
@@ -27,9 +28,12 @@ namespace App.Scripts.Scenes.GameScene.States
         private readonly RootUIViewProvider _rootUIViewProvider;
         private readonly IServicesActivator _servicesActivator;
         private readonly GameLoopSubscriber _gameLoopSubscriber;
+        private readonly IBallsService _ballsService;
 
         public bool IsActive { get; set; }
 
+        private float _lastSpeedMultiplier;
+        
         public GameLoopState(
             IEnumerable<ITickable> tickables,
             IHealthContainer healthContainer,
@@ -39,7 +43,8 @@ namespace App.Scripts.Scenes.GameScene.States
             ILevelProgressService levelProgressService,
             RootUIViewProvider rootUIViewProvider,
             IServicesActivator servicesActivator,
-            GameLoopSubscriber gameLoopSubscriber)
+            GameLoopSubscriber gameLoopSubscriber,
+            IBallsService ballsService)
         {
             
             _tickables = tickables;
@@ -51,6 +56,9 @@ namespace App.Scripts.Scenes.GameScene.States
             _rootUIViewProvider = rootUIViewProvider;
             _servicesActivator = servicesActivator;
             _gameLoopSubscriber = gameLoopSubscriber;
+            _ballsService = ballsService;
+
+            _lastSpeedMultiplier = 1f;
         }
 
         public async UniTask Enter()
@@ -60,6 +68,8 @@ namespace App.Scripts.Scenes.GameScene.States
             _gameLoopSubscriber.SubscribeAll();
             _healthContainer.LivesAreWasted   += OnLivesAreWasted;
             _levelProgressService.LevelPassed += OnLevelPassed;
+            
+            _ballsService.SetSpeedMultiplier(_lastSpeedMultiplier);
             
             await UniTask.CompletedTask;
         }
@@ -71,7 +81,10 @@ namespace App.Scripts.Scenes.GameScene.States
             _gameLoopSubscriber.DescribeAll();
             _healthContainer.LivesAreWasted   -= OnLivesAreWasted;
             _levelProgressService.LevelPassed -= OnLevelPassed;
-            
+
+            _lastSpeedMultiplier = _ballsService.SpeedMultiplier;
+            _ballsService.SetSpeedMultiplier(0f);
+
             await UniTask.CompletedTask;
         }
 

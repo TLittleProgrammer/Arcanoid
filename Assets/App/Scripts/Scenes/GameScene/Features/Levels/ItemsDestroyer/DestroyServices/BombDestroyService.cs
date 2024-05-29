@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using App.Scripts.Scenes.GameScene.Features.Effects;
 using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.Levels.Data;
 using App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.Helpers;
@@ -19,6 +20,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroySer
         private readonly IAddVisualDamage _addVisualDamage;
         private readonly IItemsDestroyable _itemsDestroyable;
         private readonly SimpleDestroyService _simpleDestroyService;
+        private readonly ExplosionEffect.Pool _explosionsPool;
 
         public BombDestroyService(
             ILevelViewUpdater levelViewUpdater,
@@ -26,7 +28,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroySer
             IAnimatedDestroyService animatedDestroyService,
             IAddVisualDamage addVisualDamage,
             IItemsDestroyable itemsDestroyable,
-            SimpleDestroyService simpleDestroyService)
+            SimpleDestroyService simpleDestroyService,
+            ExplosionEffect.Pool explosionsPool)
         {
             _levelViewUpdater = levelViewUpdater;
             _levelLoader = levelLoader;
@@ -34,6 +37,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroySer
             _addVisualDamage = addVisualDamage;
             _itemsDestroyable = itemsDestroyable;
             _simpleDestroyService = simpleDestroyService;
+            _explosionsPool = explosionsPool;
         }
         
         public async void Destroy(GridItemData gridItemData, IEntityView iEntityView)
@@ -68,6 +72,15 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroySer
 
         private async UniTask AnimateAll(EntityView bomb, List<EntityData> immediateEntityDatas, List<EntityData> diagonalsEntityDatas)
         {
+            float bombSize = bomb.gameObject.transform.localScale.x;
+            
+            ExplosionEffect effect = _explosionsPool.Spawn();
+            ParticleSystem.MainModule explosionMain = effect.Explosion.main;
+            explosionMain.startSizeX = bombSize * 1.431f;
+
+            effect.transform.position = bomb.Position;
+            effect.Explosion.Play();
+
             await _animatedDestroyService.Animate(new List<EntityData>()
             {
                 new()
@@ -78,7 +91,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroySer
             });
 
             GridItemData gridItemData = _levelViewUpdater.LevelGridItemData[bomb.GridPositionX, bomb.GridPositionY];
-            
             _simpleDestroyService.Destroy(gridItemData, bomb);
 
             foreach (EntityData data in immediateEntityDatas)
@@ -86,9 +98,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroySer
                 _itemsDestroyable.Destroy(data.GridItemData, data.EntityView);
             }
 
-            await UniTask.Delay(350);
-
-            
             foreach (EntityData data in diagonalsEntityDatas)
             {
                 _itemsDestroyable.Destroy(data.GridItemData, data.EntityView);
@@ -105,6 +114,14 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroySer
             {
                 GridItemData gridItemData = _levelViewUpdater.LevelGridItemData[new Vector2Int(position.x, position.y)];
                 IEntityView entityView = _levelLoader.Entities.First(x => x.GridPositionX == position.x && x.GridPositionY == position.y);
+
+                float bombSize = entityView.GameObject.transform.localScale.x;
+                ExplosionEffect immediateEffect = _explosionsPool.Spawn();
+                ParticleSystem.MainModule immediateExplosionMain = immediateEffect.Explosion.main;
+                immediateExplosionMain.startSizeX = bombSize * 1.431f;
+
+                immediateEffect.transform.position = entityView.Position;
+                immediateEffect.Explosion.Play();
                 
                 if (gridItemData.CurrentHealth - damage <= 0 && entityView.BoxCollider2D.enabled)
                 {

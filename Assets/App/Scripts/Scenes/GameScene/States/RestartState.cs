@@ -2,6 +2,7 @@
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Infrastructure;
 using App.Scripts.General.LoadingScreen;
+using App.Scripts.Scenes.GameScene.Features.Ball;
 using App.Scripts.Scenes.GameScene.Features.Dotween;
 using App.Scripts.Scenes.GameScene.Features.Levels.Animations;
 using Cysharp.Threading.Tasks;
@@ -15,13 +16,17 @@ namespace App.Scripts.Scenes.GameScene.States
         private readonly IStateMachine _gameStateMachine;
         private readonly ITweenersLocator _tweenersLocator;
         private readonly IShowLevelAnimation _showLevelAnimation;
+        private readonly IBallsService _ballsService;
+        private readonly BallView.Pool _ballViewPool;
 
         public RestartState(
             ILoadingScreen loadingScreen,
             IEnumerable<IRestartable> restartables,
             IStateMachine gameStateMachine,
             ITweenersLocator tweenersLocator,
-            IShowLevelAnimation showLevelAnimation
+            IShowLevelAnimation showLevelAnimation,
+            IBallsService ballsService,
+            BallView.Pool ballViewPool
         )
         {
             _loadingScreen = loadingScreen;
@@ -29,6 +34,8 @@ namespace App.Scripts.Scenes.GameScene.States
             _gameStateMachine = gameStateMachine;
             _tweenersLocator = tweenersLocator;
             _showLevelAnimation = showLevelAnimation;
+            _ballsService = ballsService;
+            _ballViewPool = ballViewPool;
         }
         
         public async UniTask Enter()
@@ -41,6 +48,16 @@ namespace App.Scripts.Scenes.GameScene.States
             {
                 restartable.Restart();
             }
+            
+            foreach ((BallView view, var movementService) in _ballsService.Balls)
+            {
+                if (view.gameObject.activeSelf)
+                {
+                    _ballViewPool.Despawn(view);
+                }
+            }
+            
+            _ballsService.Reset();
 
             await _loadingScreen.Hide();
             await _showLevelAnimation.Show();
