@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using App.Scripts.Scenes.GameScene.Features.Ball;
+﻿using App.Scripts.Scenes.GameScene.Features.Ball;
 using App.Scripts.Scenes.GameScene.Features.Ball.Collision;
 using App.Scripts.Scenes.GameScene.Features.Ball.Movement;
 using App.Scripts.Scenes.GameScene.Features.Ball.Movement.MoveVariants;

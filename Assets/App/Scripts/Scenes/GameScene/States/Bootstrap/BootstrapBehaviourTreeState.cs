@@ -3,7 +3,6 @@ using App.Scripts.Scenes.GameScene.Features.Autopilot;
 using App.Scripts.Scenes.GameScene.Features.Autopilot.Nodes;
 using App.Scripts.Scenes.GameScene.Features.Autopilot.Strategies;
 using Cysharp.Threading.Tasks;
-using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.States.Bootstrap
 {

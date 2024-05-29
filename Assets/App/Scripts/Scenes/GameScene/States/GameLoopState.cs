@@ -3,7 +3,6 @@ using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Popup;
 using App.Scripts.General.RootUI;
 using App.Scripts.Scenes.GameScene.Features.Ball;
-using App.Scripts.Scenes.GameScene.Features.Ball.Movement.MoveVariants;
 using App.Scripts.Scenes.GameScene.Features.Components;
 using App.Scripts.Scenes.GameScene.Features.Healthes;
 using App.Scripts.Scenes.GameScene.Features.Helpers;
@@ -12,7 +11,6 @@ using App.Scripts.Scenes.GameScene.Features.Popups;
 using App.Scripts.Scenes.GameScene.Features.ServiceActivator;
 using App.Scripts.Scenes.GameScene.Features.Time;
 using Cysharp.Threading.Tasks;
-using UnityEngine;
 using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.States

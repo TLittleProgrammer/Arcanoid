@@ -1,6 +1,5 @@
 ﻿using System;
 using App.Scripts.General.LevelPackInfoService;
-using App.Scripts.Scenes.GameScene.Features.Ball;
 using App.Scripts.Scenes.GameScene.Features.Levels;
 using App.Scripts.Scenes.GameScene.Features.Levels.AssetManagement;
 using App.Scripts.Scenes.GameScene.Features.LevelView;

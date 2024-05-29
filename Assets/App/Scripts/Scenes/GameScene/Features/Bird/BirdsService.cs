@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using App.Scripts.General.Infrastructure;
-using App.Scripts.Scenes.GameScene.Features.Ball;
-using App.Scripts.Scenes.GameScene.Features.Components;
 using App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer;
 using App.Scripts.Scenes.GameScene.Features.ScreenInfo;
 using Cysharp.Threading.Tasks;

@@ -5,7 +5,6 @@ using App.Scripts.Scenes.GameScene.Features.Ball.Movement;
 using App.Scripts.Scenes.GameScene.Features.Ball.PositionChecker;
 using App.Scripts.Scenes.GameScene.Features.Components;
 using App.Scripts.Scenes.GameScene.Features.Damage;
-using App.Scripts.Scenes.GameScene.Features.Factories;
 using App.Scripts.Scenes.GameScene.Features.Input;
 using App.Scripts.Scenes.GameScene.Features.ScreenInfo;
 using Cysharp.Threading.Tasks;

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using App.Scripts.Scenes.GameScene.Features.Ball;
 using App.Scripts.Scenes.GameScene.Features.Entities;
-using App.Scripts.Scenes.GameScene.Features.Factories;
 using App.Scripts.Scenes.GameScene.Features.Levels.Data;
 using App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.Helpers;
 

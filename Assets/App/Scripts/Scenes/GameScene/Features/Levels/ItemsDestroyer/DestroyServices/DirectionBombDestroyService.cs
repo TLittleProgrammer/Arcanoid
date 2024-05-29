@@ -12,7 +12,6 @@ using App.Scripts.Scenes.GameScene.Features.ScreenInfo;
 using Cysharp.Threading.Tasks;
 using Unity.Mathematics;
 using UnityEngine;
-using Zenject.SpaceFighter;
 
 namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroyServices
 {

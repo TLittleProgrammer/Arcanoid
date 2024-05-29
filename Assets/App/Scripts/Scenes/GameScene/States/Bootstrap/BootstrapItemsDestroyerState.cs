@@ -3,7 +3,6 @@ using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer;
 using App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroyServices;
 using Cysharp.Threading.Tasks;
-using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.States.Bootstrap
 {

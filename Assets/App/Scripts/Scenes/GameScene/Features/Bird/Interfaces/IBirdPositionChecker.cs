@@ -1,5 +1,4 @@
 ﻿using System;
-using App.Scripts.External.Components;
 using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.Features.Bird

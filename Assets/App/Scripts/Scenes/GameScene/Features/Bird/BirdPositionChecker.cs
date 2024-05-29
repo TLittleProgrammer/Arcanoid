@@ -1,5 +1,4 @@
 ﻿using System;
-using App.Scripts.External.Components;
 using App.Scripts.Scenes.GameScene.Features.ScreenInfo;
 
 namespace App.Scripts.Scenes.GameScene.Features.Bird

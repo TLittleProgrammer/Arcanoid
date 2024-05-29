@@ -1,12 +1,8 @@
 ﻿using System.Collections.Generic;
 using App.Scripts.External.GameStateMachine;
-using App.Scripts.Scenes.GameScene.Features.Boosts;
-using App.Scripts.Scenes.GameScene.Features.Boosts.Interfaces;
 using App.Scripts.Scenes.GameScene.Features.Components;
-using App.Scripts.Scenes.GameScene.Features.MiniGun;
 using App.Scripts.Scenes.GameScene.Features.ServiceActivator;
 using Cysharp.Threading.Tasks;
-using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.States.Bootstrap
 {

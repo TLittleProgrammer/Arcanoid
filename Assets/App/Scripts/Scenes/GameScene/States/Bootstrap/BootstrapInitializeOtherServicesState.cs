@@ -2,12 +2,9 @@
 using App.Scripts.General.Constants;
 using App.Scripts.General.Popup.AssetManagment;
 using App.Scripts.Scenes.GameScene.Features.Ball;
-using App.Scripts.Scenes.GameScene.Features.Ball.Movement;
-using App.Scripts.Scenes.GameScene.Features.Bird;
 using App.Scripts.Scenes.GameScene.Features.Levels.Animations;
 using App.Scripts.Scenes.GameScene.Features.Walls;
 using Cysharp.Threading.Tasks;
-using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.States.Bootstrap
 {
