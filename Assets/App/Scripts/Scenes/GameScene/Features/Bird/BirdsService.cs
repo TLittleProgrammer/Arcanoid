@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using App.Scripts.General.Infrastructure;
+using App.Scripts.Scenes.GameScene.Features.Components;
 using App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer;
 using App.Scripts.Scenes.GameScene.Features.ScreenInfo;
 using Cysharp.Threading.Tasks;
@@ -9,7 +11,7 @@ using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.Features.Bird
 {
-    public class BirdsService : IBirdsService, ITickable
+    public class BirdsService : IBirdsService, ITickable, IActivable
     {
         private readonly IScreenInfoProvider _screenInfoProvider;
         private readonly BirdView.Pool _birdViewPool;
@@ -40,8 +42,13 @@ namespace App.Scripts.Scenes.GameScene.Features.Bird
             birdRespawnService.BirdRespawned += GoFly;
         }
 
+        public bool IsActive { get; set; }
+
         public void Tick()
         {
+            if (!IsActive)
+                return;
+            
             foreach ((BirdView view, IBirdMovement movement) in Birds)
             {
                 movement.Tick();
@@ -119,6 +126,24 @@ namespace App.Scripts.Scenes.GameScene.Features.Bird
         private void SetBirdXPosition(BirdView birdView, float x)
         {
             birdView.transform.position = new(x, 0f, 0f);
+        }
+
+        public void Restart()
+        {
+            foreach ((BirdView view, IBirdMovement movement) in Birds)
+            {
+                if (movement.IsActive)
+                {
+                    if (_lastDirection[view] == Direction.Left)
+                    {
+                        SetBirdXPosition(view, _screenInfoProvider.WidthInWorld / 2f + 1f);
+                    }
+                    else
+                    {
+                        SetBirdXPosition(view, -_screenInfoProvider.WidthInWorld / 2f - 1f);
+                    }
+                }
+            }
         }
     }
 }

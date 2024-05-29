@@ -76,12 +76,12 @@ namespace App.Scripts.Scenes.GameScene.Features.Ball.Movement.MoveVariants
             if (speedMultiplier == 0f)
             {
                 _lastDirection = Velocity.normalized;
-                Velocity = _lastDirection * Speed;
+                Velocity = Vector2.zero;
                 
                 return;
             }
 
-            Velocity = Velocity.normalized * Speed;
+            Velocity = _lastDirection * Speed;
         }
 
         public void Restart()
