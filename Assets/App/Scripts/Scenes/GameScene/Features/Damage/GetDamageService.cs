@@ -1,6 +1,6 @@
-﻿using App.Scripts.Scenes.GameScene.Features.Blocks;
-using App.Scripts.Scenes.GameScene.Features.Camera;
+﻿using App.Scripts.Scenes.GameScene.Features.Camera;
 using App.Scripts.Scenes.GameScene.Features.Healthes;
+using App.Scripts.Scenes.GameScene.Features.Shake;
 
 namespace App.Scripts.Scenes.GameScene.Features.Damage
 {

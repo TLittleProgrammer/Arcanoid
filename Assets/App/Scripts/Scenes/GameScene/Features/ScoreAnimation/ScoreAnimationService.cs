@@ -9,6 +9,7 @@ namespace App.Scripts.Scenes.GameScene.Features.ScoreAnimation
     public sealed class ScoreAnimationService : IScoreAnimationService
     {
         private readonly ScoreAnimationSettings _scoreAnimationSettings;
+        
         private Dictionary<TMP_Text, Tweener> _sequences = new();
 
         public ScoreAnimationService(ScoreAnimationSettings scoreAnimationSettings)
@@ -35,15 +36,6 @@ namespace App.Scripts.Scenes.GameScene.Features.ScoreAnimation
             
             _sequences[text].Kill();
             _sequences[text] = DOVirtual.Int(from, to, _scoreAnimationSettings.Duration, updateValue.Invoke);
-        }
-
-        public void Dispose()
-        {
-            foreach (KeyValuePair<TMP_Text,Tweener> pair in _sequences)
-            {
-                pair.Value.Kill();
-            }
-            _sequences.Clear();
         }
 
         private void SetScore(TMP_Text text, int score)

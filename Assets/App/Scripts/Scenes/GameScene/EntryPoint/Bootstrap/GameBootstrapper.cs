@@ -1,6 +1,5 @@
 ﻿using App.Scripts.External.GameStateMachine;
 using App.Scripts.Scenes.GameScene.States.Bootstrap;
-using UnityEngine;
 using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.EntryPoint.Bootstrap

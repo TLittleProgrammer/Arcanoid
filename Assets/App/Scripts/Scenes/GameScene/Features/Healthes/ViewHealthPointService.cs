@@ -2,7 +2,8 @@
 using App.Scripts.External.Components;
 using App.Scripts.Scenes.GameScene.Features.Constants;
 using App.Scripts.Scenes.GameScene.Features.Healthes.View;
-using App.Scripts.Scenes.GameScene.Features.Levels;
+using App.Scripts.Scenes.GameScene.Features.Levels.General;
+using App.Scripts.Scenes.GameScene.Features.Levels.Loading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;

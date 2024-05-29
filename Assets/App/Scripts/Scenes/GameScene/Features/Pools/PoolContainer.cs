@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using App.Scripts.Scenes.GameScene.Features.Boosts;
+using App.Scripts.Scenes.GameScene.Features.Boosts.General;
 using App.Scripts.Scenes.GameScene.Features.Effects;
 using App.Scripts.Scenes.GameScene.Features.Entities;
+using App.Scripts.Scenes.GameScene.Features.Entities.TopSprites;
+using App.Scripts.Scenes.GameScene.Features.Entities.View;
 using App.Scripts.Scenes.GameScene.Features.Healthes.View;
-using App.Scripts.Scenes.GameScene.Features.TopSprites;
 using UnityEngine;
 using Zenject;
 

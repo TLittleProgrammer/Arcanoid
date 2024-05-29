@@ -1,6 +1,5 @@
 ﻿using App.Scripts.External.GameStateMachine;
 using Cysharp.Threading.Tasks;
-using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.States.Bootstrap
 {

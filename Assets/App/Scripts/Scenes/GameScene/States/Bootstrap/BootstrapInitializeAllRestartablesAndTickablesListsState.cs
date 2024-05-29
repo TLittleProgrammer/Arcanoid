@@ -2,15 +2,15 @@
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Infrastructure;
 using App.Scripts.General.Popup;
-using App.Scripts.Scenes.GameScene.Features.Ball.Movement;
-using App.Scripts.Scenes.GameScene.Features.Bird;
-using App.Scripts.Scenes.GameScene.Features.Boosts.Interfaces;
+using App.Scripts.Scenes.GameScene.Features.Boosts.General.Interfaces;
+using App.Scripts.Scenes.GameScene.Features.Entities.Ball;
+using App.Scripts.Scenes.GameScene.Features.Entities.Bird.Interfaces;
+using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.Move;
 using App.Scripts.Scenes.GameScene.Features.Grid;
 using App.Scripts.Scenes.GameScene.Features.Healthes;
 using App.Scripts.Scenes.GameScene.Features.Input;
-using App.Scripts.Scenes.GameScene.Features.LevelProgress;
-using App.Scripts.Scenes.GameScene.Features.Levels.Load;
-using App.Scripts.Scenes.GameScene.Features.PlayerShape.Move;
+using App.Scripts.Scenes.GameScene.Features.Levels.General.Load;
+using App.Scripts.Scenes.GameScene.Features.Levels.LevelProgress;
 using App.Scripts.Scenes.GameScene.Features.Pools;
 using App.Scripts.Scenes.GameScene.Features.PositionChecker;
 using App.Scripts.Scenes.GameScene.Features.Time;
@@ -24,7 +24,6 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
         private readonly IStateMachine _stateMachine;
         private readonly List<IRestartable> _generalRestartables;
         private readonly List<IRestartable> _restartablesForLoadNewLevel;
-        private readonly List<ITickable> _gameLoopTickables;
         private readonly IViewHealthPointService _viewHealthPointService;
         private readonly IHealthContainer _healthContainer;
         private readonly ILevelProgressService _levelProgressService;
@@ -39,6 +38,8 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
         private readonly IBoostContainer _boostContainer;
         private readonly IBulletPositionChecker _bulletPositionChecker;
         private readonly IBirdsService _birdsService;
+        private readonly GameLoopState _gameLoopState;
+        private readonly IBallsService _ballsService;
 
         public BootstrapInitializeAllRestartablesAndTickablesListsState(
             IStateMachine stateMachine,
@@ -58,12 +59,13 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             IInputService inputService,
             IBoostContainer boostContainer,
             IBulletPositionChecker bulletPositionChecker,
-            IBirdsService birdsService)
+            IBirdsService birdsService,
+            GameLoopState gameLoopState,
+            IBallsService ballsService)
         {
             _stateMachine = stateMachine;
             _generalRestartables = generalRestartables;
             _restartablesForLoadNewLevel = restartablesForLoadNewLevel;
-            _gameLoopTickables = gameLoopTickables;
             _viewHealthPointService = viewHealthPointService;
             _healthContainer = healthContainer;
             _levelProgressService = levelProgressService;
@@ -78,6 +80,8 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             _boostContainer = boostContainer;
             _bulletPositionChecker = bulletPositionChecker;
             _birdsService = birdsService;
+            _gameLoopState = gameLoopState;
+            _ballsService = ballsService;
         }
         
         public async UniTask Enter()
@@ -98,9 +102,10 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
 
         private void InitializeTickablesList()
         {
-            _gameLoopTickables.Add(_playerShapeMover);
-            _gameLoopTickables.Add(_clickDetector);
-            _gameLoopTickables.Add(_inputService);
+            _gameLoopState.AddTickable(_playerShapeMover);
+            _gameLoopState.AddTickable(_clickDetector);
+            _gameLoopState.AddTickable(_inputService);
+            _gameLoopState.AddTickable(_ballsService);
         }
 
         private void InitializeRestartablesListForNewLevel()
@@ -115,6 +120,7 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             _restartablesForLoadNewLevel.Add(_viewHealthPointService);
             _restartablesForLoadNewLevel.Add(_healthContainer);
             _restartablesForLoadNewLevel.Add(_birdsService);
+            _restartablesForLoadNewLevel.Add(_ballsService);
         }
 
         private void InitializeGeneralList()
@@ -131,6 +137,7 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             _generalRestartables.Add(_viewHealthPointService);
             _generalRestartables.Add(_healthContainer);
             _generalRestartables.Add(_birdsService);
+            _generalRestartables.Add(_ballsService);
         }
     }
 }

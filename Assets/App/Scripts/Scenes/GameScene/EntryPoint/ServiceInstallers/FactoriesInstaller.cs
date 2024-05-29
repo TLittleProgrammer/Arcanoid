@@ -3,12 +3,15 @@ using App.Scripts.General.Popup;
 using App.Scripts.General.Popup.AssetManagment;
 using App.Scripts.General.Popup.Factory;
 using App.Scripts.General.RootUI;
-using App.Scripts.Scenes.GameScene.Features.Ball;
-using App.Scripts.Scenes.GameScene.Features.Bird;
 using App.Scripts.Scenes.GameScene.Features.Boosts;
-using App.Scripts.Scenes.GameScene.Features.Boosts.UI;
+using App.Scripts.Scenes.GameScene.Features.Boosts.General;
+using App.Scripts.Scenes.GameScene.Features.Boosts.General.UI;
 using App.Scripts.Scenes.GameScene.Features.Effects;
 using App.Scripts.Scenes.GameScene.Features.Entities;
+using App.Scripts.Scenes.GameScene.Features.Entities.Ball;
+using App.Scripts.Scenes.GameScene.Features.Entities.Bird;
+using App.Scripts.Scenes.GameScene.Features.Entities.TopSprites;
+using App.Scripts.Scenes.GameScene.Features.Entities.View;
 using App.Scripts.Scenes.GameScene.Features.Factories;
 using App.Scripts.Scenes.GameScene.Features.Factories.Boosts;
 using App.Scripts.Scenes.GameScene.Features.Factories.CircleEffect;
@@ -16,7 +19,6 @@ using App.Scripts.Scenes.GameScene.Features.Factories.Entity;
 using App.Scripts.Scenes.GameScene.Features.Factories.Health;
 using App.Scripts.Scenes.GameScene.Features.Factories.OnTopSprite;
 using App.Scripts.Scenes.GameScene.Features.Healthes.View;
-using App.Scripts.Scenes.GameScene.Features.TopSprites;
 using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers

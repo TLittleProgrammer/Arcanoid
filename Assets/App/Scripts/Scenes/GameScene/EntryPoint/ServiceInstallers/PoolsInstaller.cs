@@ -1,15 +1,17 @@
 ﻿using App.Scripts.External.Extensions.ZenjectExtensions;
-using App.Scripts.Scenes.GameScene.Features.Ball;
-using App.Scripts.Scenes.GameScene.Features.Bird;
 using App.Scripts.Scenes.GameScene.Features.Boosts;
+using App.Scripts.Scenes.GameScene.Features.Boosts.General;
+using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun;
 using App.Scripts.Scenes.GameScene.Features.Effects;
 using App.Scripts.Scenes.GameScene.Features.Effects.Bombs;
 using App.Scripts.Scenes.GameScene.Features.Entities;
+using App.Scripts.Scenes.GameScene.Features.Entities.Ball;
+using App.Scripts.Scenes.GameScene.Features.Entities.Bird;
+using App.Scripts.Scenes.GameScene.Features.Entities.TopSprites;
+using App.Scripts.Scenes.GameScene.Features.Entities.View;
 using App.Scripts.Scenes.GameScene.Features.Healthes.View;
-using App.Scripts.Scenes.GameScene.Features.MiniGun;
 using App.Scripts.Scenes.GameScene.Features.Pools;
 using App.Scripts.Scenes.GameScene.Features.Settings;
-using App.Scripts.Scenes.GameScene.Features.TopSprites;
 using UnityEngine;
 using Zenject;
 
