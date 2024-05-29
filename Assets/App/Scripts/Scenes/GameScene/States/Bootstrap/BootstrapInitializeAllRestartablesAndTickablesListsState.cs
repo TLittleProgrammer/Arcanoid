@@ -3,6 +3,7 @@ using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Infrastructure;
 using App.Scripts.General.Popup;
 using App.Scripts.Scenes.GameScene.Features.Ball.Movement;
+using App.Scripts.Scenes.GameScene.Features.Bird;
 using App.Scripts.Scenes.GameScene.Features.Boosts.Interfaces;
 using App.Scripts.Scenes.GameScene.Features.Grid;
 using App.Scripts.Scenes.GameScene.Features.Healthes;
@@ -37,6 +38,7 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
         private readonly IInputService _inputService;
         private readonly IBoostContainer _boostContainer;
         private readonly IBulletPositionChecker _bulletPositionChecker;
+        private readonly IBirdsService _birdsService;
 
         public BootstrapInitializeAllRestartablesAndTickablesListsState(
             IStateMachine stateMachine,
@@ -55,7 +57,8 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             IClickDetector clickDetector,
             IInputService inputService,
             IBoostContainer boostContainer,
-            IBulletPositionChecker bulletPositionChecker)
+            IBulletPositionChecker bulletPositionChecker,
+            IBirdsService birdsService)
         {
             _stateMachine = stateMachine;
             _generalRestartables = generalRestartables;
@@ -74,6 +77,7 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             _inputService = inputService;
             _boostContainer = boostContainer;
             _bulletPositionChecker = bulletPositionChecker;
+            _birdsService = birdsService;
         }
         
         public async UniTask Enter()
@@ -110,6 +114,7 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             _restartablesForLoadNewLevel.Add(_popupService as IRestartable);
             _restartablesForLoadNewLevel.Add(_viewHealthPointService);
             _restartablesForLoadNewLevel.Add(_healthContainer);
+            _restartablesForLoadNewLevel.Add(_birdsService);
         }
 
         private void InitializeGeneralList()
@@ -125,6 +130,7 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             _generalRestartables.Add(_popupService as IRestartable);
             _generalRestartables.Add(_viewHealthPointService);
             _generalRestartables.Add(_healthContainer);
+            _generalRestartables.Add(_birdsService);
         }
     }
 }
