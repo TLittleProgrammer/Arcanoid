@@ -2,7 +2,7 @@
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Infrastructure;
 using App.Scripts.General.Popup;
-using App.Scripts.Scenes.GameScene.Features.Boosts.Interfaces;
+using App.Scripts.Scenes.GameScene.Features.Boosts.General.Interfaces;
 using App.Scripts.Scenes.GameScene.Features.Entities.Bird.Interfaces;
 using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.Move;
 using App.Scripts.Scenes.GameScene.Features.Grid;

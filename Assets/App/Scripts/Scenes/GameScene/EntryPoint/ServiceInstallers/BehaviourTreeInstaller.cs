@@ -1,5 +1,5 @@
-﻿using App.Scripts.Scenes.GameScene.Features.Autopilot;
-using App.Scripts.Scenes.GameScene.Features.Autopilot.Strategies;
+﻿using App.Scripts.Scenes.GameScene.Features.Boosts.Autopilot;
+using App.Scripts.Scenes.GameScene.Features.Boosts.Autopilot.Strategies;
 using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers

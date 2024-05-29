@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using App.Scripts.Scenes.GameScene.Features.MiniGun;
+using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun;
 using App.Scripts.Scenes.GameScene.Features.ScreenInfo;
 using Zenject;
 

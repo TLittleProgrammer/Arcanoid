@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using App.Scripts.General.Infrastructure;
-using App.Scripts.Scenes.GameScene.Features.MiniGun;
+using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun;
 
 namespace App.Scripts.Scenes.GameScene.Features.PositionChecker
 {

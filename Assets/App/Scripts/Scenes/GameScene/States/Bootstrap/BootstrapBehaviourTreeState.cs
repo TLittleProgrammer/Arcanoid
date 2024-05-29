@@ -1,7 +1,7 @@
 ﻿using App.Scripts.External.GameStateMachine;
-using App.Scripts.Scenes.GameScene.Features.Autopilot;
-using App.Scripts.Scenes.GameScene.Features.Autopilot.Nodes;
-using App.Scripts.Scenes.GameScene.Features.Autopilot.Strategies;
+using App.Scripts.Scenes.GameScene.Features.Boosts.Autopilot;
+using App.Scripts.Scenes.GameScene.Features.Boosts.Autopilot.Nodes;
+using App.Scripts.Scenes.GameScene.Features.Boosts.Autopilot.Strategies;
 using Cysharp.Threading.Tasks;
 
 namespace App.Scripts.Scenes.GameScene.States.Bootstrap

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using App.Scripts.Scenes.GameScene.Features.Boosts;
-using App.Scripts.Scenes.GameScene.Features.Boosts.Interfaces;
+using App.Scripts.Scenes.GameScene.Features.Boosts.General;
+using App.Scripts.Scenes.GameScene.Features.Boosts.General.Interfaces;
 using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.Levels.Data;
 using App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.Helpers;
