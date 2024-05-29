@@ -126,7 +126,19 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.General.View
 
         public void SaveProgress(LevelDataProgress levelDataProgress)
         {
-            levelDataProgress.EntityGridItemsData = LevelGridItemData;
+            levelDataProgress.EntityGridItemsData = new();
+
+            for (int i = 0; i < _levelGridItemData.Height; i++)
+            {
+                for (int j = 0; j < _levelGridItemData.Width; j++)
+                {
+                    GridItemData gridItemData = _levelGridItemData[j, i];
+                    gridItemData.GridPositionX = i;
+                    gridItemData.GridPositionY = j;
+                    
+                    levelDataProgress.EntityGridItemsData.Add(gridItemData);
+                }
+            }
         }
     }
 }

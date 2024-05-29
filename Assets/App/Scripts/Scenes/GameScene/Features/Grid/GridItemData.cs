@@ -17,6 +17,11 @@ namespace App.Scripts.Scenes.GameScene.Features.Grid
         public bool CanGetDamage;
         [JsonProperty("CurrentHealth")]
         public int CurrentHealth;
+
+        [JsonProperty("PositionX")]
+        public int GridPositionX;
+        [JsonProperty("PositionY")]
+        public int GridPositionY;
         
         public List<OnTopSprites> Sprites = new();
 

@@ -5,7 +5,7 @@ using Zenject;
 
 namespace App.Scripts.Scenes.GameScene
 {
-    public class F : MonoBehaviour
+    public class SaveLevel : MonoBehaviour
     {
         private LevelProgressSaveService _levelProgressSaveService;
 

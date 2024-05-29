@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
 using App.Scripts.External.Grid;
 using App.Scripts.Scenes.GameScene.Features.Entities;
-using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer;
 using App.Scripts.Scenes.GameScene.Features.Entities.View;
 using App.Scripts.Scenes.GameScene.Features.Grid;
+using App.Scripts.Scenes.GameScene.Features.Levels.General;
+using App.Scripts.Scenes.GameScene.Features.Levels.General.Load;
 using App.Scripts.Scenes.GameScene.Features.Levels.General.View;
 using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress;
 using UnityEngine;
 
-namespace App.Scripts.Scenes.GameScene.Features.Levels.General.Load
+namespace App.Scripts.Scenes.GameScene.Features.Levels.Loading.Loader
 {
     public sealed class LevelLoader : ILevelLoader, ILevelProgressSavable
     {
@@ -83,9 +84,9 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.General.Load
             {
                 EntitySaveData entityData = new EntitySaveData();
 
-                entity.EntityId = entity.EntityId;
-                entity.GridPositionX = entity.GridPositionX;
-                entity.GridPositionY = entity.GridPositionY;
+                entityData.EntityId = entity.EntityId;
+                entityData.GridPositionX = entity.GridPositionX;
+                entityData.GridPositionY = entity.GridPositionY;
 
                 levelDataProgress.EntityDatas.Add(entityData);
             }
