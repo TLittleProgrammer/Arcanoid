@@ -18,6 +18,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
         public BoxCollidersAroundScreenSettings BoxCollidersAroundScreenSettings;
         public BoostViewProvider BoostViewProvider;
         public BoostsSettings BoostsSettings;
+        public BirdSettings BirdSettings;
 
         public override void InstallBindings()
         {
@@ -31,6 +32,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.Bind<BoxCollidersAroundScreenSettings>().FromInstance(BoxCollidersAroundScreenSettings).IfNotBound();
             Container.Bind<BoostViewProvider>().FromInstance(BoostViewProvider).IfNotBound();
             Container.Bind<BoostsSettings>().FromInstance(BoostsSettings).IfNotBound();
+            Container.Bind<BirdSettings>().FromInstance(BirdSettings).IfNotBound();
         }
     }
 }

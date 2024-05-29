@@ -13,5 +13,6 @@
         Laser           = 8,
         Plazma          = 9,
         Explosion       = 10,
+        BirdView        = 11,
     }
 }

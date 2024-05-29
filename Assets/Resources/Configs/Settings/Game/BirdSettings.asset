@@ -9,8 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7cef42de5cb14eadac68fdc1ac0ffefa, type: 3}
-  m_Name: LevelPackProvider
+  m_Script: {fileID: 11500000, guid: 4647ecb558004f01af7b148058ace237, type: 3}
+  m_Name: BirdSettings
   m_EditorClassIdentifier: 
-  LevelPacks:
-  - {fileID: 11400000, guid: f029f00259954994aa46eeaee92c7cde, type: 2}
+  Amplitude: 0.69
+  HorizontalSpeed: 1
+  RespawnTime: 2
+  InitialHealthCount: 2

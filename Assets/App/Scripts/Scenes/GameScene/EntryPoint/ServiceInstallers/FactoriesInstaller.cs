@@ -4,6 +4,7 @@ using App.Scripts.General.Popup.AssetManagment;
 using App.Scripts.General.Popup.Factory;
 using App.Scripts.General.RootUI;
 using App.Scripts.Scenes.GameScene.Features.Ball;
+using App.Scripts.Scenes.GameScene.Features.Bird;
 using App.Scripts.Scenes.GameScene.Features.Boosts;
 using App.Scripts.Scenes.GameScene.Features.Boosts.UI;
 using App.Scripts.Scenes.GameScene.Features.Effects;
@@ -39,6 +40,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
             Container.BindFactory<IEntityView, OnTopSprites, OnTopSprites.Factory>().FromFactory<OnTopSpriteFactory>();
             Container.BindFactory<BoostTypeId, BoostView, BoostView.Factory>().FromFactory<BoostViewFactory>();
             Container.BindFactory<BallView, BallView.Factory>().FromFactory<BallViewFactory>();
+            Container.BindFactory<BirdView, BirdView.Factory>().FromFactory<BirdViewFactory>();
 
             Container.Bind<BoostItemView>().FromInstance(_prefab).WhenInjectedInto<BoostItemViewFactory>();
             Container.BindFactory<BoostTypeId, BoostItemView, BoostItemView.Factory>().FromFactory<BoostItemViewFactory>();

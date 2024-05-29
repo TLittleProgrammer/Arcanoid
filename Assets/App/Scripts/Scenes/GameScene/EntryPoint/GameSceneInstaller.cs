@@ -7,6 +7,7 @@ using App.Scripts.General.RootUI;
 using App.Scripts.Scenes.GameScene.EntryPoint.Bootstrap;
 using App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers;
 using App.Scripts.Scenes.GameScene.Features.Ball;
+using App.Scripts.Scenes.GameScene.Features.Bird;
 using App.Scripts.Scenes.GameScene.Features.Blocks;
 using App.Scripts.Scenes.GameScene.Features.Boosts.UI;
 using App.Scripts.Scenes.GameScene.Features.Camera;
@@ -78,6 +79,9 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.Bind<IScreenInfoProvider>().To<ScreenInfoProvider>().AsSingle();
             Container.BindInterfacesAndSelfTo<BulletPositionChecker>().AsSingle();
             Container.BindInterfacesAndSelfTo<MiniGunService>().AsSingle();
+            Container.BindInterfacesAndSelfTo<BirdsService>().AsSingle();
+            Container.BindInterfacesAndSelfTo<BirdRespawnService>().AsSingle();
+            Container.BindInterfacesAndSelfTo<BirdsHealthContainer>().AsSingle();
 
             InputInstaller.Install(Container);
             LevelServicesInstaller.Install(Container);
