@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using App.Scripts.Scenes.GameScene.Features.Effects;
 using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.Levels.AssetManagement;
 using App.Scripts.Scenes.GameScene.Features.Levels.Data;
@@ -12,7 +13,7 @@ using Unity.Mathematics;
 
 namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroyServices
 {
-    public class ChainDestroyer : DestroyService
+    public class ChainDestroyer : BombDestroyer
     {
         private readonly ILevelLoader _levelLoader;
         private readonly IAnimatedDestroyService _animatedDestroyService;
@@ -22,7 +23,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroySer
             ILevelViewUpdater levelViewUpdater,
             ILevelLoader levelLoader,
             IAnimatedDestroyService animatedDestroyService,
-            SimpleDestroyService simpleDestroyService) : base(levelViewUpdater)
+            SimpleDestroyService simpleDestroyService,
+            ExplosionEffect.Pool explosionsPool) : base(levelViewUpdater, explosionsPool)
         {
             _levelLoader = levelLoader;
             _animatedDestroyService = animatedDestroyService;
@@ -243,6 +245,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroySer
 
         private async UniTask SimpleDestroy(GridItemData gridItemData, IEntityView entityView)
         {
+            SetExplosionsEffect(entityView);
             await _animatedDestroyService.Animate(entityView);
 
             gridItemData.CurrentHealth = -1;

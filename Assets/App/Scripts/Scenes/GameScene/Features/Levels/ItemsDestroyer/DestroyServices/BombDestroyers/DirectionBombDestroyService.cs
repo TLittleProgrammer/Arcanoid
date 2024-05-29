@@ -15,7 +15,7 @@ using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroyServices
 {
-    public class DirectionBombDestroyService : DestroyService
+    public class DirectionBombDestroyService : BombDestroyer
     {
         private readonly ILevelViewUpdater _levelViewUpdater;
         private readonly IItemsDestroyable _itemsDestroyable;
@@ -34,7 +34,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroySer
             IAnimatedDestroyService animatedDestroyService,
             IScreenInfoProvider screenInfoProvider,
             LaserEffect.Pool laserEffectPool,
-            ExplosionEffect.Pool explosionsPool) : base(levelViewUpdater)
+            ExplosionEffect.Pool explosionsPool) : base(levelViewUpdater, explosionsPool)
         {
             _levelViewUpdater = levelViewUpdater;
             _itemsDestroyable = itemsDestroyable;
@@ -211,26 +211,16 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroySer
                 {
                     firstEntityDatas[i].GridItemData.CurrentHealth = -1;
                     _itemsDestroyable.Destroy(firstEntityDatas[i].GridItemData, firstEntityDatas[i].EntityView);
-                    
-                    ExplosionEffect effect = _explosionsPool.Spawn();
-                    ParticleSystem.MainModule explosionMain = effect.Explosion.main;
-                    explosionMain.startSizeX = firstEntityDatas[i].EntityView.GameObject.transform.localScale.x * 1.431f;
 
-                    effect.transform.position = firstEntityDatas[i].EntityView.Position;
-                    effect.Explosion.Play();
+                    SetExplosionsEffect(firstEntityDatas[i].EntityView);
                 }
                 
                 if (i < secondEntityDatas.Count)
                 {
                     secondEntityDatas[i].GridItemData.CurrentHealth = -1;
                     _itemsDestroyable.Destroy(secondEntityDatas[i].GridItemData, secondEntityDatas[i].EntityView);
-                    
-                    ExplosionEffect effect = _explosionsPool.Spawn();
-                    ParticleSystem.MainModule explosionMain = effect.Explosion.main;
-                    explosionMain.startSizeX = secondEntityDatas[i].EntityView.GameObject.transform.localScale.x * 1.431f;
 
-                    effect.transform.position = secondEntityDatas[i].EntityView.Position;
-                    effect.Explosion.Play();
+                    SetExplosionsEffect(secondEntityDatas[i].EntityView);
                 }
 
                 await UniTask.Delay(350);
