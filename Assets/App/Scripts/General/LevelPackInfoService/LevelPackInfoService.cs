@@ -7,23 +7,23 @@ namespace App.Scripts.General.LevelPackInfoService
     public sealed class LevelPackInfoService : ILevelPackInfoService
     {
         private readonly LevelPackProvider _levelPackProvider;
-        private readonly LevelProgressDataService _levelProgressDataService;
+        private readonly LevelPackProgressDataService _levelPackProgressDataService;
         
         private ILevelPackTransferData _levelPackTransferData;
 
         public LevelPackInfoService(
             LevelPackProvider levelPackProvider,
-            LevelProgressDataService levelProgressDataService)
+            LevelPackProgressDataService levelPackProgressDataService)
         {
             _levelPackProvider = levelPackProvider;
-            _levelProgressDataService = levelProgressDataService;
+            _levelPackProgressDataService = levelPackProgressDataService;
         }
 
         public ILevelPackTransferData UpdateLevelPackTransferData()
         {
             ILevelPackTransferData data = new LevelPackTransferData();
 
-            _levelProgressDataService.PassLevel(_levelPackTransferData.PackIndex, _levelPackTransferData.LevelIndex);
+            _levelPackProgressDataService.PassLevel(_levelPackTransferData.PackIndex, _levelPackTransferData.LevelIndex);
             
             UpdatePackIndexAndLevelIndex(_levelPackTransferData, data);
             LoadLevelPack(data);
@@ -69,13 +69,13 @@ namespace App.Scripts.General.LevelPackInfoService
                 return false;
             }
 
-            return _levelProgressDataService.GetPassedLevelsForPackIndex(_levelPackTransferData.PackIndex + 1) == 0 ||
+            return _levelPackProgressDataService.GetPassedLevelsForPackIndex(_levelPackTransferData.PackIndex + 1) == 0 ||
                    _levelPackTransferData.LevelIndex + 1 < _levelPackTransferData.LevelPack.Levels.Count;;
         }
 
         public bool NeedLoadNextPack()
         {
-            return _levelProgressDataService.GetPassedLevelsForPackIndex(_levelPackTransferData.PackIndex + 1) == 0 &&
+            return _levelPackProgressDataService.GetPassedLevelsForPackIndex(_levelPackTransferData.PackIndex + 1) == 0 &&
                    _levelPackTransferData.LevelIndex + 1 >= _levelPackTransferData.LevelPack.Levels.Count;
         }
 

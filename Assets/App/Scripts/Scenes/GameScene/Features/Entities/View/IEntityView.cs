@@ -12,6 +12,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.View
         Sprite OnTopSprite { get; set; }
         BoostTypeId BoostTypeId { get; set; }
         int EntityId { get; set; }
+        public int GridPositionX { get; set; }
+        public int GridPositionY { get; set; }
         
         public class Factory : PlaceholderFactory<string, IEntityView>
         {

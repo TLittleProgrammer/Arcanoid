@@ -30,7 +30,7 @@ namespace App.Scripts.General.ProjectInitialization.Installers
             
             Container.Bind<ISceneManagementService>().To<SceneManagementService>().AsSingle();
             Container.Bind<IDotweenContainerService>().To<DotweenContainerService>().AsSingle();
-            Container.Bind<LevelProgressDataService>().AsSingle();
+            Container.Bind<LevelPackProgressDataService>().AsSingle();
             Container.Bind<ILocaleService>().To<LocaleService>().AsSingle();
             Container.Bind<IConverter>().To<CsvConverter>().AsSingle();
             Container.Bind<IEnergyDataService>().To<EnergyDataService>().AsSingle();

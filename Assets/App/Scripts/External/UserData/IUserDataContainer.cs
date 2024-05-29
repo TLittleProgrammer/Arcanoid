@@ -7,5 +7,6 @@ namespace App.Scripts.External.UserData
         void AddData<TSavable>(TSavable savable) where TSavable : ISavable;
         ISavable GetData<TSavable>() where TSavable : ISavable;
         void SaveData<TSavable>() where TSavable : ISavable;
+        void FastSaveData<TSavable>(TSavable savable) where TSavable : ISavable;
     }
 }

@@ -3,11 +3,11 @@ using App.Scripts.General.UserData.Levels.Data;
 
 namespace App.Scripts.General.UserData.Levels
 {
-    public class LevelProgressDataService
+    public class LevelPackProgressDataService
     {
         private readonly IUserDataContainer _userDataContainer;
 
-        public LevelProgressDataService(IUserDataContainer userDataContainer)
+        public LevelPackProgressDataService(IUserDataContainer userDataContainer)
         {
             _userDataContainer = userDataContainer;
         }

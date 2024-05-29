@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using App.Scripts.General.Infrastructure;
 using App.Scripts.Scenes.GameScene.Features.Constants;
 using App.Scripts.Scenes.GameScene.Features.Levels.General;
+using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress;
 using Cysharp.Threading.Tasks;
 
 namespace App.Scripts.Scenes.GameScene.Features.Healthes
 {
-    public sealed class HealthContainer : IHealthContainer
+    public sealed class HealthContainer : IHealthContainer, ILevelProgressSavable
     {
         private readonly IViewHealthPointService _viewHealthPointService;
 
@@ -78,6 +79,12 @@ namespace App.Scripts.Scenes.GameScene.Features.Healthes
         public void Restart()
         {
             _currentHealthCounter = _maxHealthCounter;
+        }
+
+        public void SaveProgress(LevelDataProgress levelDataProgress)
+        {
+            levelDataProgress.AllHealthes = _maxHealthCounter;
+            levelDataProgress.CurrentHealth = _currentHealthCounter;
         }
     }
 }
