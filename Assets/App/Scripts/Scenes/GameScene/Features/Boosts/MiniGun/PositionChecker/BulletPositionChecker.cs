@@ -9,6 +9,7 @@ namespace App.Scripts.Scenes.GameScene.Features.PositionChecker
     {
         private readonly BulletView.Pool _bulletsPool;
         private readonly float _maxHeight;
+        
         private List<BulletView> _bullets = new();
         
         public BulletPositionChecker(IScreenInfoProvider screenInfoProvider, BulletView.Pool bulletsPool)
