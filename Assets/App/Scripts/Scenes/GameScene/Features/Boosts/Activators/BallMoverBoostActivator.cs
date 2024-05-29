@@ -2,6 +2,7 @@
 using App.Scripts.Scenes.GameScene.Features.Boosts.Interfaces;
 using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.Settings;
+using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Boosts.Activators
 {
