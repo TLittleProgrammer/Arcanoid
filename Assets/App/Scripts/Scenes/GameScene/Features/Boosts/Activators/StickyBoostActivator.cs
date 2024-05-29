@@ -1,7 +1,7 @@
-﻿using App.Scripts.Scenes.GameScene.Features.Ball;
-using App.Scripts.Scenes.GameScene.Features.Boosts.Interfaces;
+﻿using App.Scripts.Scenes.GameScene.Features.Boosts.Interfaces;
 using App.Scripts.Scenes.GameScene.Features.Entities;
-using App.Scripts.Scenes.GameScene.Features.PlayerShape;
+using App.Scripts.Scenes.GameScene.Features.Entities.Ball;
+using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape;
 using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Boosts.Activators

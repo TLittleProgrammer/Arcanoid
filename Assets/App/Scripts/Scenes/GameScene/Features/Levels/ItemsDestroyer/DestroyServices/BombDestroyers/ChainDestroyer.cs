@@ -11,7 +11,7 @@ using App.Scripts.Scenes.GameScene.Utilities;
 using Cysharp.Threading.Tasks;
 using Unity.Mathematics;
 
-namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroyServices
+namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroyServices.BombDestroyers
 {
     public class ChainDestroyer : BombDestroyer
     {

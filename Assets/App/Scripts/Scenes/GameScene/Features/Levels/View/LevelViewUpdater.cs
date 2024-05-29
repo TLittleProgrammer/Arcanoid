@@ -2,10 +2,10 @@
 using System.Linq;
 using App.Scripts.External.Grid;
 using App.Scripts.Scenes.GameScene.Features.Entities;
+using App.Scripts.Scenes.GameScene.Features.Entities.TopSprites;
 using App.Scripts.Scenes.GameScene.Features.Levels.AssetManagement;
 using App.Scripts.Scenes.GameScene.Features.Levels.Data;
 using App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer;
-using App.Scripts.Scenes.GameScene.Features.TopSprites;
 using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Levels.View

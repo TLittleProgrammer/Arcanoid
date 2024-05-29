@@ -1,4 +1,5 @@
-﻿using App.Scripts.Scenes.GameScene.Features.Bird;
+﻿using App.Scripts.Scenes.GameScene.Features.Entities.Bird;
+using App.Scripts.Scenes.GameScene.Features.Entities.Bird.Interfaces;
 using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.Features.Factories

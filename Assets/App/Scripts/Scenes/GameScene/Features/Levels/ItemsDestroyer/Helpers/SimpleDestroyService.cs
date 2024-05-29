@@ -1,9 +1,9 @@
 ﻿using App.Scripts.Scenes.GameScene.Features.Boosts;
 using App.Scripts.Scenes.GameScene.Features.Entities;
+using App.Scripts.Scenes.GameScene.Features.Entities.TopSprites;
 using App.Scripts.Scenes.GameScene.Features.LevelProgress;
 using App.Scripts.Scenes.GameScene.Features.Levels.Data;
 using App.Scripts.Scenes.GameScene.Features.Pools;
-using App.Scripts.Scenes.GameScene.Features.TopSprites;
 
 namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.Helpers
 {

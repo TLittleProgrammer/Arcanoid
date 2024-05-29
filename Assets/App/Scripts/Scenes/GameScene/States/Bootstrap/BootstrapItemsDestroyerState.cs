@@ -2,6 +2,7 @@
 using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer;
 using App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroyServices;
+using App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroyServices.BombDestroyers;
 using Cysharp.Threading.Tasks;
 
 namespace App.Scripts.Scenes.GameScene.States.Bootstrap

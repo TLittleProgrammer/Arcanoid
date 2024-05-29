@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using App.Scripts.Scenes.GameScene.Features.Entities;
-using App.Scripts.Scenes.GameScene.Features.TopSprites;
+using App.Scripts.Scenes.GameScene.Features.Entities.TopSprites;
 
 namespace App.Scripts.Scenes.GameScene.Features.Levels.Data
 {

@@ -1,9 +1,9 @@
-﻿using App.Scripts.Scenes.GameScene.Features.Blocks;
-using App.Scripts.Scenes.GameScene.Features.Entities;
+﻿using App.Scripts.Scenes.GameScene.Features.Entities;
+using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape;
 using App.Scripts.Scenes.GameScene.Features.Levels.View;
-using App.Scripts.Scenes.GameScene.Features.PlayerShape;
 using App.Scripts.Scenes.GameScene.Features.PositionChecker;
 using App.Scripts.Scenes.GameScene.Features.Settings;
+using App.Scripts.Scenes.GameScene.Features.Shake;
 using App.Scripts.Scenes.GameScene.Features.Time;
 using UnityEngine;
 using Zenject;

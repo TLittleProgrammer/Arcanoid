@@ -4,7 +4,7 @@ using App.Scripts.Scenes.GameScene.Features.Levels.Data;
 using App.Scripts.Scenes.GameScene.Features.Levels.View;
 using UnityEngine;
 
-namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroyServices
+namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroyServices.BombDestroyers
 {
     public abstract class BombDestroyer : DestroyService
     {

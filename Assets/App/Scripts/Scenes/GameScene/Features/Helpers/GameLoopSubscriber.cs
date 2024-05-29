@@ -1,4 +1,4 @@
-﻿using App.Scripts.Scenes.GameScene.Features.Ball;
+﻿using App.Scripts.Scenes.GameScene.Features.Entities.Ball;
 using App.Scripts.Scenes.GameScene.Features.LevelProgress;
 
 namespace App.Scripts.Scenes.GameScene.Features.Helpers

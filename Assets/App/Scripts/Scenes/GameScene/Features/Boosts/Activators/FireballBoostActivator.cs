@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using App.Scripts.Scenes.GameScene.Features.Ball;
 using App.Scripts.Scenes.GameScene.Features.Boosts.Interfaces;
 using App.Scripts.Scenes.GameScene.Features.Entities;
+using App.Scripts.Scenes.GameScene.Features.Entities.Ball;
 using App.Scripts.Scenes.GameScene.Features.Levels.Data;
 using App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer;
 using App.Scripts.Scenes.GameScene.Features.Levels.Load;

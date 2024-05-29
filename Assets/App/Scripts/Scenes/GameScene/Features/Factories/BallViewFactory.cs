@@ -1,8 +1,8 @@
-﻿using App.Scripts.Scenes.GameScene.Features.Ball;
-using App.Scripts.Scenes.GameScene.Features.Ball.Collision;
-using App.Scripts.Scenes.GameScene.Features.Ball.Movement;
-using App.Scripts.Scenes.GameScene.Features.Ball.Movement.MoveVariants;
-using App.Scripts.Scenes.GameScene.Features.PlayerShape;
+﻿using App.Scripts.Scenes.GameScene.Features.Entities.Ball;
+using App.Scripts.Scenes.GameScene.Features.Entities.Ball.Collision;
+using App.Scripts.Scenes.GameScene.Features.Entities.Ball.Movement;
+using App.Scripts.Scenes.GameScene.Features.Entities.Ball.Movement.MoveVariants;
+using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape;
 using Cysharp.Threading.Tasks;
 using Zenject;
 

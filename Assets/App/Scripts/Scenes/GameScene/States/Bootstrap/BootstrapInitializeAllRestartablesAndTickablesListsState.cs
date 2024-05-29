@@ -2,14 +2,14 @@
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Infrastructure;
 using App.Scripts.General.Popup;
-using App.Scripts.Scenes.GameScene.Features.Bird;
 using App.Scripts.Scenes.GameScene.Features.Boosts.Interfaces;
+using App.Scripts.Scenes.GameScene.Features.Entities.Bird.Interfaces;
+using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.Move;
 using App.Scripts.Scenes.GameScene.Features.Grid;
 using App.Scripts.Scenes.GameScene.Features.Healthes;
 using App.Scripts.Scenes.GameScene.Features.Input;
 using App.Scripts.Scenes.GameScene.Features.LevelProgress;
 using App.Scripts.Scenes.GameScene.Features.Levels.Load;
-using App.Scripts.Scenes.GameScene.Features.PlayerShape.Move;
 using App.Scripts.Scenes.GameScene.Features.Pools;
 using App.Scripts.Scenes.GameScene.Features.PositionChecker;
 using App.Scripts.Scenes.GameScene.Features.Time;

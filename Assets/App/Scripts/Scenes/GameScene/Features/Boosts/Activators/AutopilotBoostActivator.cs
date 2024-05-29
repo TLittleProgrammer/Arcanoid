@@ -2,7 +2,7 @@
 using App.Scripts.Scenes.GameScene.Features.Boosts.Interfaces;
 using App.Scripts.Scenes.GameScene.Features.Components;
 using App.Scripts.Scenes.GameScene.Features.Entities;
-using App.Scripts.Scenes.GameScene.Features.PlayerShape.Move;
+using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.Move;
 using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.Features.Boosts.Activators

@@ -1,5 +1,5 @@
 ﻿using System;
-using App.Scripts.Scenes.GameScene.Features.Ball;
+using App.Scripts.Scenes.GameScene.Features.Entities.Ball;
 using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Components

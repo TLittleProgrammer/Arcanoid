@@ -13,7 +13,7 @@ using Cysharp.Threading.Tasks;
 using Unity.Mathematics;
 using UnityEngine;
 
-namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroyServices
+namespace App.Scripts.Scenes.GameScene.Features.Levels.ItemsDestroyer.DestroyServices.BombDestroyers
 {
     public class DirectionBombDestroyService : BombDestroyer
     {
