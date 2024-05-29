@@ -26,6 +26,12 @@ namespace App.Scripts.Scenes.GameScene.Features.Restart
         {
             LevelPack levelPack = _levelPackInfoService.GetDataForCurrentPack();
 
+            if (levelPack is null)
+            {
+                _stateMachine.Enter<RestartState>();
+                return;
+            }
+            
             if (levelPack.EnergyPrice <= _energyDataService.CurrentValue)
             {
                 _energyDataService.Add(-levelPack.EnergyPrice);

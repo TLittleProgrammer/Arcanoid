@@ -1,4 +1,5 @@
-﻿using App.Scripts.General.Levels;
+﻿using System;
+using App.Scripts.General.Levels;
 using App.Scripts.General.UserData.Levels;
 
 namespace App.Scripts.General.LevelPackInfoService
@@ -46,7 +47,14 @@ namespace App.Scripts.General.LevelPackInfoService
 
         public LevelPack GetDataForCurrentPack()
         {
-            return _levelPackProvider.LevelPacks[_levelPackTransferData.PackIndex];
+            try
+            {
+                return _levelPackProvider.LevelPacks[_levelPackTransferData.PackIndex];
+            }
+            catch (NullReferenceException nullReference)
+            {
+                return null;
+            }
         }
         
         public void SetData(ILevelPackTransferData levelPackTransferData)
