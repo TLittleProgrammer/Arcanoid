@@ -22,7 +22,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress
         [JsonProperty("EntityDatas")]
         public List<EntitySaveData> EntityDatas;
         [JsonProperty("EntityGridItemDatas")]
-        public Grid<GridItemData> EntityGridItemsData;
+        public List<GridItemData> EntityGridItemsData;
         
         public string FileName => SavableConstants.CurrentLevelProgressFileName;
     }

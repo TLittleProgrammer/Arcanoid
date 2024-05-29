@@ -1,9 +1,16 @@
-﻿namespace App.Scripts.Scenes.GameScene.Features.Entities
+﻿using System;
+using Newtonsoft.Json;
+
+namespace App.Scripts.Scenes.GameScene.Features.Entities
 {
+    [Serializable]
     public class EntitySaveData
     {
-        int EntityId { get; set; }
-        public int GridPositionX { get; set; }
-        public int GridPositionY { get; set; }
+        [JsonProperty("EntityId")]
+        public int EntityId;
+        [JsonProperty("GridPositionX")]
+        public int GridPositionX;
+        [JsonProperty("GridPositionY")]
+        public int GridPositionY;
     }
 }
