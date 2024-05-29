@@ -8,11 +8,10 @@ using App.Scripts.Scenes.GameScene.Features.Entities.Ball.PositionChecker;
 using App.Scripts.Scenes.GameScene.Features.Input;
 using App.Scripts.Scenes.GameScene.Features.ScreenInfo;
 using Cysharp.Threading.Tasks;
-using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
 {
-    public class BallsService : IBallsService, ITickable
+    public class BallsService : IBallsService, IActivable
     {
         private readonly IGetDamageService _getDamageService;
         private readonly BallView.Pool _ballViewPool;
@@ -22,6 +21,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
         private float _speedMultiplier;
         private float _levelProgress;
         private bool _redBallActivated;
+        private float _lastSpeedMultiplier;
+        private bool _isActive;
 
         public BallsService(
             IScreenInfoProvider screenInfoProvider,
@@ -32,8 +33,9 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
             _getDamageService = getDamageService;
             _ballViewPool = ballViewPool;
             _minBallYPosition = -screenInfoProvider.HeightInWorld / 2f;
-            _speedMultiplier = 1f;
+            _speedMultiplier = _lastSpeedMultiplier = 1f;
             _levelProgress = 0f;
+            _isActive = true;
             
             Balls = new();
             clickDetector.MouseUp += OnMouseUp;
@@ -43,6 +45,26 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
         public event Action<BallView> BallAdded;
 
         public float SpeedMultiplier => _speedMultiplier;
+
+        public bool IsActive
+        {
+            get => _isActive;
+            set
+            {
+                if (value is false)
+                {
+                    _lastSpeedMultiplier = SpeedMultiplier;
+                    SetSpeedMultiplier(0f);
+                }
+                else
+                {
+                    SetSpeedMultiplier(_lastSpeedMultiplier);
+                }
+
+                _isActive = value;
+            }
+        }
+        
 
         public void AddBall(BallView ballView, bool isFreeFlight = false)
         {
@@ -61,6 +83,9 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
 
         public void Tick()
         {
+            if (!IsActive)
+                return;
+
             foreach ((BallView ballView, IBallMovementService ballMovementService) in Balls)
             {
                 if (ballView.gameObject.activeSelf)
@@ -100,7 +125,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
                 movementService.UpdateSpeed(_levelProgress);
             }
         }
-        
+
         public void SetRedBall(bool activated)
         {
             _redBallActivated = activated;

@@ -33,13 +33,18 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Destroy
 
         public async void Destroy(GridItemData gridItemData, IEntityView entityView)
         {
+            AddBall(entityView);
+
+            await _animatedDestroyService.Animate(new List<EntityData> { new(gridItemData, entityView) });
+            _simpleDestroyService.Destroy(gridItemData, entityView);
+        }
+
+        private void AddBall(IEntityView entityView)
+        {
             BallView ballView = _ballViewFactory.Create();
 
             ballView.Position = entityView.Position;
             _ballsService.AddBall(ballView, true);
-            
-            await _animatedDestroyService.Animate(new List<EntityData> { new(gridItemData, entityView) });
-            _simpleDestroyService.Destroy(gridItemData, entityView);
         }
     }
 }
