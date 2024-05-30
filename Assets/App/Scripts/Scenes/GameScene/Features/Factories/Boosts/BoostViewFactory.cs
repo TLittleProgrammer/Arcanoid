@@ -10,17 +10,18 @@ namespace App.Scripts.Scenes.GameScene.Features.Factories.Boosts
     public class BoostViewFactory : IFactory<BoostTypeId, BoostView>
     {
         private readonly BoostViewProvider _boostViewProvider;
+        private readonly BoostView.Pool _boostViewPool;
         private readonly IPoolContainer _poolContainer;
 
-        public BoostViewFactory(BoostViewProvider boostViewProvider, IPoolContainer poolContainer)
+        public BoostViewFactory(BoostViewProvider boostViewProvider, BoostView.Pool boostViewPool)
         {
             _boostViewProvider = boostViewProvider;
-            _poolContainer = poolContainer;
+            _boostViewPool = boostViewPool;
         }
         
         public BoostView Create(BoostTypeId targetType)
         {
-            BoostView boostView = _poolContainer.GetItem<BoostView>(PoolTypeId.Boosts);
+            BoostView boostView = _boostViewPool.Spawn();
 
             boostView.SpriteRenderer.sprite = _boostViewProvider.Sprites[targetType];
             boostView.BoostTypeId = targetType;

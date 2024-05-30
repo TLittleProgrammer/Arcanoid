@@ -10,9 +10,9 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Helpers
     {
         private readonly IEntityViewService _entityViewService;
         private readonly ILevelViewUpdater _levelViewUpdater;
-        private readonly CircleEffect.Factory _circleEffectFactory;
+        private readonly CircleEffects.Factory _circleEffectFactory;
 
-        public AddVisualDamageService(IEntityViewService entityViewService, ILevelViewUpdater levelViewUpdater, CircleEffect.Factory circleEffectFactory)
+        public AddVisualDamageService(IEntityViewService entityViewService, ILevelViewUpdater levelViewUpdater, CircleEffects.Factory circleEffectFactory)
         {
             _entityViewService = entityViewService;
             _levelViewUpdater = levelViewUpdater;
@@ -31,8 +31,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Helpers
                 _entityViewService.TryAddOnTopSprite(entityView, entityStage, gridItemData, i);
             }
 
-            CircleEffect circleEffect = _circleEffectFactory.Create(entityView as EntityView);
-            circleEffect.PlayEffect();
+            CircleEffects circleEffects = _circleEffectFactory.Create(entityView as EntityView);
+            circleEffects.PlayEffect();
         }
     }
 }

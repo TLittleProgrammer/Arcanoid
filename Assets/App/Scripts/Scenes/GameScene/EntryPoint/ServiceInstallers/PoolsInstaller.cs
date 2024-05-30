@@ -30,7 +30,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
         public override void InstallBindings()
         {
             BindPool<EntityView, EntityView.Pool>(PoolTypeId.EntityView);
-            BindPool<CircleEffect, IEffect<CircleEffect>.Pool>(PoolTypeId.CircleEffect);
+            BindPool<CircleEffects, CircleEffects.Pool>(PoolTypeId.CircleEffect);
             BindPool<HealthPointView, HealthPointView.Pool>(PoolTypeId.HealthPointView);
             BindPool<OnTopSprites, OnTopSprites.Pool>(PoolTypeId.OnTopSprite);
             BindPool<BoostView, BoostView.Pool>(PoolTypeId.Boosts);

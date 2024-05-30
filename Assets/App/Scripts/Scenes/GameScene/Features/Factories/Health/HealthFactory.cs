@@ -8,16 +8,16 @@ namespace App.Scripts.Scenes.GameScene.Features.Factories.Health
 {
     public class HealthFactory : IFactory<ITransformable, IHealthPointView>
     {
-        private readonly IPoolContainer _poolContainer;
+        private readonly HealthPointView.Pool _healthPointViewPool;
 
-        public HealthFactory(IPoolContainer poolContainer)
+        public HealthFactory(HealthPointView.Pool healthPointViewPool)
         {
-            _poolContainer = poolContainer;
+            _healthPointViewPool = healthPointViewPool;
         }
 
         public IHealthPointView Create(ITransformable targetType)
         {
-            HealthPointView healthView = _poolContainer.GetItem<HealthPointView>(PoolTypeId.HealthPointView);
+            HealthPointView healthView = _healthPointViewPool.Spawn();
 
             healthView.Image.fillAmount = 1f;
             

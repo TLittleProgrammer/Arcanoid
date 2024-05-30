@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General.Interfaces;
 using App.Scripts.Scenes.GameScene.Features.Pools;
 using App.Scripts.Scenes.GameScene.Features.ScreenInfo;
@@ -7,18 +8,18 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General
 {
     public sealed class BoostPositionCheckerService : IBoostPositionChecker
     {
-        private readonly IPoolContainer _poolContainer;
+        private readonly BoostView.Pool _boostViewPool;
         private readonly IBoostMoveService _boostMoveService;
 
         private float _minYPosition;
         private List<BoostView> _views;
 
         public BoostPositionCheckerService(
-            IPoolContainer poolContainer,
+            BoostView.Pool boostViewPool,
             IScreenInfoProvider screenInfoProvider,
             IBoostMoveService boostMoveService)
         {
-            _poolContainer = poolContainer;
+            _boostViewPool = boostViewPool;
             _boostMoveService = boostMoveService;
             _views = new();
             
@@ -32,7 +33,12 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General
                 if (_views[i].Transform.position.y <= _minYPosition)
                 {
                     _boostMoveService.RemoveView(_views[i]);
-                    _poolContainer.RemoveItem(PoolTypeId.Boosts, _views[i]);
+
+                    if (!_boostViewPool.InactiveItems.Contains(_views[i]))
+                    {
+                        _boostViewPool.Despawn(_views[i]);
+                    }
+                    
                     _views.Remove(_views[i]);
                     i--;
                 }

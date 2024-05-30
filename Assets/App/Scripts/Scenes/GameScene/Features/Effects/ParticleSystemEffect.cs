@@ -4,7 +4,7 @@ using UnityEngine;
 namespace App.Scripts.Scenes.GameScene.Features.Effects
 {
     [RequireComponent(typeof(ParticleSystem))]
-    public abstract class ParticleSystemEffect<TEffect> : MonoBehaviour, IEffect<TEffect>, IPositionable, IScalable<float> where TEffect : MonoBehaviour
+    public abstract class ParticleSystemEffect : MonoBehaviour, IPositionable, IScalable<float>
     {
         [SerializeField] private ParticleSystem _particleSystem;
 
