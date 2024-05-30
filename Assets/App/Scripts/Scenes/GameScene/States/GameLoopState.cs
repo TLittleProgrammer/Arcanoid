@@ -15,9 +15,12 @@ namespace App.Scripts.Scenes.GameScene.States
 
         private bool _isActive;
 
-        public GameLoopState(IServicesActivator servicesActivator, GameLoopSubscriber gameLoopSubscriber)
+        public GameLoopState(
+            IServicesActivator servicesActivator,
+            GameLoopSubscriber gameLoopSubscriber,
+            List<ITickable> tickables)
         {
-            _tickables = new();
+            _tickables = tickables;
             _servicesActivator = servicesActivator;
             _gameLoopSubscriber = gameLoopSubscriber;
         }

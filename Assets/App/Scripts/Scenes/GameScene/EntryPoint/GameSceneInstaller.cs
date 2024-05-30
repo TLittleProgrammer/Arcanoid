@@ -6,6 +6,9 @@ using App.Scripts.General.Infrastructure;
 using App.Scripts.General.RootUI;
 using App.Scripts.Scenes.GameScene.EntryPoint.Bootstrap;
 using App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers;
+using App.Scripts.Scenes.GameScene.Features.Boosts.Autopilot.Nodes;
+using App.Scripts.Scenes.GameScene.Features.Boosts.Autopilot.Strategies;
+using App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General.UI;
 using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun;
 using App.Scripts.Scenes.GameScene.Features.Camera;
@@ -37,6 +40,8 @@ using App.Scripts.Scenes.GameScene.Features.ScreenInfo;
 using App.Scripts.Scenes.GameScene.Features.ServiceActivator;
 using App.Scripts.Scenes.GameScene.Features.Settings;
 using App.Scripts.Scenes.GameScene.Features.Shake;
+using App.Scripts.Scenes.GameScene.States;
+using App.Scripts.Scenes.GameScene.States.Bootstrap;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -106,7 +111,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.Bind<IServicesActivator>().To<ServiceActivator>().AsSingle();
             Container.Bind<IShowLevelAnimation>().To<SimpleShowLevelAnimation>().AsSingle();
             Container.Bind<IGetDamageService>().To<GetDamageService>().AsSingle();
-            Container.Bind(typeof(IActivable), typeof(IBallsService), typeof(IGeneralRestartable)).To<BallsService>().AsSingle();
+            Container.BindInterfacesTo<BallsService>().AsSingle().WhenNotInjectedInto<GameLoopState>();
             Container.BindInterfacesAndSelfTo<LevelProgressService>().AsSingle().WithArguments(_levelPackInfoView, _levelPackBackground);
 
             Container.Bind<SkipLevelService>().AsSingle().WithArguments(_skipLevelButton).NonLazy();
@@ -135,8 +140,17 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
         {
             ShapeMoverSettings shapeMoverSettings = new();
             shapeMoverSettings.Speed = 5f;
-            
-            Container.Bind(typeof(IPlayerShapeMover), typeof(IGeneralRestartable)).To<PlayerShapeMover>().AsSingle().WithArguments(_playerShape, shapeMoverSettings);
+
+            Container
+                .BindInterfacesTo<PlayerShapeMover>()
+                .AsSingle()
+                .WithArguments(_playerShape, shapeMoverSettings).
+                WhenInjectedInto(
+                    typeof(GameLoopState), 
+                    typeof(AutopilotBoostActivator),
+                    typeof(SimpleMovingStrategy),
+                    typeof(BootstrapLoadLevelState),
+                    typeof(ShapeBoostSpeed));
         }
     }
 }

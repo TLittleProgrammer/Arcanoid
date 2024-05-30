@@ -41,7 +41,7 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             await _popupProvider.AsyncInitialize(Pathes.PathToPopups);
             await _showLevelAnimation.Show();
 
-            _stateMachine.Enter<BootstrapInitializeAllRestartablesAndTickablesListsState>();
+            _stateMachine.Enter<GameLoopState>();
             
             await UniTask.CompletedTask;
         }

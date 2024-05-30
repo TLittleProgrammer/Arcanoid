@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using App.Scripts.External.GameStateMachine;
-using App.Scripts.General.Infrastructure;
 using App.Scripts.Scenes.GameScene.Features.Helpers;
 using App.Scripts.Scenes.GameScene.Features.Levels.LevelView;
 using App.Scripts.Scenes.GameScene.States;
@@ -45,14 +44,13 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
         {
             Container.Bind<GameLoopSubscriber>().AsSingle().WithArguments(stateMachine);
             
-            Container.BindInterfacesAndSelfTo<GameLoopState>().AsSingle();
+            Container.BindInterfacesAndSelfTo<GameLoopState>().AsSingle().WhenNotInjectedInto<GameLoopState>();
 
             Container.BindInterfacesTo<BootstrapState>().AsSingle().WithArguments(stateMachine);
             Container.BindInterfacesTo<BootstrapServiceActivatorState>().AsSingle().WithArguments(stateMachine);
             Container.BindInterfacesTo<BootstrapBehaviourTreeState>().AsSingle().WithArguments(stateMachine);
             Container.BindInterfacesTo<BootstrapLoadLevelState>().AsSingle().WithArguments(stateMachine);
             Container.BindInterfacesTo<BootstrapEntityDestroyerState>().AsSingle().WithArguments(stateMachine);
-            Container.BindInterfacesTo<BootstrapInitializeAllRestartablesAndTickablesListsState>().AsSingle().WithArguments(stateMachine);
             Container.BindInterfacesTo<BootstrapInitializeOtherServicesState>().AsSingle().WithArguments(stateMachine);
             
             Container.BindInterfacesTo<WinState>().AsSingle().WithArguments(stateMachine);
