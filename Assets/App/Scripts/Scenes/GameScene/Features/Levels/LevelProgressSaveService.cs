@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using App.Scripts.External.UserData;
+using App.Scripts.General.LevelPackInfoService;
+using App.Scripts.General.Levels;
 using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress;
 
 namespace App.Scripts.Scenes.GameScene.Features.Levels
@@ -8,11 +10,16 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels
     {
         private readonly List<ILevelProgressSavable> _levelProgressSavable;
         private readonly IUserDataContainer _userDataContainer;
+        private readonly ILevelPackInfoService _levelPackInfoService;
 
-        public LevelProgressSaveService(List<ILevelProgressSavable> levelProgressSavable, IUserDataContainer userDataContainer)
+        public LevelProgressSaveService(
+            List<ILevelProgressSavable> levelProgressSavable,
+            IUserDataContainer userDataContainer,
+            ILevelPackInfoService levelPackInfoService)
         {
             _levelProgressSavable = levelProgressSavable;
             _userDataContainer = userDataContainer;
+            _levelPackInfoService = levelPackInfoService;
         }
 
         public void SaveProgress()
@@ -23,7 +30,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels
             {
                 progressSavable.SaveProgress(levelDataProgress);
             }
-            
+
             _userDataContainer.FastSaveData(levelDataProgress);
         }
     }

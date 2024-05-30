@@ -11,5 +11,6 @@ namespace App.Scripts.General.LevelPackInfoService
         void SetData(ILevelPackTransferData levelPackTransferData);
         bool NeedLoadNextPackOrLevel();
         bool NeedLoadNextPack();
+        bool NeedContinueLevel { get; }
     }
 }

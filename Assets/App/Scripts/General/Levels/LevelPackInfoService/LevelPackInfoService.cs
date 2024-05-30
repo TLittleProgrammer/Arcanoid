@@ -19,6 +19,8 @@ namespace App.Scripts.General.LevelPackInfoService
             _levelPackProgressDataService = levelPackProgressDataService;
         }
 
+        public bool NeedContinueLevel => true;
+
         public ILevelPackTransferData UpdateLevelPackTransferData()
         {
             ILevelPackTransferData data = new LevelPackTransferData();
@@ -56,7 +58,7 @@ namespace App.Scripts.General.LevelPackInfoService
                 return null;
             }
         }
-        
+
         public void SetData(ILevelPackTransferData levelPackTransferData)
         {
             _levelPackTransferData = levelPackTransferData;

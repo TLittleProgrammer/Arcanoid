@@ -12,5 +12,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.General.View
         void SetGrid(Grid<int> grid, List<IEntityView> entityViews);
         EntityStage GetEntityStage(IEntityView entityView);
         void UpdateVisual(IEntityView entityView, int damage);
+        void FastUpdateVisual(IEntityView entityView, int health);
+        void SetHealth(IEntityView view, int health);
     }
 }

@@ -1,11 +1,12 @@
 ﻿using App.Scripts.General.LevelPackInfoService;
 using App.Scripts.Scenes.GameScene.Features.Levels.General;
+using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress;
 using Newtonsoft.Json;
 using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Levels.Loading
 {
-    public sealed class LevelDataChooser : ILevelDataChooser
+    public sealed class LevelDataChooser : ILevelDataChooser, ILevelProgressSavable
     {
         private readonly ILevelPackInfoService _levelPackInfoService;
         private readonly TextAsset _choosedFromSceneLevelData;
@@ -27,13 +28,17 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.Loading
             }
 
             return JsonConvert.DeserializeObject<LevelData>(_choosedFromSceneLevelData.text);
-
         }
 
         public LevelData GetNextLevelData()
         {
             var data = _levelPackInfoService.UpdateLevelPackTransferData();
             return JsonConvert.DeserializeObject<LevelData>(data.LevelPack.Levels[data.LevelIndex].text);
+        }
+
+        public void SaveProgress(LevelDataProgress levelDataProgress)
+        {
+            levelDataProgress.LevelData = GetLevelData();
         }
     }
 }

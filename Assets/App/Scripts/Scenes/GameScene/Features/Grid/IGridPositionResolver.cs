@@ -9,5 +9,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Grid
     {
         Vector2 GetCurrentGridPosition();
         Vector2 GetCellSize();
+        Vector2 GetPositionByCoordinates(int x, int y);
     }
 }

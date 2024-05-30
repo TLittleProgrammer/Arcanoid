@@ -42,7 +42,6 @@ namespace App.Scripts.Scenes.GameScene.States
 
         public LoadNextLevelState(
             ILoadingScreen loadingScreen,
-            IEnumerable<IRestartable> restartables,
             IStateMachine gameStateMachine,
             IPopupService popupService,
             ILevelPackInfoView levelPackInfoView,
@@ -77,9 +76,7 @@ namespace App.Scripts.Scenes.GameScene.States
             RestartAll();
             
             await ClosePopups();
-            
-            
-            
+
             LevelData level = await _levelLoadService.LoadLevelNextLevel();
 
             var data = _levelPackInfoService.GetData();

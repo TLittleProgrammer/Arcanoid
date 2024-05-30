@@ -1,4 +1,6 @@
 ﻿using System.IO;
+using App.Scripts.External.Converters;
+using Codice.Utils;
 using Newtonsoft.Json;
 using UnityEngine;
 using Path = System.IO.Path;
@@ -9,7 +11,7 @@ namespace App.Scripts.External.UserData.SaveLoad
     {
         public void Save(ISavable savable)
         {
-            string text = JsonConvert.SerializeObject(savable, Formatting.Indented);
+            string text = JsonConvert.SerializeObject(savable, Formatting.Indented, new Int2Converter());
 
             string pathToFile = Path.Combine(Application.persistentDataPath, savable.FileName);
 

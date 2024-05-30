@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using App.Scripts.External.Grid;
 using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.Entities.View;
@@ -11,7 +12,7 @@ using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Levels.Loading.Loader
 {
-    public sealed class LevelLoader : ILevelLoader, ILevelProgressSavable
+    public sealed class LevelLoader : ILevelLoader, ILevelProgressSavable, IInitializeByLevelProgress
     {
         private readonly IGridPositionResolver _gridPositionResolver;
         private readonly IEntityView.Factory _entityFactory;
@@ -53,18 +54,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.Loading.Loader
                     }
                     
                     levelGrid[j, i] = index;
-
-                    IEntityView spawnedBlock = _entityFactory.Create(index.ToString());
-                
-                    spawnedBlock.Position = targetPosition;
-                    spawnedBlock.Scale = Vector3.zero;
-                    spawnedBlock.GridPositionX = j;
-                    spawnedBlock.GridPositionY = i;
-                    spawnedBlock.BoxCollider2D.enabled = true;
-                    spawnedBlock.EntityId = index;
-
-
-                    _entityViews.Add(spawnedBlock);
+                    SpawnBlock(targetPosition, j, i, index, Vector3.zero);
                 }
             }
 
@@ -90,6 +80,68 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.Loading.Loader
 
                 levelDataProgress.EntityDatas.Add(entityData);
             }
+        }
+
+        public void LoadProgress(LevelDataProgress levelDataProgress)
+        {
+            _entityViews = new();
+            
+            SpawnAllViews(levelDataProgress);
+            UpdateVisualsBeforeLoading(levelDataProgress);
+        }
+
+        private void SpawnAllViews(LevelDataProgress levelDataProgress)
+        {
+            Grid<int> levelGrid = new Grid<int>(new(levelDataProgress.GridSizeX, levelDataProgress.GridSizeY));
+            
+            foreach (EntitySaveData entityData in levelDataProgress.EntityDatas)
+            {
+                if (IsEntityDestroyed(levelDataProgress, entityData))
+                {
+                    continue;
+                }
+
+                Vector2 targetPosition =
+                    _gridPositionResolver.GetPositionByCoordinates(entityData.GridPositionX, entityData.GridPositionY);
+
+                levelGrid[entityData.GridPositionX, entityData.GridPositionY] = entityData.EntityId;
+                SpawnBlock(targetPosition, entityData.GridPositionX, entityData.GridPositionY, entityData.EntityId,
+                    _gridPositionResolver.GetCellSize());
+            }
+            
+            _levelViewUpdater.SetGrid(levelGrid, _entityViews);
+        }
+
+        private void UpdateVisualsBeforeLoading(LevelDataProgress levelDataProgress)
+        {
+            foreach (IEntityView view in _entityViews)
+            {
+                SaveGridItemData save = levelDataProgress.EntityGridItemsData.First(x => x.GridPositionX == view.GridPositionX && x.GridPositionY == view.GridPositionY);
+                
+                _levelViewUpdater.FastUpdateVisual(view, save.CurrentHealth);
+                _levelViewUpdater.SetHealth(view, save.CurrentHealth);
+            }
+        }
+
+        private bool IsEntityDestroyed(LevelDataProgress levelDataProgress, EntitySaveData entityData)
+        {
+            return levelDataProgress.EntityGridItemsData.First(x => x.GridPositionX == entityData.GridPositionX && x.GridPositionY == entityData.GridPositionY).CurrentHealth <= 0;
+        }
+
+        private IEntityView SpawnBlock(Vector2 targetPosition, int x, int y, int id, Vector3 scale)
+        {
+            IEntityView spawnedBlock = _entityFactory.Create(id.ToString());
+
+            spawnedBlock.Position = targetPosition;
+            spawnedBlock.Scale = scale;
+            spawnedBlock.GridPositionX = x;
+            spawnedBlock.GridPositionY = y;
+            spawnedBlock.BoxCollider2D.enabled = true;
+            spawnedBlock.EntityId = id;
+            
+            _entityViews.Add(spawnedBlock);
+
+            return spawnedBlock;
         }
     }
 }

@@ -53,6 +53,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
             Container.BindInterfacesTo<BootstrapEntityDestroyerState>().AsSingle().WithArguments(stateMachine);
             Container.BindInterfacesTo<BootstrapInitializeOtherServicesState>().AsSingle().WithArguments(stateMachine);
             
+            Container.BindInterfacesTo<BootstrapContinueLoadLevelState>().AsSingle().WithArguments(stateMachine);
             Container.BindInterfacesTo<WinState>().AsSingle().WithArguments(stateMachine);
             Container.BindInterfacesTo<LoadSceneFromMainMenuState>().AsSingle().WithArguments(_projectStateMachine);
             Container.BindInterfacesTo<RestartState>().AsSingle().WithArguments(stateMachine);

@@ -48,6 +48,10 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.General.View
                 for (int j = 0; j < _levelGrid.Height; j++)
                 {
                     string index = _levelGrid[i, j].ToString();
+                    
+                    if(index.Equals("0"))
+                        continue;
+                    
                     EntityStage entityStage = _entityProvider.EntityStages[index];
 
                     _levelGridItemData[i, j] = new();
@@ -100,6 +104,21 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.General.View
             _entityViewService.TryAddOnTopSprite(entityView, entityStage, itemData);
         }
 
+        public void FastUpdateVisual(IEntityView entityView, int targetHealth)
+        {
+            EntityStage entityStage = GetEntityStage(entityView);
+
+            GridItemData itemData = _levelGridItemData[entityView.GridPositionX, entityView.GridPositionY];
+            itemData.CurrentHealth = targetHealth;
+            
+            _entityViewService.FastAddSprites(entityView, entityStage, targetHealth, itemData);
+        }
+
+        public void SetHealth(IEntityView view, int health)
+        {
+            _levelGridItemData[view.GridPositionX, view.GridPositionY].CurrentHealth = health;
+        }
+
         private bool ReturnIfCurrentHealthIsEqualsOrLessZero(IEntityView entityView, GridItemData itemData)
         {
             if (itemData.CurrentHealth <= 0)
@@ -127,16 +146,17 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.General.View
         public void SaveProgress(LevelDataProgress levelDataProgress)
         {
             levelDataProgress.EntityGridItemsData = new();
+            levelDataProgress.GridSizeX = _levelGrid.Width;
+            levelDataProgress.GridSizeY = _levelGrid.Height;
 
             for (int i = 0; i < _levelGridItemData.Height; i++)
             {
                 for (int j = 0; j < _levelGridItemData.Width; j++)
                 {
                     GridItemData gridItemData = _levelGridItemData[j, i];
-                    gridItemData.GridPositionX = i;
-                    gridItemData.GridPositionY = j;
-                    
-                    levelDataProgress.EntityGridItemsData.Add(gridItemData);
+                    SaveGridItemData save = new(gridItemData, j, i);
+
+                    levelDataProgress.EntityGridItemsData.Add(save);
                 }
             }
         }

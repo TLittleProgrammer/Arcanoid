@@ -10,5 +10,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.View
         void TryAddOnTopSprite(IEntityView entityView, EntityStage entityStage, GridItemData itemData);
 
         void TryAddOnTopSprite(IEntityView entityView, EntityStage entityStage, GridItemData itemData, int targetHealth);
+        void FastAddSprites(IEntityView entityView, EntityStage entityStage, int targetHealth, GridItemData gridItemData);
     }
 }

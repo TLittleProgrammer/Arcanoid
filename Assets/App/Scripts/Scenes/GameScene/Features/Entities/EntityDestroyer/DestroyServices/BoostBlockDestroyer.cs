@@ -4,11 +4,13 @@ using App.Scripts.Scenes.GameScene.Features.Boosts.General.Interfaces;
 using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Helpers;
 using App.Scripts.Scenes.GameScene.Features.Entities.View;
 using App.Scripts.Scenes.GameScene.Features.Grid;
+using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.DestroyServices
 {
-    public class BoostBlockDestroyer : IBlockDestroyService
+    public class BoostBlockDestroyer : IBlockDestroyService, IInitializeByLevelProgress
     {
         private readonly IAnimatedDestroyService _animatedDestroyService;
         private readonly SimpleDestroyService _simpleDestroyService;
@@ -51,7 +53,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Destroy
 
         public void Destroy(GridItemData gridItemData, IEntityView entityView)
         {
-            AddBoostOnMap(entityView);
+            AddBoostOnMap(entityView.BoostTypeId, entityView.Position);
             DestroyBoostBlock(gridItemData, entityView).Forget();
         }
 
@@ -70,10 +72,18 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Destroy
             _simpleDestroyService.Destroy(gridItemData, entityView);
         }
 
-        private void AddBoostOnMap(IEntityView entityView)
+        public void LoadProgress(LevelDataProgress levelDataProgress)
         {
-            BoostView boostView = _boostViewFactory.Create(entityView.BoostTypeId);
-            boostView.Transform.position = entityView.Position;
+            foreach (SaveBoostViewData data in levelDataProgress.ViewBoostDatas)
+            {
+                AddBoostOnMap(data.BoostTypeId, new Vector2(data.PositionX, data.PositionY));
+            }
+        }
+
+        private void AddBoostOnMap(BoostTypeId boostTypeId, Vector2 position)
+        {
+            BoostView boostView = _boostViewFactory.Create(boostTypeId);
+            boostView.Transform.position = position;
 
             _boostMoveService.AddView(boostView);
             _boostPositionChecker.Add(boostView);

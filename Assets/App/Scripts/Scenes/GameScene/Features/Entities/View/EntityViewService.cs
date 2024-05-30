@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using App.Scripts.External.Extensions.ListExtensions;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General;
 using App.Scripts.Scenes.GameScene.Features.Entities.AssetManagement;
@@ -47,6 +48,19 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.View
                 topSprite.SetSprite(healthSpriteData.Sprites.GetRandomValue());
 
                 itemData.Sprites.Add(topSprite);
+            }
+        }
+
+        public void FastAddSprites(IEntityView entityView, EntityStage entityStage, int targetHealth, GridItemData gridItemData)
+        {
+            List<HealthSpriteData> healthSpriteData = entityStage.AddSpritesOnMainByHp.Where(x => x.Healthes <= targetHealth).ToList();
+
+            foreach (HealthSpriteData data in healthSpriteData)
+            {
+                OnTopSprites topSprite = _spritesFactory.Create(entityView);
+                topSprite.SetSprite(data.Sprites.GetRandomValue());
+
+                gridItemData.Sprites.Add(topSprite);
             }
         }
     }
