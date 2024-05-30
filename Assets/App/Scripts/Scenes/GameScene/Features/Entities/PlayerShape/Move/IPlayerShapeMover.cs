@@ -4,7 +4,7 @@ using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.Move
 {
-    public interface IPlayerShapeMover : ITickable, IRestartable, IActivable
+    public interface IPlayerShapeMover : ITickable, IGeneralRestartable, IActivable
     {
         float Speed { get; set; }
         void ChangeSpeed(float speedScale);

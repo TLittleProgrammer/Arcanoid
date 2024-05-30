@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace App.Scripts.General.Popup
 {
-    public sealed class PopupService : IPopupService, IRestartable
+    public sealed class PopupService : IPopupService, IGeneralRestartable
     {
         private readonly IPopupFactory _factory;
         private readonly IBackPopupPlane _backPopupPlane;

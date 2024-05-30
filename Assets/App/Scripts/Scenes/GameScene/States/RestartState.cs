@@ -12,27 +12,30 @@ namespace App.Scripts.Scenes.GameScene.States
     public class RestartState : IState
     {
         private readonly ILoadingScreen _loadingScreen;
-        private readonly List<IRestartable> _restartables;
+        private readonly List<ICurrentLevelRestartable> _currentLevelRestartables;
         private readonly IStateMachine _gameStateMachine;
         private readonly ITweenersLocator _tweenersLocator;
         private readonly IShowLevelAnimation _showLevelAnimation;
         private readonly IBallsService _ballsService;
+        private readonly List<IGeneralRestartable> _generalRestartables;
 
         public RestartState(
             ILoadingScreen loadingScreen,
-            List<IRestartable> restartables,
+            List<ICurrentLevelRestartable> currentLevelRestartables,
             IStateMachine gameStateMachine,
             ITweenersLocator tweenersLocator,
             IShowLevelAnimation showLevelAnimation,
-            IBallsService ballsService
+            IBallsService ballsService,
+            List<IGeneralRestartable> generalRestartables
         )
         {
             _loadingScreen = loadingScreen;
-            _restartables = restartables;
+            _currentLevelRestartables = currentLevelRestartables;
             _gameStateMachine = gameStateMachine;
             _tweenersLocator = tweenersLocator;
             _showLevelAnimation = showLevelAnimation;
             _ballsService = ballsService;
+            _generalRestartables = generalRestartables;
         }
         
         public async UniTask Enter()
@@ -41,11 +44,16 @@ namespace App.Scripts.Scenes.GameScene.States
 
             _tweenersLocator.RemoveAll();
             
-            foreach (IRestartable restartable in _restartables)
+            foreach (IGeneralRestartable generalRestartable in _generalRestartables)
+            {
+                generalRestartable.Restart();
+            }
+
+            foreach (ICurrentLevelRestartable restartable in _currentLevelRestartables)
             {
                 restartable.Restart();
             }
-            
+
             _ballsService.DespawnAll();
 
             await _loadingScreen.Hide();

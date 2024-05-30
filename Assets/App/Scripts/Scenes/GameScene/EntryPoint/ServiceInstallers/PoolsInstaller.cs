@@ -1,4 +1,5 @@
 ﻿using App.Scripts.External.Extensions.ZenjectExtensions;
+using App.Scripts.General.Infrastructure;
 using App.Scripts.Scenes.GameScene.Features.Boosts;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General;
 using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun;
@@ -41,7 +42,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
             BindPool<ExplosionEffect, ExplosionEffect.Pool>(PoolTypeId.Explosion);
             BindPool<BirdView, BirdView.Pool>(PoolTypeId.BirdView);
             
-            Container.Bind<IPoolContainer>().To<PoolContainer>().AsSingle();
+            Container.Bind(typeof(IPoolContainer), typeof(IGeneralRestartable)).To<PoolContainer>().AsSingle();
         }
 
         private void BindPool<TInstance, TPool>(PoolTypeId poolType) where TPool : IMemoryPool where TInstance : MonoBehaviour 

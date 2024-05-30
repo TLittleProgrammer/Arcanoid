@@ -64,10 +64,6 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
         [Inject] private IStateMachine _projectStateMachine;
         [Inject] private RootUIViewProvider _rootUIView;
 
-        private readonly List<IRestartable> _restartables = new();
-        private readonly List<IRestartable> _restartablesForLoadNewLevel = new();
-        private readonly List<ITickable> _gameLoopTickables = new();
-
         public override void InstallBindings()
         {
             BindInitializeDependencies();
@@ -97,7 +93,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.BindInterfacesAndSelfTo<LevelDataChooser>().AsSingle();
             Container.BindInterfacesAndSelfTo<LevelLoadService>().AsSingle();
 
-            Container.Bind<IGridPositionResolver>().To<GridPositionResolver>().AsSingle().WithArguments(_header);
+            Container.BindInterfacesTo<GridPositionResolver>().AsSingle().WithArguments(_header);
             Container.Bind<IShapePositionChecker>().To<PlayerShapePositionChecker>().AsSingle().WithArguments(_playerShape);
             Container.Bind<PlayerCollisionService>().AsSingle().WithArguments(_playerShape).NonLazy();
             
@@ -110,13 +106,13 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.Bind<IServicesActivator>().To<ServiceActivator>().AsSingle();
             Container.Bind<IShowLevelAnimation>().To<SimpleShowLevelAnimation>().AsSingle();
             Container.Bind<IGetDamageService>().To<GetDamageService>().AsSingle();
-            Container.Bind(typeof(IActivable), typeof(IBallsService)).To<BallsService>().AsSingle();
+            Container.Bind(typeof(IActivable), typeof(IBallsService), typeof(IGeneralRestartable)).To<BallsService>().AsSingle();
             Container.BindInterfacesAndSelfTo<LevelProgressService>().AsSingle().WithArguments(_levelPackInfoView, _levelPackBackground);
 
             Container.Bind<SkipLevelService>().AsSingle().WithArguments(_skipLevelButton).NonLazy();
             Container.Bind<LevelProgressSaveService>().AsSingle().NonLazy();
             
-            StateMachineInstaller.Install(Container, _gameLoopTickables, _projectStateMachine, _restartables, _levelPackInfoView, _restartablesForLoadNewLevel);
+            StateMachineInstaller.Install(Container, _projectStateMachine, _levelPackInfoView);
             
             Container.BindInterfacesTo<GameBootstrapper>().AsSingle();
         }
@@ -131,8 +127,8 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
 
         private void BindHealthPointService()
         {
-            Container.Bind<IViewHealthPointService>().To<ViewHealthPointService>().AsSingle().WithArguments(_healthParent as ITransformable);
-            Container.Bind(typeof(IHealthContainer), typeof(ILevelProgressSavable)).To<HealthContainer>().AsSingle();
+            Container.BindInterfacesTo<ViewHealthPointService>().AsSingle().WithArguments(_healthParent as ITransformable);
+            Container.Bind(typeof(IHealthContainer), typeof(ILevelProgressSavable), typeof(IGeneralRestartable)).To<HealthContainer>().AsSingle();
         }
 
         private void BindPlayerMoving()
@@ -140,7 +136,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             ShapeMoverSettings shapeMoverSettings = new();
             shapeMoverSettings.Speed = 5f;
             
-            Container.Bind<IPlayerShapeMover>().To<PlayerShapeMover>().AsSingle().WithArguments(_playerShape, shapeMoverSettings);
+            Container.Bind(typeof(IPlayerShapeMover), typeof(IGeneralRestartable)).To<PlayerShapeMover>().AsSingle().WithArguments(_playerShape, shapeMoverSettings);
         }
     }
 }

@@ -4,7 +4,7 @@ using App.Scripts.Scenes.GameScene.Features.Entities.View;
 
 namespace App.Scripts.Scenes.GameScene.Features.Levels.General.Load
 {
-    public interface ILevelLoader : IRestartable
+    public interface ILevelLoader : ICurrentLevelRestartable
     {
         List<IEntityView> Entities { get; }
         
