@@ -19,7 +19,7 @@ namespace App.Scripts.General.LevelPackInfoService
             _levelPackProgressDataService = levelPackProgressDataService;
         }
 
-        public bool NeedContinueLevel => true;
+        public bool NeedContinueLevel => _levelPackTransferData.NeedContinue;
 
         public ILevelPackTransferData UpdateLevelPackTransferData()
         {
