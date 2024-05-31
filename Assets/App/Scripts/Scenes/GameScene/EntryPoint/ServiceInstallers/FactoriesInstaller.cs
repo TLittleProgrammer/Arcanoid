@@ -47,10 +47,6 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
 
             Container.Bind<BoostItemView>().FromInstance(_prefab).WhenInjectedInto<BoostItemViewFactory>();
             Container.BindFactory<BoostTypeId, BoostItemView, BoostItemView.Factory>().FromFactory<BoostItemViewFactory>();
-            
-            Container.Bind<IPopupProvider>().To<ResourcesPopupProvider>().AsSingle();
-            Container.Bind<IPopupFactory>().To<PopupFactory>().AsSingle();
-            Container.Bind(typeof(IPopupService), typeof(IGeneralRestartable)).To<PopupService>().AsSingle().WithArguments(_rootUIViewProvider.BackPopupPlane);
         }
     }
 }

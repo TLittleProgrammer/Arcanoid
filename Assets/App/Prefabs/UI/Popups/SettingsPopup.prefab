@@ -288,7 +288,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd055882d42f44c4933999611616dc20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _localeItemViewParent: {fileID: 2293676013223423078}
+  LocaleItemViewParent: {fileID: 2293676013223423078}
 --- !u!1 &1389112193453514144
 GameObject:
   m_ObjectHideFlags: 0

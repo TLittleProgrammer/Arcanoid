@@ -15,6 +15,7 @@ using App.Scripts.Scenes.MainMenuScene.Factories.Levels;
 using App.Scripts.Scenes.MainMenuScene.LevelPacks;
 using App.Scripts.Scenes.MainMenuScene.LevelPacks.MonoBehaviours;
 using App.Scripts.Scenes.MainMenuScene.LocaleView;
+using App.Scripts.Scenes.MainMenuScene.Popup;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -34,8 +35,6 @@ namespace App.Scripts.Scenes.MainMenuScene.Installers
         [SerializeField] public Image ScreenTransitionIamge;
         [SerializeField] public Button ContinueButton;
 
-        [Inject] private RootUIViewProvider _rootUIView;
-        
         public override void InstallBindings()
         {
             Container.BindInterfacesAndSelfTo<MainMenuInitalizer>().AsSingle().WithArguments(EnergyView);
@@ -49,17 +48,11 @@ namespace App.Scripts.Scenes.MainMenuScene.Installers
             Container.Bind<LevelPackProgressDictionary>().FromInstance(levelPackProgressDictionary);
             Container.BindInterfacesTo<ContinueLevelService>().AsSingle().WithArguments(ContinueButton).NonLazy();
             
-            Container.Bind<IPopupProvider>().To<ResourcesPopupProvider>().AsSingle();
-            Container.Bind<IPopupFactory>().To<PopupFactory>().AsSingle();
-            Container.Bind<IPopupService>().To<PopupService>().AsSingle().WithArguments(_rootUIView.BackPopupPlane);
-
             Container
                 .BindInterfacesAndSelfTo<ActivateScreensService>()
                 .AsSingle()
                 .WithArguments(PlayButton, BackButton, InitialScreen, LevelPacksScreen, ScreenTransitionIamge);
-            
-            
-            
+
             Container
                 .BindFactory<int, LevelPack, ILevelItemView, ILevelItemView.Factory>()
                 .FromFactory<LevelItemFactory>();
@@ -67,6 +60,9 @@ namespace App.Scripts.Scenes.MainMenuScene.Installers
             Container
                 .BindFactory<List<LocaleItemView>, LocaleItemView.Factory>()
                 .FromFactory<LocaleItemViewFactory>();
+
+            Container.BindInterfacesAndSelfTo<SettingsModel>().AsSingle();
+            Container.BindInterfacesAndSelfTo<SettingsViewModel>().AsSingle();
         }
     }
 }

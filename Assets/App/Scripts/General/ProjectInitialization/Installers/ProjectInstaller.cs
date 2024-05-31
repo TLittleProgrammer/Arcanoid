@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using App.Scripts.External.Components;
 using App.Scripts.External.DotweenContainerService;
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.External.Localisation;
@@ -6,7 +7,11 @@ using App.Scripts.External.Localisation.Converters;
 using App.Scripts.External.SceneManagment;
 using App.Scripts.General.DateTime;
 using App.Scripts.General.Energy;
+using App.Scripts.General.Infrastructure;
 using App.Scripts.General.LoadingScreen;
+using App.Scripts.General.Popup;
+using App.Scripts.General.Popup.AssetManagment;
+using App.Scripts.General.Popup.Factory;
 using App.Scripts.General.RootUI;
 using App.Scripts.General.States;
 using App.Scripts.General.Time;
@@ -40,6 +45,12 @@ namespace App.Scripts.General.ProjectInitialization.Installers
             Container.Bind<InfoBetweenScenes.InfoBetweenScenes>().AsSingle();
 
             CreateRootUI();
+            
+            Container.Bind<IPopupProvider>().To<ResourcesPopupProvider>().AsSingle();
+            Container.Bind<IPopupFactory>().To<PopupFactory>().AsSingle();
+            Container.Bind(typeof(IPopupService), typeof(IGeneralRestartable)).To<PopupService>().AsSingle();
+
+            
             BindProjectStateMachine();
             
             Container.BindInterfacesAndSelfTo<ProjectInitializer>().AsSingle().WithArguments(Localisation);
@@ -50,6 +61,8 @@ namespace App.Scripts.General.ProjectInitialization.Installers
             RootUIViewProvider rootUI = Container.InstantiatePrefabForComponent<RootUIViewProvider>(RootUIPrefab);
 
             Container.Bind<RootUIViewProvider>().FromInstance(rootUI).AsSingle();
+            Container.Bind<IBackPopupPlane>().FromInstance(rootUI.BackPopupPlane).AsSingle();
+            Container.Bind<ITransformable>().FromInstance(rootUI.PopupUpViewProvider).AsSingle();
             
             ILoadingScreen loadingScreen = Container.InstantiatePrefabForComponent<ILoadingScreen>(LoadingScreenPrefab, Vector3.zero, Quaternion.identity, rootUI.LoadingCanvasGroup.transform);
 

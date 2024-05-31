@@ -12,12 +12,13 @@ namespace App.Scripts.Scenes.Bootstrap.Buttons
         [SerializeField] private Button _button;
         
         private IPopupService _popupService;
-        private RootUIViewProvider _rootUIViewProvider;
+        private SettingsModel _settingsModel;
+        private SettingsViewModel _settingsViewModel;
 
         [Inject]
-        private void Construct(IPopupService popupService, RootUIViewProvider rootUIViewProvider)
+        private void Construct(IPopupService popupService, SettingsViewModel settingsViewModel)
         {
-            _rootUIViewProvider = rootUIViewProvider;
+            _settingsViewModel = settingsViewModel;
             _popupService = popupService;
         }
 
@@ -33,7 +34,8 @@ namespace App.Scripts.Scenes.Bootstrap.Buttons
         
         private void ShowSettingsPopup()
         {
-            _popupService.Show<SettingsPopupView>(_rootUIViewProvider.PopupUpViewProvider);
+            SettingsPopupView settingsPopupView = _popupService.Show<SettingsPopupView>();
+            _settingsViewModel.FillView(settingsPopupView);
         }
     }
 }

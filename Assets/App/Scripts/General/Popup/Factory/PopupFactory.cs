@@ -1,14 +1,11 @@
-﻿using System;
-using App.Scripts.External.Components;
-using App.Scripts.External.Initialization;
+﻿using App.Scripts.External.Initialization;
 using App.Scripts.General.Popup.AssetManagment;
 using Cysharp.Threading.Tasks;
-using UnityEngine;
 using Zenject;
 
 namespace App.Scripts.General.Popup.Factory
 {
-    public sealed class PopupFactory : IPopupFactory, IAsyncInitializable<DiContainer>
+    public sealed class PopupFactory : IPopupFactory
     {
         private readonly IPopupProvider _popupProvider;
         private DiContainer _diContainer;
@@ -25,12 +22,11 @@ namespace App.Scripts.General.Popup.Factory
             await UniTask.CompletedTask;
         }
 
-        public IPopupView Create<TViewPopupProvider>(ITransformable parent) where TViewPopupProvider : IPopupView
+        public IPopupView Create<TViewPopupProvider>() where TViewPopupProvider : IPopupView
         {
             IPopupView prefab = _popupProvider.LoadPopup<TViewPopupProvider>();
 
-            Transform parentPrefab = parent is null ? null : parent.Transform;
-            return _diContainer.InstantiatePrefabForComponent<IPopupView>(prefab.GameObject, parentPrefab);
+            return _diContainer.InstantiatePrefabForComponent<IPopupView>(prefab.GameObject);
         }
     }
 }
