@@ -60,8 +60,6 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
             Container.BindInterfacesTo<LoadNextLevelState>().AsSingle().WithArguments(_levelPackInfoView, stateMachine);
             Container.BindInterfacesTo<MenuPopupState>().AsSingle();
             Container.BindInterfacesTo<LooseState>().AsSingle();
-
-            Container.Bind<List<IExitableState>>().FromMethod(ctx => ctx.Container.ResolveAll<IExitableState>().ToList()).AsSingle();
         }
     }
 }

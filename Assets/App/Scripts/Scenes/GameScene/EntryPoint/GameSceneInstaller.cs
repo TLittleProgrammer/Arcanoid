@@ -81,8 +81,6 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             EntityDestroyableInstaller.Install(Container);
             BehaviourTreeInstaller.Install(Container);
             
-            Container.Bind<List<IActivable>>().FromMethod(ctx => ctx.Container.ResolveAll<IActivable>().ToList()).AsSingle();
-
             Container.Bind<ITweenersLocator>().To<TweenersLocator>().AsSingle();
             Container.Bind<IScoreAnimationService>().To<ScoreAnimationService>().AsSingle();
             Container.Bind<IShakeService>().To<ShakeService>().AsSingle();
