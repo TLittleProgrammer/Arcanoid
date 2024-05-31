@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using App.Scripts.External.Localisation;
+﻿using System;
+using App.Scripts.External.Components;
 using App.Scripts.External.Localisation.MonoBehaviours;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -8,43 +8,30 @@ using Zenject;
 
 namespace App.Scripts.Scenes.MainMenuScene.LocaleView
 {
-    public class LocaleItemView : MonoBehaviour, ILocaleItemView, IPointerClickHandler
+    public class LocaleItemView : MonoBehaviour, ILocaleItemView, IClickable<string>
     {
         [SerializeField] private Image _languageImage;
         [SerializeField] private UILocale _locale;
 
-        private ILocaleService _localeService;
         private string _targetLocaleKey;
 
-        [Inject]
-        private void Construct(ILocaleService localeService)
-        {
-            _localeService = localeService;
-        }
-
+        public event Action<string> Clicked;
         public GameObject GameObject => gameObject;
 
         public void OnPointerClick(PointerEventData eventData)
         {
-            _localeService.SetLocale(_targetLocaleKey);
+            Clicked?.Invoke(_targetLocaleKey);
         }
 
         public void SetModel(LocaleViewModel model)
         {
-            _languageImage.sprite = model.Sprite;
             _locale.SetToken(model.LocaleToken);
+            _locale.SetText(model.LocaleTokenText);
+            _languageImage.sprite = model.Sprite;
             _targetLocaleKey = model.LocaleKey;
-            
-            UpdateLocale();
         }
 
-        private void UpdateLocale()
-        {
-            string viewText = _localeService.GetTextByToken(_locale.Token);
-            _locale.SetText(viewText);
-        }
-
-        public class Factory : PlaceholderFactory<List<LocaleItemView>>
+        public class Factory : PlaceholderFactory<LocaleItemView>
         {
             
         }

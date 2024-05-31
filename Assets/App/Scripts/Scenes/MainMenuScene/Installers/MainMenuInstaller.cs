@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
 using App.Scripts.External.Components;
 using App.Scripts.External.UserData;
+using App.Scripts.General.Components;
 using App.Scripts.General.Energy;
 using App.Scripts.General.Levels;
-using App.Scripts.General.Popup;
-using App.Scripts.General.Popup.AssetManagment;
-using App.Scripts.General.Popup.Factory;
-using App.Scripts.General.RootUI;
 using App.Scripts.General.UserData.Levels.Data;
+using App.Scripts.Scenes.Bootstrap.Buttons;
 using App.Scripts.Scenes.MainMenuScene.ActivateScreens;
+using App.Scripts.Scenes.MainMenuScene.Buttons;
 using App.Scripts.Scenes.MainMenuScene.ContinueLevel;
 using App.Scripts.Scenes.MainMenuScene.Factories.ItemView;
 using App.Scripts.Scenes.MainMenuScene.Factories.Levels;
@@ -34,6 +33,7 @@ namespace App.Scripts.Scenes.MainMenuScene.Installers
         [SerializeField] public GameObject LevelPacksScreen;
         [SerializeField] public Image ScreenTransitionIamge;
         [SerializeField] public Button ContinueButton;
+        [SerializeField] public SettingsButton SettingsButton;
 
         public override void InstallBindings()
         {
@@ -58,11 +58,12 @@ namespace App.Scripts.Scenes.MainMenuScene.Installers
                 .FromFactory<LevelItemFactory>();
 
             Container
-                .BindFactory<List<LocaleItemView>, LocaleItemView.Factory>()
+                .BindFactory<LocaleItemView, LocaleItemView.Factory>()
                 .FromFactory<LocaleItemViewFactory>();
 
             Container.BindInterfacesAndSelfTo<SettingsModel>().AsSingle();
             Container.BindInterfacesAndSelfTo<SettingsViewModel>().AsSingle();
+            Container.BindInterfacesAndSelfTo<ButtonsHandler>().AsSingle().WithArguments(SettingsButton);
         }
     }
 }
