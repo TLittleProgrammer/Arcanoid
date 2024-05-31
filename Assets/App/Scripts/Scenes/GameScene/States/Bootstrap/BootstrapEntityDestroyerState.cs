@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using App.Scripts.External.GameStateMachine;
+using App.Scripts.General.LevelPackInfoService;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General;
 using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer;
 using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.DestroyServices;
@@ -12,23 +13,33 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
         private readonly IStateMachine _stateMachine;
         private readonly IEntityDestroyable _entityDestroyable;
         private readonly List<IBlockDestroyService> _entityDestroyers;
+        private readonly ILevelPackInfoService _levelPackInfoService;
 
         public BootstrapEntityDestroyerState(
             IStateMachine stateMachine,
             IEntityDestroyable entityDestroyable,
-            List<IBlockDestroyService> entityDestroyers
+            List<IBlockDestroyService> entityDestroyers,
+            ILevelPackInfoService levelPackInfoService
         )
         {
             _stateMachine = stateMachine;
             _entityDestroyable = entityDestroyable;
             _entityDestroyers = entityDestroyers;
+            _levelPackInfoService = levelPackInfoService;
         }
         
         public async UniTask Enter()
         {
             InitializeItemsDestroyable();
 
-            _stateMachine.Enter<BootstrapLoadLevelState>();
+            if (_levelPackInfoService.NeedContinueLevel)
+            {
+                _stateMachine.Enter<BootstrapContinueLoadLevelState>();
+            }
+            else
+            {
+                _stateMachine.Enter<BootstrapLoadLevelState>();
+            }
             
             await UniTask.CompletedTask;
         }

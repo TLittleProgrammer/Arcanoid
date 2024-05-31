@@ -3,9 +3,7 @@ using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Pools
 {
-    public interface IPoolContainer : IRestartable
+    public interface IPoolContainer : IGeneralRestartable
     {
-        TItem GetItem<TItem>(PoolTypeId poolTypeId) where TItem : MonoBehaviour;
-        void RemoveItem<TItem>(PoolTypeId poolTypeId, TItem item) where TItem : MonoBehaviour;
     }
 }

@@ -1,5 +1,6 @@
 ﻿using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Constants;
+using App.Scripts.General.LevelPackInfoService;
 using App.Scripts.General.Popup.AssetManagment;
 using App.Scripts.Scenes.GameScene.Features.Entities.Ball;
 using App.Scripts.Scenes.GameScene.Features.Entities.Walls;
@@ -16,6 +17,7 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
         private readonly IShowLevelAnimation _showLevelAnimation;
         private readonly IBallsService _ballsService;
         private readonly BallView.Factory _ballViewFactory;
+        private readonly ILevelPackInfoService _levelPackInfoService;
 
         public BootstrapInitializeOtherServicesState(
             IStateMachine stateMachine,
@@ -23,7 +25,8 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             IPopupProvider popupProvider,
             IShowLevelAnimation showLevelAnimation,
             IBallsService ballsService,
-            BallView.Factory ballViewFactory)
+            BallView.Factory ballViewFactory,
+            ILevelPackInfoService levelPackInfoService)
         {
             _stateMachine = stateMachine;
             _wallLoader = wallLoader;
@@ -31,6 +34,7 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             _showLevelAnimation = showLevelAnimation;
             _ballsService = ballsService;
             _ballViewFactory = ballViewFactory;
+            _levelPackInfoService = levelPackInfoService;
         }
         
         public async UniTask Enter()
@@ -39,9 +43,13 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
 
             await _wallLoader.AsyncInitialize();
             await _popupProvider.AsyncInitialize(Pathes.PathToPopups);
-            await _showLevelAnimation.Show();
 
-            _stateMachine.Enter<BootstrapInitializeAllRestartablesAndTickablesListsState>();
+            if (!_levelPackInfoService.NeedContinueLevel)
+            {
+                await _showLevelAnimation.Show();
+            }
+
+            _stateMachine.Enter<GameLoopState>();
             
             await UniTask.CompletedTask;
         }

@@ -5,7 +5,7 @@ using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.Features.Effects
 {
-    public class CircleEffect : ParticleSystemEffect<CircleEffect>
+    public class CircleEffects : ParticleSystemEffect
     {
         [SerializeField] private ParticleSystem _subParticleSystem;
 
@@ -22,7 +22,12 @@ namespace App.Scripts.Scenes.GameScene.Features.Effects
             set => _subParticlesMainModule.startSize = value;
         }
         
-        public class Factory : PlaceholderFactory<EntityView, CircleEffect>
+        public class Pool : MonoMemoryPool<CircleEffects>
+        {
+            
+        }
+        
+        public class Factory : PlaceholderFactory<EntityView, CircleEffects>
         {
             
         }

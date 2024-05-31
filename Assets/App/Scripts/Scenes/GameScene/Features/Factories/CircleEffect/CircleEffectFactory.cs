@@ -1,28 +1,29 @@
-﻿using App.Scripts.Scenes.GameScene.Features.Entities;
+﻿using App.Scripts.Scenes.GameScene.Features.Effects;
+using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.Entities.View;
 using App.Scripts.Scenes.GameScene.Features.Pools;
 using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.Features.Factories.CircleEffect
 {
-    public class CircleEffectFactory : IFactory<EntityView, Effects.CircleEffect>
+    public class CircleEffectFactory : IFactory<EntityView, CircleEffects>
     {
-        private readonly IPoolContainer _poolContainer;
+        private readonly CircleEffects.Pool _circleEffectPool;
 
-        public CircleEffectFactory(IPoolContainer poolContainer)
+        public CircleEffectFactory(CircleEffects.Pool circleEffectPool)
         {
-            _poolContainer = poolContainer;
+            _circleEffectPool = circleEffectPool;
         }
         
-        public Effects.CircleEffect Create(EntityView targetType)
+        public CircleEffects Create(EntityView targetType)
         {
-            Effects.CircleEffect effect = _poolContainer.GetItem<Effects.CircleEffect>(PoolTypeId.CircleEffect);
+            CircleEffects effects = _circleEffectPool.Spawn();
+            
+            effects.Position = targetType.Position;
+            effects.Scale    = targetType.Scale.x;
+            effects.ScaleForSubParticles = effects.Scale / 10f;
 
-            effect.Position = targetType.Position;
-            effect.Scale    = targetType.Scale.x;
-            effect.ScaleForSubParticles = effect.Scale / 10f;
-
-            return effect;
+            return effects;
         }
     }
 }

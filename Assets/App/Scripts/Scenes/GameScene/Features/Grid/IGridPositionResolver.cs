@@ -5,9 +5,10 @@ using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Grid
 {
-    public interface IGridPositionResolver : IAsyncInitializable<LevelData>, IRestartable
+    public interface IGridPositionResolver : IAsyncInitializable<LevelData>, IGeneralRestartable
     {
         Vector2 GetCurrentGridPosition();
         Vector2 GetCellSize();
+        Vector2 GetPositionByCoordinates(int x, int y);
     }
 }

@@ -8,7 +8,7 @@ using Cysharp.Threading.Tasks;
 
 namespace App.Scripts.Scenes.GameScene.Features.Healthes
 {
-    public sealed class HealthContainer : IHealthContainer, ILevelProgressSavable
+    public sealed class HealthContainer : IHealthContainer, ILevelProgressSavable, IInitializeByLevelProgress
     {
         private readonly IViewHealthPointService _viewHealthPointService;
 
@@ -85,6 +85,12 @@ namespace App.Scripts.Scenes.GameScene.Features.Healthes
         {
             levelDataProgress.AllHealthes = _maxHealthCounter;
             levelDataProgress.CurrentHealth = _currentHealthCounter;
+        }
+
+        public void LoadProgress(LevelDataProgress levelDataProgress)
+        {
+            _maxHealthCounter = levelDataProgress.AllHealthes;
+            UpdateHealth(-(_maxHealthCounter - levelDataProgress.CurrentHealth));
         }
     }
 }

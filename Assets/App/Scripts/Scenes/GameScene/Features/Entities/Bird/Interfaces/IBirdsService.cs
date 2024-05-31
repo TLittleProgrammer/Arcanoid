@@ -4,7 +4,7 @@ using App.Scripts.Scenes.GameScene.Features.Components;
 
 namespace App.Scripts.Scenes.GameScene.Features.Entities.Bird.Interfaces
 {
-    public interface IBirdsService : IRestartable, IActivable
+    public interface IBirdsService : IGeneralRestartable, IActivable
     {
         Dictionary<BirdView, IBirdMovement> Birds { get; }
         void AddBird(BirdView birdView);

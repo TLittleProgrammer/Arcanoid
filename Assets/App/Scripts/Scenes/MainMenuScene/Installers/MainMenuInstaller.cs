@@ -9,6 +9,7 @@ using App.Scripts.General.Popup.Factory;
 using App.Scripts.General.RootUI;
 using App.Scripts.General.UserData.Levels.Data;
 using App.Scripts.Scenes.MainMenuScene.ActivateScreens;
+using App.Scripts.Scenes.MainMenuScene.ContinueLevel;
 using App.Scripts.Scenes.MainMenuScene.Factories.ItemView;
 using App.Scripts.Scenes.MainMenuScene.Factories.Levels;
 using App.Scripts.Scenes.MainMenuScene.LevelPacks;
@@ -31,6 +32,7 @@ namespace App.Scripts.Scenes.MainMenuScene.Installers
         [SerializeField] public GameObject InitialScreen;
         [SerializeField] public GameObject LevelPacksScreen;
         [SerializeField] public Image ScreenTransitionIamge;
+        [SerializeField] public Button ContinueButton;
 
         [Inject] private RootUIViewProvider _rootUIView;
         
@@ -45,6 +47,7 @@ namespace App.Scripts.Scenes.MainMenuScene.Installers
             Container.Bind<ILocaleItemView>().FromInstance(LocaleItemView);
             Container.Bind<ITransformable>().FromInstance(LevelPackParent);
             Container.Bind<LevelPackProgressDictionary>().FromInstance(levelPackProgressDictionary);
+            Container.BindInterfacesTo<ContinueLevelService>().AsSingle().WithArguments(ContinueButton).NonLazy();
             
             Container.Bind<IPopupProvider>().To<ResourcesPopupProvider>().AsSingle();
             Container.Bind<IPopupFactory>().To<PopupFactory>().AsSingle();
@@ -54,6 +57,8 @@ namespace App.Scripts.Scenes.MainMenuScene.Installers
                 .BindInterfacesAndSelfTo<ActivateScreensService>()
                 .AsSingle()
                 .WithArguments(PlayButton, BackButton, InitialScreen, LevelPacksScreen, ScreenTransitionIamge);
+            
+            
             
             Container
                 .BindFactory<int, LevelPack, ILevelItemView, ILevelItemView.Factory>()

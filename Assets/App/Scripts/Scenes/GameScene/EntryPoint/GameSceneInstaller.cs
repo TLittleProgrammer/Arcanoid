@@ -6,6 +6,9 @@ using App.Scripts.General.Infrastructure;
 using App.Scripts.General.RootUI;
 using App.Scripts.Scenes.GameScene.EntryPoint.Bootstrap;
 using App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers;
+using App.Scripts.Scenes.GameScene.Features.Boosts.Autopilot.Nodes;
+using App.Scripts.Scenes.GameScene.Features.Boosts.Autopilot.Strategies;
+using App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General.UI;
 using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun;
 using App.Scripts.Scenes.GameScene.Features.Camera;
@@ -37,6 +40,8 @@ using App.Scripts.Scenes.GameScene.Features.ScreenInfo;
 using App.Scripts.Scenes.GameScene.Features.ServiceActivator;
 using App.Scripts.Scenes.GameScene.Features.Settings;
 using App.Scripts.Scenes.GameScene.Features.Shake;
+using App.Scripts.Scenes.GameScene.States;
+using App.Scripts.Scenes.GameScene.States.Bootstrap;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -63,10 +68,6 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
         [Inject] private PoolProviders _poolProviders;
         [Inject] private IStateMachine _projectStateMachine;
         [Inject] private RootUIViewProvider _rootUIView;
-
-        private readonly List<IRestartable> _restartables = new();
-        private readonly List<IRestartable> _restartablesForLoadNewLevel = new();
-        private readonly List<ITickable> _gameLoopTickables = new();
 
         public override void InstallBindings()
         {
@@ -97,7 +98,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.BindInterfacesAndSelfTo<LevelDataChooser>().AsSingle();
             Container.BindInterfacesAndSelfTo<LevelLoadService>().AsSingle();
 
-            Container.Bind<IGridPositionResolver>().To<GridPositionResolver>().AsSingle().WithArguments(_header);
+            Container.BindInterfacesTo<GridPositionResolver>().AsSingle().WithArguments(_header);
             Container.Bind<IShapePositionChecker>().To<PlayerShapePositionChecker>().AsSingle().WithArguments(_playerShape);
             Container.Bind<PlayerCollisionService>().AsSingle().WithArguments(_playerShape).NonLazy();
             
@@ -110,13 +111,13 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.Bind<IServicesActivator>().To<ServiceActivator>().AsSingle();
             Container.Bind<IShowLevelAnimation>().To<SimpleShowLevelAnimation>().AsSingle();
             Container.Bind<IGetDamageService>().To<GetDamageService>().AsSingle();
-            Container.Bind(typeof(IActivable), typeof(IBallsService)).To<BallsService>().AsSingle();
+            Container.BindInterfacesTo<BallsService>().AsSingle().WhenNotInjectedInto<GameLoopState>();
             Container.BindInterfacesAndSelfTo<LevelProgressService>().AsSingle().WithArguments(_levelPackInfoView, _levelPackBackground);
 
             Container.Bind<SkipLevelService>().AsSingle().WithArguments(_skipLevelButton).NonLazy();
             Container.Bind<LevelProgressSaveService>().AsSingle().NonLazy();
             
-            StateMachineInstaller.Install(Container, _gameLoopTickables, _projectStateMachine, _restartables, _levelPackInfoView, _restartablesForLoadNewLevel);
+            StateMachineInstaller.Install(Container, _projectStateMachine, _levelPackInfoView);
             
             Container.BindInterfacesTo<GameBootstrapper>().AsSingle();
         }
@@ -131,16 +132,25 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
 
         private void BindHealthPointService()
         {
-            Container.Bind<IViewHealthPointService>().To<ViewHealthPointService>().AsSingle().WithArguments(_healthParent as ITransformable);
-            Container.Bind(typeof(IHealthContainer), typeof(ILevelProgressSavable)).To<HealthContainer>().AsSingle();
+            Container.BindInterfacesTo<ViewHealthPointService>().AsSingle().WithArguments(_healthParent as ITransformable);
+            Container.Bind(typeof(IHealthContainer), typeof(ILevelProgressSavable), typeof(IGeneralRestartable)).To<HealthContainer>().AsSingle();
         }
 
         private void BindPlayerMoving()
         {
             ShapeMoverSettings shapeMoverSettings = new();
             shapeMoverSettings.Speed = 5f;
-            
-            Container.Bind<IPlayerShapeMover>().To<PlayerShapeMover>().AsSingle().WithArguments(_playerShape, shapeMoverSettings);
+
+            Container
+                .BindInterfacesTo<PlayerShapeMover>()
+                .AsSingle()
+                .WithArguments(_playerShape, shapeMoverSettings).
+                WhenInjectedInto(
+                    typeof(GameLoopState), 
+                    typeof(AutopilotBoostActivator),
+                    typeof(SimpleMovingStrategy),
+                    typeof(BootstrapLoadLevelState),
+                    typeof(ShapeBoostSpeed));
         }
     }
 }

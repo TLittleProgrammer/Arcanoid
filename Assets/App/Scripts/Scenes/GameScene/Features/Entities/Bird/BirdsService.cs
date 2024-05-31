@@ -13,7 +13,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Bird
     public class BirdsService : IBirdsService, ITickable
     {
         private readonly IScreenInfoProvider _screenInfoProvider;
-        private readonly BirdView.Pool _birdViewPool;
         private readonly IBirdHealthPointContainer _birdHealthPointContainer;
         private readonly Dictionary<BirdView, Direction> _lastDirection;
 
@@ -24,13 +23,11 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Bird
 
         public BirdsService(
             IScreenInfoProvider screenInfoProvider,
-            BirdView.Pool birdViewPool,
             IBirdHealthPointContainer birdHealthPointContainer,
             BirdRespawnService birdRespawnService)
         {
             _birdRespawnService = birdRespawnService;
             _screenInfoProvider = screenInfoProvider;
-            _birdViewPool = birdViewPool;
             _birdHealthPointContainer = birdHealthPointContainer;
             _lastDirection = new();
             Birds = new();

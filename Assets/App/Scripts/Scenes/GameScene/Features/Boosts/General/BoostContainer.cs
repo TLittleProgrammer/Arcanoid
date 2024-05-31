@@ -3,20 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General.Interfaces;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General.UI;
-using App.Scripts.Scenes.GameScene.Features.Entities;
+using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress;
 using App.Scripts.Scenes.GameScene.Features.Settings;
 using App.Scripts.Scenes.GameScene.Features.Time;
 using Object = UnityEngine.Object;
 
 namespace App.Scripts.Scenes.GameScene.Features.Boosts.General
 {
-    public sealed class BoostContainer : IBoostContainer
+    public sealed class BoostContainer : IBoostContainer, ILevelProgressSavable, IInitializeByLevelProgress
     {
         private readonly BoostsSettings _boostsSettings;
         private readonly ITimeProvider _timeProvider;
         private readonly BoostItemView.Factory _boostItemFactory;
         private readonly BoostsViewContainer _boostsViewContainer;
-        private readonly List<BoostData> _boosts;
+        
+        private List<BoostData> _boosts;
         private Dictionary<BoostTypeId, BoostItemView> _viewsDictionary = new();
 
         public bool IsActive { get; set; }
@@ -183,6 +184,31 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General
             }
             
             _boosts.Clear();
+        }
+
+        public void SaveProgress(LevelDataProgress levelDataProgress)
+        {
+            levelDataProgress.ActiveBoostDatas = new();
+
+            foreach (BoostData boostData in _boosts)
+            {
+                SaveActiveBoostData save = new(boostData);
+                
+                levelDataProgress.ActiveBoostDatas.Add(save);
+            }
+        }
+
+        public void LoadProgress(LevelDataProgress levelDataProgress)
+        {
+            _boosts = new();
+
+            foreach (SaveActiveBoostData save in levelDataProgress.ActiveBoostDatas)
+            {
+                BoostData boostData = new(save.BoostTypeId, save.Duration);
+                CreateUiBoost(boostData.BoostTypeId);
+                
+                _boosts.Add(boostData);
+            }
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.Entities.TopSprites;
 using App.Scripts.Scenes.GameScene.Features.Entities.View;
-using App.Scripts.Scenes.GameScene.Features.Pools;
 using UnityEngine;
 using Zenject;
 
@@ -9,16 +8,16 @@ namespace App.Scripts.Scenes.GameScene.Features.Factories.OnTopSprite
 {
     public class OnTopSpriteFactory : IFactory<IEntityView, OnTopSprites>
     {
-        private readonly IPoolContainer _poolContainer;
+        private readonly OnTopSprites.Pool _onTopSprites;
 
-        public OnTopSpriteFactory(IPoolContainer poolContainer)
+        public OnTopSpriteFactory(OnTopSprites.Pool onTopSprites)
         {
-            _poolContainer = poolContainer;
+            _onTopSprites = onTopSprites;
         }
         
         public OnTopSprites Create(IEntityView targetType)
         {
-            OnTopSprites sprite = _poolContainer.GetItem<OnTopSprites>(PoolTypeId.OnTopSprite);
+            OnTopSprites sprite = _onTopSprites.Spawn();
 
             Transform spriteTransform     = sprite.transform;
             spriteTransform.parent        = targetType.GameObject.transform;

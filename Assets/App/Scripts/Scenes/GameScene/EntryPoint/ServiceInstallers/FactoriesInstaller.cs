@@ -1,4 +1,5 @@
 ﻿using App.Scripts.External.Components;
+using App.Scripts.General.Infrastructure;
 using App.Scripts.General.Popup;
 using App.Scripts.General.Popup.AssetManagment;
 using App.Scripts.General.Popup.Factory;
@@ -38,7 +39,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
         {
             Container.BindFactory<string, IEntityView, IEntityView.Factory>().FromFactory<EntityFactory>();
             Container.BindFactory<ITransformable, IHealthPointView, IHealthPointView.Factory>().FromFactory<HealthFactory>();
-            Container.BindFactory<EntityView, CircleEffect, CircleEffect.Factory>().FromFactory<CircleEffectFactory>();
+            Container.BindFactory<EntityView, CircleEffects, CircleEffects.Factory>().FromFactory<CircleEffectFactory>();
             Container.BindFactory<IEntityView, OnTopSprites, OnTopSprites.Factory>().FromFactory<OnTopSpriteFactory>();
             Container.BindFactory<BoostTypeId, BoostView, BoostView.Factory>().FromFactory<BoostViewFactory>();
             Container.BindFactory<BallView, BallView.Factory>().FromFactory<BallViewFactory>();
@@ -49,7 +50,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
             
             Container.Bind<IPopupProvider>().To<ResourcesPopupProvider>().AsSingle();
             Container.Bind<IPopupFactory>().To<PopupFactory>().AsSingle();
-            Container.Bind<IPopupService>().To<PopupService>().AsSingle().WithArguments(_rootUIViewProvider.BackPopupPlane);
+            Container.Bind(typeof(IPopupService), typeof(IGeneralRestartable)).To<PopupService>().AsSingle().WithArguments(_rootUIViewProvider.BackPopupPlane);
         }
     }
 }

@@ -5,7 +5,7 @@ using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.Features.Levels.LevelProgress
 {
-    public interface ILevelProgressService : IInitializable, IRestartable
+    public interface ILevelProgressService : IInitializable, IGeneralRestartable
     {
         event Action<float> ProgressChanged; 
         event Action LevelPassed;

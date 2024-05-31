@@ -12,7 +12,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball.Collision
     public class BallCollisionService : IBallCollisionService
     {
         private readonly BallView _ball;
-        private readonly CircleEffect.Factory _circleEffectFactory;
+        private readonly CircleEffects.Factory _circleEffectFactory;
         private readonly ILevelViewUpdater _levelViewUpdater;
         private readonly IShakeService _shakeService;
         private readonly PlazmaEffect.Pool _plazmaEffectPool;
@@ -22,7 +22,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball.Collision
 
         public BallCollisionService(
             BallView ball,
-            CircleEffect.Factory circleEffectFactory,
+            CircleEffects.Factory circleEffectFactory,
             ILevelViewUpdater levelViewUpdater,
             IShakeService shakeService,
             PlazmaEffect.Pool plazmaEffectPool,
@@ -81,8 +81,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball.Collision
 
         private void PlayCircleEffects(EntityView entityView)
         {
-            CircleEffect circleEffect = _circleEffectFactory.Create(entityView);
-            circleEffect.PlayEffect();
+            CircleEffects circleEffects = _circleEffectFactory.Create(entityView);
+            circleEffects.PlayEffect();
         }
     }
 }

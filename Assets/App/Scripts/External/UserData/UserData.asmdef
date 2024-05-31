@@ -1,7 +1,7 @@
 {
     "name": "UserData",
     "rootNamespace": "",
-    "references": [],
+    "references": ["GUID:bb64ee77f29300c4696ce825aa05e987"],
     "includePlatforms": [
         "Android",
         "Editor",

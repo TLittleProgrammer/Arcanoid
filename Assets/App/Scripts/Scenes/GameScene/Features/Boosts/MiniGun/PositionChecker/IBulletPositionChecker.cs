@@ -4,7 +4,7 @@ using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun;
 
 namespace App.Scripts.Scenes.GameScene.Features.PositionChecker
 {
-    public interface IBulletPositionChecker : IRestartable
+    public interface IBulletPositionChecker : IGeneralRestartable
     {
         IEnumerable<BulletView> GetAll();
         void AddBullet(BulletView bulletView);

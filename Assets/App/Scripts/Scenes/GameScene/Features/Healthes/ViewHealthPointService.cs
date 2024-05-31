@@ -4,13 +4,14 @@ using App.Scripts.Scenes.GameScene.Features.Constants;
 using App.Scripts.Scenes.GameScene.Features.Healthes.View;
 using App.Scripts.Scenes.GameScene.Features.Levels.General;
 using App.Scripts.Scenes.GameScene.Features.Levels.Loading;
+using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Healthes
 {
-    public sealed class ViewHealthPointService : IViewHealthPointService
+    public sealed class ViewHealthPointService : IViewHealthPointService, IInitializeByLevelProgress
     {
         private readonly List<IHealthPointView> _healthPointViews;
         private readonly IHealthPointView.Factory _healthPointViewFactory;
@@ -120,6 +121,14 @@ namespace App.Scripts.Scenes.GameScene.Features.Healthes
         {
             _healthPointViews.Clear();
             InstallAllViews();
+        }
+
+        public void LoadProgress(LevelDataProgress levelDataProgress)
+        {
+            _maxHealthCount = levelDataProgress.AllHealthes;
+            
+            InstallAllViews();
+            UpdateHealth(_maxHealthCount - levelDataProgress.CurrentHealth);
         }
     }
 }

@@ -9,12 +9,13 @@ namespace App.Scripts.Scenes.GameScene.Features.Factories.Entity
     public class EntityFactory : IFactory<string, IEntityView>
     {
         private readonly EntityProvider _entityProvider;
+        private readonly EntityView.Pool _entityViewPool;
         private readonly IPoolContainer _poolContainer;
 
-        public EntityFactory(EntityProvider entityProvider, IPoolContainer poolContainer)
+        public EntityFactory(EntityProvider entityProvider, EntityView.Pool entityViewPool)
         {
             _entityProvider = entityProvider;
-            _poolContainer = poolContainer;
+            _entityViewPool = entityViewPool;
         }
 
         public IEntityView Create(string targetType)
@@ -25,7 +26,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Factories.Entity
             }
 
             EntityStage entityStage = _entityProvider.EntityStages[targetType];
-            EntityView entityView   = _poolContainer.GetItem<EntityView>(PoolTypeId.EntityView);
+            EntityView entityView   = _entityViewPool.Spawn();
 
             entityView.MainSprite   = entityStage.Sprite;
             entityView.BoostTypeId = entityStage.BoostTypeId;

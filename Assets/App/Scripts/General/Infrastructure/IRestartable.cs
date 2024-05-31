@@ -4,4 +4,19 @@
     {
         void Restart();
     }
+
+    public interface INewLevelRestartable : IRestartable
+    {
+        
+    }
+
+    public interface ICurrentLevelRestartable : IRestartable
+    {
+        
+    }
+
+    public interface IGeneralRestartable : IRestartable
+    {
+        
+    }
 }

@@ -48,8 +48,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Grid
         {
             Vector2 result = Vector2.zero;
 
-            result.y = _topPosition - _curretGridPosition.y * (_cellSize.y / 2f + _spaceBetweenCells.y);
-            result.x = _leftPosition + _cellSize.x / 2f + _curretGridPosition.x * (_cellSize.x + _spaceBetweenCells.x);
+            result.y = GetYPosition(_curretGridPosition.y);
+            result.x = GetXPosition(_curretGridPosition.x);
 
             _curretGridPosition.x++;
             if (_curretGridPosition.x >= _levelData.GridSize.x)
@@ -58,6 +58,16 @@ namespace App.Scripts.Scenes.GameScene.Features.Grid
                 _curretGridPosition.x = 0;
             }
             
+            return result;
+        }
+
+        public Vector2 GetPositionByCoordinates(int x, int y)
+        {
+            Vector2 result = Vector2.zero;
+
+            result.y = GetYPosition(y);
+            result.x = GetXPosition(x);
+
             return result;
         }
 
@@ -113,6 +123,16 @@ namespace App.Scripts.Scenes.GameScene.Features.Grid
             float positionInPixels = _screenInfoProvider.HeightInPixels - _screenInfoProvider.HeightInPixels * (topOffset / 100f);
             
             return worldBottomLeftCorner.y - (_worldCameraSize.y / 2f - _cameraService.ScreenToWorldPoint(new(0f, positionInPixels)).y) - _cellSize.y / 2f;
+        }
+
+        private float GetXPosition(int x)
+        {
+            return _leftPosition + _cellSize.x / 2f + x * (_cellSize.x + _spaceBetweenCells.x);
+        }
+
+        private float GetYPosition(int y)
+        {
+            return _topPosition - y * (_cellSize.y / 2f + _spaceBetweenCells.y);
         }
 
         public void Restart()

@@ -7,7 +7,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
     {
         public override void InstallBindings()
         {
-            Container.Bind<ITimeProvider>().To<TimeProvider>().AsSingle();
+            Container.BindInterfacesTo<TimeProvider>().AsSingle();
             Container.Bind<ITimeScaleAnimator>().To<TimeScaleAnimator>().AsSingle();
         }
     }

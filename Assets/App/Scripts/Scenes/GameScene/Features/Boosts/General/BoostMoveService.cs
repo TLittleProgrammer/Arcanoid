@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General.Interfaces;
 using App.Scripts.Scenes.GameScene.Features.Constants;
+using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress;
 using App.Scripts.Scenes.GameScene.Features.Time;
 using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Boosts.General
 {
-    public class BoostMoveService : IBoostMoveService
+    public class BoostMoveService : IBoostMoveService, ILevelProgressSavable
     {
         private readonly ITimeProvider _timeProvider;
 
@@ -41,5 +42,17 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General
         }
 
         public bool IsActive { get; set; }
+        
+        public void SaveProgress(LevelDataProgress levelDataProgress)
+        {
+            levelDataProgress.ViewBoostDatas = new();
+
+            foreach (BoostView view in _views)
+            {
+                SaveBoostViewData saveBoostViewData = new(view);
+                
+                levelDataProgress.ViewBoostDatas.Add(saveBoostViewData);
+            }
+        }
     }
 }
