@@ -8,12 +8,14 @@ using App.Scripts.General.UserData.Levels.Data;
 using App.Scripts.Scenes.Bootstrap.Buttons;
 using App.Scripts.Scenes.MainMenuScene.ActivateScreens;
 using App.Scripts.Scenes.MainMenuScene.Buttons;
+using App.Scripts.Scenes.MainMenuScene.Command;
 using App.Scripts.Scenes.MainMenuScene.ContinueLevel;
 using App.Scripts.Scenes.MainMenuScene.Factories.ItemView;
 using App.Scripts.Scenes.MainMenuScene.Factories.Levels;
 using App.Scripts.Scenes.MainMenuScene.LevelPacks;
 using App.Scripts.Scenes.MainMenuScene.LevelPacks.MonoBehaviours;
 using App.Scripts.Scenes.MainMenuScene.LocaleView;
+using App.Scripts.Scenes.MainMenuScene.MVVM.Settings;
 using App.Scripts.Scenes.MainMenuScene.Popup;
 using UnityEngine;
 using UnityEngine.UI;
@@ -37,14 +39,11 @@ namespace App.Scripts.Scenes.MainMenuScene.Installers
 
         public override void InstallBindings()
         {
-            Container.BindInterfacesAndSelfTo<MainMenuInitalizer>().AsSingle().WithArguments(EnergyView);
-            
             LevelPackProgressDictionary levelPackProgressDictionary =
                 (LevelPackProgressDictionary)Container.Resolve<IUserDataContainer>().GetData<LevelPackProgressDictionary>();
 
             Container.Bind<ILevelItemView>().FromInstance(LevelItemView);
             Container.Bind<ILocaleItemView>().FromInstance(LocaleItemView);
-            Container.Bind<ITransformable>().FromInstance(LevelPackParent);
             Container.Bind<LevelPackProgressDictionary>().FromInstance(levelPackProgressDictionary);
             Container.BindInterfacesTo<ContinueLevelService>().AsSingle().WithArguments(ContinueButton).NonLazy();
             
@@ -54,7 +53,7 @@ namespace App.Scripts.Scenes.MainMenuScene.Installers
                 .WithArguments(PlayButton, BackButton, InitialScreen, LevelPacksScreen, ScreenTransitionIamge);
 
             Container
-                .BindFactory<int, LevelPack, ILevelItemView, ILevelItemView.Factory>()
+                .BindFactory<ILevelItemView, ILevelItemView.Factory>()
                 .FromFactory<LevelItemFactory>();
 
             Container
@@ -64,6 +63,22 @@ namespace App.Scripts.Scenes.MainMenuScene.Installers
             Container.BindInterfacesAndSelfTo<SettingsModel>().AsSingle();
             Container.BindInterfacesAndSelfTo<SettingsViewModel>().AsSingle();
             Container.BindInterfacesAndSelfTo<ButtonsHandler>().AsSingle().WithArguments(SettingsButton);
+
+            Container.BindInterfacesAndSelfTo<LevelPackModel>().AsSingle();
+            Container.BindInterfacesAndSelfTo<LevelPackViewModel>().AsSingle();
+            
+            Container
+                .BindInterfacesTo<ChangeLocaleCommand>()
+                .AsSingle()
+                .WhenInjectedInto<SettingsViewModel>();
+
+            Container
+                .BindInterfacesTo<LoadLevelCommand>()
+                .AsSingle()
+                .WhenInjectedInto<LevelPackViewModel>();
+            
+            Container.BindInterfacesAndSelfTo<MainMenuInitalizer>().AsSingle().WithArguments(EnergyView);
+            Container.BindInterfacesAndSelfTo<LevelPacksInitializer>().AsSingle().WithArguments(LevelPackParent);
         }
     }
 }

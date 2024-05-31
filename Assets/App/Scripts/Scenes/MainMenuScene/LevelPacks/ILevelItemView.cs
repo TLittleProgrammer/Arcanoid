@@ -23,7 +23,7 @@ namespace App.Scripts.Scenes.MainMenuScene.LevelPacks
 
         void UpdateVisual(LevelModel levelModel);
         
-        public class Factory : PlaceholderFactory<int, LevelPack, ILevelItemView>
+        public class Factory : PlaceholderFactory<ILevelItemView>
         {
             
         }

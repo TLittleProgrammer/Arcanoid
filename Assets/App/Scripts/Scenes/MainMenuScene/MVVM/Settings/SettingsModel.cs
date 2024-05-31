@@ -1,17 +1,17 @@
 ﻿using System.Collections.Generic;
-using App.Scripts.External.Components;
 using App.Scripts.External.Localisation;
 using App.Scripts.External.Localisation.Config;
 using App.Scripts.General.Components;
 using App.Scripts.Scenes.MainMenuScene.LocaleView;
 
-namespace App.Scripts.Scenes.MainMenuScene.Popup
+namespace App.Scripts.Scenes.MainMenuScene.MVVM.Settings
 {
     public class SettingsModel : IModel
     {
         private readonly LocaleItemView.Factory _localeItemViewFactory;
         private readonly LocaleProvider _localeProvider;
         private readonly ILocaleService _localeService;
+
         private const string LocaleTokenPostfix = "_itemView";
 
         private SettingsModel(
@@ -32,21 +32,12 @@ namespace App.Scripts.Scenes.MainMenuScene.Popup
             {
                 LocaleItemView item = _localeItemViewFactory.Create();
 
-                SubscribeOnClick(item);
                 UpdateView(localeConfig, item);
 
                 localeItemViews.Add(item);
             }
             
             return localeItemViews;
-        }
-
-        private void SubscribeOnClick(IClickable<string> clickable)
-        {
-            clickable.Clicked += localeKey =>
-            {
-                _localeService.SetLocale(localeKey);
-            };
         }
 
         private void UpdateView(LocaleConfig localeConfig, LocaleItemView item)
