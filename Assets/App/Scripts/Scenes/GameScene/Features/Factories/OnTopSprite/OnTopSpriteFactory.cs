@@ -1,5 +1,4 @@
-﻿using App.Scripts.Scenes.GameScene.Features.Entities;
-using App.Scripts.Scenes.GameScene.Features.Entities.TopSprites;
+﻿using App.Scripts.Scenes.GameScene.Features.Entities.TopSprites;
 using App.Scripts.Scenes.GameScene.Features.Entities.View;
 using UnityEngine;
 using Zenject;

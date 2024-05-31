@@ -1,5 +1,4 @@
-﻿using System;
-using App.Scripts.Scenes.GameScene.Features.Entities.View;
+﻿using App.Scripts.Scenes.GameScene.Features.Entities.View;
 using App.Scripts.Scenes.GameScene.Features.Levels.General.Load;
 using App.Scripts.Scenes.GameScene.Features.Levels.General.View;
 using UnityEngine.UI;

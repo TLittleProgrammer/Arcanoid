@@ -11,22 +11,17 @@ namespace App.Scripts.Scenes.GameScene.States
     {
         private readonly ITimeProvider _timeProvider;
         private readonly IPopupService _popupService;
-        private readonly RootUIViewProvider _rootUIViewProvider;
 
-        public LooseState(
-            ITimeProvider timeProvider,
-            IPopupService popupService,
-            RootUIViewProvider rootUIViewProvider)
+        public LooseState(ITimeProvider timeProvider, IPopupService popupService)
         {
             _timeProvider = timeProvider;
             _popupService = popupService;
-            _rootUIViewProvider = rootUIViewProvider;
         }
         
         public async UniTask Enter()
         {
             _timeProvider.TimeScale = 0f;
-            _popupService.Show<LoosePopupView>(_rootUIViewProvider.PopupUpViewProvider);
+            _popupService.Show<LoosePopupView>();
 
             await UniTask.CompletedTask;
         }

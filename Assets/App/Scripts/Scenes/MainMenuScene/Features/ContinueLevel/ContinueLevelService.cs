@@ -6,7 +6,6 @@ using App.Scripts.General.Energy;
 using App.Scripts.General.LevelPackInfoService;
 using App.Scripts.General.Levels;
 using App.Scripts.General.States;
-using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 

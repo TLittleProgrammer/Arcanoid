@@ -31,11 +31,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Pools
 
         public void Restart()
         {
-            _entityViewPool.Clear();
-            _circleEffectPool.Clear();
-            _healthPointPool.Clear();
-            _onTopSpritesPool.Clear();
-            _boostsViewPool.Clear();
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using App.Scripts.General.Constants;
 using App.Scripts.General.Energy;
 using App.Scripts.General.Popup.AssetManagment;
-using App.Scripts.Scenes.MainMenuScene.LevelPacks.MonoBehaviours;
 using Zenject;
 
 namespace App.Scripts.Scenes.MainMenuScene.Installers

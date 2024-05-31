@@ -1,9 +1,5 @@
-﻿using System.Collections.Generic;
-using App.Scripts.External.Components;
-using App.Scripts.External.UserData;
-using App.Scripts.General.Components;
+﻿using App.Scripts.External.UserData;
 using App.Scripts.General.Energy;
-using App.Scripts.General.Levels;
 using App.Scripts.General.UserData.Levels.Data;
 using App.Scripts.Scenes.Bootstrap.Buttons;
 using App.Scripts.Scenes.MainMenuScene.ActivateScreens;

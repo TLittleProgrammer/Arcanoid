@@ -8,9 +8,7 @@ namespace App.Scripts.Scenes.MainMenuScene.Installers
         private readonly LevelPackParent _levelPackParent;
         private readonly LevelPackViewModel _levelPackViewModel;
 
-        public LevelPacksInitializer(
-        LevelPackParent levelPackParent,
-        LevelPackViewModel levelPackViewModel)
+        public LevelPacksInitializer(LevelPackParent levelPackParent, LevelPackViewModel levelPackViewModel)
         {
             _levelPackParent = levelPackParent;
             _levelPackViewModel = levelPackViewModel;

@@ -4,6 +4,7 @@ using App.Scripts.External.Grid;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General;
 using App.Scripts.Scenes.GameScene.Features.Entities.AssetManagement;
 using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer;
+using App.Scripts.Scenes.GameScene.Features.Entities.TopSprites;
 using App.Scripts.Scenes.GameScene.Features.Entities.View;
 using App.Scripts.Scenes.GameScene.Features.Grid;
 using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress;
@@ -16,6 +17,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.General.View
         private readonly EntityProvider _entityProvider;
         private readonly IEntityDestroyable _entityDestroyable;
         private readonly IEntityViewService _entityViewService;
+        private readonly OnTopSprites.Pool _topSpritesPool;
 
         private Grid<int> _levelGrid;
         private Grid<GridItemData> _levelGridItemData = new(Vector2Int.zero);
@@ -23,11 +25,13 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.General.View
         public LevelViewUpdater(
             EntityProvider entityProvider,
             IEntityDestroyable entityDestroyable,
-            IEntityViewService entityViewService)
+            IEntityViewService entityViewService,
+            OnTopSprites.Pool topSpritesPool)
         {
             _entityProvider = entityProvider;
             _entityDestroyable = entityDestroyable;
             _entityViewService = entityViewService;
+            _topSpritesPool = topSpritesPool;
         }
 
         public Grid<GridItemData> LevelGridItemData => _levelGridItemData;
@@ -157,6 +161,25 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.General.View
                     SaveGridItemData save = new(gridItemData, j, i);
 
                     levelDataProgress.EntityGridItemsData.Add(save);
+                }
+            }
+        }
+
+        public void Restart()
+        {
+            for (int i = 0; i < _levelGridItemData.Height; i++)
+            {
+                for (int j = 0; j < _levelGridItemData.Width; j++)
+                {
+                    GridItemData gridItemData = _levelGridItemData[i, j];
+
+                    foreach (OnTopSprites topSprites in gridItemData.Sprites)
+                    {
+                        if (topSprites.gameObject.activeSelf)
+                        {
+                            _topSpritesPool.Despawn(topSprites);
+                        }
+                    }
                 }
             }
         }

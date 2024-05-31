@@ -1,5 +1,4 @@
-﻿using App.Scripts.External.Initialization;
-using App.Scripts.General.Popup.AssetManagment;
+﻿using App.Scripts.General.Popup.AssetManagment;
 using Cysharp.Threading.Tasks;
 using Zenject;
 

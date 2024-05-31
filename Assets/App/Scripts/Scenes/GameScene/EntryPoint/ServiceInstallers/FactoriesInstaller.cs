@@ -1,14 +1,8 @@
 ﻿using App.Scripts.External.Components;
-using App.Scripts.General.Infrastructure;
-using App.Scripts.General.Popup;
-using App.Scripts.General.Popup.AssetManagment;
-using App.Scripts.General.Popup.Factory;
 using App.Scripts.General.RootUI;
-using App.Scripts.Scenes.GameScene.Features.Boosts;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General.UI;
 using App.Scripts.Scenes.GameScene.Features.Effects;
-using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.Entities.Ball;
 using App.Scripts.Scenes.GameScene.Features.Entities.Bird;
 using App.Scripts.Scenes.GameScene.Features.Entities.TopSprites;
@@ -24,14 +18,12 @@ using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
 {
-    public class FactoriesInstaller : Installer<RootUIViewProvider, BoostItemView, FactoriesInstaller>
+    public class FactoriesInstaller : Installer<BoostItemView, FactoriesInstaller>
     {
-        private readonly RootUIViewProvider _rootUIViewProvider;
         private readonly BoostItemView _prefab;
 
-        public FactoriesInstaller(RootUIViewProvider rootUIViewProvider, BoostItemView prefab)
+        public FactoriesInstaller(BoostItemView prefab)
         {
-            _rootUIViewProvider = rootUIViewProvider;
             _prefab = prefab;
         }
         

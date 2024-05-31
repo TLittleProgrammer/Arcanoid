@@ -1,5 +1,4 @@
-﻿using App.Scripts.Scenes.GameScene.Features.Boosts;
-using App.Scripts.Scenes.GameScene.Features.Boosts.General;
+﻿using App.Scripts.Scenes.GameScene.Features.Boosts.General;
 using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.Collisions

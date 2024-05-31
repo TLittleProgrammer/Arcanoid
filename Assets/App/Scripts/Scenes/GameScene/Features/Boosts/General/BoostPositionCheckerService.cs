@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General.Interfaces;
-using App.Scripts.Scenes.GameScene.Features.Pools;
 using App.Scripts.Scenes.GameScene.Features.ScreenInfo;
 
 namespace App.Scripts.Scenes.GameScene.Features.Boosts.General
@@ -53,6 +52,11 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General
         public void Remove(BoostView view)
         {
             _views.Remove(view);
+        }
+
+        public void Restart()
+        {
+            _views.Clear();
         }
     }
 }

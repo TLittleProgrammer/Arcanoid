@@ -17,6 +17,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.Loading.Loader
         private readonly IGridPositionResolver _gridPositionResolver;
         private readonly IEntityView.Factory _entityFactory;
         private readonly ILevelViewUpdater _levelViewUpdater;
+        private readonly EntityView.Pool _entityViewPool;
 
         private LevelData _previousLevelData;
         private List<IEntityView> _entityViews;
@@ -25,11 +26,13 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.Loading.Loader
         public LevelLoader(
             IGridPositionResolver gridPositionResolver,
             IEntityView.Factory entityFactory,
-            ILevelViewUpdater levelViewUpdater)
+            ILevelViewUpdater levelViewUpdater,
+            EntityView.Pool entityViewPool)
         {
             _gridPositionResolver = gridPositionResolver;
             _entityFactory = entityFactory;
             _levelViewUpdater = levelViewUpdater;
+            _entityViewPool = entityViewPool;
             _entityViews = new();
         }
 
@@ -63,6 +66,13 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.Loading.Loader
 
         public void Restart()
         {
+            foreach (IEntityView view in _entityViews)
+            {
+                if (view.GameObject.activeSelf)
+                {
+                    _entityViewPool.Despawn(view as EntityView);
+                }
+            }
             LoadLevel(_previousLevelData);
         }
 

@@ -11,7 +11,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
     {
         public override void InstallBindings()
         {
-            Container.Bind(typeof(ILevelViewUpdater), typeof(ILevelProgressSavable)).To<LevelViewUpdater>().AsSingle();
+            Container.BindInterfacesAndSelfTo<LevelViewUpdater>().AsSingle();
             Container.Bind(typeof(ILevelLoader), typeof(ILevelProgressSavable), typeof(ICurrentLevelRestartable), typeof(IInitializeByLevelProgress)).To<LevelLoader>().AsSingle();
         }
     }

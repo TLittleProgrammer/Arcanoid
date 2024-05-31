@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.Scenes.GameScene.Features.Helpers;
 using App.Scripts.Scenes.GameScene.Features.Levels.LevelView;

@@ -18,7 +18,6 @@ namespace App.Scripts.Scenes.GameScene.States
     {
         private readonly ITimeScaleAnimator _timeScaleAnimator;
         private readonly IPopupService _popupService;
-        private readonly RootUIViewProvider _rootUIViewProvider;
         private readonly IStateMachine _gameStateMachine;
         private readonly ILevelPackInfoService _levelPackInfoService;
         private readonly IEnergyService _energyService;
@@ -29,7 +28,6 @@ namespace App.Scripts.Scenes.GameScene.States
         public WinState(
             ITimeScaleAnimator timeScaleAnimator,
             IPopupService popupService,
-            RootUIViewProvider rootUIViewProvider,
             IStateMachine gameStateMachine,
             ILevelPackInfoService levelPackInfoService,
             IEnergyService energyService,
@@ -38,7 +36,6 @@ namespace App.Scripts.Scenes.GameScene.States
             _popupService = popupService;
             _timeScaleAnimator = timeScaleAnimator;
             _popupService = popupService;
-            _rootUIViewProvider = rootUIViewProvider;
             _gameStateMachine = gameStateMachine;
             _levelPackInfoService = levelPackInfoService;
             _energyService = energyService;
@@ -122,7 +119,7 @@ namespace App.Scripts.Scenes.GameScene.States
 
         private void ShowPopup()
         {
-            _winPopupView = (WinPopupView)_popupService.Show<WinPopupView>(_rootUIViewProvider.PopupUpViewProvider);
+            _winPopupView = _popupService.Show<WinPopupView>();
             _energyService.AddView(_winPopupView.EnergyView);
         }
 

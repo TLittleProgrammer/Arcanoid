@@ -1,6 +1,4 @@
-﻿using App.Scripts.External.Components;
-using App.Scripts.General.Levels;
-using App.Scripts.Scenes.MainMenuScene.LevelPacks;
+﻿using App.Scripts.Scenes.MainMenuScene.LevelPacks;
 using Zenject;
 
 namespace App.Scripts.Scenes.MainMenuScene.Factories.Levels
