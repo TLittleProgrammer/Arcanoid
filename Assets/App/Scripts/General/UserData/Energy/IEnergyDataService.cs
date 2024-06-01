@@ -1,9 +1,8 @@
 ﻿using System;
-using App.Scripts.External.Initialization;
 
 namespace App.Scripts.General.UserData.Energy
 {
-    public interface IEnergyDataService : IAsyncInitializable
+    public interface IEnergyDataService
     {
         int CurrentValue { get; }
         

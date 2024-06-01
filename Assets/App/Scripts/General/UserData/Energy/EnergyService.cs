@@ -2,10 +2,11 @@
 using App.Scripts.External.UserData;
 using App.Scripts.General.LevelPackInfoService;
 using Cysharp.Threading.Tasks;
+using Zenject;
 
 namespace App.Scripts.General.UserData.Energy
 {
-    public class EnergyDataService : IEnergyDataService
+    public class EnergyDataService : IEnergyDataService, IInitializable
     {
         private readonly IDataProvider<EnergyData> _energyDataProvider;
         private readonly ILevelPackInfoService _levelPackInfoService;
@@ -21,11 +22,9 @@ namespace App.Scripts.General.UserData.Energy
 
         public int CurrentValue => _energyData.Value;
 
-        public async UniTask AsyncInitialize()
+        public void Initialize()
         {
             _energyData = _energyDataProvider.GetData();
-
-            await UniTask.CompletedTask;
         }
 
         public void Add(int value)

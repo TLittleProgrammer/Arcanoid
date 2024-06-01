@@ -4,6 +4,7 @@ using App.Scripts.External.Localisation.Converters;
 using App.Scripts.External.UserData;
 using App.Scripts.General.DateTime;
 using App.Scripts.General.Energy;
+using App.Scripts.General.MVVM.Energy;
 using App.Scripts.General.ProjectInitialization.Settings;
 using App.Scripts.General.UserData.Energy;
 using App.Scripts.General.UserData.Global;
@@ -18,7 +19,7 @@ namespace App.Scripts.General.ProjectInitialization.Installers
         private readonly ILocaleService _localeService;
         private readonly IConverter _converter;
         private readonly TextAsset _localisation;
-        private readonly IEnergyService _energyService;
+        private readonly EnergyModel _energyModel;
         private readonly IEnergyDataService _energyDataService;
         private readonly IDataProvider<GlobalData> _globalDataProvider;
         private readonly EnergySettings _energySettings;
@@ -30,7 +31,7 @@ namespace App.Scripts.General.ProjectInitialization.Installers
             ILocaleService localeService,
             IConverter converter,
             TextAsset localisation,
-            IEnergyService energyService,
+            EnergyModel energyModel,
             IEnergyDataService energyDataService,
             IDataProvider<GlobalData> globalDataProvider,
             EnergySettings energySettings,
@@ -41,7 +42,7 @@ namespace App.Scripts.General.ProjectInitialization.Installers
             _localeService = localeService;
             _converter = converter;
             _localisation = localisation;
-            _energyService = energyService;
+            _energyModel = energyModel;
             _energyDataService = energyDataService;
             _globalDataProvider = globalDataProvider;
             _energySettings = energySettings;
@@ -55,7 +56,6 @@ namespace App.Scripts.General.ProjectInitialization.Installers
             QualitySettings.vSyncCount = _applicationSettings.VSyncCounter;
             
             InitializeLocale();
-            InitializeEnergyServices();
             
             GlobalData globalData = _globalDataProvider.GetData();
             
@@ -92,18 +92,12 @@ namespace App.Scripts.General.ProjectInitialization.Installers
                     _energyDataService.Add(needAddEnergy + _energyDataService.CurrentValue);
                 }
                 
-                _energyService.SetSecondsToAddEnergy(needAddEnergy % _energySettings.SecondsToRecoveryEnergy);
+                _energyModel.SetRemainingSeconds(needAddEnergy % _energySettings.SecondsToRecoveryEnergy);
             }
             else
             {
                 _energyDataService.Add(_energySettings.InitialEnergyCount);
             }
-        }
-
-        private async void InitializeEnergyServices()
-        {
-            await _energyDataService.AsyncInitialize();
-            await _energyService.AsyncInitialize();
         }
 
         private void InitializeLocale()

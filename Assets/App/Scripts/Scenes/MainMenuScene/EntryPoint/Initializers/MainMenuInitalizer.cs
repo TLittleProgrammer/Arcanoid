@@ -1,5 +1,6 @@
 ﻿using App.Scripts.General.Constants;
 using App.Scripts.General.Energy;
+using App.Scripts.General.MVVM.Energy;
 using App.Scripts.General.Popup.AssetManagment;
 using Zenject;
 
@@ -9,22 +10,22 @@ namespace App.Scripts.Scenes.MainMenuScene.Installers
     {
         private readonly IPopupProvider _popupProvider;
         private readonly EnergyView _energyView;
-        private readonly IEnergyService _energyService;
+        private readonly EnergyViewModel _energyViewModel;
 
         public MainMenuInitalizer(
             IPopupProvider popupProvider,
             EnergyView energyView,
-            IEnergyService energyService)
+            EnergyViewModel energyViewModel)
         {
             _popupProvider = popupProvider;
             _energyView = energyView;
-            _energyService = energyService;
+            _energyViewModel = energyViewModel;
         }
         
         public async void Initialize()
         {
             await _popupProvider.AsyncInitialize(Pathes.PathToPopups);
-            _energyService.AddView(_energyView);
+            _energyViewModel.AddView(_energyView);
         }
     }
 }

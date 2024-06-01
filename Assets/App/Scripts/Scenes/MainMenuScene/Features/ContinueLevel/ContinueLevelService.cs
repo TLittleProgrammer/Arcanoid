@@ -5,6 +5,7 @@ using App.Scripts.General.Constants;
 using App.Scripts.General.Energy;
 using App.Scripts.General.LevelPackInfoService;
 using App.Scripts.General.Levels;
+using App.Scripts.General.MVVM.Energy;
 using App.Scripts.General.States;
 using UnityEngine.UI;
 using Zenject;
@@ -17,20 +18,20 @@ namespace App.Scripts.Scenes.MainMenuScene.ContinueLevel
         private readonly ISaveLoadService _saveLoadService;
         private readonly IStateMachine _stateMachine;
         private readonly ILevelPackInfoService _levelPackInfoService;
-        private readonly IEnergyService _energyService;
+        private readonly EnergyViewModel _energyViewModel;
 
         public ContinueLevelService(
             Button playButton,
             ISaveLoadService saveLoadService,
             IStateMachine stateMachine,
             ILevelPackInfoService levelPackInfoService,
-            IEnergyService energyService)
+            EnergyViewModel energyViewModel)
         {
             _playButton = playButton;
             _saveLoadService = saveLoadService;
             _stateMachine = stateMachine;
             _levelPackInfoService = levelPackInfoService;
-            _energyService = energyService;
+            _energyViewModel = energyViewModel;
         }
 
         public void Initialize()
@@ -52,7 +53,7 @@ namespace App.Scripts.Scenes.MainMenuScene.ContinueLevel
                 NeedContinue = true
             });
 
-            _energyService.Dispose();
+            _energyViewModel.Dispose();
 
             _stateMachine.Enter<LoadingSceneState, string>(SceneNaming.Game);
         }

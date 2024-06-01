@@ -1,6 +1,7 @@
 ﻿using System;
 using App.Scripts.General.Levels;
 using App.Scripts.General.UserData.Levels;
+using UnityEngine;
 
 namespace App.Scripts.General.LevelPackInfoService
 {
@@ -55,6 +56,7 @@ namespace App.Scripts.General.LevelPackInfoService
             }
             catch (NullReferenceException nullReference)
             {
+                Debug.Log($"Встречен nullref при попытке получить текущий пак, уровень запускался сразу с игровой сцены\n{nullReference}");
                 return null;
             }
         }

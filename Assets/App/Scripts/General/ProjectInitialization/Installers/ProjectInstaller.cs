@@ -8,6 +8,7 @@ using App.Scripts.General.DateTime;
 using App.Scripts.General.Energy;
 using App.Scripts.General.Infrastructure;
 using App.Scripts.General.LevelPackInfoService;
+using App.Scripts.General.MVVM.Energy;
 using App.Scripts.General.Popup;
 using App.Scripts.General.Popup.AssetManagment;
 using App.Scripts.General.Popup.Factory;
@@ -18,6 +19,7 @@ using App.Scripts.General.UserData.Global;
 using App.Scripts.General.UserData.Levels;
 using UnityEngine;
 using Zenject;
+using EnergyViewModel = App.Scripts.General.MVVM.Energy.EnergyViewModel;
 
 namespace App.Scripts.General.ProjectInitialization.Installers
 {
@@ -34,17 +36,18 @@ namespace App.Scripts.General.ProjectInitialization.Installers
             Container.Bind<LevelPackProgressDataService>().AsSingle();
             Container.Bind<ILocaleService>().To<LocaleService>().AsSingle();
             Container.Bind<IConverter>().To<CsvConverter>().AsSingle();
-            Container.Bind<IEnergyDataService>().To<EnergyDataService>().AsSingle();
-            Container.Bind<IEnergyService>().To<EnergyService>().AsSingle();
             Container.Bind<IDateTimeService>().To<DateTimeService>().AsSingle();
             Container.Bind<IGlobalDataService>().To<GlobalDataService>().AsSingle();
             Container.Bind<InfoBetweenScenes.InfoBetweenScenes>().AsSingle();
-
             Container.Bind<IPopupProvider>().To<ResourcesPopupProvider>().AsSingle();
             Container.Bind<IPopupFactory>().To<PopupFactory>().AsSingle();
             Container.Bind(typeof(IPopupService), typeof(IGeneralRestartable)).To<PopupService>().AsSingle();
 
+            Container.BindInterfacesAndSelfTo<EnergyDataService>().AsSingle();
             Container.BindInterfacesAndSelfTo<LoadingSceneState>().AsSingle();
+            Container.BindInterfacesAndSelfTo<EnergyModel>().AsSingle();
+            Container.BindInterfacesAndSelfTo<EnergyViewModel>().AsSingle();
+            
             Container.Bind<ILevelPackInfoService>().To<LevelPackInfoService.LevelPackInfoService>().AsSingle();
             BindStatemachine();
             
