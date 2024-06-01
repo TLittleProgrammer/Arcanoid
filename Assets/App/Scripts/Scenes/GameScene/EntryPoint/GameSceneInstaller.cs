@@ -79,6 +79,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             BehaviourTreeInstaller.Install(Container);
             CommandsInstaller.Install(Container);
             MVVMInstaller.Install(Container, _openMenuPopupButton);
+            MiniGunInstaller.Install(Container);
             
             Container.Bind<ITweenersLocator>().To<TweenersLocator>().AsSingle();
             Container.Bind<IScoreAnimationService>().To<ScoreAnimationService>().AsSingle();
@@ -86,8 +87,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.Bind<IRectMousePositionChecker>().To<RectMousePositionChecker>().AsSingle().WithArguments(_rectTransformableViews.ToList());
             Container.Bind<ICameraService>().To<CameraService>().AsSingle().WithArguments(_camera);
             Container.Bind<IScreenInfoProvider>().To<ScreenInfoProvider>().AsSingle();
-            Container.BindInterfacesAndSelfTo<BulletPositionChecker>().AsSingle();
-            Container.BindInterfacesAndSelfTo<MiniGunService>().AsSingle();
+
             Container.BindInterfacesAndSelfTo<BirdsService>().AsSingle();
             Container.BindInterfacesAndSelfTo<BirdRespawnService>().AsSingle();
             Container.BindInterfacesAndSelfTo<BirdsHealthContainer>().AsSingle();

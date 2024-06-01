@@ -89,7 +89,7 @@ MonoBehaviour:
   BallSpeedDuration: 10
   SlowDownPercentFromAll: 0.25
   AcceleratePercentFromAll: 1.5
-  ShapeSizeDuration: 3
+  ShapeSizeDuration: 7
   AddPercent: 2
   MinusPercent: 1
   ShapeSpeedDuration: 3
@@ -98,7 +98,7 @@ MonoBehaviour:
   AddHealth: 1
   MinusHealth: 1
   FireballDuration: 4
-  StickyDuration: 5
+  StickyDuration: 10
   MiniGunDuration: 7
   BulletTimeOffset: 0.75
   BulletDamage: 1
