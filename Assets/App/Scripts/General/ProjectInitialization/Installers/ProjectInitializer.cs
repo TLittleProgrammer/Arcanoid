@@ -84,7 +84,7 @@ namespace App.Scripts.General.ProjectInitialization.Installers
                 {
                     if (_energyDataService.CurrentValue < _energySettings.MaxEnergyCount)
                     {
-                        _energyDataService.Add(Mathf.Abs(_energySettings.MaxEnergyCount - _energyDataService.CurrentValue - needAddEnergy));
+                        _energyDataService.Add(_energySettings.MaxEnergyCount - _energyDataService.CurrentValue);
                     }
                 }
                 else
