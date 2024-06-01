@@ -17,8 +17,7 @@ namespace App.Scripts.Scenes.Bootstrap.Installers
 
         public void Initialize()
         {
-            _stateMachine.Enter<LoadingSceneState, string, bool, Action>(SceneNaming.MainMenu, true, null);
+            _stateMachine.Enter<LoadingSceneState, string>(SceneNaming.MainMenu);
         }
     }
-    
 }

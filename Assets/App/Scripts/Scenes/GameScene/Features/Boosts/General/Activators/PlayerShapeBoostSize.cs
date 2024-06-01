@@ -13,19 +13,19 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
         private readonly PlayerView _playerView;
         private readonly IShapePositionChecker _shapePositionChecker;
         private readonly BoostsSettings _boostsSettings;
-        private readonly IMiniGunService _miniGunService;
+        private readonly IBulletMovement _bulletMovement;
 
         public PlayerShapeBoostSize(
             PlayerView playerView,
             IShapePositionChecker shapePositionChecker,
             BoostsSettings boostsSettings,
             IBoostContainer boostContainer,
-            IMiniGunService miniGunService)
+            IBulletMovement bulletMovement)
         {
             _playerView = playerView;
             _shapePositionChecker = shapePositionChecker;
             _boostsSettings = boostsSettings;
-            _miniGunService = miniGunService;
+            _bulletMovement = bulletMovement;
 
             boostContainer.BoostEnded += OnBoostEnded;
         }
@@ -48,7 +48,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
             await DOVirtual.Float(currentWidth, to, 0.5f, UpdateSpriteWidth);
             _shapePositionChecker.ChangeShapeScale();
 
-            _miniGunService.RecalculateSpawnPositions();
+            _bulletMovement.RecalculateSpawnPositions();
         }
 
         private void UpdateSpriteWidth(float value)
@@ -62,15 +62,15 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
             _shapePositionChecker.ChangeShapeScale();
         }
 
-        private void OnBoostEnded(BoostTypeId boostType)
+        private async void OnBoostEnded(BoostTypeId boostType)
         {
             if (boostType is BoostTypeId.PlayerShapeMinusSize or BoostTypeId.PlayerShapeAddSize)
             {
                 float currentWidth = _playerView.SpriteRenderer.size.x;
-                DOVirtual.Float(currentWidth, 1.5f, 0.5f, UpdateSpriteWidth);
+                await DOVirtual.Float(currentWidth, 1.5f, 0.5f, UpdateSpriteWidth);
                 
                 _shapePositionChecker.ChangeShapeScale();
-                _miniGunService.RecalculateSpawnPositions();
+                _bulletMovement.RecalculateSpawnPositions();
             }
         }
     }

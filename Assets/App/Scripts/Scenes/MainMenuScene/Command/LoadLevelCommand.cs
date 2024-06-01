@@ -48,8 +48,7 @@ namespace App.Scripts.Scenes.MainMenuScene.Command
 
             _energyService.Dispose();
 
-            _stateMachine.Enter<LoadingSceneState, string, bool, Action>(SceneNaming.Game, false, null);
-
+            _stateMachine.Enter<LoadingSceneState, string>(SceneNaming.Game);
         }
     }
 }

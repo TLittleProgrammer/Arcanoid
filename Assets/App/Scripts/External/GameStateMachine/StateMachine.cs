@@ -20,32 +20,18 @@ namespace App.Scripts.External.GameStateMachine
 
         public IState CurrentState => _activeState as IState;
 
-        public void Enter<TState>() where TState : class, IState
+        public UniTask Enter<TState>() where TState : class, IState
         {
             TState state = ChangeState<TState>();
             
-            state.Enter();
+            return  state.Enter();
         }
 
-        public void Enter<TState, TParam>(TParam param) where TState : class, IState<TParam>
+        public UniTask Enter<TState, TParam>(TParam param) where TState : class, IState<TParam>
         {
             TState state = ChangeState<TState>();
             
-            state.Enter(param);
-        }
-
-        public void Enter<TState, TParam, TSecondParam>(TParam param, TSecondParam secondParam) where TState : class, IState<TParam, TSecondParam>
-        {
-            TState state = ChangeState<TState>();
-            
-            state.Enter(param, secondParam);
-        }
-        
-        public void Enter<TState, TParam, TSecondParam, TThirdParam>(TParam param, TSecondParam secondParam, TThirdParam thirdParam) where TState : class, IState<TParam, TSecondParam, TThirdParam>
-        {
-            TState state = ChangeState<TState>();
-            
-            state.Enter(param, secondParam, thirdParam);
+            return state.Enter(param);
         }
 
         private TState ChangeState<TState>() where TState : class, IExitableState
