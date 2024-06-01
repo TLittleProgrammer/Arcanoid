@@ -14,7 +14,6 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
         private readonly List<IInitializeByLevelProgress> _initializeByLevelProgresses;
         private readonly ISaveLoadService _saveLoadService;
         private readonly IGridPositionResolver _gridPositionResolver;
-        private readonly IUserDataContainer _userDataContainer;
 
         public BootstrapContinueLoadLevelState(
             IStateMachine stateMachine,

@@ -20,7 +20,7 @@ namespace App.Scripts.General.ProjectInitialization.Installers
         private readonly TextAsset _localisation;
         private readonly IEnergyService _energyService;
         private readonly IEnergyDataService _energyDataService;
-        private readonly IUserDataContainer _userDataContainer;
+        private readonly IDataProvider<GlobalData> _globalDataProvider;
         private readonly EnergySettings _energySettings;
         private readonly IDateTimeService _dateTimeService;
         private readonly IGlobalDataService _globalDataService;
@@ -32,7 +32,7 @@ namespace App.Scripts.General.ProjectInitialization.Installers
             TextAsset localisation,
             IEnergyService energyService,
             IEnergyDataService energyDataService,
-            IUserDataContainer userDataContainer,
+            IDataProvider<GlobalData> globalDataProvider,
             EnergySettings energySettings,
             IDateTimeService dateTimeService,
             IGlobalDataService globalDataService)
@@ -43,7 +43,7 @@ namespace App.Scripts.General.ProjectInitialization.Installers
             _localisation = localisation;
             _energyService = energyService;
             _energyDataService = energyDataService;
-            _userDataContainer = userDataContainer;
+            _globalDataProvider = globalDataProvider;
             _energySettings = energySettings;
             _dateTimeService = dateTimeService;
             _globalDataService = globalDataService;
@@ -57,7 +57,7 @@ namespace App.Scripts.General.ProjectInitialization.Installers
             InitializeLocale();
             InitializeEnergyServices();
             
-            GlobalData globalData = (GlobalData)_userDataContainer.GetData<GlobalData>();
+            GlobalData globalData = _globalDataProvider.GetData();
             
             InitializeEnergyData(globalData);
             CheckFirstEnter(globalData);
@@ -70,7 +70,7 @@ namespace App.Scripts.General.ProjectInitialization.Installers
             if (globalData.IsFirstEnter)
             {
                 globalData.IsFirstEnter = false;
-                _userDataContainer.SaveData<GlobalData>();
+                _globalDataProvider.SaveData(globalData);
             }
         }
 

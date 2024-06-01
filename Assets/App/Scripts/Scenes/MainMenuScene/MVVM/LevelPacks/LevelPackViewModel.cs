@@ -19,14 +19,14 @@ namespace App.Scripts.Scenes.MainMenuScene.LevelPacks.MonoBehaviours
 
         public LevelPackViewModel(
             LevelPackModel levelPackModel,
-            IUserDataContainer userDataContainer,
+            IDataProvider<LevelPackProgressDictionary> levelPackProvider,
             LevelItemViewByTypeProvider levelItemViewByTypeProvider,
             ILoadLevelCommand loadLevelCommand)
         {
             _levelPackModel = levelPackModel;
             _levelItemViewByTypeProvider = levelItemViewByTypeProvider;
             _loadLevelCommand = loadLevelCommand;
-            _levelPackProgressDictionary = (LevelPackProgressDictionary)userDataContainer.GetData<LevelPackProgressDictionary>();
+            _levelPackProgressDictionary = levelPackProvider.GetData();
         }
 
         public void CreateAllLeveViewPacks(ITransformable levelPackContainerView)

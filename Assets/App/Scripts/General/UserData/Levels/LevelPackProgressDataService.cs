@@ -5,17 +5,16 @@ namespace App.Scripts.General.UserData.Levels
 {
     public class LevelPackProgressDataService
     {
-        private readonly IUserDataContainer _userDataContainer;
+        private readonly IDataProvider<LevelPackProgressDictionary> _levelPackProgressProvider;
 
-        public LevelPackProgressDataService(IUserDataContainer userDataContainer)
+        public LevelPackProgressDataService(IDataProvider<LevelPackProgressDictionary> levelPackProgressProvider)
         {
-            _userDataContainer = userDataContainer;
+            _levelPackProgressProvider = levelPackProgressProvider;
         }
         
         public void PassLevel(int packIndex, int levelIndex)
         {
-            LevelPackProgressDictionary levelPackDictionary =
-                (LevelPackProgressDictionary) _userDataContainer.GetData<LevelPackProgressDictionary>();
+            LevelPackProgressDictionary levelPackDictionary = _levelPackProgressProvider.GetData();
             
             if (!levelPackDictionary.ContainsKey(packIndex))
             {
@@ -27,13 +26,12 @@ namespace App.Scripts.General.UserData.Levels
 
             levelPackDictionary[packIndex].PassedLevels++;
             
-            _userDataContainer.SaveData<LevelPackProgressDictionary>();
+            _levelPackProgressProvider.SaveData(levelPackDictionary);
         }
 
         public int GetPassedLevelsForPackIndex(int packIndex)
         {
-            LevelPackProgressDictionary levelPackDictionary =
-                (LevelPackProgressDictionary) _userDataContainer.GetData<LevelPackProgressDictionary>();
+            LevelPackProgressDictionary levelPackDictionary = _levelPackProgressProvider.GetData();
             
             if (!levelPackDictionary.ContainsKey(packIndex))
             {
