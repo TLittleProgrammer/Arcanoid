@@ -6,6 +6,7 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using DG.Tweening.Core;
 using DG.Tweening.Plugins.Options;
+using PlasticGui.Help;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -39,6 +40,17 @@ namespace App.Scripts.Scenes.GameScene.MVVM.Popups.Menu
         {
             _menuPopupView = menuPopupView;
             SubscribeOnCommands(menuPopupView);
+            Show();
+        }
+
+        private void Show()
+        {
+            Sequence sequence = DOTween.Sequence(); 
+            sequence
+                .Append(_menuPopupView.Transform.DOScale(Vector3.one, 1f).From(Vector3.zero))
+                .Append(_menuPopupView.RestartButton.transform.DOScale(Vector3.one, 0.25f).From(Vector3.zero).SetEase(Ease.OutBounce))
+                .Append(_menuPopupView.BackButton.transform.DOScale(Vector3.one, 0.25f).From(Vector3.zero).SetEase(Ease.OutBounce))
+                .Append(_menuPopupView.ContinueButton.transform.DOScale(Vector3.one, 0.25f).From(Vector3.zero).SetEase(Ease.OutBounce));
         }
 
         private void SubscribeOnCommands(IMenuPopupView menuPopupView)

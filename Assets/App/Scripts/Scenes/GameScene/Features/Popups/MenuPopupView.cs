@@ -23,13 +23,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Popups
 
         public override UniTask Show()
         {
-            _sequence = DOTween.Sequence();
-            _sequence
-                .Append(transform.DOScale(Vector3.one, 1f).From(Vector3.zero))
-                .Append(_restartButton.transform.DOScale(Vector3.one, 0.25f).From(Vector3.zero).SetEase(Ease.OutBounce))
-                .Append(_backButton.transform.DOScale(Vector3.one, 0.25f).From(Vector3.zero).SetEase(Ease.OutBounce))
-                .Append(_continueButton.transform.DOScale(Vector3.one, 0.25f).From(Vector3.zero).SetEase(Ease.OutBounce));
-            
             return UniTask.CompletedTask;
         }
     }
