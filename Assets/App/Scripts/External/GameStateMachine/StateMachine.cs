@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using Random = UnityEngine.Random;
 
 namespace App.Scripts.External.GameStateMachine
 {
@@ -11,7 +12,18 @@ namespace App.Scripts.External.GameStateMachine
 
         private IExitableState _activeState;
 
-        public UniTask AsyncInitialize(IEnumerable<IExitableState> param)
+        public StateMachine()
+        {
+            
+        }
+        
+        public StateMachine(List<IExitableState> param)
+        {
+            _states = param
+                .ToDictionary(x => x.GetType(), x => x);
+        }
+
+        public UniTask AsyncInitialize(List<IExitableState> param)
         {
             _states = param
                 .ToDictionary(x => x.GetType(), x => x);

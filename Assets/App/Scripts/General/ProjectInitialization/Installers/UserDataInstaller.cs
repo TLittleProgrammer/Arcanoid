@@ -1,6 +1,5 @@
 ﻿using App.Scripts.External.UserData;
 using App.Scripts.External.UserData.SaveLoad;
-using App.Scripts.General.LevelPackInfoService;
 using App.Scripts.General.UserData.Energy;
 using App.Scripts.General.UserData.Global;
 using App.Scripts.General.UserData.Levels.Data;
@@ -12,14 +11,11 @@ namespace App.Scripts.General.ProjectInitialization.Installers
     {
         public override void InstallBindings()
         {
-            Container.BindInterfacesAndSelfTo<UserDataInstaller>().FromInstance(this).AsSingle();
             Container.Bind<ISaveLoadService>().To<SaveLoadService>().AsSingle();
             
             Container.Bind<IDataProvider<GlobalData>>().To<DataProvider<GlobalData>>().AsSingle();
             Container.Bind<IDataProvider<EnergyData>>().To<DataProvider<EnergyData>>().AsSingle();
             Container.Bind<IDataProvider<LevelPackProgressDictionary>>().To<DataProvider<LevelPackProgressDictionary>>().AsSingle();
-            
-            Container.Bind<ILevelPackInfoService>().To<LevelPackInfoService.LevelPackInfoService>().AsSingle();
         }
     }
 }

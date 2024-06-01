@@ -4,7 +4,7 @@ using Cysharp.Threading.Tasks;
 
 namespace App.Scripts.External.GameStateMachine
 {
-    public interface IStateMachine : IAsyncInitializable<IEnumerable<IExitableState>>
+    public interface IStateMachine : IAsyncInitializable<List<IExitableState>>
     {
         IState CurrentState { get; }
         
