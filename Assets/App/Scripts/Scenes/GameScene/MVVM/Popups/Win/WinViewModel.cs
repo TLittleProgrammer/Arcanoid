@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using App.Scripts.Scenes.GameScene.Command;
+using App.Scripts.Scenes.GameScene.Command.Win;
 using App.Scripts.Scenes.GameScene.Features.Dotween;
 using App.Scripts.Scenes.GameScene.Features.Popups;
 using App.Scripts.Scenes.GameScene.Features.Settings;
@@ -15,7 +16,7 @@ namespace App.Scripts.Scenes.GameScene.MVVM.Popups.Win
         private readonly WinContinueButtonAnimationSettings _winContinueButtonAnimationSettings;
         private readonly ITweenersLocator _tweenersLocator;
         private readonly CircleWinEffectSettings _circleWinEffectSettings;
-        private readonly IContinueCommand _continueCommand;
+        private readonly ILoadNextLevelCommand _loadNextLevelCommand;
         private readonly IDisableButtonsCommand _disableButtonsCommand;
 
         private IWinPopupView _winPopupView;
@@ -24,13 +25,13 @@ namespace App.Scripts.Scenes.GameScene.MVVM.Popups.Win
             WinContinueButtonAnimationSettings winContinueButtonAnimationSettings,
             ITweenersLocator tweenersLocator,
             CircleWinEffectSettings circleWinEffectSettings,
-            IContinueCommand continueCommand,
+            ILoadNextLevelCommand loadNextLevelCommand,
             IDisableButtonsCommand disableButtonsCommand)
         {
             _winContinueButtonAnimationSettings = winContinueButtonAnimationSettings;
             _tweenersLocator = tweenersLocator;
             _circleWinEffectSettings = circleWinEffectSettings;
-            _continueCommand = continueCommand;
+            _loadNextLevelCommand = loadNextLevelCommand;
             _disableButtonsCommand = disableButtonsCommand;
         }
 
@@ -51,7 +52,7 @@ namespace App.Scripts.Scenes.GameScene.MVVM.Popups.Win
         private void Continue()
         {
             DisableButtons();
-            _continueCommand.Execute();
+            _loadNextLevelCommand.Execute();
         }
 
         private void AnimateCircleEffect()

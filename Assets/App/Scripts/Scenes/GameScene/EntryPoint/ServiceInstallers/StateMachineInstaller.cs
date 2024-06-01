@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.Scenes.GameScene.Command;
+using App.Scripts.Scenes.GameScene.Command.Win;
 using App.Scripts.Scenes.GameScene.Features.Helpers;
 using App.Scripts.Scenes.GameScene.Features.Levels.LevelView;
 using App.Scripts.Scenes.GameScene.Features.Restart;
@@ -66,6 +67,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
         
             Container.Bind<IRestartService>().To<RestartService>().AsSingle().WithArguments(stateMachine);
             Container.BindInterfacesAndSelfTo<ContinueCommand>().AsSingle().WithArguments(stateMachine);
+            Container.BindInterfacesAndSelfTo<LoadNextLeveCommand>().AsSingle().WithArguments(stateMachine);
         }
     }
 }

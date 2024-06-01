@@ -171,7 +171,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.General.View
             {
                 for (int j = 0; j < _levelGridItemData.Width; j++)
                 {
-                    GridItemData gridItemData = _levelGridItemData[i, j];
+                    GridItemData gridItemData = _levelGridItemData[j, i];
 
                     foreach (OnTopSprites topSprites in gridItemData.Sprites)
                     {
