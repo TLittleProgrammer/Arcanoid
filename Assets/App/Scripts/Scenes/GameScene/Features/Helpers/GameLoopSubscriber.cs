@@ -2,6 +2,7 @@
 using App.Scripts.Scenes.GameScene.Features.Entities.Ball;
 using App.Scripts.Scenes.GameScene.Features.Healthes;
 using App.Scripts.Scenes.GameScene.Features.Levels.LevelProgress;
+using App.Scripts.Scenes.GameScene.MVVM.Popups.Loose;
 using App.Scripts.Scenes.GameScene.States;
 
 namespace App.Scripts.Scenes.GameScene.Features.Helpers

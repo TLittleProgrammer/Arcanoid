@@ -103,7 +103,6 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             BindHealthPointService();
             
             Container.Bind<IWallLoader>().To<WallLoader>().AsSingle().WithArguments(_wallPrefab);
-            Container.Bind<IRestartService>().To<RestartService>().AsSingle();
             Container.Bind<IEntityViewService>().To<EntityViewService>().AsSingle();
             Container.Bind<IServicesActivator>().To<ServiceActivator>().AsSingle();
             Container.Bind<IShowLevelAnimation>().To<SimpleShowLevelAnimation>().AsSingle();

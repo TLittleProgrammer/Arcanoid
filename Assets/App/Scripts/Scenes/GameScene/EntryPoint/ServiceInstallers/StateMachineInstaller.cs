@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.Scenes.GameScene.Features.Helpers;
 using App.Scripts.Scenes.GameScene.Features.Levels.LevelView;
+using App.Scripts.Scenes.GameScene.Features.Restart;
 using App.Scripts.Scenes.GameScene.States;
 using App.Scripts.Scenes.GameScene.States.Bootstrap;
 using Zenject;
@@ -59,6 +61,9 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
             Container.BindInterfacesTo<LoadNextLevelState>().AsSingle().WithArguments(_levelPackInfoView, stateMachine);
             Container.BindInterfacesTo<MenuPopupState>().AsSingle();
             Container.BindInterfacesTo<LooseState>().AsSingle();
+        
+        
+            Container.Bind<IRestartService>().To<RestartService>().AsSingle().WithArguments(stateMachine);
         }
     }
 }

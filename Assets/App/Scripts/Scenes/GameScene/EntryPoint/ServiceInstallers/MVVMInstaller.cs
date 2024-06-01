@@ -2,6 +2,7 @@
 using App.Scripts.Scenes.GameScene.Command;
 using App.Scripts.Scenes.GameScene.Features.Popups.Buttons;
 using App.Scripts.Scenes.GameScene.MVVM.Main;
+using App.Scripts.Scenes.GameScene.MVVM.Popups.Loose;
 using App.Scripts.Scenes.GameScene.MVVM.Popups.Menu;
 using Zenject;
 
@@ -20,7 +21,8 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
         {
             Container.Bind<IOpenMenuPopupCommand>().To<OpenMenuPopupCommand>().AsSingle();
             Container.BindInterfacesAndSelfTo<MainViewModel>().AsSingle().WithArguments(_openMenuPopupButton);
-            Container.BindInterfacesAndSelfTo<MenuViewModel>().AsSingle().WhenNotInjectedInto<IStateMachine>();
+            Container.BindInterfacesAndSelfTo<MenuViewModel>().AsSingle();
+            Container.BindInterfacesAndSelfTo<LooseViewModel>().AsSingle();
         }
     }
 }
