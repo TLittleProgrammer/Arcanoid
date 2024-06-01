@@ -22,8 +22,17 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress
         [JsonProperty("GridSizeY")]
         public int GridSizeY;
 
+        [JsonProperty("PlatformData")]
+        public PlatformSaveData PlatformData;
+
+        [JsonProperty("BallsData")] 
+        public BallsSaveData BallsData;
+        
         [JsonProperty("LevelData")]
         public LevelData LevelData;
+        
+        [JsonProperty("ProgressedLevelData")]
+        public ProgressedLevelData ProgressedLevelData;
         
         [JsonProperty("EntityDatas")]
         public List<EntitySaveData> EntityDatas;
@@ -36,6 +45,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress
         [JsonProperty("ViewBoostData")]
         public List<SaveBoostViewData> ViewBoostDatas;
         
+        [JsonIgnore]
         public string FileName => SavableConstants.CurrentLevelProgressFileName;
     }
 }

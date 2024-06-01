@@ -1,12 +1,13 @@
 ﻿using App.Scripts.Scenes.GameScene.Features.Components;
 using App.Scripts.Scenes.GameScene.Features.Input;
+using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress;
 using App.Scripts.Scenes.GameScene.Features.PositionChecker;
 using App.Scripts.Scenes.GameScene.Features.Time;
 using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.Move
 {
-    public sealed class PlayerShapeMover : IPlayerShapeMover
+    public sealed class PlayerShapeMover : IPlayerShapeMover, ILevelProgressSavable, IInitializeByLevelProgress
     {
         private readonly IPositionable _playerPositionable;
         private readonly ITimeProvider _timeProvider;
@@ -95,6 +96,30 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.Move
         public void ChangeSpeed(float speedScale)
         {
             _speed = _shapeMoverSettings.Speed * speedScale;
+        }
+
+        public void SaveProgress(LevelDataProgress levelDataProgress)
+        {
+            PlatformSaveData platformSaveData = new();
+            platformSaveData.Position = new()
+            {
+                X = _playerPositionable.Position.x,
+                Y = _playerPositionable.Position.y,
+                Z = _playerPositionable.Position.z,
+            };
+
+            levelDataProgress.PlatformData = platformSaveData;
+        }
+
+        public void LoadProgress(LevelDataProgress levelDataProgress)
+        {
+            Vector3 targetPosition = new(
+                levelDataProgress.PlatformData.Position.X,
+                levelDataProgress.PlatformData.Position.Y,
+                levelDataProgress.PlatformData.Position.Z
+                );
+            
+            _playerPositionable.Position = targetPosition;
         }
     }
 }

@@ -129,7 +129,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
         private void BindHealthPointService()
         {
             Container.BindInterfacesTo<ViewHealthPointService>().AsSingle().WithArguments(_healthParent as ITransformable);
-            Container.Bind(typeof(IHealthContainer), typeof(ILevelProgressSavable), typeof(IGeneralRestartable)).To<HealthContainer>().AsSingle();
+            Container.BindInterfacesTo<HealthContainer>().AsSingle();
         }
 
         private void BindPlayerMoving()
@@ -147,7 +147,9 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
                     typeof(SimpleMovingStrategy),
                     typeof(BootstrapLoadLevelState),
                     typeof(ShapeBoostSpeed),
-                    typeof(RestartState));
+                    typeof(RestartState),
+                    typeof(LevelProgressSaveService),
+                    typeof(BootstrapContinueLoadLevelState));
         }
     }
 }

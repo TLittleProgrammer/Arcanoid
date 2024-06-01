@@ -135,9 +135,9 @@ namespace App.Scripts.Scenes.GameScene.Features.Healthes
         public void LoadProgress(LevelDataProgress levelDataProgress)
         {
             _maxHealthCount = levelDataProgress.AllHealthes;
-            
+
             InstallAllViews();
-            UpdateHealth(_maxHealthCount - levelDataProgress.CurrentHealth);
+            UpdateHealth(-(_maxHealthCount - levelDataProgress.CurrentHealth));
         }
     }
 }

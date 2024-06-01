@@ -4,7 +4,6 @@ using App.Scripts.General.Energy;
 using App.Scripts.General.LevelPackInfoService;
 using App.Scripts.General.Levels;
 using App.Scripts.General.Popup;
-using App.Scripts.General.RootUI;
 using App.Scripts.General.UserData.Energy;
 using App.Scripts.Scenes.GameScene.Features.Popups;
 using App.Scripts.Scenes.GameScene.Features.Time;

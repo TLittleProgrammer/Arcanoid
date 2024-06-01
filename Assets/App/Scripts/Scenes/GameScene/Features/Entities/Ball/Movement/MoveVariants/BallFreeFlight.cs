@@ -2,6 +2,7 @@
 using App.Scripts.Scenes.GameScene.Features.Settings;
 using App.Scripts.Scenes.GameScene.Features.Time;
 using Cysharp.Threading.Tasks;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball.Movement.MoveVariants
@@ -42,15 +43,13 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball.Movement.MoveVaria
             await UniTask.CompletedTask;
         }
 
-        private Vector2 Velocity
+        public Vector2 Velocity
         {
             get => _ballRigidbody.Rigidbody2D.velocity;
             set => _ballRigidbody.Rigidbody2D.velocity = value;
         }
 
         private float Speed => _speed * _multiplier;
-        
-        public float ConstantSpeed => _constantSpeed;
 
         public void SetSpeed(float targetValue)
         {
@@ -62,11 +61,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball.Movement.MoveVaria
         {
             _lastDirection = Velocity.normalized;
             Velocity = Vector2.zero;
-        }
-
-        public void Continue()
-        {
-            Velocity = _lastDirection * Speed;
         }
 
         public void SetSpeedMultiplier(float speedMultiplier)
@@ -94,6 +88,12 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball.Movement.MoveVaria
             {
                 Velocity = Velocity.normalized * Speed;
             }
+        }
+
+        public void SetVelocity(Vector2 velocity)
+        {
+            _lastDirection = velocity;
+            Velocity = velocity;
         }
 
         public void Restart()

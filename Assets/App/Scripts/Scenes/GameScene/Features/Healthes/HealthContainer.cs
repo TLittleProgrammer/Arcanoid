@@ -5,6 +5,7 @@ using App.Scripts.Scenes.GameScene.Features.Constants;
 using App.Scripts.Scenes.GameScene.Features.Levels.General;
 using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Healthes
 {
@@ -53,6 +54,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Healthes
                     RestartServicesIfNeed(healthCount);
                 }
                 
+               
                 _viewHealthPointService.UpdateHealth(healthCount);
             }    
         }
@@ -89,8 +91,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Healthes
 
         public void LoadProgress(LevelDataProgress levelDataProgress)
         {
-            _maxHealthCounter = levelDataProgress.AllHealthes;
-            UpdateHealth(-(_maxHealthCounter - levelDataProgress.CurrentHealth));
+            _maxHealthCounter = _currentHealthCounter = levelDataProgress.AllHealthes;
         }
     }
 }
