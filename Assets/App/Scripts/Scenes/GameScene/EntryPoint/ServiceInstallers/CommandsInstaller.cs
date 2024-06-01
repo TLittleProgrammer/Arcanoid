@@ -8,7 +8,6 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
         public override void InstallBindings()
         {
             Container.BindInterfacesAndSelfTo<DisableButtonsCommand>().AsSingle();
-            Container.BindInterfacesAndSelfTo<ContinueCommand>().AsCached().Lazy();
             Container.BindInterfacesAndSelfTo<BackCommand>().AsSingle();
             Container.BindInterfacesAndSelfTo<RestartCommand>().AsSingle();
         }

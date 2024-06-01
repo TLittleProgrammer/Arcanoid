@@ -1,6 +1,7 @@
 ﻿using System;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General;
-using Unity.Plastic.Newtonsoft.Json;
+using Newtonsoft.Json;
+
 
 namespace App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress
 {

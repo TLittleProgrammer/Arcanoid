@@ -8,6 +8,7 @@ using App.Scripts.General.RootUI;
 using App.Scripts.General.UserData.Energy;
 using App.Scripts.Scenes.GameScene.Features.Popups;
 using App.Scripts.Scenes.GameScene.Features.Time;
+using App.Scripts.Scenes.GameScene.MVVM.Popups.Win;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
@@ -22,6 +23,7 @@ namespace App.Scripts.Scenes.GameScene.States
         private readonly ILevelPackInfoService _levelPackInfoService;
         private readonly IEnergyService _energyService;
         private readonly IEnergyDataService _energyDataService;
+        private readonly WinViewModel _winViewModel;
 
         private WinPopupView _winPopupView;
 
@@ -31,7 +33,8 @@ namespace App.Scripts.Scenes.GameScene.States
             IStateMachine gameStateMachine,
             ILevelPackInfoService levelPackInfoService,
             IEnergyService energyService,
-            IEnergyDataService energyDataService)
+            IEnergyDataService energyDataService,
+            WinViewModel winViewModel)
         {
             _popupService = popupService;
             _timeScaleAnimator = timeScaleAnimator;
@@ -40,6 +43,7 @@ namespace App.Scripts.Scenes.GameScene.States
             _levelPackInfoService = levelPackInfoService;
             _energyService = energyService;
             _energyDataService = energyDataService;
+            _winViewModel = winViewModel;
         }
         
         public async UniTask Enter()
@@ -47,12 +51,11 @@ namespace App.Scripts.Scenes.GameScene.States
             await _timeScaleAnimator.Animate(0f);
             
             ShowPopup();
-            UpdateVisual();
-            Subscribe();
+            //UpdateVisual();
             
             _energyDataService.Add(_levelPackInfoService.GetDataForCurrentPack().EnergyAddForWin);
             
-            AnimateIfNeed();
+            //AnimateIfNeed();
         }
 
         public async UniTask Exit()
@@ -111,16 +114,13 @@ namespace App.Scripts.Scenes.GameScene.States
             _winPopupView.GalacticName.SetToken(currentPack.LocaleKey);
             _winPopupView.PassedLevelsText.text = $"{_levelPackInfoService.GetData().LevelIndex + 1}/{currentPack.Levels.Count}";
         }
-
-        private void Subscribe()
-        {
-            _winPopupView.ContinueButton.onClick.AddListener(OnContinueClicked);
-        }
-
+        
         private void ShowPopup()
         {
             _winPopupView = _popupService.Show<WinPopupView>();
             _energyService.AddView(_winPopupView.EnergyView);
+            
+            _winViewModel.InstallView(_winPopupView);
         }
 
         private void OnContinueClicked()
