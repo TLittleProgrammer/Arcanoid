@@ -9,5 +9,6 @@ namespace App.Scripts.General.UserData.Energy
         
         event Action<int> ValueChanged;
         void Add(int value);
+        void AddEnergyByPassedLevel();
     }
 }

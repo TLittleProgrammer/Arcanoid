@@ -1,5 +1,6 @@
 ﻿using System;
 using App.Scripts.External.UserData;
+using App.Scripts.General.LevelPackInfoService;
 using Cysharp.Threading.Tasks;
 
 namespace App.Scripts.General.UserData.Energy
@@ -7,13 +8,17 @@ namespace App.Scripts.General.UserData.Energy
     public class EnergyDataService : IEnergyDataService
     {
         private readonly IUserDataContainer _userDataContainer;
-        
+        private readonly ILevelPackInfoService _levelPackInfoService;
+
         private EnergyData _energyData;
         public event Action<int> ValueChanged;
 
-        public EnergyDataService(IUserDataContainer userDataContainer)
+        public EnergyDataService(
+            IUserDataContainer userDataContainer,
+            ILevelPackInfoService levelPackInfoService)
         {
             _userDataContainer = userDataContainer;
+            _levelPackInfoService = levelPackInfoService;
         }
 
         public int CurrentValue => _energyData.Value;
@@ -38,6 +43,11 @@ namespace App.Scripts.General.UserData.Energy
             
             ValueChanged?.Invoke(_energyData.Value);
             _userDataContainer.SaveData<EnergyData>();
+        }
+
+        public void AddEnergyByPassedLevel()
+        {
+            Add(_levelPackInfoService.GetDataForCurrentPack().EnergyAddForWin);
         }
     }
 }

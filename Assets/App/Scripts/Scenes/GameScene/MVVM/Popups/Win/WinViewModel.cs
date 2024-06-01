@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using App.Scripts.General.LevelPackInfoService;
+using App.Scripts.General.Levels;
 using App.Scripts.Scenes.GameScene.Command;
 using App.Scripts.Scenes.GameScene.Command.Win;
 using App.Scripts.Scenes.GameScene.Features.Dotween;
@@ -18,6 +20,7 @@ namespace App.Scripts.Scenes.GameScene.MVVM.Popups.Win
         private readonly CircleWinEffectSettings _circleWinEffectSettings;
         private readonly ILoadNextLevelCommand _loadNextLevelCommand;
         private readonly IDisableButtonsCommand _disableButtonsCommand;
+        private readonly ILevelPackInfoService _levelPackInfoService;
 
         private IWinPopupView _winPopupView;
         
@@ -26,13 +29,15 @@ namespace App.Scripts.Scenes.GameScene.MVVM.Popups.Win
             ITweenersLocator tweenersLocator,
             CircleWinEffectSettings circleWinEffectSettings,
             ILoadNextLevelCommand loadNextLevelCommand,
-            IDisableButtonsCommand disableButtonsCommand)
+            IDisableButtonsCommand disableButtonsCommand,
+            ILevelPackInfoService levelPackInfoService)
         {
             _winContinueButtonAnimationSettings = winContinueButtonAnimationSettings;
             _tweenersLocator = tweenersLocator;
             _circleWinEffectSettings = circleWinEffectSettings;
             _loadNextLevelCommand = loadNextLevelCommand;
             _disableButtonsCommand = disableButtonsCommand;
+            _levelPackInfoService = levelPackInfoService;
         }
 
         public void InstallView(IWinPopupView winPopupView)
@@ -42,6 +47,16 @@ namespace App.Scripts.Scenes.GameScene.MVVM.Popups.Win
             SubscribeButtons();
             AnimateShow();
             AnimateCircleEffect();
+            UpdateVisual();
+            AnimateIfNeed();
+        }
+
+        private void UpdateVisual()
+        {
+            LevelPack currentPack = _levelPackInfoService.GetData().LevelPack;
+            _winPopupView.BottomGalacticIcon.sprite = currentPack.GalacticIcon;
+            _winPopupView.GalacticName.SetToken(currentPack.LocaleKey);
+            _winPopupView.PassedLevelsText.text = $"{_levelPackInfoService.GetData().LevelIndex + 1}/{currentPack.Levels.Count}";
         }
 
         private void SubscribeButtons()
@@ -108,6 +123,48 @@ namespace App.Scripts.Scenes.GameScene.MVVM.Popups.Win
         private float GetDirection()
         {
             return Random.Range(0, 2) == 0 ? 1f : -1f;
+        }
+
+        private async void AnimateIfNeed()
+        {
+            if (_levelPackInfoService.NeedLoadNextPack())
+            {
+                LevelPack nextPack = _levelPackInfoService.GetDataForNextPack();
+                LevelPack currentLevelPack = _levelPackInfoService.GetData().LevelPack;
+
+                _winPopupView.TopGalacticIcon.color = Color.clear;
+                _winPopupView.TopGalacticIcon.sprite = nextPack.GalacticIcon;
+                _winPopupView.ContinueButton.interactable = false;
+
+                await UniTask.Delay(2000);
+                await DOVirtual.Float(1f, 0f, 1f, HideObjects);
+
+                _winPopupView.GalacticName.SetToken(nextPack.LocaleKey);
+
+                DOVirtual.Float(0f, 1f, 1f, ShowObjects).ToUniTask().Forget();
+                await DOVirtual.Float(0f, 1f, 1f, (value) =>
+                {
+                    int currentLevel = (int)Mathf.Lerp(currentLevelPack.Levels.Count, 0, value);
+                    int maxLevelsCount = (int)Mathf.Lerp(currentLevelPack.Levels.Count, nextPack.Levels.Count, value);
+
+                    _winPopupView.PassedLevelsText.text = $"{currentLevel.ToString()}/{maxLevelsCount.ToString()}";
+                });
+
+                _winPopupView.ContinueButton.interactable = true;
+            }
+
+        }
+
+        private void ShowObjects(float value)
+        {
+            _winPopupView.GalacticName.Text.color = new Color(1f, 1f, 1f, value);
+            _winPopupView.TopGalacticIcon.color = new Color(1f, 1f, 1f, value);
+        }
+
+        private void HideObjects(float value)
+        {
+            _winPopupView.GalacticName.Text.color = new Color(1f, 1f, 1f, value);
+            _winPopupView.BottomGalacticIcon.color = new Color(1f, 1f, 1f, value);
         }
     }
 }

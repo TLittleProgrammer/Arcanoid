@@ -11,6 +11,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Popups
         UILocale GalacticName { get; }
         TMP_Text PassedLevelsText { get; }
         Image BottomGalacticIcon { get; }
+        Image TopGalacticIcon { get; }
         Button ContinueButton { get; }
         RectTransform TextFalling { get; }
         RectTransform TargetPositionForTextFalling { get; }
