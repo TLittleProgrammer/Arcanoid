@@ -6,7 +6,7 @@ using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.Features.Entities.View
 {
-    public interface IEntityView : IPositionable, IScalable<Vector3>, IBoxColliderable2D, IGridPositinable, IGameObjectable
+    public interface IEntityView : IPositionable, IScalable<Vector3>, IBoxColliderable2D, IGameObjectable
     {
         Sprite MainSprite { get; set; }
         Sprite OnTopSprite { get; set; }

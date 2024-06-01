@@ -39,9 +39,7 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
                 progress.LoadProgress(levelDataProgress);
             }
 
-            _stateMachine.Enter<BootstrapInitializeOtherServicesState>();
-            
-            await UniTask.CompletedTask;
+            _stateMachine.Enter<BootstrapInitializeOtherServicesState>().Forget();
         }
 
         public async UniTask Exit()

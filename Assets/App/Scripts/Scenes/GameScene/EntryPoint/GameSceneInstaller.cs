@@ -136,13 +136,10 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
 
         private void BindPlayerMoving()
         {
-            ShapeMoverSettings shapeMoverSettings = new();
-            shapeMoverSettings.Speed = 5f;
-
             Container
                 .BindInterfacesTo<PlayerShapeMover>()
                 .AsSingle()
-                .WithArguments(_playerShape, shapeMoverSettings)
+                .WithArguments(_playerShape)
                 .WhenInjectedInto(
                     typeof(GameLoopState), 
                     typeof(AutopilotBoostActivator),

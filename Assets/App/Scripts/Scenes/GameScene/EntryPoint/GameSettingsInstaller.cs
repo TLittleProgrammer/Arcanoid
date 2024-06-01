@@ -1,4 +1,5 @@
 ﻿using App.Scripts.Scenes.GameScene.Features.Entities.AssetManagement;
+using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape;
 using App.Scripts.Scenes.GameScene.Features.Settings;
 using UnityEngine;
 using Zenject;
@@ -19,6 +20,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
         public BoostViewProvider BoostViewProvider;
         public BoostsSettings BoostsSettings;
         public BirdSettings BirdSettings;
+        public ShapeMoverSettings ShapeMoverSettings;
 
         public override void InstallBindings()
         {
@@ -33,6 +35,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.Bind<BoostViewProvider>().FromInstance(BoostViewProvider).IfNotBound();
             Container.Bind<BoostsSettings>().FromInstance(BoostsSettings).IfNotBound();
             Container.Bind<BirdSettings>().FromInstance(BirdSettings).IfNotBound();
+            Container.Bind<ShapeMoverSettings>().FromInstance(ShapeMoverSettings).IfNotBound();
         }
     }
 }

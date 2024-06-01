@@ -60,7 +60,7 @@ namespace App.Scripts.Scenes.GameScene.States
             await _loadingScreen.Hide();
             await _showLevelAnimation.Show();
             
-            _gameStateMachine.Enter<GameLoopState>();
+            _gameStateMachine.Enter<GameLoopState>().Forget();
         }
 
         public async UniTask Exit()
