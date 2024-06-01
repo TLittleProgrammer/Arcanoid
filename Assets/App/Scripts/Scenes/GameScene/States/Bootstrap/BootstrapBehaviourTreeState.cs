@@ -22,13 +22,13 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             _simpleMovingStrategy = simpleMovingStrategy;
         }
         
-        public async UniTask Enter()
+        public UniTask Enter()
         {
             _behaviourTree.AddChild(CreateNode("SimpleMoving", _simpleMovingStrategy));
 
-            _stateMachine.Enter<BootstrapEntityDestroyerState>();
+            _stateMachine.Enter<BootstrapEntityDestroyerState>().Forget();
             
-            await UniTask.CompletedTask;
+            return UniTask.CompletedTask;
         }
 
         public async UniTask Exit()

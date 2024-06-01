@@ -55,9 +55,7 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
 
             _ballsService.AddBall(_ballViewFactory.Create());
             
-            _stateMachine.Enter<BootstrapInitializeOtherServicesState>();
-            
-            await UniTask.CompletedTask;
+            _stateMachine.Enter<BootstrapInitializeOtherServicesState>().Forget();
         }
 
         public async UniTask Exit()

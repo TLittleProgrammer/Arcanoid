@@ -4,6 +4,7 @@ using App.Scripts.External.Localisation.Converters;
 using App.Scripts.External.UserData;
 using App.Scripts.General.DateTime;
 using App.Scripts.General.Energy;
+using App.Scripts.General.MVVM.Energy;
 using App.Scripts.General.ProjectInitialization.Settings;
 using App.Scripts.General.UserData.Energy;
 using App.Scripts.General.UserData.Global;
@@ -18,9 +19,9 @@ namespace App.Scripts.General.ProjectInitialization.Installers
         private readonly ILocaleService _localeService;
         private readonly IConverter _converter;
         private readonly TextAsset _localisation;
-        private readonly IEnergyService _energyService;
+        private readonly EnergyModel _energyModel;
         private readonly IEnergyDataService _energyDataService;
-        private readonly IUserDataContainer _userDataContainer;
+        private readonly IDataProvider<GlobalData> _globalDataProvider;
         private readonly EnergySettings _energySettings;
         private readonly IDateTimeService _dateTimeService;
         private readonly IGlobalDataService _globalDataService;
@@ -30,9 +31,9 @@ namespace App.Scripts.General.ProjectInitialization.Installers
             ILocaleService localeService,
             IConverter converter,
             TextAsset localisation,
-            IEnergyService energyService,
+            EnergyModel energyModel,
             IEnergyDataService energyDataService,
-            IUserDataContainer userDataContainer,
+            IDataProvider<GlobalData> globalDataProvider,
             EnergySettings energySettings,
             IDateTimeService dateTimeService,
             IGlobalDataService globalDataService)
@@ -41,9 +42,9 @@ namespace App.Scripts.General.ProjectInitialization.Installers
             _localeService = localeService;
             _converter = converter;
             _localisation = localisation;
-            _energyService = energyService;
+            _energyModel = energyModel;
             _energyDataService = energyDataService;
-            _userDataContainer = userDataContainer;
+            _globalDataProvider = globalDataProvider;
             _energySettings = energySettings;
             _dateTimeService = dateTimeService;
             _globalDataService = globalDataService;
@@ -55,9 +56,8 @@ namespace App.Scripts.General.ProjectInitialization.Installers
             QualitySettings.vSyncCount = _applicationSettings.VSyncCounter;
             
             InitializeLocale();
-            InitializeEnergyServices();
             
-            GlobalData globalData = (GlobalData)_userDataContainer.GetData<GlobalData>();
+            GlobalData globalData = _globalDataProvider.GetData();
             
             InitializeEnergyData(globalData);
             CheckFirstEnter(globalData);
@@ -70,7 +70,7 @@ namespace App.Scripts.General.ProjectInitialization.Installers
             if (globalData.IsFirstEnter)
             {
                 globalData.IsFirstEnter = false;
-                _userDataContainer.SaveData<GlobalData>();
+                _globalDataProvider.SaveData(globalData);
             }
         }
 
@@ -80,7 +80,7 @@ namespace App.Scripts.General.ProjectInitialization.Installers
             {
                 int needAddEnergy = (int)(_dateTimeService.GetCurrentTimestamp() - globalData.LastTimestampEnter) / _energySettings.SecondsToRecoveryEnergy;
 
-                if (needAddEnergy + _energyDataService.CurrentValue > _energySettings.MaxEnergyCount)
+                if (needAddEnergy + _energyDataService.CurrentValue >= _energySettings.MaxEnergyCount)
                 {
                     if (_energyDataService.CurrentValue < _energySettings.MaxEnergyCount)
                     {
@@ -89,21 +89,15 @@ namespace App.Scripts.General.ProjectInitialization.Installers
                 }
                 else
                 {
-                    _energyDataService.Add(needAddEnergy + _energyDataService.CurrentValue);
+                    _energyDataService.Add(needAddEnergy);
                 }
                 
-                _energyService.SetSecondsToAddEnergy(needAddEnergy % _energySettings.SecondsToRecoveryEnergy);
+                _energyModel.SetRemainingSeconds(needAddEnergy % _energySettings.SecondsToRecoveryEnergy);
             }
             else
             {
                 _energyDataService.Add(_energySettings.InitialEnergyCount);
             }
-        }
-
-        private async void InitializeEnergyServices()
-        {
-            await _energyDataService.AsyncInitialize();
-            await _energyService.AsyncInitialize();
         }
 
         private void InitializeLocale()

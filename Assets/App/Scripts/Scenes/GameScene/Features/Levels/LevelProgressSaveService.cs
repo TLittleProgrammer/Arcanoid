@@ -8,16 +8,16 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels
     public class LevelProgressSaveService
     {
         private readonly List<ILevelProgressSavable> _levelProgressSavable;
-        private readonly IUserDataContainer _userDataContainer;
+        private readonly IDataProvider<LevelDataProgress> _levelDataProgressProvider;
         private readonly ILevelPackInfoService _levelPackInfoService;
 
         public LevelProgressSaveService(
             List<ILevelProgressSavable> levelProgressSavable,
-            IUserDataContainer userDataContainer,
+            IDataProvider<LevelDataProgress> levelDataProgressProvider,
             ILevelPackInfoService levelPackInfoService)
         {
             _levelProgressSavable = levelProgressSavable;
-            _userDataContainer = userDataContainer;
+            _levelDataProgressProvider = levelDataProgressProvider;
             _levelPackInfoService = levelPackInfoService;
         }
 
@@ -30,7 +30,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels
                 progressSavable.SaveProgress(levelDataProgress);
             }
 
-            _userDataContainer.FastSaveData(levelDataProgress);
+            _levelDataProgressProvider.SaveData(levelDataProgress);
         }
     }
 }

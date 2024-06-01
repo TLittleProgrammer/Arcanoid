@@ -12,10 +12,11 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             _stateMachine = stateMachine;
         }
 
-        public async UniTask Enter()
+        public UniTask Enter()
         {
-            _stateMachine.Enter<BootstrapServiceActivatorState>();
-            await UniTask.CompletedTask;
+            _stateMachine.Enter<BootstrapServiceActivatorState>().Forget();
+            
+            return UniTask.CompletedTask;
         }
 
         public async UniTask Exit()

@@ -35,12 +35,8 @@ namespace App.Scripts.Scenes.MainMenuScene.Installers
 
         public override void InstallBindings()
         {
-            LevelPackProgressDictionary levelPackProgressDictionary =
-                (LevelPackProgressDictionary)Container.Resolve<IUserDataContainer>().GetData<LevelPackProgressDictionary>();
-
             Container.Bind<ILevelItemView>().FromInstance(LevelItemView);
             Container.Bind<ILocaleItemView>().FromInstance(LocaleItemView);
-            Container.Bind<LevelPackProgressDictionary>().FromInstance(levelPackProgressDictionary);
             Container.BindInterfacesTo<ContinueLevelService>().AsSingle().WithArguments(ContinueButton).NonLazy();
             
             Container

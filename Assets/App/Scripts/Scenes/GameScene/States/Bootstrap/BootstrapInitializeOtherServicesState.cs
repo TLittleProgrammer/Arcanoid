@@ -41,9 +41,7 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
                 await _showLevelAnimation.Show();
             }
 
-            _stateMachine.Enter<GameLoopState>();
-            
-            await UniTask.CompletedTask;
+            _stateMachine.Enter<GameLoopState>().Forget();
         }
 
         public async UniTask Exit()

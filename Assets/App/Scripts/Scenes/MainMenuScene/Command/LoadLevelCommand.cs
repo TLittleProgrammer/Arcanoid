@@ -4,6 +4,7 @@ using App.Scripts.General.Constants;
 using App.Scripts.General.Energy;
 using App.Scripts.General.LevelPackInfoService;
 using App.Scripts.General.Levels;
+using App.Scripts.General.MVVM.Energy;
 using App.Scripts.General.States;
 using App.Scripts.General.UserData.Energy;
 using App.Scripts.Scenes.MainMenuScene.LevelPacks.MonoBehaviours;
@@ -15,18 +16,18 @@ namespace App.Scripts.Scenes.MainMenuScene.Command
         private readonly IEnergyDataService _energyDataService;
         private readonly IStateMachine _stateMachine;
         private readonly ILevelPackInfoService _levelPackInfoService;
-        private readonly IEnergyService _energyService;
+        private readonly EnergyViewModel _energyViewModel;
 
         public LoadLevelCommand(
             IEnergyDataService energyDataService,
             IStateMachine stateMachine,
             ILevelPackInfoService levelPackInfoService,
-            IEnergyService energyService)
+            EnergyViewModel energyViewModel)
         {
             _energyDataService = energyDataService;
             _stateMachine = stateMachine;
             _levelPackInfoService = levelPackInfoService;
-            _energyService = energyService;
+            _energyViewModel = energyViewModel;
         }
         
         public void Execute(LevelItemData itemData, int targetLevelIndex)
@@ -46,7 +47,7 @@ namespace App.Scripts.Scenes.MainMenuScene.Command
                 PackIndex = itemData.PackIndex
             });
 
-            _energyService.Dispose();
+            _energyViewModel.Dispose();
 
             _stateMachine.Enter<LoadingSceneState, string>(SceneNaming.Game);
         }

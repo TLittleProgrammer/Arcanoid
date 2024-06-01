@@ -1,6 +1,7 @@
 ﻿using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Popup;
 using App.Scripts.Scenes.GameScene.States;
+using Cysharp.Threading.Tasks;
 
 namespace App.Scripts.Scenes.GameScene.Command
 {
@@ -19,7 +20,7 @@ namespace App.Scripts.Scenes.GameScene.Command
         {
             await _popupService.CloseAll();
             
-            _stateMachine.Enter<GameLoopState>();
+            _stateMachine.Enter<GameLoopState>().Forget();
         }
     }
 }

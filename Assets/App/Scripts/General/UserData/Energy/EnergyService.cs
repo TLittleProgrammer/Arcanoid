@@ -2,32 +2,30 @@
 using App.Scripts.External.UserData;
 using App.Scripts.General.LevelPackInfoService;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
+using Zenject;
 
 namespace App.Scripts.General.UserData.Energy
 {
-    public class EnergyDataService : IEnergyDataService
+    public class EnergyDataService : IEnergyDataService, IInitializable
     {
-        private readonly IUserDataContainer _userDataContainer;
+        private readonly IDataProvider<EnergyData> _energyDataProvider;
         private readonly ILevelPackInfoService _levelPackInfoService;
 
         private EnergyData _energyData;
         public event Action<int> ValueChanged;
 
-        public EnergyDataService(
-            IUserDataContainer userDataContainer,
-            ILevelPackInfoService levelPackInfoService)
+        public EnergyDataService(IDataProvider<EnergyData> energyDataProvider, ILevelPackInfoService levelPackInfoService)
         {
-            _userDataContainer = userDataContainer;
+            _energyDataProvider = energyDataProvider;
             _levelPackInfoService = levelPackInfoService;
         }
 
         public int CurrentValue => _energyData.Value;
 
-        public async UniTask AsyncInitialize()
+        public void Initialize()
         {
-            _energyData = (EnergyData)_userDataContainer.GetData<EnergyData>();
-
-            await UniTask.CompletedTask;
+            _energyData = _energyDataProvider.GetData();
         }
 
         public void Add(int value)
@@ -42,7 +40,7 @@ namespace App.Scripts.General.UserData.Energy
             }
             
             ValueChanged?.Invoke(_energyData.Value);
-            _userDataContainer.SaveData<EnergyData>();
+            _energyDataProvider.SaveData(_energyData);
         }
 
         public void AddEnergyByPassedLevel()

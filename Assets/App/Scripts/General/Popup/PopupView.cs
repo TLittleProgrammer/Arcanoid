@@ -6,16 +6,14 @@ namespace App.Scripts.General.Popup
 {
     public abstract class PopupView : MonoBehaviour, IPopupView
     {
-        public virtual async UniTask Show()
+        public virtual UniTask Show()
         {
-            gameObject.SetActive(true);
-            await transform.DOScale(Vector3.one, 1f).From(Vector3.zero).ToUniTask();
+            return UniTask.CompletedTask;
         }
 
-        public virtual async UniTask Close()
+        public virtual UniTask Close()
         {
-            await transform.DOScale(Vector3.zero, 1f).From(Vector3.zero).ToUniTask();
-            gameObject.SetActive(false);
+            return UniTask.CompletedTask;
         }
         
         public GameObject GameObject => gameObject;

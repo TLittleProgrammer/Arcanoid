@@ -22,16 +22,16 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             _activables = activables;
         }
         
-        public async UniTask Enter()
+        public UniTask Enter()
         {
             foreach (IActivable activable in _activables)
             {
                 _servicesActivator.AddActivable(activable);
             }
             
-            _stateMachine.Enter<BootstrapBehaviourTreeState>();
+            _stateMachine.Enter<BootstrapBehaviourTreeState>().Forget();
             
-            await UniTask.CompletedTask;
+            return UniTask.CompletedTask;
         }
 
         public async UniTask Exit()

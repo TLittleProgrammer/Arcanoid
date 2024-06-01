@@ -1,6 +1,5 @@
 ﻿using App.Scripts.External.UserData;
 using App.Scripts.External.UserData.SaveLoad;
-using App.Scripts.General.LevelPackInfoService;
 using App.Scripts.General.UserData.Energy;
 using App.Scripts.General.UserData.Global;
 using App.Scripts.General.UserData.Levels.Data;
@@ -12,29 +11,11 @@ namespace App.Scripts.General.ProjectInitialization.Installers
     {
         public override void InstallBindings()
         {
-            Container.BindInterfacesAndSelfTo<UserDataInstaller>().FromInstance(this).AsSingle();
             Container.Bind<ISaveLoadService>().To<SaveLoadService>().AsSingle();
-            Container.Bind<IUserDataContainer>().To<UserDataContainer>().AsSingle();
-            Container.Bind<ILevelPackInfoService>().To<LevelPackInfoService.LevelPackInfoService>().AsSingle();
-
-            Initialize();
-        }
-
-        private void Initialize()
-        {
-            var saveLoad = Container.Resolve<ISaveLoadService>();
-            var userDataContainer = Container.Resolve<IUserDataContainer>();
             
-            AddSavable<LevelPackProgressDictionary>(saveLoad, userDataContainer);
-            AddSavable<EnergyData>(saveLoad, userDataContainer);
-            AddSavable<GlobalData>(saveLoad, userDataContainer);
-        }
-
-        private void AddSavable<TSavable>(ISaveLoadService saveLoad, IUserDataContainer userDataContainer) where TSavable : ISavable, new()
-        {
-            TSavable savable = new TSavable();
-            saveLoad.Load(ref savable);
-            userDataContainer.AddData(savable);
+            Container.Bind<IDataProvider<GlobalData>>().To<DataProvider<GlobalData>>().AsSingle();
+            Container.Bind<IDataProvider<EnergyData>>().To<DataProvider<EnergyData>>().AsSingle();
+            Container.Bind<IDataProvider<LevelPackProgressDictionary>>().To<DataProvider<LevelPackProgressDictionary>>().AsSingle();
         }
     }
 }

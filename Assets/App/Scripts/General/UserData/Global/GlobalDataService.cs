@@ -10,7 +10,7 @@ namespace App.Scripts.General.UserData.Global
     {
         private readonly ApplicationSettings _applicationSettings;
         private readonly ITimeTicker _ticker;
-        private readonly IUserDataContainer _userDataContainer;
+        private readonly IDataProvider<GlobalData> _globalDataProvider;
         private readonly IDateTimeService _dateTimeService;
         
         private int _passedSeconds = 0;
@@ -19,18 +19,18 @@ namespace App.Scripts.General.UserData.Global
         public GlobalDataService(
             ApplicationSettings applicationSettings,
             ITimeTicker ticker,
-            IUserDataContainer userDataContainer,
+            IDataProvider<GlobalData> globalDataProvider,
             IDateTimeService dateTimeService)
         {
             _applicationSettings = applicationSettings;
             _ticker = ticker;
-            _userDataContainer = userDataContainer;
+            _globalDataProvider = globalDataProvider;
             _dateTimeService = dateTimeService;
         }
 
         public async UniTask AsyncInitialize()
         {
-            _globalData = (GlobalData)_userDataContainer.GetData<GlobalData>();
+            _globalData = _globalDataProvider.GetData();
             _ticker.SecondsTicked += OnSecondsTicked;
             
             await UniTask.CompletedTask;
@@ -45,7 +45,7 @@ namespace App.Scripts.General.UserData.Global
                 _globalData.LastTimestampEnter = _dateTimeService.GetCurrentTimestamp();
                 _passedSeconds = 0;
                 
-                _userDataContainer.SaveData<GlobalData>();
+                _globalDataProvider.SaveData(_globalData);
             }
         }
     }

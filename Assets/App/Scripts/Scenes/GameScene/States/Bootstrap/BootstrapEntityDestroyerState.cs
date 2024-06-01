@@ -28,20 +28,20 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             _levelPackInfoService = levelPackInfoService;
         }
         
-        public async UniTask Enter()
+        public UniTask Enter()
         {
             InitializeItemsDestroyable();
 
             if (_levelPackInfoService.NeedContinueLevel)
             {
-                _stateMachine.Enter<BootstrapContinueLoadLevelState>();
+                _stateMachine.Enter<BootstrapContinueLoadLevelState>().Forget();
             }
             else
             {
-                _stateMachine.Enter<BootstrapLoadLevelState>();
+                _stateMachine.Enter<BootstrapLoadLevelState>().Forget();
             }
             
-            await UniTask.CompletedTask;
+            return UniTask.CompletedTask;
         }
 
         private void InitializeItemsDestroyable()
