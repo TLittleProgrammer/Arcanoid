@@ -1,7 +1,6 @@
 ﻿using System;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General;
 using Newtonsoft.Json;
-using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Grid
 {

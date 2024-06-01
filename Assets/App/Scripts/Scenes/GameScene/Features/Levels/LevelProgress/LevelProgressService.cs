@@ -3,13 +3,14 @@ using App.Scripts.General.LevelPackInfoService;
 using App.Scripts.Scenes.GameScene.Features.Entities.AssetManagement;
 using App.Scripts.Scenes.GameScene.Features.Levels.General;
 using App.Scripts.Scenes.GameScene.Features.Levels.LevelView;
-using App.Scripts.Scenes.GameScene.Features.Levels.Loading;
+using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress;
 using App.Scripts.Scenes.GameScene.Features.ScoreAnimation;
 using TMPro;
+using UnityEngine.Playables;
 
 namespace App.Scripts.Scenes.GameScene.Features.Levels.LevelProgress
 {
-    public class LevelProgressService : ILevelProgressService
+    public class LevelProgressService : ILevelProgressService, ILevelProgressSavable, IInitializeByLevelProgress
     {
         private readonly ILevelPackInfoService _levelPackInfoService;
         private readonly ILevelPackInfoView _levelPackInfoView;
@@ -110,6 +111,32 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.LevelProgress
         private void AnimateScore(TMP_Text text, int from, int to, Action<int> ticked)
         {
             _scoreAnimationService.Animate(text, from, to, ticked);
+        }
+
+        public void SaveProgress(LevelDataProgress levelDataProgress)
+        {
+            ProgressedLevelData progressedLevelData = new();
+
+            progressedLevelData.DestroyedBlocks = _destroyedBlockCounter;
+            progressedLevelData.Progress = _progress;
+            progressedLevelData.Step = _step;
+            progressedLevelData.AllBlocksCounter = _allBlockCounter;
+
+            levelDataProgress.ProgressedLevelData = progressedLevelData;
+        }
+
+        public void LoadProgress(LevelDataProgress levelDataProgress)
+        {
+            ProgressedLevelData progressedLevelData = levelDataProgress.ProgressedLevelData;
+
+            _destroyedBlockCounter = progressedLevelData.DestroyedBlocks;
+            _progress = progressedLevelData.Progress;
+            _step = progressedLevelData.Step;
+            _allBlockCounter = progressedLevelData.AllBlocksCounter;
+            
+            _targetScore = (int)Math.Round(_progress * 100f);
+            
+            _levelPackInfoView.UpdateProgressText(_targetScore);
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using App.Scripts.Scenes.GameScene.Features.Entities;
-using App.Scripts.Scenes.GameScene.Features.Healthes;
+﻿using App.Scripts.Scenes.GameScene.Features.Healthes;
 using App.Scripts.Scenes.GameScene.Features.Settings;
 
 namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators

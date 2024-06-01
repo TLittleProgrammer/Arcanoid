@@ -18,9 +18,9 @@ MonoBehaviour:
   EnergyPrice: 3
   EnergyAddForWin: 5
   Levels:
-  - {fileID: 4900000, guid: 06b32051799e3224ca9756ff3dbffe22, type: 3}
-  - {fileID: 4900000, guid: d049f68c01d5aaa4ba1819fdcfaf49ed, type: 3}
   - {fileID: 4900000, guid: 47cd837f452f75f47a6c24454c967444, type: 3}
+  - {fileID: 4900000, guid: 562174237c9646143ab418a796ab20aa, type: 3}
+  - {fileID: 4900000, guid: d049f68c01d5aaa4ba1819fdcfaf49ed, type: 3}
   - {fileID: 4900000, guid: 4d7e465e5a324fb41af019f30ea380ef, type: 3}
   - {fileID: 4900000, guid: 502fb8d8a1f1f384b978189e5b26c549, type: 3}
   - {fileID: 4900000, guid: 07d404e454d65f24091a9d8f723eb304, type: 3}

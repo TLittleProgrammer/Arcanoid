@@ -26,11 +26,11 @@ MonoBehaviour:
     SerializationNodes:
     - Name: PlayerShapeSprites
       Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[App.Scripts.Scenes.GameScene.Features.Entities.BoostTypeId,
+      Data: 0|System.Collections.Generic.Dictionary`2[[App.Scripts.Scenes.GameScene.Features.Boosts.General.BoostTypeId,
         Game],[UnityEngine.Sprite, UnityEngine.CoreModule]], mscorlib
     - Name: comparer
       Entry: 7
-      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[App.Scripts.Scenes.GameScene.Features.Entities.BoostTypeId,
+      Data: 1|System.Collections.Generic.EnumEqualityComparer`1[[App.Scripts.Scenes.GameScene.Features.Boosts.General.BoostTypeId,
         Game]], mscorlib
     - Name: 
       Entry: 12
@@ -86,9 +86,9 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-  BallSpeedDuration: 4
+  BallSpeedDuration: 10
   SlowDownPercentFromAll: 0.25
-  AcceleratePercentFromAll: 2
+  AcceleratePercentFromAll: 1.5
   ShapeSizeDuration: 3
   AddPercent: 2
   MinusPercent: 1

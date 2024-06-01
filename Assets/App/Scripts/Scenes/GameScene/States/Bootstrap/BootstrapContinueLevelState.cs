@@ -2,15 +2,7 @@
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.External.UserData;
 using App.Scripts.External.UserData.SaveLoad;
-using App.Scripts.General.Infrastructure;
-using App.Scripts.General.Levels;
-using App.Scripts.Scenes.GameScene.Features.Entities.Ball.Movement.MoveVariants;
-using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.Move;
 using App.Scripts.Scenes.GameScene.Features.Grid;
-using App.Scripts.Scenes.GameScene.Features.Healthes;
-using App.Scripts.Scenes.GameScene.Features.Levels.General;
-using App.Scripts.Scenes.GameScene.Features.Levels.LevelProgress;
-using App.Scripts.Scenes.GameScene.Features.Levels.Loading;
 using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress;
 using Cysharp.Threading.Tasks;
 

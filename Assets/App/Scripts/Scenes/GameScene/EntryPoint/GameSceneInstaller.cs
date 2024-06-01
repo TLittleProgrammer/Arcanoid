@@ -6,13 +6,11 @@ using App.Scripts.General.Infrastructure;
 using App.Scripts.General.RootUI;
 using App.Scripts.Scenes.GameScene.EntryPoint.Bootstrap;
 using App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers;
-using App.Scripts.Scenes.GameScene.Features.Boosts.Autopilot.Nodes;
 using App.Scripts.Scenes.GameScene.Features.Boosts.Autopilot.Strategies;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General.UI;
 using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun;
 using App.Scripts.Scenes.GameScene.Features.Camera;
-using App.Scripts.Scenes.GameScene.Features.Components;
 using App.Scripts.Scenes.GameScene.Features.Damage;
 using App.Scripts.Scenes.GameScene.Features.Dotween;
 using App.Scripts.Scenes.GameScene.Features.Entities.Ball;
@@ -25,14 +23,13 @@ using App.Scripts.Scenes.GameScene.Features.Entities.Walls;
 using App.Scripts.Scenes.GameScene.Features.Grid;
 using App.Scripts.Scenes.GameScene.Features.Healthes;
 using App.Scripts.Scenes.GameScene.Features.Healthes.View;
-using App.Scripts.Scenes.GameScene.Features.Helpers;
-using App.Scripts.Scenes.GameScene.Features.Levels;
 using App.Scripts.Scenes.GameScene.Features.Levels.General.Animations;
 using App.Scripts.Scenes.GameScene.Features.Levels.LevelProgress;
 using App.Scripts.Scenes.GameScene.Features.Levels.LevelView;
 using App.Scripts.Scenes.GameScene.Features.Levels.Loading;
 using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress;
 using App.Scripts.Scenes.GameScene.Features.Levels.SkipLevel;
+using App.Scripts.Scenes.GameScene.Features.Popups.Buttons;
 using App.Scripts.Scenes.GameScene.Features.PositionChecker;
 using App.Scripts.Scenes.GameScene.Features.Restart;
 using App.Scripts.Scenes.GameScene.Features.ScoreAnimation;
@@ -64,10 +61,10 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
         [SerializeField] private BoostsViewContainer _boostsViewContainer;
         [SerializeField] private Image _menuButton;
         [SerializeField] private Button _skipLevelButton;
+        [SerializeField] private OpenMenuPopupButton _openMenuPopupButton;
 
         [Inject] private PoolProviders _poolProviders;
         [Inject] private IStateMachine _projectStateMachine;
-        [Inject] private RootUIViewProvider _rootUIView;
 
         public override void InstallBindings()
         {
@@ -75,14 +72,14 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
 
             TimeProviderInstaller.Install(Container);
             PoolsInstaller.Install(Container, _poolProviders);
-            FactoriesInstaller.Install(Container, _rootUIView, _boostItemViewPrefab);
+            FactoriesInstaller.Install(Container, _boostItemViewPrefab);
             InputInstaller.Install(Container);
             LevelServicesInstaller.Install(Container);
             EntityDestroyableInstaller.Install(Container);
             BehaviourTreeInstaller.Install(Container);
+            CommandsInstaller.Install(Container);
+            MVVMInstaller.Install(Container, _openMenuPopupButton);
             
-            Container.Bind<List<IActivable>>().FromMethod(ctx => ctx.Container.ResolveAll<IActivable>().ToList()).AsSingle();
-
             Container.Bind<ITweenersLocator>().To<TweenersLocator>().AsSingle();
             Container.Bind<IScoreAnimationService>().To<ScoreAnimationService>().AsSingle();
             Container.Bind<IShakeService>().To<ShakeService>().AsSingle();
@@ -106,7 +103,6 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             BindHealthPointService();
             
             Container.Bind<IWallLoader>().To<WallLoader>().AsSingle().WithArguments(_wallPrefab);
-            Container.Bind<IRestartService>().To<RestartService>().AsSingle();
             Container.Bind<IEntityViewService>().To<EntityViewService>().AsSingle();
             Container.Bind<IServicesActivator>().To<ServiceActivator>().AsSingle();
             Container.Bind<IShowLevelAnimation>().To<SimpleShowLevelAnimation>().AsSingle();
@@ -133,7 +129,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
         private void BindHealthPointService()
         {
             Container.BindInterfacesTo<ViewHealthPointService>().AsSingle().WithArguments(_healthParent as ITransformable);
-            Container.Bind(typeof(IHealthContainer), typeof(ILevelProgressSavable), typeof(IGeneralRestartable)).To<HealthContainer>().AsSingle();
+            Container.BindInterfacesTo<HealthContainer>().AsSingle();
         }
 
         private void BindPlayerMoving()
@@ -144,13 +140,16 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container
                 .BindInterfacesTo<PlayerShapeMover>()
                 .AsSingle()
-                .WithArguments(_playerShape, shapeMoverSettings).
-                WhenInjectedInto(
+                .WithArguments(_playerShape, shapeMoverSettings)
+                .WhenInjectedInto(
                     typeof(GameLoopState), 
                     typeof(AutopilotBoostActivator),
                     typeof(SimpleMovingStrategy),
                     typeof(BootstrapLoadLevelState),
-                    typeof(ShapeBoostSpeed));
+                    typeof(ShapeBoostSpeed),
+                    typeof(RestartState),
+                    typeof(LevelProgressSaveService),
+                    typeof(BootstrapContinueLoadLevelState));
         }
     }
 }

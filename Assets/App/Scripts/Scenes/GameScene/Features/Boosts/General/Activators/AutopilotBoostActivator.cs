@@ -1,7 +1,6 @@
 ﻿using App.Scripts.Scenes.GameScene.Features.Boosts.Autopilot;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General.Interfaces;
 using App.Scripts.Scenes.GameScene.Features.Components;
-using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.Move;
 using Zenject;
 

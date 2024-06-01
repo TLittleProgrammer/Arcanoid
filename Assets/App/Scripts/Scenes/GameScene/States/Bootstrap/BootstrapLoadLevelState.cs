@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Infrastructure;
+using App.Scripts.Scenes.GameScene.Features.Entities.Ball;
 using App.Scripts.Scenes.GameScene.Features.Entities.Ball.Movement.MoveVariants;
 using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.Move;
 using App.Scripts.Scenes.GameScene.Features.Healthes;
@@ -20,6 +21,8 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
         private readonly IBallMover _ballMover;
         private readonly ILevelLoadService _levelLoadService;
         private readonly ILevelProgressService _levelProgressService;
+        private readonly IBallsService _ballsService;
+        private readonly BallView.Factory _ballViewFactory;
 
         public BootstrapLoadLevelState(
             IStateMachine stateMachine,
@@ -27,7 +30,9 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             IHealthContainer healthContainer,
             IPlayerShapeMover playerShapeMover,
             ILevelLoadService levelLoadService,
-            ILevelProgressService levelProgressService
+            ILevelProgressService levelProgressService,
+            IBallsService ballsService,
+            BallView.Factory ballViewFactory
             )
         {
             _stateMachine = stateMachine;
@@ -36,6 +41,8 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             _playerShapeMover = playerShapeMover;
             _levelLoadService = levelLoadService;
             _levelProgressService = levelProgressService;
+            _ballsService = ballsService;
+            _ballViewFactory = ballViewFactory;
         }
         
         public async UniTask Enter()
@@ -45,6 +52,8 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             await _healthContainer.AsyncInitialize(levelData, new List<IRestartable> {_playerShapeMover});
             await _viewHealthPointService.AsyncInitialize(levelData);
             _levelProgressService.CalculateStepByLevelData(levelData);
+
+            _ballsService.AddBall(_ballViewFactory.Create());
             
             _stateMachine.Enter<BootstrapInitializeOtherServicesState>();
             

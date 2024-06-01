@@ -11,18 +11,26 @@ namespace App.Scripts.General.Popup
     {
         private readonly IPopupFactory _factory;
         private readonly IBackPopupPlane _backPopupPlane;
+        private readonly ITransformable _defaultParent;
         private readonly List<IPopupView> _popupsList;
 
-        public PopupService(IPopupFactory factory, IBackPopupPlane backPopupPlane)
+        public PopupService(
+            IPopupFactory factory,
+            IBackPopupPlane backPopupPlane,
+            ITransformable defaultParent)
         {
             _factory = factory;
             _backPopupPlane = backPopupPlane;
+            _defaultParent = defaultParent;
             _popupsList = new();
         }
 
-        public IPopupView Show<TPopupView>(ITransformable parent = null) where TPopupView : IPopupView
+        public TPopupView Show<TPopupView>(ITransformable parent = null) where TPopupView : IPopupView
         {
-            IPopupView popupView = _factory.Create<TPopupView>(parent);
+            ITransformable choosedParent = parent ?? _defaultParent;
+            IPopupView popupView = _factory.Create<TPopupView>();
+            
+            popupView.GameObject.transform.SetParent(choosedParent.Transform, false);
             
             UpdateRaycastTargetForBackPanel(true);
             UpdateSiblingPosition();
@@ -30,7 +38,7 @@ namespace App.Scripts.General.Popup
             _popupsList.Add(popupView);
             popupView.Show();
             
-            return popupView;
+            return (TPopupView)popupView;
         }
 
         public async UniTask Close<TPopup>() where TPopup : IPopupView

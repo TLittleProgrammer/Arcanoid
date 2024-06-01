@@ -15,8 +15,6 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
         private readonly IWallLoader _wallLoader;
         private readonly IPopupProvider _popupProvider;
         private readonly IShowLevelAnimation _showLevelAnimation;
-        private readonly IBallsService _ballsService;
-        private readonly BallView.Factory _ballViewFactory;
         private readonly ILevelPackInfoService _levelPackInfoService;
 
         public BootstrapInitializeOtherServicesState(
@@ -24,23 +22,17 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             IWallLoader wallLoader,
             IPopupProvider popupProvider,
             IShowLevelAnimation showLevelAnimation,
-            IBallsService ballsService,
-            BallView.Factory ballViewFactory,
             ILevelPackInfoService levelPackInfoService)
         {
             _stateMachine = stateMachine;
             _wallLoader = wallLoader;
             _popupProvider = popupProvider;
             _showLevelAnimation = showLevelAnimation;
-            _ballsService = ballsService;
-            _ballViewFactory = ballViewFactory;
             _levelPackInfoService = levelPackInfoService;
         }
         
         public async UniTask Enter()
         {
-            _ballsService.AddBall(_ballViewFactory.Create());
-
             await _wallLoader.AsyncInitialize();
             await _popupProvider.AsyncInitialize(Pathes.PathToPopups);
 

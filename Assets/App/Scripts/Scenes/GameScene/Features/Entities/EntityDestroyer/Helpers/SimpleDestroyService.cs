@@ -4,7 +4,6 @@ using App.Scripts.Scenes.GameScene.Features.Entities.TopSprites;
 using App.Scripts.Scenes.GameScene.Features.Entities.View;
 using App.Scripts.Scenes.GameScene.Features.Grid;
 using App.Scripts.Scenes.GameScene.Features.Levels.LevelProgress;
-using App.Scripts.Scenes.GameScene.Features.Pools;
 
 namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Helpers
 {

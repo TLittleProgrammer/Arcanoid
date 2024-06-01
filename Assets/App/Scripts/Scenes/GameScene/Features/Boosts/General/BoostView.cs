@@ -1,5 +1,4 @@
 ﻿using App.Scripts.Scenes.GameScene.Features.Boosts.General.Interfaces;
-using App.Scripts.Scenes.GameScene.Features.Entities;
 using UnityEngine;
 using Zenject;
 

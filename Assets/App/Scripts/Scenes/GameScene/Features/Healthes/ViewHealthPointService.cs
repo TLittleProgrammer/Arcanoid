@@ -3,7 +3,6 @@ using App.Scripts.External.Components;
 using App.Scripts.Scenes.GameScene.Features.Constants;
 using App.Scripts.Scenes.GameScene.Features.Healthes.View;
 using App.Scripts.Scenes.GameScene.Features.Levels.General;
-using App.Scripts.Scenes.GameScene.Features.Levels.Loading;
 using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
@@ -15,6 +14,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Healthes
     {
         private readonly List<IHealthPointView> _healthPointViews;
         private readonly IHealthPointView.Factory _healthPointViewFactory;
+        private readonly HealthPointView.Pool _healthPointViewPool;
         private readonly ITransformable _parent;
 
         private int _maxHealthCount;
@@ -23,9 +23,13 @@ namespace App.Scripts.Scenes.GameScene.Features.Healthes
         private bool _isAnimated;
         private Queue<int> _queriesToChangeHealth;
 
-        public ViewHealthPointService(ITransformable parent, IHealthPointView.Factory healthPointViewFactory)
+        public ViewHealthPointService(
+            ITransformable parent,
+            IHealthPointView.Factory healthPointViewFactory,
+            HealthPointView.Pool healthPointViewPool)
         {
             _healthPointViewFactory = healthPointViewFactory;
+            _healthPointViewPool = healthPointViewPool;
             _parent = parent;
             _healthPointViews = new();
             _queriesToChangeHealth = new();
@@ -119,6 +123,11 @@ namespace App.Scripts.Scenes.GameScene.Features.Healthes
 
         public void Restart()
         {
+            foreach (IHealthPointView pointView in _healthPointViews)
+            {
+                _healthPointViewPool.Despawn(pointView as HealthPointView);
+            }
+            
             _healthPointViews.Clear();
             InstallAllViews();
         }
@@ -126,9 +135,9 @@ namespace App.Scripts.Scenes.GameScene.Features.Healthes
         public void LoadProgress(LevelDataProgress levelDataProgress)
         {
             _maxHealthCount = levelDataProgress.AllHealthes;
-            
+
             InstallAllViews();
-            UpdateHealth(_maxHealthCount - levelDataProgress.CurrentHealth);
+            UpdateHealth(-(_maxHealthCount - levelDataProgress.CurrentHealth));
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Infrastructure;
 using App.Scripts.General.LevelPackInfoService;
@@ -7,12 +6,8 @@ using App.Scripts.General.LoadingScreen;
 using App.Scripts.General.Popup;
 using App.Scripts.Scenes.GameScene.Features.Dotween;
 using App.Scripts.Scenes.GameScene.Features.Entities.Ball;
-using App.Scripts.Scenes.GameScene.Features.Entities.Bird;
-using App.Scripts.Scenes.GameScene.Features.Entities.Bird.Interfaces;
-using App.Scripts.Scenes.GameScene.Features.Grid;
 using App.Scripts.Scenes.GameScene.Features.Levels.General;
 using App.Scripts.Scenes.GameScene.Features.Levels.General.Animations;
-using App.Scripts.Scenes.GameScene.Features.Levels.General.Load;
 using App.Scripts.Scenes.GameScene.Features.Levels.General.View;
 using App.Scripts.Scenes.GameScene.Features.Levels.LevelProgress;
 using App.Scripts.Scenes.GameScene.Features.Levels.LevelView;
@@ -20,7 +15,6 @@ using App.Scripts.Scenes.GameScene.Features.Levels.Loading;
 using App.Scripts.Scenes.GameScene.Features.Popups;
 using App.Scripts.Scenes.GameScene.Features.Time;
 using Cysharp.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace App.Scripts.Scenes.GameScene.States
 {

@@ -16,7 +16,8 @@
         "Unity.TextMeshPro",
         "UserData",
         "Localisation",
-        "Unity.PlasticSCM.Editor"
+        "Unity.PlasticSCM.Editor",
+        "CustomData"
     ],
     "includePlatforms": [
         "Android",

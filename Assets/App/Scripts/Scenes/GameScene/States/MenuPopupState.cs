@@ -1,25 +1,25 @@
-﻿using App.Scripts.External.Components;
-using App.Scripts.External.GameStateMachine;
+﻿using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Popup;
 using App.Scripts.Scenes.GameScene.Features.Popups;
+using App.Scripts.Scenes.GameScene.MVVM.Popups.Menu;
 using Cysharp.Threading.Tasks;
 
 namespace App.Scripts.Scenes.GameScene.States
 {
-    public class MenuPopupState : IState<ITransformable>
+    public class MenuPopupState : IState<MenuViewModel>
     {
         private readonly IPopupService _popupService;
 
-        private float _lastSpeedMultiplier;
-        
         public MenuPopupState(IPopupService popupService)
         {
             _popupService = popupService;
         }
         
-        public async UniTask Enter(ITransformable transformable)
+        public async UniTask Enter(MenuViewModel menuViewModel)
         {
-            _popupService.Show<MenuPopupView>(transformable);
+            MenuPopupView menuPopupView = _popupService.Show<MenuPopupView>();
+            
+            menuViewModel.InitializeView(menuPopupView);
             
             await UniTask.CompletedTask;
         }

@@ -1,5 +1,4 @@
 ﻿using App.Scripts.Scenes.GameScene.Features.Boosts.General.Interfaces;
-using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.Move;
 using App.Scripts.Scenes.GameScene.Features.Settings;
 

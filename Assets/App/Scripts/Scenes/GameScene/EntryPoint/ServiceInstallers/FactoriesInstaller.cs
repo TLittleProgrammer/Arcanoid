@@ -1,15 +1,10 @@
 ﻿using App.Scripts.External.Components;
-using App.Scripts.General.Infrastructure;
-using App.Scripts.General.Popup;
-using App.Scripts.General.Popup.AssetManagment;
-using App.Scripts.General.Popup.Factory;
 using App.Scripts.General.RootUI;
-using App.Scripts.Scenes.GameScene.Features.Boosts;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General.UI;
 using App.Scripts.Scenes.GameScene.Features.Effects;
-using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.Entities.Ball;
+using App.Scripts.Scenes.GameScene.Features.Entities.Ball.Movement;
 using App.Scripts.Scenes.GameScene.Features.Entities.Bird;
 using App.Scripts.Scenes.GameScene.Features.Entities.TopSprites;
 using App.Scripts.Scenes.GameScene.Features.Entities.View;
@@ -24,14 +19,12 @@ using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
 {
-    public class FactoriesInstaller : Installer<RootUIViewProvider, BoostItemView, FactoriesInstaller>
+    public class FactoriesInstaller : Installer<BoostItemView, FactoriesInstaller>
     {
-        private readonly RootUIViewProvider _rootUIViewProvider;
         private readonly BoostItemView _prefab;
 
-        public FactoriesInstaller(RootUIViewProvider rootUIViewProvider, BoostItemView prefab)
+        public FactoriesInstaller(BoostItemView prefab)
         {
-            _rootUIViewProvider = rootUIViewProvider;
             _prefab = prefab;
         }
         
@@ -43,14 +36,11 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
             Container.BindFactory<IEntityView, OnTopSprites, OnTopSprites.Factory>().FromFactory<OnTopSpriteFactory>();
             Container.BindFactory<BoostTypeId, BoostView, BoostView.Factory>().FromFactory<BoostViewFactory>();
             Container.BindFactory<BallView, BallView.Factory>().FromFactory<BallViewFactory>();
+            Container.BindFactory<BallView, IBallMovementService, BallMovementFactory>().FromFactory<BallMovementServiceFactory>();
             Container.BindFactory<BirdView, BirdView.Factory>().FromFactory<BirdViewFactory>();
 
             Container.Bind<BoostItemView>().FromInstance(_prefab).WhenInjectedInto<BoostItemViewFactory>();
             Container.BindFactory<BoostTypeId, BoostItemView, BoostItemView.Factory>().FromFactory<BoostItemViewFactory>();
-            
-            Container.Bind<IPopupProvider>().To<ResourcesPopupProvider>().AsSingle();
-            Container.Bind<IPopupFactory>().To<PopupFactory>().AsSingle();
-            Container.Bind(typeof(IPopupService), typeof(IGeneralRestartable)).To<PopupService>().AsSingle().WithArguments(_rootUIViewProvider.BackPopupPlane);
         }
     }
 }

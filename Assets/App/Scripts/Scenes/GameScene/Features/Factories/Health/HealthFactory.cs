@@ -1,6 +1,5 @@
 ﻿using App.Scripts.External.Components;
 using App.Scripts.Scenes.GameScene.Features.Healthes.View;
-using App.Scripts.Scenes.GameScene.Features.Pools;
 using UnityEngine;
 using Zenject;
 

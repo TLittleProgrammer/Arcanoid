@@ -7,4 +7,9 @@ namespace App.Scripts.External.Components
     {
         event Action Clicked;
     }
+
+    public interface IClickable<TParam> : IComponent, IPointerClickHandler
+    {
+        event Action<TParam> Clicked;
+    }
 }

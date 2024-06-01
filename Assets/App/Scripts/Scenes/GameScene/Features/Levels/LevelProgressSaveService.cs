@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using App.Scripts.External.UserData;
 using App.Scripts.General.LevelPackInfoService;
-using App.Scripts.General.Levels;
 using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress;
 
 namespace App.Scripts.Scenes.GameScene.Features.Levels

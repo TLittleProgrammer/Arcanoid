@@ -3,6 +3,7 @@ using App.Scripts.General.Popup;
 using App.Scripts.General.RootUI;
 using App.Scripts.Scenes.GameScene.Features.Popups;
 using App.Scripts.Scenes.GameScene.Features.Time;
+using App.Scripts.Scenes.GameScene.MVVM.Popups.Loose;
 using Cysharp.Threading.Tasks;
 
 namespace App.Scripts.Scenes.GameScene.States
@@ -11,23 +12,25 @@ namespace App.Scripts.Scenes.GameScene.States
     {
         private readonly ITimeProvider _timeProvider;
         private readonly IPopupService _popupService;
-        private readonly RootUIViewProvider _rootUIViewProvider;
+        private readonly LooseViewModel _looseViewModel;
 
         public LooseState(
             ITimeProvider timeProvider,
             IPopupService popupService,
-            RootUIViewProvider rootUIViewProvider)
+            LooseViewModel looseViewModel)
         {
             _timeProvider = timeProvider;
             _popupService = popupService;
-            _rootUIViewProvider = rootUIViewProvider;
+            _looseViewModel = looseViewModel;
         }
         
         public async UniTask Enter()
         {
             _timeProvider.TimeScale = 0f;
-            _popupService.Show<LoosePopupView>(_rootUIViewProvider.PopupUpViewProvider);
+            LoosePopupView loosePopupView = _popupService.Show<LoosePopupView>();
 
+            _looseViewModel.InstallView(loosePopupView);
+            
             await UniTask.CompletedTask;
         }
 

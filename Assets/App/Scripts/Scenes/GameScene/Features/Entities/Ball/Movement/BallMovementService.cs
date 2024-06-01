@@ -21,6 +21,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball.Movement
         }
 
         public bool IsFreeFlight { get; set; }
+        public Vector2 Velocity => _ballFreeFlightMover.Velocity;
 
         public void Tick()
         {
@@ -64,6 +65,11 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball.Movement
         public void SetSpeedMultiplier(float speedMultiplier)
         {
             _ballFreeFlightMover.SetSpeedMultiplier(speedMultiplier);
+        }
+
+        public void SetVelocity(Vector2 velocity)
+        {
+            _ballFreeFlightMover.SetVelocity(velocity);
         }
     }
 }

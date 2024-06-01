@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.External.SceneManagment;
 using App.Scripts.General.LoadingScreen;

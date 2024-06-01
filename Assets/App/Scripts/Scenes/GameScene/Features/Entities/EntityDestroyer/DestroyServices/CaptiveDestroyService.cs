@@ -42,9 +42,10 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Destroy
         private void AddBall(IEntityView entityView)
         {
             BallView ballView = _ballViewFactory.Create();
-
-            ballView.Position = entityView.Position;
+            
             _ballsService.AddBall(ballView, true);
+            
+            ballView.Position = entityView.Position;
         }
     }
 }

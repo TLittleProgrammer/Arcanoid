@@ -10,14 +10,18 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General
     public class BoostMoveService : IBoostMoveService, ILevelProgressSavable
     {
         private readonly ITimeProvider _timeProvider;
+        private readonly BoostView.Pool _boostViewPool;
 
         private List<BoostView> _views;
 
-        public BoostMoveService(ITimeProvider timeProvider)
+        public BoostMoveService(ITimeProvider timeProvider, BoostView.Pool boostViewPool)
         {
             _timeProvider = timeProvider;
+            _boostViewPool = boostViewPool;
             _views = new();
         }
+
+        public bool IsActive { get; set; }
 
         public void Tick()
         {
@@ -41,8 +45,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General
             _views.Remove(boostView);
         }
 
-        public bool IsActive { get; set; }
-        
         public void SaveProgress(LevelDataProgress levelDataProgress)
         {
             levelDataProgress.ViewBoostDatas = new();
@@ -53,6 +55,19 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General
                 
                 levelDataProgress.ViewBoostDatas.Add(saveBoostViewData);
             }
+        }
+
+        public void Restart()
+        {
+            foreach (BoostView view in _views)
+            {
+                if (view.gameObject.activeSelf)
+                {
+                    _boostViewPool.Despawn(view);
+                }
+            }
+            
+            _views.Clear();
         }
     }
 }
