@@ -54,7 +54,7 @@ namespace App.Scripts.Scenes.MainMenuScene.ContinueLevel
 
             _energyService.Dispose();
 
-            _stateMachine.Enter<LoadingSceneState, string, bool, Action>(SceneNaming.Game, false, null);
+            _stateMachine.Enter<LoadingSceneState, string>(SceneNaming.Game);
         }
     }
 }

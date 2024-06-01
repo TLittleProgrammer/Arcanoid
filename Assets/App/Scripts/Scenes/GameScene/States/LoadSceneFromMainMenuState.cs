@@ -30,11 +30,11 @@ namespace App.Scripts.Scenes.GameScene.States
         public async UniTask Enter(string sceneName)
         {
             _infoBetweenScenes.NeedShowLevelPackContainer = true;
-            _projectStateMachine.Enter<LoadingSceneState, string, bool, Action>(sceneName, false, () =>
-            {
-                _tweenersLocator.RemoveAll();
-                _popupService.CloseAll();
-            });
+            
+            await _projectStateMachine.Enter<LoadingSceneState, string>(sceneName);
+            
+            _tweenersLocator.RemoveAll();
+            _popupService.CloseAll();
 
             await UniTask.CompletedTask;
         }
