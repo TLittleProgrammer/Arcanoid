@@ -80,16 +80,16 @@ namespace App.Scripts.General.ProjectInitialization.Installers
             {
                 int needAddEnergy = (int)(_dateTimeService.GetCurrentTimestamp() - globalData.LastTimestampEnter) / _energySettings.SecondsToRecoveryEnergy;
 
-                if (needAddEnergy + _energyDataService.CurrentValue > _energySettings.MaxEnergyCount)
+                if (needAddEnergy + _energyDataService.CurrentValue >= _energySettings.MaxEnergyCount)
                 {
                     if (_energyDataService.CurrentValue < _energySettings.MaxEnergyCount)
                     {
-                        _energyDataService.Add(_energySettings.MaxEnergyCount - _energyDataService.CurrentValue);
+                        _energyDataService.Add(Mathf.Abs(_energySettings.MaxEnergyCount - _energyDataService.CurrentValue - needAddEnergy));
                     }
                 }
                 else
                 {
-                    _energyDataService.Add(needAddEnergy + _energyDataService.CurrentValue);
+                    _energyDataService.Add(needAddEnergy);
                 }
                 
                 _energyModel.SetRemainingSeconds(needAddEnergy % _energySettings.SecondsToRecoveryEnergy);

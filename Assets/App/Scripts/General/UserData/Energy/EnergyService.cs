@@ -2,6 +2,7 @@
 using App.Scripts.External.UserData;
 using App.Scripts.General.LevelPackInfoService;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 using Zenject;
 
 namespace App.Scripts.General.UserData.Energy
@@ -29,6 +30,7 @@ namespace App.Scripts.General.UserData.Energy
 
         public void Add(int value)
         {
+            Debug.Log(value);
             if (_energyData.Value + value < 0)
             {
                 _energyData.Value = 0;
