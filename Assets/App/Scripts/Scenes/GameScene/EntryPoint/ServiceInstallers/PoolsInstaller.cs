@@ -39,8 +39,6 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
             BindPool<PlazmaEffect, PlazmaEffect.Pool>(PoolTypeId.Plazma);
             BindPool<ExplosionEffect, ExplosionEffect.Pool>(PoolTypeId.Explosion);
             BindPool<BirdView, BirdView.Pool>(PoolTypeId.BirdView);
-            
-            Container.Bind(typeof(IPoolContainer), typeof(IGeneralRestartable)).To<PoolContainer>().AsSingle();
         }
 
         private void BindPool<TInstance, TPool>(PoolTypeId poolType) where TPool : IMemoryPool where TInstance : MonoBehaviour 
