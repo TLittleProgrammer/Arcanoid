@@ -35,7 +35,6 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
             Container.BindFactory<EntityView, CircleEffects, CircleEffects.Factory>().FromFactory<CircleEffectFactory>();
             Container.BindFactory<IEntityView, OnTopSprites, OnTopSprites.Factory>().FromFactory<OnTopSpriteFactory>();
             Container.BindFactory<BoostTypeId, BoostView, BoostView.Factory>().FromFactory<BoostViewFactory>();
-            Container.BindFactory<BallView, BallView.Factory>().FromFactory<BallViewFactory>();
             Container.BindFactory<BallView, IBallMovementService, BallMovementFactory>().FromFactory<BallMovementServiceFactory>();
             Container.BindFactory<BirdView, BirdView.Factory>().FromFactory<BirdViewFactory>();
 

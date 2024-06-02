@@ -110,7 +110,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.Bind<IServicesActivator>().To<ServiceActivator>().AsSingle();
             Container.Bind<IShowLevelAnimation>().To<SimpleShowLevelAnimation>().AsSingle();
             Container.Bind<IGetDamageService>().To<GetDamageService>().AsSingle();
-            Container.BindInterfacesTo<BallsService>().AsSingle().WhenNotInjectedInto<GameLoopState>();
+            Container.BindInterfacesAndSelfTo<BallsService>().AsSingle().WhenNotInjectedInto<GameLoopState>();
             Container.BindInterfacesAndSelfTo<LevelProgressService>().AsSingle().WithArguments(_levelPackInfoView, _levelPackBackground);
 
             Container.Bind<SkipLevelService>().AsSingle().WithArguments(_skipLevelButton).NonLazy();
@@ -150,7 +150,8 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
                     typeof(RestartState),
                     typeof(LevelProgressSaveService),
                     typeof(BootstrapContinueLoadLevelState),
-                    typeof(RestartService));
+                    typeof(RestartService),
+                    typeof(LoadNextLevelState));
         }
     }
 }

@@ -77,12 +77,13 @@ namespace App.Scripts.Scenes.GameScene.MVVM.Popups.Win
         private void AnimateCircleEffect()
         {
             _tweenersLocator.AddTweener(_winPopupView.CircleEffect
-                .DORotate(new Vector3(0f, 0f, -360f), _circleWinEffectSettings.Duration, RotateMode.LocalAxisAdd)
-                .SetLoops(-1, LoopType.Restart)
+                .DORotate(new Vector3(0f, 0f, -360f), _circleWinEffectSettings.Duration, RotateMode.WorldAxisAdd)
+                .SetRelative()
+                .SetLoops(-1, LoopType.Incremental)
                 .SetEase(Ease.Linear));
             
             _tweenersLocator.AddTweener(_winPopupView.CircleEffect
-                .DOScale(Vector3.one * 1.25f, _circleWinEffectSettings.Duration / 2f)
+                .DOScale(Vector3.one * 1.25f, _circleWinEffectSettings.Duration / 4f)
                 .SetLoops(-1, LoopType.Yoyo)
                 .SetEase(Ease.Linear));
         }

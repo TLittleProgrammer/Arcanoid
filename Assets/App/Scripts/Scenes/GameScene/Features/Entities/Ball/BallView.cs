@@ -35,9 +35,5 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
         {
             
         }
-
-        public class Factory : PlaceholderFactory<BallView>
-        {
-        }
     }
 }

@@ -53,10 +53,5 @@ namespace App.Scripts.Scenes.GameScene.States
                 tickable.Tick();
             }
         }
-
-        public void AddTickable(ITickable tickable)
-        {
-            _tickables.Add(tickable);
-        }
     }
 }

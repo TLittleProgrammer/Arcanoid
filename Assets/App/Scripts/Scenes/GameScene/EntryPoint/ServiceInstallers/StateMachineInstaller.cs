@@ -65,7 +65,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
             Container.BindInterfacesTo<LooseState>().AsSingle();
         
         
-            Container.Bind<IRestartService>().To<RestartService>().AsSingle().WithArguments(stateMachine);
+            Container.BindInterfacesAndSelfTo<RestartService>().AsSingle().WithArguments(stateMachine);
             Container.BindInterfacesAndSelfTo<ContinueCommand>().AsSingle().WithArguments(stateMachine);
             Container.BindInterfacesAndSelfTo<LoadNextLeveCommand>().AsSingle().WithArguments(stateMachine);
         }

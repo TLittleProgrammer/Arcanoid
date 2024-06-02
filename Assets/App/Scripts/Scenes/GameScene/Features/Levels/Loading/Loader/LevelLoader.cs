@@ -73,7 +73,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.Loading.Loader
             {
                 _previousLevelData = _levelDataChooser.GetLevelData();
             }
-            
+
             foreach (IEntityView view in _entityViews)
             {
                 if (view.GameObject.activeSelf)

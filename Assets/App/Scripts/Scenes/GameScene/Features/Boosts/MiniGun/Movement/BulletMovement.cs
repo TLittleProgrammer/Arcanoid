@@ -29,6 +29,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun
         {
             bulletView.Rigidbody2D.velocity = Vector2.up * _boostsSettings.BulletSpeed;
             bulletView.transform.position = GetBulletPosition(_shapeWidth * ChooseSpawnSide());
+            
+            _bullets.Add(bulletView);
         }
 
         private float ChooseSpawnSide()

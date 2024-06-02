@@ -22,7 +22,7 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
         private readonly ILevelLoadService _levelLoadService;
         private readonly ILevelProgressService _levelProgressService;
         private readonly IBallsService _ballsService;
-        private readonly BallView.Factory _ballViewFactory;
+        private readonly BallView.Pool _ballViewPool;
 
         public BootstrapLoadLevelState(
             IStateMachine stateMachine,
@@ -32,7 +32,7 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             ILevelLoadService levelLoadService,
             ILevelProgressService levelProgressService,
             IBallsService ballsService,
-            BallView.Factory ballViewFactory
+            BallView.Pool ballViewPool
             )
         {
             _stateMachine = stateMachine;
@@ -42,7 +42,7 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             _levelLoadService = levelLoadService;
             _levelProgressService = levelProgressService;
             _ballsService = ballsService;
-            _ballViewFactory = ballViewFactory;
+            _ballViewPool = ballViewPool;
         }
         
         public async UniTask Enter()
@@ -53,7 +53,7 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             await _viewHealthPointService.AsyncInitialize(levelData);
             _levelProgressService.CalculateStepByLevelData(levelData);
 
-            _ballsService.AddBall(_ballViewFactory.Create());
+            _ballsService.AddBall(_ballViewPool.Spawn());
             
             _stateMachine.Enter<BootstrapInitializeOtherServicesState>().Forget();
         }
