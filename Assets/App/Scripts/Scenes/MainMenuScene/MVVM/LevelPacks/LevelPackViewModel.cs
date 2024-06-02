@@ -134,9 +134,14 @@ namespace App.Scripts.Scenes.MainMenuScene.LevelPacks.MonoBehaviours
 
             var lastOpenedPack = _levelPackProgressDictionary.Last();
 
-            if (packIndex == lastOpenedPack.Key && lastOpenedPack.Value.PassedLevels >= levelPack.Levels.Count)
+            if (packIndex == lastOpenedPack.Key + 1)
             {
-                return VisualTypeId.InProgress;
+                int lastPassedLevels = _levelPackModel.GetLevelItemDatas().First(x => x.PackIndex == lastOpenedPack.Key).LevelPack.Levels.Count;
+
+                if (_levelPackProgressDictionary[lastOpenedPack.Key].PassedLevels >= lastPassedLevels)
+                {
+                    return VisualTypeId.InProgress;
+                }
             }
             
             if (!_levelPackProgressDictionary.ContainsKey(packIndex))
