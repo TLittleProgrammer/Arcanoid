@@ -3,7 +3,7 @@ using System.Linq;
 using App.Scripts.Scenes.GameScene.Features.Entities.View;
 using Unity.Mathematics;
 
-namespace App.Scripts.Scenes.GameScene.Utilities
+namespace App.Scripts.Scenes.GameScene.Features.Entities.Extensions
 {
     public static class ListExtensions
     {

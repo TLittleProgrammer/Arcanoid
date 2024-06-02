@@ -2,7 +2,7 @@
 using App.Scripts.General.AnimatableButtons;
 using UnityEngine.UI;
 
-namespace App.Scripts.Scenes.GameScene.Command
+namespace App.Scripts.General.Command
 {
     public sealed class DisableButtonsCommand : IDisableButtonsCommand
     {

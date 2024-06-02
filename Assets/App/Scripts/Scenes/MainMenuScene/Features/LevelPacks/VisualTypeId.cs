@@ -1,4 +1,4 @@
-﻿namespace App.Scripts.Scenes.MainMenuScene.LevelPacks
+﻿namespace App.Scripts.Scenes.MainMenuScene.Features.LevelPacks
 {
     public enum VisualTypeId
     {

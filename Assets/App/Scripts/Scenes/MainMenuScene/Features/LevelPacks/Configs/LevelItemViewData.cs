@@ -1,7 +1,7 @@
 ﻿using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace App.Scripts.Scenes.MainMenuScene.LevelPacks.Configs
+namespace App.Scripts.Scenes.MainMenuScene.Features.LevelPacks.Configs
 {
     public class LevelItemViewData
     {

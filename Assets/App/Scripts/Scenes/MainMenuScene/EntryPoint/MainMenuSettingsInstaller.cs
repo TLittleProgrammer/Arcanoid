@@ -1,10 +1,10 @@
 ﻿using App.Scripts.External.Localisation.Config;
 using App.Scripts.General.Levels;
-using App.Scripts.Scenes.MainMenuScene.LevelPacks.Configs;
+using App.Scripts.Scenes.MainMenuScene.Features.LevelPacks.Configs;
 using UnityEngine;
 using Zenject;
 
-namespace App.Scripts.Scenes.MainMenuScene.Installers
+namespace App.Scripts.Scenes.MainMenuScene.EntryPoint
 {
     [CreateAssetMenu(menuName = "Configs/Main Menu/Main Menu Settings", fileName = "MainMenuSettings")]
     public class MainMenuSettingsInstaller : ScriptableObjectInstaller

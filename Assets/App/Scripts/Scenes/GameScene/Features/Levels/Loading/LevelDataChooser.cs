@@ -1,7 +1,8 @@
-﻿using App.Scripts.General.LevelPackInfoService;
-using App.Scripts.General.Levels;
+﻿using App.Scripts.General.Levels;
+using App.Scripts.General.Levels.LevelPackInfoService;
 using App.Scripts.Scenes.GameScene.Features.Levels.General;
 using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress;
+using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress.Data;
 using Newtonsoft.Json;
 using UnityEngine;
 

@@ -3,7 +3,7 @@ using System.Linq;
 using App.Scripts.Scenes.GameScene.Features.Constants;
 using App.Scripts.Scenes.GameScene.Features.Entities.View;
 using App.Scripts.Scenes.GameScene.Features.Grid;
-using App.Scripts.Scenes.GameScene.Features.Levels.General.Load;
+using App.Scripts.Scenes.GameScene.Features.Levels.Loading.Loader;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine.UI;

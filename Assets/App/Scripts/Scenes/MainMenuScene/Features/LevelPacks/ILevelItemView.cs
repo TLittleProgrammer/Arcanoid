@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-namespace App.Scripts.Scenes.MainMenuScene.LevelPacks
+namespace App.Scripts.Scenes.MainMenuScene.Features.LevelPacks
 {
     public interface ILevelItemView : IGameObjectable, IClickable
     {

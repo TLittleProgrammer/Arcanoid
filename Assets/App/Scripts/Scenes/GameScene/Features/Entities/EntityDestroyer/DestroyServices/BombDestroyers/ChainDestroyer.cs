@@ -4,11 +4,11 @@ using App.Scripts.Scenes.GameScene.Features.Boosts.General;
 using App.Scripts.Scenes.GameScene.Features.Effects;
 using App.Scripts.Scenes.GameScene.Features.Entities.AssetManagement;
 using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Helpers;
+using App.Scripts.Scenes.GameScene.Features.Entities.Extensions;
 using App.Scripts.Scenes.GameScene.Features.Entities.View;
 using App.Scripts.Scenes.GameScene.Features.Grid;
-using App.Scripts.Scenes.GameScene.Features.Levels.General.Load;
 using App.Scripts.Scenes.GameScene.Features.Levels.General.View;
-using App.Scripts.Scenes.GameScene.Utilities;
+using App.Scripts.Scenes.GameScene.Features.Levels.Loading.Loader;
 using Cysharp.Threading.Tasks;
 using Unity.Mathematics;
 

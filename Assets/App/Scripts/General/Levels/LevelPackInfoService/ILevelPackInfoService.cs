@@ -1,6 +1,4 @@
-﻿using App.Scripts.General.Levels;
-
-namespace App.Scripts.General.LevelPackInfoService
+﻿namespace App.Scripts.General.Levels.LevelPackInfoService
 {
     public interface ILevelPackInfoService
     {

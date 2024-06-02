@@ -1,7 +1,7 @@
 ﻿using System;
 using App.Scripts.Scenes.GameScene.Features.Grid;
 using App.Scripts.Scenes.GameScene.Features.Levels.General;
-using App.Scripts.Scenes.GameScene.Features.Levels.General.Load;
+using App.Scripts.Scenes.GameScene.Features.Levels.Loading.Loader;
 using Cysharp.Threading.Tasks;
 
 namespace App.Scripts.Scenes.GameScene.Features.Levels.Loading

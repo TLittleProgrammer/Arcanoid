@@ -1,4 +1,5 @@
 ﻿using App.Scripts.External.GameStateMachine;
+using App.Scripts.Scenes.GameScene.Command.Interfaces;
 using App.Scripts.Scenes.GameScene.MVVM.Popups.Menu;
 using App.Scripts.Scenes.GameScene.States;
 

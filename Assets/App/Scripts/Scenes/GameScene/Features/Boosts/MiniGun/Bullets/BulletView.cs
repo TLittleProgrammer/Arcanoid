@@ -2,7 +2,7 @@
 using UnityEngine;
 using Zenject;
 
-namespace App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun
+namespace App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.Bullets
 {
     public class BulletView : MonoBehaviour
     {

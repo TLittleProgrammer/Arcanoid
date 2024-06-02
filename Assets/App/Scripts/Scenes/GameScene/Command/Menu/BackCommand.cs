@@ -1,10 +1,11 @@
 ﻿using App.Scripts.External.GameStateMachine;
 using App.Scripts.External.UserData;
 using App.Scripts.General.Constants;
+using App.Scripts.Scenes.GameScene.Command.Interfaces;
 using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress;
 using App.Scripts.Scenes.GameScene.States;
 
-namespace App.Scripts.Scenes.GameScene.Command
+namespace App.Scripts.Scenes.GameScene.Command.Menu
 {
     public sealed class BackCommand : IBackCommand
     {

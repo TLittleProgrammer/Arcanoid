@@ -2,7 +2,7 @@
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.External.UserData;
 using App.Scripts.General.Infrastructure;
-using App.Scripts.General.LevelPackInfoService;
+using App.Scripts.General.Levels.LevelPackInfoService;
 using App.Scripts.General.LoadingScreen;
 using App.Scripts.General.Popup;
 using App.Scripts.General.Providers;
@@ -18,6 +18,7 @@ using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress;
 using App.Scripts.Scenes.GameScene.Features.Popups;
 using App.Scripts.Scenes.GameScene.Features.Time;
 using App.Scripts.Scenes.GameScene.MVVM.Header;
+using App.Scripts.Scenes.GameScene.States.Gameloop;
 using Cysharp.Threading.Tasks;
 
 namespace App.Scripts.Scenes.GameScene.States

@@ -1,5 +1,6 @@
 ﻿using App.Scripts.External.GameStateMachine;
 using App.Scripts.Scenes.GameScene.Command;
+using App.Scripts.Scenes.GameScene.Command.Interfaces;
 using App.Scripts.Scenes.GameScene.Features.Popups.Buttons;
 using App.Scripts.Scenes.GameScene.MVVM.Main;
 using App.Scripts.Scenes.GameScene.MVVM.Popups.Loose;

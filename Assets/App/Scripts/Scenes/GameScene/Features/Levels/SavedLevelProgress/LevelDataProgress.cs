@@ -5,6 +5,7 @@ using App.Scripts.General.UserData.Constants;
 using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.Grid;
 using App.Scripts.Scenes.GameScene.Features.Levels.General;
+using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress.Data;
 using Newtonsoft.Json;
 
 namespace App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress

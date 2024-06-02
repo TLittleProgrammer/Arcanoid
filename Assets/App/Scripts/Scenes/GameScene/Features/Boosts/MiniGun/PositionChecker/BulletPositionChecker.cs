@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun;
+using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.Bullets;
 using App.Scripts.Scenes.GameScene.Features.ScreenInfo;
 using Zenject;
 
-namespace App.Scripts.Scenes.GameScene.Features.PositionChecker
+namespace App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.PositionChecker
 {
     public sealed class BulletPositionChecker : IBulletPositionChecker, ITickable
     {

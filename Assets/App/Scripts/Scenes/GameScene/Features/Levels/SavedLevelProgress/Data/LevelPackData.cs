@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using UnityEngine;
 
-namespace App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress
+namespace App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress.Data
 {
     [Serializable]
     public class LevelPackData

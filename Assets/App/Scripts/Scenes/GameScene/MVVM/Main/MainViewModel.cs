@@ -1,5 +1,6 @@
 ﻿using App.Scripts.External.Components;
 using App.Scripts.Scenes.GameScene.Command;
+using App.Scripts.Scenes.GameScene.Command.Interfaces;
 using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.MVVM.Main

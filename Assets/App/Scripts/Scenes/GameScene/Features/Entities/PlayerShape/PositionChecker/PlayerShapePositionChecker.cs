@@ -2,7 +2,7 @@
 using App.Scripts.Scenes.GameScene.Features.ScreenInfo;
 using UnityEngine;
 
-namespace App.Scripts.Scenes.GameScene.Features.PositionChecker
+namespace App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.PositionChecker
 {
     public sealed class PlayerShapePositionChecker : IShapePositionChecker
     {

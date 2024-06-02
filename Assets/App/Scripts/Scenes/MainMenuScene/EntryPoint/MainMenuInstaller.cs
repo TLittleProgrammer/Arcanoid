@@ -1,24 +1,22 @@
-﻿using App.Scripts.External.UserData;
+﻿using App.Scripts.General.Command;
 using App.Scripts.General.Energy;
-using App.Scripts.General.UserData.Levels.Data;
-using App.Scripts.Scenes.Bootstrap.Buttons;
-using App.Scripts.Scenes.GameScene.Command;
-using App.Scripts.Scenes.MainMenuScene.ActivateScreens;
-using App.Scripts.Scenes.MainMenuScene.Buttons;
 using App.Scripts.Scenes.MainMenuScene.Command;
-using App.Scripts.Scenes.MainMenuScene.ContinueLevel;
-using App.Scripts.Scenes.MainMenuScene.Factories.ItemView;
-using App.Scripts.Scenes.MainMenuScene.Factories.Levels;
-using App.Scripts.Scenes.MainMenuScene.LevelPacks;
-using App.Scripts.Scenes.MainMenuScene.LevelPacks.MonoBehaviours;
-using App.Scripts.Scenes.MainMenuScene.LocaleView;
+using App.Scripts.Scenes.MainMenuScene.EntryPoint.Initializers;
+using App.Scripts.Scenes.MainMenuScene.Features.ActivateScreens;
+using App.Scripts.Scenes.MainMenuScene.Features.Buttons;
+using App.Scripts.Scenes.MainMenuScene.Features.ContinueLevel;
+using App.Scripts.Scenes.MainMenuScene.Features.Factories.ItemView;
+using App.Scripts.Scenes.MainMenuScene.Features.Factories.Levels;
+using App.Scripts.Scenes.MainMenuScene.Features.LevelPacks;
+using App.Scripts.Scenes.MainMenuScene.Features.LevelPacks.MonoBehaviours;
+using App.Scripts.Scenes.MainMenuScene.Features.LocaleView;
+using App.Scripts.Scenes.MainMenuScene.MVVM.LevelPacks;
 using App.Scripts.Scenes.MainMenuScene.MVVM.Settings;
-using App.Scripts.Scenes.MainMenuScene.Popup;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-namespace App.Scripts.Scenes.MainMenuScene.Installers
+namespace App.Scripts.Scenes.MainMenuScene.EntryPoint
 {
     public class MainMenuInstaller : MonoInstaller
     {

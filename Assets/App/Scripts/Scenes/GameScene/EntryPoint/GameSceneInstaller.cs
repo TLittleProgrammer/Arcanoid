@@ -20,6 +20,7 @@ using App.Scripts.Scenes.GameScene.Features.Entities.Bird;
 using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape;
 using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.Collisions;
 using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.Move;
+using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.PositionChecker;
 using App.Scripts.Scenes.GameScene.Features.Entities.View;
 using App.Scripts.Scenes.GameScene.Features.Entities.Walls;
 using App.Scripts.Scenes.GameScene.Features.Game;
@@ -33,7 +34,6 @@ using App.Scripts.Scenes.GameScene.Features.Levels.Loading;
 using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress;
 using App.Scripts.Scenes.GameScene.Features.Levels.SkipLevel;
 using App.Scripts.Scenes.GameScene.Features.Popups.Buttons;
-using App.Scripts.Scenes.GameScene.Features.PositionChecker;
 using App.Scripts.Scenes.GameScene.Features.Restart;
 using App.Scripts.Scenes.GameScene.Features.ScoreAnimation;
 using App.Scripts.Scenes.GameScene.Features.ScreenInfo;
@@ -43,10 +43,11 @@ using App.Scripts.Scenes.GameScene.Features.Shake;
 using App.Scripts.Scenes.GameScene.MVVM.Header;
 using App.Scripts.Scenes.GameScene.States;
 using App.Scripts.Scenes.GameScene.States.Bootstrap;
+using App.Scripts.Scenes.GameScene.States.Gameloop;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
-using LevelProgressSaveService = App.Scripts.Scenes.GameScene.Features.Levels.LevelProgressSaveService;
+using LevelProgressSaveService = App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress.LevelProgressSaveService;
 
 namespace App.Scripts.Scenes.GameScene.EntryPoint
 {

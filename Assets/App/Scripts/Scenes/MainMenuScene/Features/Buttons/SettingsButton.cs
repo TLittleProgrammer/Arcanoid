@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace App.Scripts.Scenes.Bootstrap.Buttons
+namespace App.Scripts.Scenes.MainMenuScene.Features.Buttons
 {
     public class SettingsButton : MonoBehaviour, IButtonable
     {

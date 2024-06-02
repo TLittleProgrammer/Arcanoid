@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using App.Scripts.General.Components;
 using App.Scripts.General.Levels;
+using App.Scripts.Scenes.MainMenuScene.Features.LevelPacks;
 
-namespace App.Scripts.Scenes.MainMenuScene.LevelPacks.MonoBehaviours
+namespace App.Scripts.Scenes.MainMenuScene.MVVM.LevelPacks
 {
     public class LevelPackModel : IModel
     {

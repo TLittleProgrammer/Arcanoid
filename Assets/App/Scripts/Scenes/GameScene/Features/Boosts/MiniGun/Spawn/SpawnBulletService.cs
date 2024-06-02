@@ -1,6 +1,9 @@
-﻿using App.Scripts.Scenes.GameScene.Features.PositionChecker;
+﻿using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.Bullets;
+using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.Collision;
+using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.Movement;
+using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.PositionChecker;
 
-namespace App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun
+namespace App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.Spawn
 {
     public sealed class SpawnBulletService : ISpawnBulletService
     {

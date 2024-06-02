@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-namespace App.Scripts.Scenes.MainMenuScene.ActivateScreens
+namespace App.Scripts.Scenes.MainMenuScene.Features.ActivateScreens
 {
     public class ActivateScreensService : IInitializable
     {

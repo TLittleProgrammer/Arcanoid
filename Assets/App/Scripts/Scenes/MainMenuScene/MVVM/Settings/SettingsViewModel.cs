@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
 using App.Scripts.External.Components;
+using App.Scripts.General.Command;
 using App.Scripts.General.Components;
-using App.Scripts.Scenes.GameScene.Command;
 using App.Scripts.Scenes.MainMenuScene.Command;
-using App.Scripts.Scenes.MainMenuScene.LocaleView;
-using App.Scripts.Scenes.MainMenuScene.MVVM.Settings;
+using App.Scripts.Scenes.MainMenuScene.Features.LocaleView;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace App.Scripts.Scenes.MainMenuScene.Popup
+namespace App.Scripts.Scenes.MainMenuScene.MVVM.Settings
 {
     public class SettingsViewModel : IViewModel
     {

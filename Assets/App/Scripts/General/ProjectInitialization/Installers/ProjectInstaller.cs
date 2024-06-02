@@ -7,7 +7,7 @@ using App.Scripts.External.SceneManagment;
 using App.Scripts.General.DateTime;
 using App.Scripts.General.Energy;
 using App.Scripts.General.Infrastructure;
-using App.Scripts.General.LevelPackInfoService;
+using App.Scripts.General.Levels.LevelPackInfoService;
 using App.Scripts.General.MVVM.Energy;
 using App.Scripts.General.Popup;
 using App.Scripts.General.Popup.AssetManagment;
@@ -48,7 +48,7 @@ namespace App.Scripts.General.ProjectInitialization.Installers
             Container.BindInterfacesAndSelfTo<EnergyModel>().AsSingle();
             Container.BindInterfacesAndSelfTo<EnergyViewModel>().AsSingle();
             
-            Container.Bind<ILevelPackInfoService>().To<LevelPackInfoService.LevelPackInfoService>().AsSingle();
+            Container.Bind<ILevelPackInfoService>().To<LevelPackInfoService>().AsSingle();
             BindStatemachine();
             
             Container.BindInterfacesAndSelfTo<ProjectInitializer>().AsSingle().WithArguments(Localisation);

@@ -1,7 +1,8 @@
-﻿using App.Scripts.Scenes.MainMenuScene.LevelPacks.MonoBehaviours;
+﻿using App.Scripts.Scenes.MainMenuScene.Features.LevelPacks.MonoBehaviours;
+using App.Scripts.Scenes.MainMenuScene.MVVM.LevelPacks;
 using Zenject;
 
-namespace App.Scripts.Scenes.MainMenuScene.Installers
+namespace App.Scripts.Scenes.MainMenuScene.EntryPoint.Initializers
 {
     public class LevelPacksInitializer : IInitializable
     {

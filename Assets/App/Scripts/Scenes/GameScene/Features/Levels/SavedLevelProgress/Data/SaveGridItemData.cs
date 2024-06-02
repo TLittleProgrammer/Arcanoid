@@ -1,8 +1,9 @@
 ﻿using System;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General;
+using App.Scripts.Scenes.GameScene.Features.Grid;
 using Newtonsoft.Json;
 
-namespace App.Scripts.Scenes.GameScene.Features.Grid
+namespace App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress.Data
 {
     [Serializable]
     public class SaveGridItemData

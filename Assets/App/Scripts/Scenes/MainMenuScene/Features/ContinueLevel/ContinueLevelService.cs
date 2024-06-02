@@ -1,16 +1,14 @@
-﻿using System;
-using App.Scripts.External.GameStateMachine;
+﻿using App.Scripts.External.GameStateMachine;
 using App.Scripts.External.UserData.SaveLoad;
 using App.Scripts.General.Constants;
-using App.Scripts.General.Energy;
-using App.Scripts.General.LevelPackInfoService;
 using App.Scripts.General.Levels;
+using App.Scripts.General.Levels.LevelPackInfoService;
 using App.Scripts.General.MVVM.Energy;
 using App.Scripts.General.States;
 using UnityEngine.UI;
 using Zenject;
 
-namespace App.Scripts.Scenes.MainMenuScene.ContinueLevel
+namespace App.Scripts.Scenes.MainMenuScene.Features.ContinueLevel
 {
     public class ContinueLevelService : IInitializable
     {

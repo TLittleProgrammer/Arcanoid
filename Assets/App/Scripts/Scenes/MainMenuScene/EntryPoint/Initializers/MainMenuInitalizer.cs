@@ -4,7 +4,7 @@ using App.Scripts.General.MVVM.Energy;
 using App.Scripts.General.Popup.AssetManagment;
 using Zenject;
 
-namespace App.Scripts.Scenes.MainMenuScene.Installers
+namespace App.Scripts.Scenes.MainMenuScene.EntryPoint.Initializers
 {
     public class MainMenuInitalizer : IInitializable
     {

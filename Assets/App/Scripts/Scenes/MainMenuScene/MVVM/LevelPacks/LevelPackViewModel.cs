@@ -6,12 +6,13 @@ using App.Scripts.General.Levels;
 using App.Scripts.General.Providers;
 using App.Scripts.General.UserData.Levels.Data;
 using App.Scripts.Scenes.MainMenuScene.Command;
-using App.Scripts.Scenes.MainMenuScene.Constants;
-using App.Scripts.Scenes.MainMenuScene.LevelPacks.Configs;
+using App.Scripts.Scenes.MainMenuScene.Features.Constants;
+using App.Scripts.Scenes.MainMenuScene.Features.LevelPacks;
+using App.Scripts.Scenes.MainMenuScene.Features.LevelPacks.Configs;
 using TMPro;
 using UnityEngine;
 
-namespace App.Scripts.Scenes.MainMenuScene.LevelPacks.MonoBehaviours
+namespace App.Scripts.Scenes.MainMenuScene.MVVM.LevelPacks
 {
     public class LevelPackViewModel
     {

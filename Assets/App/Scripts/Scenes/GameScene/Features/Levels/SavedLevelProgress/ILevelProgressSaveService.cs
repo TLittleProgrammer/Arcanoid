@@ -1,4 +1,4 @@
-﻿namespace App.Scripts.Scenes.GameScene.Features.Levels
+﻿namespace App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress
 {
     public interface ILevelProgressSaveService
     {

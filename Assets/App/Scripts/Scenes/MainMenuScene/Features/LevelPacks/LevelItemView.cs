@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace App.Scripts.Scenes.MainMenuScene.LevelPacks
+namespace App.Scripts.Scenes.MainMenuScene.Features.LevelPacks
 {
     public class LevelItemView : MonoBehaviour, ILevelItemView
     {

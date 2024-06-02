@@ -1,10 +1,10 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.Bullets;
 using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape;
 using App.Scripts.Scenes.GameScene.Features.Settings;
 using UnityEngine;
 
-namespace App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun
+namespace App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.Movement
 {
     public class BulletMovement : IBulletMovement
     {

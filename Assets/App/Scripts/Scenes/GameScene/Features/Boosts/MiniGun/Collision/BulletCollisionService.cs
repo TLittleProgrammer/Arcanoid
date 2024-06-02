@@ -1,11 +1,13 @@
 ﻿using System;
+using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.Bullets;
+using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.Movement;
+using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.PositionChecker;
 using App.Scripts.Scenes.GameScene.Features.Entities.View;
 using App.Scripts.Scenes.GameScene.Features.Levels.General.View;
-using App.Scripts.Scenes.GameScene.Features.PositionChecker;
 using App.Scripts.Scenes.GameScene.Features.Settings;
 using UnityEngine;
 
-namespace App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun
+namespace App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.Collision
 {
     public sealed class BulletCollisionService : IBulletCollisionService
     {

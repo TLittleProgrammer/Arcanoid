@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using App.Scripts.External.GameStateMachine;
-using App.Scripts.Scenes.GameScene.Features.Helpers;
 using App.Scripts.Scenes.GameScene.Features.ServiceActivator;
 using Cysharp.Threading.Tasks;
 using Zenject;
 
-namespace App.Scripts.Scenes.GameScene.States
+namespace App.Scripts.Scenes.GameScene.States.Gameloop
 {
     public class GameLoopState : IState, ITickable
     {

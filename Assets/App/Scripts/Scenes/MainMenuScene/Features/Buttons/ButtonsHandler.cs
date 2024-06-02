@@ -1,9 +1,9 @@
 ﻿using App.Scripts.General.Components;
 using App.Scripts.General.Popup;
-using App.Scripts.Scenes.MainMenuScene.Popup;
+using App.Scripts.Scenes.MainMenuScene.MVVM.Settings;
 using Zenject;
 
-namespace App.Scripts.Scenes.MainMenuScene.Buttons
+namespace App.Scripts.Scenes.MainMenuScene.Features.Buttons
 {
     public class ButtonsHandler : IInitializable
     {

@@ -1,9 +1,10 @@
-﻿using App.Scripts.Scenes.GameScene.Features.Settings;
+﻿using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.Movement;
+using App.Scripts.Scenes.GameScene.Features.Settings;
 using App.Scripts.Scenes.GameScene.Features.Time;
 using UnityEngine;
 using Zenject;
 
-namespace App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun
+namespace App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.Spawn
 {
     public class MiniGunService : IMiniGunService, ITickable
     {

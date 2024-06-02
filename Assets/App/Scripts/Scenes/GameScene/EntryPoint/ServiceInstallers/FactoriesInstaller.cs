@@ -9,6 +9,7 @@ using App.Scripts.Scenes.GameScene.Features.Entities.Bird;
 using App.Scripts.Scenes.GameScene.Features.Entities.TopSprites;
 using App.Scripts.Scenes.GameScene.Features.Entities.View;
 using App.Scripts.Scenes.GameScene.Features.Factories;
+using App.Scripts.Scenes.GameScene.Features.Factories.Ball;
 using App.Scripts.Scenes.GameScene.Features.Factories.Boosts;
 using App.Scripts.Scenes.GameScene.Features.Factories.CircleEffect;
 using App.Scripts.Scenes.GameScene.Features.Factories.Entity;

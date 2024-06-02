@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using App.Scripts.External.UserData;
-using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress;
-using UnityEngine;
 
-namespace App.Scripts.Scenes.GameScene.Features.Levels
+namespace App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress
 {
     public class LevelProgressSaveService : ILevelProgressSaveService
     {

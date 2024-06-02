@@ -1,5 +1,6 @@
 ﻿using App.Scripts.Scenes.GameScene.Features.Boosts.General.Interfaces;
 using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun;
+using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.Spawn;
 
 namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
 {

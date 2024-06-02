@@ -1,6 +1,6 @@
 ﻿using App.Scripts.External.GameStateMachine;
-using App.Scripts.General.LevelPackInfoService;
 using App.Scripts.General.Levels;
+using App.Scripts.General.Levels.LevelPackInfoService;
 using App.Scripts.General.UserData.Energy;
 using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.Move;
 using App.Scripts.Scenes.GameScene.Features.Healthes;

@@ -2,7 +2,7 @@
 using App.Scripts.External.CustomData;
 using Newtonsoft.Json;
 
-namespace App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress
+namespace App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress.Data
 {
     [Serializable]
     public class BallData
