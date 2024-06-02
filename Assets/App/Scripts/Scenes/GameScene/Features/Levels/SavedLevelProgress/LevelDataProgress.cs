@@ -5,6 +5,7 @@ using App.Scripts.General.UserData.Constants;
 using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.Grid;
 using App.Scripts.Scenes.GameScene.Features.Levels.General;
+using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress.Data;
 using Newtonsoft.Json;
 
 namespace App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress
@@ -44,7 +45,10 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress
         
         [JsonProperty("ViewBoostData")]
         public List<SaveBoostViewData> ViewBoostDatas;
-        
+
+        [JsonProperty("LevelPack")]
+        public LevelTransferPackData LevelTransferPackData;
+
         [JsonIgnore]
         public string FileName => SavableConstants.CurrentLevelProgressFileName;
     }

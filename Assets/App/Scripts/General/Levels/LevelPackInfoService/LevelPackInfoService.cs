@@ -1,9 +1,8 @@
 ﻿using System;
-using App.Scripts.General.Levels;
 using App.Scripts.General.UserData.Levels;
 using UnityEngine;
 
-namespace App.Scripts.General.LevelPackInfoService
+namespace App.Scripts.General.Levels.LevelPackInfoService
 {
     public sealed class LevelPackInfoService : ILevelPackInfoService
     {
@@ -21,6 +20,12 @@ namespace App.Scripts.General.LevelPackInfoService
         }
 
         public bool NeedContinueLevel => _levelPackTransferData?.NeedContinue ?? false;
+
+        public ILevelPackTransferData LevelPackTransferData
+        {
+            get => _levelPackTransferData;
+            set => _levelPackTransferData = value;
+        }
 
         public ILevelPackTransferData UpdateLevelPackTransferData()
         {

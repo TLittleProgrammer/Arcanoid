@@ -1,9 +1,10 @@
 ﻿using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Popup;
-using App.Scripts.Scenes.GameScene.States;
+using App.Scripts.Scenes.GameScene.Command.Interfaces;
+using App.Scripts.Scenes.GameScene.States.Gameloop;
 using Cysharp.Threading.Tasks;
 
-namespace App.Scripts.Scenes.GameScene.Command
+namespace App.Scripts.Scenes.GameScene.Command.Menu
 {
     public class ContinueCommand : IContinueCommand
     {

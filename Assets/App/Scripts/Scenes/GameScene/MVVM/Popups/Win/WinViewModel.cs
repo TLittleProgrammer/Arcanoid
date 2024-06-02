@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
-using App.Scripts.General.LevelPackInfoService;
+using App.Scripts.General.Command;
 using App.Scripts.General.Levels;
+using App.Scripts.General.Levels.LevelPackInfoService;
+using App.Scripts.General.Providers;
 using App.Scripts.Scenes.GameScene.Command;
 using App.Scripts.Scenes.GameScene.Command.Win;
 using App.Scripts.Scenes.GameScene.Features.Dotween;
@@ -21,6 +23,7 @@ namespace App.Scripts.Scenes.GameScene.MVVM.Popups.Win
         private readonly ILoadNextLevelCommand _loadNextLevelCommand;
         private readonly IDisableButtonsCommand _disableButtonsCommand;
         private readonly ILevelPackInfoService _levelPackInfoService;
+        private readonly SpriteProvider _spriteProvider;
 
         private IWinPopupView _winPopupView;
         
@@ -30,7 +33,8 @@ namespace App.Scripts.Scenes.GameScene.MVVM.Popups.Win
             CircleWinEffectSettings circleWinEffectSettings,
             ILoadNextLevelCommand loadNextLevelCommand,
             IDisableButtonsCommand disableButtonsCommand,
-            ILevelPackInfoService levelPackInfoService)
+            ILevelPackInfoService levelPackInfoService,
+            SpriteProvider spriteProvider)
         {
             _winContinueButtonAnimationSettings = winContinueButtonAnimationSettings;
             _tweenersLocator = tweenersLocator;
@@ -38,6 +42,7 @@ namespace App.Scripts.Scenes.GameScene.MVVM.Popups.Win
             _loadNextLevelCommand = loadNextLevelCommand;
             _disableButtonsCommand = disableButtonsCommand;
             _levelPackInfoService = levelPackInfoService;
+            _spriteProvider = spriteProvider;
         }
 
         public void InstallView(IWinPopupView winPopupView)
@@ -53,10 +58,10 @@ namespace App.Scripts.Scenes.GameScene.MVVM.Popups.Win
 
         private void UpdateVisual()
         {
-            LevelPack currentPack = _levelPackInfoService.GetData().LevelPack;
-            _winPopupView.BottomGalacticIcon.sprite = currentPack.GalacticIcon;
+            LevelPack currentPack = _levelPackInfoService.LevelPackTransferData.LevelPack;
+            _winPopupView.BottomGalacticIcon.sprite = _spriteProvider.Sprites[currentPack.GalacticIconKey];
             _winPopupView.GalacticName.SetToken(currentPack.LocaleKey);
-            _winPopupView.PassedLevelsText.text = $"{_levelPackInfoService.GetData().LevelIndex + 1}/{currentPack.Levels.Count}";
+            _winPopupView.PassedLevelsText.text = $"{_levelPackInfoService.LevelPackTransferData.LevelIndex + 1}/{currentPack.Levels.Count}";
         }
 
         private void SubscribeButtons()
@@ -73,12 +78,13 @@ namespace App.Scripts.Scenes.GameScene.MVVM.Popups.Win
         private void AnimateCircleEffect()
         {
             _tweenersLocator.AddTweener(_winPopupView.CircleEffect
-                .DORotate(new Vector3(0f, 0f, -360f), _circleWinEffectSettings.Duration, RotateMode.LocalAxisAdd)
-                .SetLoops(-1, LoopType.Restart)
+                .DORotate(new Vector3(0f, 0f, -360f), _circleWinEffectSettings.Duration, RotateMode.WorldAxisAdd)
+                .SetRelative()
+                .SetLoops(-1, LoopType.Incremental)
                 .SetEase(Ease.Linear));
             
             _tweenersLocator.AddTweener(_winPopupView.CircleEffect
-                .DOScale(Vector3.one * 1.25f, _circleWinEffectSettings.Duration / 2f)
+                .DOScale(Vector3.one * 1.25f, _circleWinEffectSettings.Duration / 4f)
                 .SetLoops(-1, LoopType.Yoyo)
                 .SetEase(Ease.Linear));
         }
@@ -130,10 +136,10 @@ namespace App.Scripts.Scenes.GameScene.MVVM.Popups.Win
             if (_levelPackInfoService.NeedLoadNextPack())
             {
                 LevelPack nextPack = _levelPackInfoService.GetDataForNextPack();
-                LevelPack currentLevelPack = _levelPackInfoService.GetData().LevelPack;
+                LevelPack currentLevelPack = _levelPackInfoService.LevelPackTransferData.LevelPack;
 
                 _winPopupView.TopGalacticIcon.color = Color.clear;
-                _winPopupView.TopGalacticIcon.sprite = nextPack.GalacticIcon;
+                _winPopupView.TopGalacticIcon.sprite = _spriteProvider.Sprites[nextPack.GalacticIconKey];
                 _winPopupView.ContinueButton.interactable = false;
 
                 await UniTask.Delay(2000);

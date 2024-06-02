@@ -1,4 +1,4 @@
-﻿namespace App.Scripts.Scenes.MainMenuScene.Constants
+﻿namespace App.Scripts.Scenes.MainMenuScene.Features.Constants
 {
     public static class MainSceneLocaleConstants
     {

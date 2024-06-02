@@ -16,15 +16,13 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer
 
         private Dictionary<BoostTypeId,IBlockDestroyService> _destroyServices;
 
-        public EntityDestroyer(
-            SimpleDestroyService simpleDestroyService,
-            IAnimatedDestroyService animatedDestroyService)
+        public EntityDestroyer(SimpleDestroyService simpleDestroyService, IAnimatedDestroyService animatedDestroyService)
         {
             _simpleDestroyService = simpleDestroyService;
             _animatedDestroyService = animatedDestroyService;
         }
         
-        public async UniTask AsyncInitialize(IEnumerable<DestroyServiceData> param)
+        public async UniTask AsyncInitialize(List<DestroyServiceData> param)
         {
             _destroyServices = param.ToDictionary(x => x.BoostTypeId, x => x.BlockDestroyService);
 

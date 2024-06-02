@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using App.Scripts.General.Infrastructure;
-using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun;
+using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.Bullets;
 
-namespace App.Scripts.Scenes.GameScene.Features.PositionChecker
+namespace App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.PositionChecker
 {
     public interface IBulletPositionChecker : IGeneralRestartable
     {

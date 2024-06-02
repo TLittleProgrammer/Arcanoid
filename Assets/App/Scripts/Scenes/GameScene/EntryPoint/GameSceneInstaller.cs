@@ -4,6 +4,7 @@ using App.Scripts.External.Components;
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.External.UserData;
 using App.Scripts.General.Infrastructure;
+using App.Scripts.General.Providers;
 using App.Scripts.General.RootUI;
 using App.Scripts.Scenes.GameScene.EntryPoint.Bootstrap;
 using App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers;
@@ -19,8 +20,10 @@ using App.Scripts.Scenes.GameScene.Features.Entities.Bird;
 using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape;
 using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.Collisions;
 using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.Move;
+using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.PositionChecker;
 using App.Scripts.Scenes.GameScene.Features.Entities.View;
 using App.Scripts.Scenes.GameScene.Features.Entities.Walls;
+using App.Scripts.Scenes.GameScene.Features.Game;
 using App.Scripts.Scenes.GameScene.Features.Grid;
 using App.Scripts.Scenes.GameScene.Features.Healthes;
 using App.Scripts.Scenes.GameScene.Features.Healthes.View;
@@ -31,19 +34,20 @@ using App.Scripts.Scenes.GameScene.Features.Levels.Loading;
 using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress;
 using App.Scripts.Scenes.GameScene.Features.Levels.SkipLevel;
 using App.Scripts.Scenes.GameScene.Features.Popups.Buttons;
-using App.Scripts.Scenes.GameScene.Features.PositionChecker;
 using App.Scripts.Scenes.GameScene.Features.Restart;
 using App.Scripts.Scenes.GameScene.Features.ScoreAnimation;
 using App.Scripts.Scenes.GameScene.Features.ScreenInfo;
 using App.Scripts.Scenes.GameScene.Features.ServiceActivator;
 using App.Scripts.Scenes.GameScene.Features.Settings;
 using App.Scripts.Scenes.GameScene.Features.Shake;
+using App.Scripts.Scenes.GameScene.MVVM.Header;
 using App.Scripts.Scenes.GameScene.States;
 using App.Scripts.Scenes.GameScene.States.Bootstrap;
+using App.Scripts.Scenes.GameScene.States.Gameloop;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
-using LevelProgressSaveService = App.Scripts.Scenes.GameScene.Features.Levels.LevelProgressSaveService;
+using LevelProgressSaveService = App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress.LevelProgressSaveService;
 
 namespace App.Scripts.Scenes.GameScene.EntryPoint
 {
@@ -63,6 +67,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
         [SerializeField] private Image _menuButton;
         [SerializeField] private Button _skipLevelButton;
         [SerializeField] private OpenMenuPopupButton _openMenuPopupButton;
+        [SerializeField] private GameStatements _gameStatements;
 
         [Inject] private PoolProviders _poolProviders;
         [Inject] private IStateMachine _projectStateMachine;
@@ -109,13 +114,15 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.Bind<IServicesActivator>().To<ServiceActivator>().AsSingle();
             Container.Bind<IShowLevelAnimation>().To<SimpleShowLevelAnimation>().AsSingle();
             Container.Bind<IGetDamageService>().To<GetDamageService>().AsSingle();
-            Container.BindInterfacesTo<BallsService>().AsSingle().WhenNotInjectedInto<GameLoopState>();
-            Container.BindInterfacesAndSelfTo<LevelProgressService>().AsSingle().WithArguments(_levelPackInfoView, _levelPackBackground);
+            Container.BindInterfacesAndSelfTo<BallsService>().AsSingle().WhenNotInjectedInto<GameLoopState>();
+            Container.BindInterfacesAndSelfTo<LevelPackProgressService>().AsSingle();
+            Container.BindInterfacesAndSelfTo<LevelPackInfoViewModel>().AsSingle().WithArguments(_levelPackInfoView, _levelPackBackground);
 
             Container.Bind<SkipLevelService>().AsSingle().WithArguments(_skipLevelButton).NonLazy();
-            Container.Bind<LevelProgressSaveService>().AsSingle().NonLazy();
-            
-            StateMachineInstaller.Install(Container, _projectStateMachine, _levelPackInfoView);
+            Container.BindInterfacesAndSelfTo<LevelProgressSaveService>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<LevelProgressSaveHandler>().AsSingle().WithArguments(_gameStatements).NonLazy();
+
+            StateMachineInstaller.Install(Container, _projectStateMachine);
             
             Container.BindInterfacesTo<GameBootstrapper>().AsSingle();
         }
@@ -148,7 +155,9 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
                     typeof(ShapeBoostSpeed),
                     typeof(RestartState),
                     typeof(LevelProgressSaveService),
-                    typeof(BootstrapContinueLoadLevelState));
+                    typeof(BootstrapContinueLoadLevelState),
+                    typeof(RestartService),
+                    typeof(LoadNextLevelState));
         }
     }
 }

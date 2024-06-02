@@ -2,26 +2,24 @@
 using System.Collections.Generic;
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.Scenes.GameScene.Command;
+using App.Scripts.Scenes.GameScene.Command.Menu;
 using App.Scripts.Scenes.GameScene.Command.Win;
-using App.Scripts.Scenes.GameScene.Features.Helpers;
 using App.Scripts.Scenes.GameScene.Features.Levels.LevelView;
 using App.Scripts.Scenes.GameScene.Features.Restart;
 using App.Scripts.Scenes.GameScene.States;
 using App.Scripts.Scenes.GameScene.States.Bootstrap;
+using App.Scripts.Scenes.GameScene.States.Gameloop;
 using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
 {
-    public class StateMachineInstaller : Installer<IStateMachine, LevelPackInfoView, StateMachineInstaller>
+    public class StateMachineInstaller : Installer<IStateMachine, StateMachineInstaller>
     {
         private readonly IStateMachine _projectStateMachine;
-        private readonly LevelPackInfoView _levelPackInfoView;
 
-        public StateMachineInstaller(IStateMachine projectStateMachine, LevelPackInfoView levelPackInfoView
-        )
+        public StateMachineInstaller(IStateMachine projectStateMachine)
         {
             _projectStateMachine = projectStateMachine;
-            _levelPackInfoView = levelPackInfoView;
         }
 
         public override void InstallBindings()
@@ -60,12 +58,12 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
             Container.BindInterfacesTo<WinState>().AsSingle();
             Container.BindInterfacesTo<LoadSceneFromMainMenuState>().AsSingle().WithArguments(_projectStateMachine);
             Container.BindInterfacesTo<RestartState>().AsSingle().WithArguments(stateMachine);
-            Container.BindInterfacesTo<LoadNextLevelState>().AsSingle().WithArguments(_levelPackInfoView, stateMachine);
+            Container.BindInterfacesTo<LoadNextLevelState>().AsSingle().WithArguments(stateMachine);
             Container.BindInterfacesTo<MenuPopupState>().AsSingle();
             Container.BindInterfacesTo<LooseState>().AsSingle();
         
         
-            Container.Bind<IRestartService>().To<RestartService>().AsSingle().WithArguments(stateMachine);
+            Container.BindInterfacesAndSelfTo<RestartService>().AsSingle().WithArguments(stateMachine);
             Container.BindInterfacesAndSelfTo<ContinueCommand>().AsSingle().WithArguments(stateMachine);
             Container.BindInterfacesAndSelfTo<LoadNextLeveCommand>().AsSingle().WithArguments(stateMachine);
         }

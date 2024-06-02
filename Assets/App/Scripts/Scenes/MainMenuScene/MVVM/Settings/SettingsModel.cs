@@ -2,7 +2,7 @@
 using App.Scripts.External.Localisation;
 using App.Scripts.External.Localisation.Config;
 using App.Scripts.General.Components;
-using App.Scripts.Scenes.MainMenuScene.LocaleView;
+using App.Scripts.Scenes.MainMenuScene.Features.LocaleView;
 
 namespace App.Scripts.Scenes.MainMenuScene.MVVM.Settings
 {

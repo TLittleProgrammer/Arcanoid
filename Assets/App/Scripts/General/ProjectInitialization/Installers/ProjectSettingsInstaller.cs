@@ -2,6 +2,7 @@
 using App.Scripts.General.Levels;
 using App.Scripts.General.LoadingScreen.Settings;
 using App.Scripts.General.ProjectInitialization.Settings;
+using App.Scripts.General.Providers;
 using UnityEngine;
 using Zenject;
 
@@ -14,6 +15,7 @@ namespace App.Scripts.General.ProjectInitialization.Installers
         public LoadingScreenSettings LoadingScreenSettings;
         public LevelPackProvider LevelPackProvider;
         public EnergySettings EnergySettings;
+        public SpriteProvider SpriteProvider;
 
         public override void InstallBindings()
         {
@@ -21,6 +23,7 @@ namespace App.Scripts.General.ProjectInitialization.Installers
             Container.Bind<LoadingScreenSettings>().FromInstance(LoadingScreenSettings).IfNotBound();
             Container.Bind<LevelPackProvider>().FromInstance(LevelPackProvider).IfNotBound();
             Container.Bind<EnergySettings>().FromInstance(EnergySettings).IfNotBound();
+            Container.Bind<SpriteProvider>().FromInstance(SpriteProvider).IfNotBound();
         }
     }
 }

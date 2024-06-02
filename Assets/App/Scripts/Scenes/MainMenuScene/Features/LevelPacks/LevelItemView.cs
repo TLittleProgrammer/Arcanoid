@@ -1,14 +1,12 @@
 ﻿using System;
 using App.Scripts.External.Localisation.MonoBehaviours;
-using App.Scripts.General.Levels;
-using App.Scripts.Scenes.MainMenuScene.LevelPacks.Configs;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace App.Scripts.Scenes.MainMenuScene.LevelPacks
+namespace App.Scripts.Scenes.MainMenuScene.Features.LevelPacks
 {
     public class LevelItemView : MonoBehaviour, ILevelItemView
     {
@@ -46,58 +44,15 @@ namespace App.Scripts.Scenes.MainMenuScene.LevelPacks
         public Image BigBackground => _bigBackground;
         public TMP_Text GalacticText => _galacticText;
         public UILocale GalacticName => _galacticName;
+        public UILocale SubTextLocale => _subTextLocale;
         public Image Glow => _glow;
         public TMP_Text EnergyText => _energyText;
         public Image LeftImageHalf => _leftImageHalf;
         public Image GalacticIcon => _galacticIcon;
         public Image LockIcon => _lockIcon;
         public Image MaskableImage => _maskableImage;
-
+        public GameObject EnergyPanel => _energyPanel;
         public GameObject GameObject => gameObject;
-
-        public void UpdateVisual(LevelModel levelModel)
-        {
-            UpdateGeneralViews(levelModel.LevelViewData, levelModel.LevelPack);
-            UpdateByItemTypeId(levelModel.LevelViewData, levelModel.LevelPack,levelModel.VisualTypeId, levelModel.PassedLevels);
-            
-            _subTextLocale.SetToken(levelModel.LocaleKey);
-        }
-
-        private void UpdateByItemTypeId(LevelItemViewData levelViewData, LevelPack levelPack, VisualTypeId visualType, int passedLevels)
-        {
-            if (visualType is VisualTypeId.NotOpened)
-            {
-                _energyPanel.gameObject.SetActive(false);
-                GalacticPassedLevels.text = $"0/{levelPack.Levels.Count}";
-                GalacticIcon.gameObject.SetActive(false);
-                LockIcon.gameObject.SetActive(true);
-
-                GalacticName.Text.colorGradient = new VertexGradient(Color.white, Color.white, Color.white, Color.white);
-                GalacticText.colorGradient      = new VertexGradient(Color.white, Color.white, Color.white, Color.white);
-                GalacticName.Text.color         = levelViewData.InactiveColorForNaming;
-                GalacticText.color              = levelViewData.InactiveColorForNaming;
-                GalacticPassedLevels.color      = levelViewData.PassedLevelsColor;
-            }
-            else
-            {
-                _energyPanel.gameObject.SetActive(true);
-                _energyText.text = levelPack.EnergyPrice.ToString();
-                GalacticIcon.sprite = levelPack.GalacticIcon;
-                GalacticPassedLevels.text = $"{passedLevels}/{levelPack.Levels.Count}";
-                GalacticIcon.gameObject.SetActive(true);
-                LockIcon.gameObject.SetActive(false);
-            }
-        }
-
-        private void UpdateGeneralViews(LevelItemViewData levelViewData, LevelPack levelPack)
-        {
-            Glow.sprite = levelViewData.Glow;
-            BigBackground.sprite = levelViewData.BigBackground;
-            MaskableImage.sprite = levelViewData.MaskableImage;
-            LeftImageHalf.sprite = levelViewData.LeftImageHalf;
-            GalacticPassedLevelsBackground.sprite = levelViewData.GalacticPassedLevelsBackground;
-            GalacticName.SetToken(levelPack.LocaleKey);
-        }
 
         public void OnPointerClick(PointerEventData eventData)
         {

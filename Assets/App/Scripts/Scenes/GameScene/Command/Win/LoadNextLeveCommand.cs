@@ -1,6 +1,6 @@
 ﻿using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Constants;
-using App.Scripts.General.LevelPackInfoService;
+using App.Scripts.General.Levels.LevelPackInfoService;
 using App.Scripts.Scenes.GameScene.States;
 
 namespace App.Scripts.Scenes.GameScene.Command.Win

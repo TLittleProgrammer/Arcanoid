@@ -1,10 +1,10 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.Bullets;
 using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape;
 using App.Scripts.Scenes.GameScene.Features.Settings;
 using UnityEngine;
 
-namespace App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun
+namespace App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.Movement
 {
     public class BulletMovement : IBulletMovement
     {
@@ -29,6 +29,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun
         {
             bulletView.Rigidbody2D.velocity = Vector2.up * _boostsSettings.BulletSpeed;
             bulletView.transform.position = GetBulletPosition(_shapeWidth * ChooseSpawnSide());
+            
+            _bullets.Add(bulletView);
         }
 
         private float ChooseSpawnSide()

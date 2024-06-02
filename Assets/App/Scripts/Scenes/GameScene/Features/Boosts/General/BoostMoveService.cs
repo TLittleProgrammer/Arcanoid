@@ -2,6 +2,7 @@
 using App.Scripts.Scenes.GameScene.Features.Boosts.General.Interfaces;
 using App.Scripts.Scenes.GameScene.Features.Constants;
 using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress;
+using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress.Data;
 using App.Scripts.Scenes.GameScene.Features.Time;
 using UnityEngine;
 
@@ -27,7 +28,12 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General
         {
             if (!IsActive)
                 return;
-            
+
+            UpdateViewPositions();
+        }
+
+        private void UpdateViewPositions()
+        {
             foreach (BoostView view in _views)
             {
                 Vector3 delta = Vector2.down * _timeProvider.DeltaTime * BoostsConstants.BoostSpeed;

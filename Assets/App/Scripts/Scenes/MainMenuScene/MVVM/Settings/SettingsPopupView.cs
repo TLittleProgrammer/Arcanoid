@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace App.Scripts.Scenes.MainMenuScene.Popup
+namespace App.Scripts.Scenes.MainMenuScene.MVVM.Settings
 {
     public class SettingsPopupView : PopupView
     {

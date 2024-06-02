@@ -25,5 +25,12 @@ namespace App.Scripts.External.UserData
         {
             _saveLoadService.Save(savable);
         }
+
+        public void Delete()
+        {
+            TClassSavable classSavable = (TClassSavable)Activator.CreateInstance(typeof(TClassSavable));
+
+            _saveLoadService.Delete(classSavable.FileName);
+        }
     }
 }

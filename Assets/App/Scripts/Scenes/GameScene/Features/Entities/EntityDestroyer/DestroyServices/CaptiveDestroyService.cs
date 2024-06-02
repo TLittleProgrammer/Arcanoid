@@ -9,18 +9,18 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Destroy
 {
     public class CaptiveDestroyService : IBlockDestroyService
     {
-        private readonly BallView.Factory _ballViewFactory;
+        private readonly BallView.Pool _ballViewPool;
         private readonly IBallsService _ballsService;
         private readonly IAnimatedDestroyService _animatedDestroyService;
         private readonly SimpleDestroyService _simpleDestroyService;
 
         public CaptiveDestroyService(
-            BallView.Factory ballViewFactory,
+            BallView.Pool ballViewPool,
             IBallsService ballsService,
             IAnimatedDestroyService animatedDestroyService,
             SimpleDestroyService simpleDestroyService)
         {
-            _ballViewFactory = ballViewFactory;
+            _ballViewPool = ballViewPool;
             _ballsService = ballsService;
             _animatedDestroyService = animatedDestroyService;
             _simpleDestroyService = simpleDestroyService;
@@ -41,7 +41,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Destroy
 
         private void AddBall(IEntityView entityView)
         {
-            BallView ballView = _ballViewFactory.Create();
+            BallView ballView = _ballViewPool.Spawn();
             
             _ballsService.AddBall(ballView, true);
             

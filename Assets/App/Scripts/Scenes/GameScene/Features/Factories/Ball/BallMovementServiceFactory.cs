@@ -6,7 +6,7 @@ using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape;
 using Cysharp.Threading.Tasks;
 using Zenject;
 
-namespace App.Scripts.Scenes.GameScene.Features.Factories
+namespace App.Scripts.Scenes.GameScene.Features.Factories.Ball
 {
     public sealed class BallMovementServiceFactory : IFactory<BallView, IBallMovementService>
     {

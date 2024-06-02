@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using Zenject;
 
-namespace App.Scripts.Scenes.MainMenuScene.LocaleView
+namespace App.Scripts.Scenes.MainMenuScene.Features.LocaleView
 {
     public class LocaleItemView : MonoBehaviour, ILocaleItemView, IClickable<string>
     {

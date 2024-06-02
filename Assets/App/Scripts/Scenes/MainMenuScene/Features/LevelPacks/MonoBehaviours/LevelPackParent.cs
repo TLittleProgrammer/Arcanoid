@@ -1,7 +1,7 @@
 ﻿using App.Scripts.External.Components;
 using UnityEngine;
 
-namespace App.Scripts.Scenes.MainMenuScene.LevelPacks.MonoBehaviours
+namespace App.Scripts.Scenes.MainMenuScene.Features.LevelPacks.MonoBehaviours
 {
     public class LevelPackParent : MonoBehaviour, ITransformable
     {

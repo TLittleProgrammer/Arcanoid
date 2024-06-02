@@ -2,6 +2,7 @@
 using App.Scripts.General.Infrastructure;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General;
 using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun;
+using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.Bullets;
 using App.Scripts.Scenes.GameScene.Features.Effects;
 using App.Scripts.Scenes.GameScene.Features.Effects.Bombs;
 using App.Scripts.Scenes.GameScene.Features.Entities.Ball;
@@ -39,8 +40,6 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
             BindPool<PlazmaEffect, PlazmaEffect.Pool>(PoolTypeId.Plazma);
             BindPool<ExplosionEffect, ExplosionEffect.Pool>(PoolTypeId.Explosion);
             BindPool<BirdView, BirdView.Pool>(PoolTypeId.BirdView);
-            
-            Container.Bind(typeof(IPoolContainer), typeof(IGeneralRestartable)).To<PoolContainer>().AsSingle();
         }
 
         private void BindPool<TInstance, TPool>(PoolTypeId poolType) where TPool : IMemoryPool where TInstance : MonoBehaviour 

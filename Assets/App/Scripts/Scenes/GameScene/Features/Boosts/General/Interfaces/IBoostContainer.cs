@@ -8,6 +8,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Interfaces
     public interface IBoostContainer : ITickable, IActivable, IGeneralRestartable
     {
         event Action<BoostTypeId> BoostEnded;
-        void AddActive(BoostTypeId boostTypeId);
+        void AddBoost(BoostTypeId boostTypeId);
     }
 }

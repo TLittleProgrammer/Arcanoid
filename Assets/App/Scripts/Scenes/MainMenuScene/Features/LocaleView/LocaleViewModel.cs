@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace App.Scripts.Scenes.MainMenuScene.LocaleView
+namespace App.Scripts.Scenes.MainMenuScene.Features.LocaleView
 {
     public record LocaleViewModel
     {

@@ -7,8 +7,10 @@ using App.Scripts.Scenes.GameScene.Features.Damage;
 using App.Scripts.Scenes.GameScene.Features.Entities.Ball.Movement;
 using App.Scripts.Scenes.GameScene.Features.Entities.Ball.PositionChecker;
 using App.Scripts.Scenes.GameScene.Features.Factories;
+using App.Scripts.Scenes.GameScene.Features.Factories.Ball;
 using App.Scripts.Scenes.GameScene.Features.Input;
 using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress;
+using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress.Data;
 using App.Scripts.Scenes.GameScene.Features.ScreenInfo;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -18,7 +20,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
     public class BallsService : IBallsService, IActivable, ILevelProgressSavable, IInitializeByLevelProgress
     {
         private readonly IGetDamageService _getDamageService;
-        private readonly BallView.Factory _ballViewFactory;
         private readonly BallMovementFactory _ballMovementFactory;
         private readonly BallView.Pool _ballViewPool;
         private readonly float _minBallYPosition;
@@ -34,12 +35,10 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
             IScreenInfoProvider screenInfoProvider,
             IGetDamageService getDamageService,
             IClickDetector clickDetector,
-            BallView.Factory ballViewFactory,
             BallMovementFactory ballMovementFactory,
             BallView.Pool ballViewPool)
         {
             _getDamageService = getDamageService;
-            _ballViewFactory = ballViewFactory;
             _ballMovementFactory = ballMovementFactory;
             _ballViewPool = ballViewPool;
             _minBallYPosition = -screenInfoProvider.HeightInWorld / 2f;
@@ -210,7 +209,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
                     {
                         view.TrailRenderer.enabled = true;
                     }
-                    
+
                     movementService.GoFly();
                 }
             }
@@ -224,21 +223,23 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
             _ballsPositionCheckers.Add(ballPositionChecker);
         }
 
-        public void Reset()
+        public void Restart()
+        {
+            _lastSpeedMultiplier = 1f;
+            SetSpeedMultiplier(1f);
+            UpdateSpeedByProgress(0f);
+        }
+
+        private void Reset()
         {
             BallView ballView = _ballViewPool.Spawn();
             var ballData = Balls.First(x => x.Key.Equals(ballView));
 
             ballView.TrailRenderer.enabled = false;
-            ballData.Key.gameObject.SetActive(true);
+            ballView.gameObject.SetActive(true);
             ballData.Value.Restart();
             
             AddBallPositionChecker(ballData.Key);
-        }
-
-        public void Restart()
-        {
-            SetSpeedMultiplier(1f);
         }
 
         public void SaveProgress(LevelDataProgress levelDataProgress)
@@ -250,17 +251,20 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
 
             foreach ((BallView view, IBallMovementService ballMovementService) in Balls)
             {
-                BallData data = new();
-                data.Velocity = new Float2(ballMovementService.Velocity.x, ballMovementService.Velocity.y);
-                data.Position = new PositionData()
+                if (view.gameObject.activeSelf)
                 {
-                    X = view.transform.position.x,
-                    Y = view.transform.position.y,
-                    Z = view.transform.position.z
-                };
+                    BallData data = new();
+                    data.Velocity = new Float2(ballMovementService.Velocity.x, ballMovementService.Velocity.y);
+                    data.Position = new PositionData()
+                    {
+                        X = view.transform.position.x,
+                        Y = view.transform.position.y,
+                        Z = view.transform.position.z
+                    };
                 
-                data.IsFreeFlight = ballMovementService.IsFreeFlight;
-                ballsSaveData.BallDatas.Add(data);
+                    data.IsFreeFlight = ballMovementService.IsFreeFlight;
+                    ballsSaveData.BallDatas.Add(data);
+                }
             }
             
             levelDataProgress.BallsData = ballsSaveData;
@@ -268,9 +272,12 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
 
         public void LoadProgress(LevelDataProgress levelDataProgress)
         {
+            UpdateSpeedByProgress(levelDataProgress.ProgressedLevelData.Progress);
+            _lastSpeedMultiplier = levelDataProgress.BallsData.SpeedMultiplier;
+            
             foreach (BallData ballData in levelDataProgress.BallsData.BallDatas)
             {
-                BallView ballView = _ballViewFactory.Create();
+                BallView ballView = _ballViewPool.Spawn();
                 IBallMovementService ballMovement = _ballMovementFactory.Create(ballView);
                 
                 ballView.Position = new Vector3(
@@ -278,7 +285,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
                     ballData.Position.Y,
                     ballData.Position.Z
                 );
-
+                
                 if (ballData.IsFreeFlight)
                 {
                     ballMovement.GoFly();
@@ -288,6 +295,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
                 {
                     ballMovement.Sticky();
                 }
+                
+                AddBallPositionChecker(ballView);
                 
                 Balls.Add(ballView, ballMovement);
             }

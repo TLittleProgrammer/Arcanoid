@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using App.Scripts.External.GameStateMachine;
-using App.Scripts.General.LevelPackInfoService;
+using App.Scripts.General.Levels.LevelPackInfoService;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General;
 using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer;
 using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.DestroyServices;

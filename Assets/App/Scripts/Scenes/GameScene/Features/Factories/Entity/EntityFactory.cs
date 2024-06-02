@@ -9,7 +9,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Factories.Entity
     {
         private readonly EntityProvider _entityProvider;
         private readonly EntityView.Pool _entityViewPool;
-        private readonly IPoolContainer _poolContainer;
 
         public EntityFactory(EntityProvider entityProvider, EntityView.Pool entityViewPool)
         {

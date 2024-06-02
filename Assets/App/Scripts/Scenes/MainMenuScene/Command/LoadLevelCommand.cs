@@ -2,12 +2,12 @@
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Constants;
 using App.Scripts.General.Energy;
-using App.Scripts.General.LevelPackInfoService;
 using App.Scripts.General.Levels;
+using App.Scripts.General.Levels.LevelPackInfoService;
 using App.Scripts.General.MVVM.Energy;
 using App.Scripts.General.States;
 using App.Scripts.General.UserData.Energy;
-using App.Scripts.Scenes.MainMenuScene.LevelPacks.MonoBehaviours;
+using App.Scripts.Scenes.MainMenuScene.MVVM.LevelPacks;
 
 namespace App.Scripts.Scenes.MainMenuScene.Command
 {
@@ -39,13 +39,14 @@ namespace App.Scripts.Scenes.MainMenuScene.Command
             
             _energyDataService.Add(-itemData.LevelPack.EnergyPrice);
             
-            _levelPackInfoService.SetData(new LevelPackTransferData
-            {
-                NeedLoadLevel = true,
-                LevelIndex = targetLevelIndex,
-                LevelPack = itemData.LevelPack,
-                PackIndex = itemData.PackIndex
-            });
+            _levelPackInfoService.LevelPackTransferData =
+                new LevelPackTransferData
+                {
+                    NeedLoadLevel = true,
+                    LevelIndex = targetLevelIndex,
+                    LevelPack = itemData.LevelPack,
+                    PackIndex = itemData.PackIndex
+                };
 
             _energyViewModel.Dispose();
 

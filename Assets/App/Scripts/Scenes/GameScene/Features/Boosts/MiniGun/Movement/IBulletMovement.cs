@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.Bullets;
+using UnityEngine;
 
-namespace App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun
+namespace App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.Movement
 {
     public interface IBulletMovement
     {

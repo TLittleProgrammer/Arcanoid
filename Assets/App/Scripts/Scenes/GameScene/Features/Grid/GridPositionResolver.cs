@@ -99,7 +99,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Grid
 
             size.x = availableSpace / gridSizeX;
             size.y = size.x;
-                
+
             return size;
         }
 

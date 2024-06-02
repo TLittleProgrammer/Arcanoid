@@ -1,6 +1,7 @@
 ﻿using App.Scripts.General.Levels;
+using App.Scripts.Scenes.MainMenuScene.Features.LevelPacks;
 
-namespace App.Scripts.Scenes.MainMenuScene.LevelPacks.MonoBehaviours
+namespace App.Scripts.Scenes.MainMenuScene.MVVM.LevelPacks
 {
     public record LevelItemData
     {

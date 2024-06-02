@@ -7,8 +7,8 @@ namespace App.Scripts.General.Levels
     public sealed class LevelPack : ScriptableObject
     {
         public string LocaleKey;
-        public Sprite GalacticIcon;
-        public Sprite GalacticBackground;
+        public string GalacticIconKey;
+        public string GalacticBackgroundKey;
         public int EnergyPrice = 3;
         public int EnergyAddForWin = 5;
         public List<TextAsset> Levels;

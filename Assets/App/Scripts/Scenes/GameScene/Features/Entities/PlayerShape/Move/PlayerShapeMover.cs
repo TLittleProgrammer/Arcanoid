@@ -1,7 +1,9 @@
 ﻿using App.Scripts.Scenes.GameScene.Features.Components;
+using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.PositionChecker;
 using App.Scripts.Scenes.GameScene.Features.Input;
 using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress;
-using App.Scripts.Scenes.GameScene.Features.PositionChecker;
+using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress.Data;
+using App.Scripts.Scenes.GameScene.Features.Settings;
 using App.Scripts.Scenes.GameScene.Features.Time;
 using UnityEngine;
 

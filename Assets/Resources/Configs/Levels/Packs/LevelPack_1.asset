@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: LevelPack_1
   m_EditorClassIdentifier: 
   LocaleKey: Galactic_Sombrero
-  GalacticIcon: {fileID: 21300000, guid: 1fa903c2fb717824fa6a87737414cc72, type: 3}
-  GalacticBackground: {fileID: 21300000, guid: 465fd2cc6f5b0c143aee2fe2460d9d56, type: 3}
+  GalacticIconKey: sombrero_icon
+  GalacticBackgroundKey: sombrero_background
   EnergyPrice: 5
   EnergyAddForWin: 7
   Levels:

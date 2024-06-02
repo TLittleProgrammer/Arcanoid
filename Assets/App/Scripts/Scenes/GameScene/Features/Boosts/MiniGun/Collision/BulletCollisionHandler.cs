@@ -1,8 +1,9 @@
-﻿using App.Scripts.Scenes.GameScene.Features.Entities.View;
+﻿using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.Bullets;
+using App.Scripts.Scenes.GameScene.Features.Entities.View;
 using App.Scripts.Scenes.GameScene.Features.Shake;
 using UnityEngine;
 
-namespace App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun
+namespace App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.Collision
 {
     public sealed class BulletCollisionHandler : IBulletCollisionHandler
     {

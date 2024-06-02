@@ -1,7 +1,8 @@
 ﻿using App.Scripts.Scenes.GameScene.Features.Boosts.General.Interfaces;
 using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun;
+using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.Movement;
 using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape;
-using App.Scripts.Scenes.GameScene.Features.PositionChecker;
+using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.PositionChecker;
 using App.Scripts.Scenes.GameScene.Features.Settings;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;

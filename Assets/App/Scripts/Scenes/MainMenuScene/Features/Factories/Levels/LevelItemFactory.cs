@@ -1,7 +1,7 @@
-﻿using App.Scripts.Scenes.MainMenuScene.LevelPacks;
+﻿using App.Scripts.Scenes.MainMenuScene.Features.LevelPacks;
 using Zenject;
 
-namespace App.Scripts.Scenes.MainMenuScene.Factories.Levels
+namespace App.Scripts.Scenes.MainMenuScene.Features.Factories.Levels
 {
     public class LevelItemFactory : IFactory<ILevelItemView>
     {

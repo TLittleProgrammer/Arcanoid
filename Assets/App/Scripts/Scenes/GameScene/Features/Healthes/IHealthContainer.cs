@@ -6,9 +6,10 @@ using App.Scripts.Scenes.GameScene.Features.Levels.General;
 
 namespace App.Scripts.Scenes.GameScene.Features.Healthes
 {
-    public interface IHealthContainer : IAsyncInitializable<LevelData, List<IRestartable>>, IGeneralRestartable
+    public interface IHealthContainer : IAsyncInitializable<int>, IGeneralRestartable
     {
         event Action LivesAreWasted;
+        event Action<int> GetDamage;
         void UpdateHealth(int healthCount, bool needRestart = true);
     }
 }

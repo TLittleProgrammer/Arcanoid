@@ -5,7 +5,7 @@ using App.Scripts.General.LoadingScreen;
 using App.Scripts.Scenes.GameScene.Features.Dotween;
 using App.Scripts.Scenes.GameScene.Features.Entities.Ball;
 using App.Scripts.Scenes.GameScene.Features.Levels.General.Animations;
-using App.Scripts.Scenes.GameScene.Features.Levels.General.Load;
+using App.Scripts.Scenes.GameScene.States.Gameloop;
 using Cysharp.Threading.Tasks;
 
 namespace App.Scripts.Scenes.GameScene.States

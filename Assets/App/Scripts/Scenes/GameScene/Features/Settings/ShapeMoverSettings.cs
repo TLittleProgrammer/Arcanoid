@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape
+namespace App.Scripts.Scenes.GameScene.Features.Settings
 {
     [CreateAssetMenu(menuName = "Configs/Game/PLayerMovingSettings", fileName = "PlayerMovingSettings")]
     public class ShapeMoverSettings : ScriptableObject

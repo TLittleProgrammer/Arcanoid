@@ -1,5 +1,4 @@
-﻿using App.Scripts.Scenes.GameScene.Features.Levels.LevelProgress;
-using TMPro;
+﻿using TMPro;
 using UnityEngine.UI;
 
 namespace App.Scripts.Scenes.GameScene.Features.Levels.LevelView
@@ -8,10 +7,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.LevelView
     {
         TMP_Text PassedLevels { get; }
         TMP_Text LevelPassProgress { get; }
-        Image Image { get; }
-
-        void UpdatePassedLevels(int currentLevel, int allLevels);
-        void UpdateProgressText(int value);
-        void Initialize(LevelPackInfoRecord packInfoRecord);
+        Image GalacticIcon { get; }
     }
 }

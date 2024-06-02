@@ -5,9 +5,9 @@ using App.Scripts.Scenes.GameScene.Features.Entities;
 using App.Scripts.Scenes.GameScene.Features.Entities.View;
 using App.Scripts.Scenes.GameScene.Features.Grid;
 using App.Scripts.Scenes.GameScene.Features.Levels.General;
-using App.Scripts.Scenes.GameScene.Features.Levels.General.Load;
 using App.Scripts.Scenes.GameScene.Features.Levels.General.View;
 using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress;
+using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress.Data;
 using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Levels.Loading.Loader
@@ -18,6 +18,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.Loading.Loader
         private readonly IEntityView.Factory _entityFactory;
         private readonly ILevelViewUpdater _levelViewUpdater;
         private readonly EntityView.Pool _entityViewPool;
+        private readonly ILevelDataChooser _levelDataChooser;
 
         private LevelData _previousLevelData;
         private List<IEntityView> _entityViews;
@@ -27,12 +28,14 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.Loading.Loader
             IGridPositionResolver gridPositionResolver,
             IEntityView.Factory entityFactory,
             ILevelViewUpdater levelViewUpdater,
-            EntityView.Pool entityViewPool)
+            EntityView.Pool entityViewPool,
+            ILevelDataChooser levelDataChooser)
         {
             _gridPositionResolver = gridPositionResolver;
             _entityFactory = entityFactory;
             _levelViewUpdater = levelViewUpdater;
             _entityViewPool = entityViewPool;
+            _levelDataChooser = levelDataChooser;
             _entityViews = new();
         }
 
@@ -66,6 +69,11 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.Loading.Loader
 
         public void Restart()
         {
+            if (_previousLevelData is null)
+            {
+                _previousLevelData = _levelDataChooser.GetLevelData();
+            }
+
             foreach (IEntityView view in _entityViews)
             {
                 if (view.GameObject.activeSelf)

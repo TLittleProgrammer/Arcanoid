@@ -9,7 +9,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Factories.Boosts
     {
         private readonly BoostViewProvider _boostViewProvider;
         private readonly BoostView.Pool _boostViewPool;
-        private readonly IPoolContainer _poolContainer;
 
         public BoostViewFactory(BoostViewProvider boostViewProvider, BoostView.Pool boostViewPool)
         {

@@ -1,6 +1,6 @@
 ﻿using System;
 using App.Scripts.External.UserData;
-using App.Scripts.General.LevelPackInfoService;
+using App.Scripts.General.Levels.LevelPackInfoService;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;

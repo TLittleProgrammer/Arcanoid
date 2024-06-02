@@ -2,10 +2,13 @@
 using App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General.Interfaces;
 using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Helpers;
+using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress;
+using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress.Data;
+using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Boosts.General
 {
-    public class BoostsActivator : IBoostsActivator
+    public class BoostsActivator : IBoostsActivator, IInitializeByLevelProgress
     {
         private readonly SimpleDestroyService _simpleDestroyService;
         private readonly IBoostContainer _boostContainer;
@@ -53,9 +56,17 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General
 
             if (boostTypeId is not BoostTypeId.AddHealth && boostTypeId is not BoostTypeId.MinusHealth)
             {
-                _boostContainer.AddActive(view.BoostTypeId);
+                _boostContainer.AddBoost(view.BoostTypeId);
             }
             _simpleDestroyService.Destroy(view);
+        }
+
+        public void LoadProgress(LevelDataProgress levelDataProgress)
+        {
+            foreach (SaveActiveBoostData boostData in levelDataProgress.ActiveBoostDatas)
+            {
+                _activators[boostData.BoostTypeId].Activate(boostData.BoostTypeId);
+            }
         }
     }
 }

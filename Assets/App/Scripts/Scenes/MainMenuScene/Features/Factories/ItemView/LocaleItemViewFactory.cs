@@ -1,7 +1,7 @@
-﻿using App.Scripts.Scenes.MainMenuScene.LocaleView;
+﻿using App.Scripts.Scenes.MainMenuScene.Features.LocaleView;
 using Zenject;
 
-namespace App.Scripts.Scenes.MainMenuScene.Factories.ItemView
+namespace App.Scripts.Scenes.MainMenuScene.Features.Factories.ItemView
 {
     public class LocaleItemViewFactory : IFactory<LocaleItemView>
     {

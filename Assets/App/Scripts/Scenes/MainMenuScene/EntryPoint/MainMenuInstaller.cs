@@ -1,23 +1,22 @@
-﻿using App.Scripts.External.UserData;
+﻿using App.Scripts.General.Command;
 using App.Scripts.General.Energy;
-using App.Scripts.General.UserData.Levels.Data;
-using App.Scripts.Scenes.Bootstrap.Buttons;
-using App.Scripts.Scenes.MainMenuScene.ActivateScreens;
-using App.Scripts.Scenes.MainMenuScene.Buttons;
 using App.Scripts.Scenes.MainMenuScene.Command;
-using App.Scripts.Scenes.MainMenuScene.ContinueLevel;
-using App.Scripts.Scenes.MainMenuScene.Factories.ItemView;
-using App.Scripts.Scenes.MainMenuScene.Factories.Levels;
-using App.Scripts.Scenes.MainMenuScene.LevelPacks;
-using App.Scripts.Scenes.MainMenuScene.LevelPacks.MonoBehaviours;
-using App.Scripts.Scenes.MainMenuScene.LocaleView;
+using App.Scripts.Scenes.MainMenuScene.EntryPoint.Initializers;
+using App.Scripts.Scenes.MainMenuScene.Features.ActivateScreens;
+using App.Scripts.Scenes.MainMenuScene.Features.Buttons;
+using App.Scripts.Scenes.MainMenuScene.Features.ContinueLevel;
+using App.Scripts.Scenes.MainMenuScene.Features.Factories.ItemView;
+using App.Scripts.Scenes.MainMenuScene.Features.Factories.Levels;
+using App.Scripts.Scenes.MainMenuScene.Features.LevelPacks;
+using App.Scripts.Scenes.MainMenuScene.Features.LevelPacks.MonoBehaviours;
+using App.Scripts.Scenes.MainMenuScene.Features.LocaleView;
+using App.Scripts.Scenes.MainMenuScene.MVVM.LevelPacks;
 using App.Scripts.Scenes.MainMenuScene.MVVM.Settings;
-using App.Scripts.Scenes.MainMenuScene.Popup;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-namespace App.Scripts.Scenes.MainMenuScene.Installers
+namespace App.Scripts.Scenes.MainMenuScene.EntryPoint
 {
     public class MainMenuInstaller : MonoInstaller
     {
@@ -59,6 +58,14 @@ namespace App.Scripts.Scenes.MainMenuScene.Installers
             Container.BindInterfacesAndSelfTo<LevelPackModel>().AsSingle();
             Container.BindInterfacesAndSelfTo<LevelPackViewModel>().AsSingle();
             
+            BindCommands();
+
+            Container.BindInterfacesAndSelfTo<MainMenuInitalizer>().AsSingle().WithArguments(EnergyView);
+            Container.BindInterfacesAndSelfTo<LevelPacksInitializer>().AsSingle().WithArguments(LevelPackParent);
+        }
+
+        private void BindCommands()
+        {
             Container
                 .BindInterfacesTo<ChangeLocaleCommand>()
                 .AsSingle()
@@ -68,9 +75,13 @@ namespace App.Scripts.Scenes.MainMenuScene.Installers
                 .BindInterfacesTo<LoadLevelCommand>()
                 .AsSingle()
                 .WhenInjectedInto<LevelPackViewModel>();
-            
-            Container.BindInterfacesAndSelfTo<MainMenuInitalizer>().AsSingle().WithArguments(EnergyView);
-            Container.BindInterfacesAndSelfTo<LevelPacksInitializer>().AsSingle().WithArguments(LevelPackParent);
+
+            Container
+                .BindInterfacesAndSelfTo<ContinueCommand>()
+                .AsSingle()
+                .WhenInjectedInto<SettingsViewModel>();
+
+            Container.BindInterfacesAndSelfTo<DisableButtonsCommand>().AsSingle();
         }
     }
 }
