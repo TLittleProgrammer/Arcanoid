@@ -249,17 +249,20 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
 
             foreach ((BallView view, IBallMovementService ballMovementService) in Balls)
             {
-                BallData data = new();
-                data.Velocity = new Float2(ballMovementService.Velocity.x, ballMovementService.Velocity.y);
-                data.Position = new PositionData()
+                if (view.gameObject.activeSelf)
                 {
-                    X = view.transform.position.x,
-                    Y = view.transform.position.y,
-                    Z = view.transform.position.z
-                };
+                    BallData data = new();
+                    data.Velocity = new Float2(ballMovementService.Velocity.x, ballMovementService.Velocity.y);
+                    data.Position = new PositionData()
+                    {
+                        X = view.transform.position.x,
+                        Y = view.transform.position.y,
+                        Z = view.transform.position.z
+                    };
                 
-                data.IsFreeFlight = ballMovementService.IsFreeFlight;
-                ballsSaveData.BallDatas.Add(data);
+                    data.IsFreeFlight = ballMovementService.IsFreeFlight;
+                    ballsSaveData.BallDatas.Add(data);
+                }
             }
             
             levelDataProgress.BallsData = ballsSaveData;

@@ -17,11 +17,6 @@ namespace App.Scripts.Scenes.GameScene.Features.ScoreAnimation
             _scoreAnimationSettings = scoreAnimationSettings;
         }
 
-        public void Animate(TMP_Text text, int from, int to)
-        {
-            Animate(text, from, to, score => SetScore(text, score));
-        }
-
         public void Animate(TMP_Text text, int from, int to, Action<int> updateValue)
         {
             if (!_sequences.ContainsKey(text))
@@ -36,11 +31,6 @@ namespace App.Scripts.Scenes.GameScene.Features.ScoreAnimation
             
             _sequences[text].Kill();
             _sequences[text] = DOVirtual.Int(from, to, _scoreAnimationSettings.Duration, updateValue.Invoke);
-        }
-
-        private void SetScore(TMP_Text text, int score)
-        {
-            text.text = score.ToString();
         }
     }
 }

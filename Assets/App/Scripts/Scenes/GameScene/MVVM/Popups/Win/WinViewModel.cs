@@ -57,10 +57,10 @@ namespace App.Scripts.Scenes.GameScene.MVVM.Popups.Win
 
         private void UpdateVisual()
         {
-            LevelPack currentPack = _levelPackInfoService.GetData().LevelPack;
+            LevelPack currentPack = _levelPackInfoService.LevelPackTransferData.LevelPack;
             _winPopupView.BottomGalacticIcon.sprite = _spriteProvider.Sprites[currentPack.GalacticIconKey];
             _winPopupView.GalacticName.SetToken(currentPack.LocaleKey);
-            _winPopupView.PassedLevelsText.text = $"{_levelPackInfoService.GetData().LevelIndex + 1}/{currentPack.Levels.Count}";
+            _winPopupView.PassedLevelsText.text = $"{_levelPackInfoService.LevelPackTransferData.LevelIndex + 1}/{currentPack.Levels.Count}";
         }
 
         private void SubscribeButtons()
@@ -135,7 +135,7 @@ namespace App.Scripts.Scenes.GameScene.MVVM.Popups.Win
             if (_levelPackInfoService.NeedLoadNextPack())
             {
                 LevelPack nextPack = _levelPackInfoService.GetDataForNextPack();
-                LevelPack currentLevelPack = _levelPackInfoService.GetData().LevelPack;
+                LevelPack currentLevelPack = _levelPackInfoService.LevelPackTransferData.LevelPack;
 
                 _winPopupView.TopGalacticIcon.color = Color.clear;
                 _winPopupView.TopGalacticIcon.sprite = _spriteProvider.Sprites[nextPack.GalacticIconKey];

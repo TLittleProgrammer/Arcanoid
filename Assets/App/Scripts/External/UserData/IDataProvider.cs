@@ -6,5 +6,6 @@ namespace App.Scripts.External.UserData
     {
         TClassSavable GetData();
         void SaveData(TClassSavable savable);
+        void Delete();
     }
 }

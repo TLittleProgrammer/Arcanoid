@@ -1,87 +1,104 @@
 ﻿using System;
 using App.Scripts.General.LevelPackInfoService;
+using App.Scripts.General.Levels;
 using App.Scripts.General.Providers;
 using App.Scripts.Scenes.GameScene.Features.Entities.AssetManagement;
 using App.Scripts.Scenes.GameScene.Features.Levels.General;
-using App.Scripts.Scenes.GameScene.Features.Levels.LevelView;
 using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress;
-using App.Scripts.Scenes.GameScene.Features.ScoreAnimation;
-using TMPro;
-using UnityEngine.Playables;
+using App.Scripts.Scenes.GameScene.MVVM.Header;
+using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Levels.LevelProgress
 {
-    public class LevelProgressService : ILevelProgressService, ILevelProgressSavable, IInitializeByLevelProgress
+    public class LevelPackInfoModel : ILevelProgressService, ILevelProgressSavable, IInitializeByLevelProgress
     {
         private readonly ILevelPackInfoService _levelPackInfoService;
-        private readonly ILevelPackInfoView _levelPackInfoView;
-        private readonly ILevelPackBackgroundView _levelPackBackgroundView;
         private readonly EntityProvider _entitesProvider;
-        private readonly IScoreAnimationService _scoreAnimationService;
         private readonly SpriteProvider _spriteProvider;
+        private readonly LevelPackInfoViewModel _viewModel;
 
         private float _step;
         private float _progress;
         private int _allBlockCounter;
         private int _destroyedBlockCounter;
-        private int _targetScore;
+        private int _progressInPercents;
+        private const int AbsenceEntityIndex = 0; 
 
         public event Action<float> ProgressChanged;
         public event Action LevelPassed;
         
-        public LevelProgressService(
+        public LevelPackInfoModel(
             ILevelPackInfoService levelPackInfoService,
-            ILevelPackInfoView levelPackInfoView,
-            ILevelPackBackgroundView levelPackBackgroundView,
             EntityProvider entitesProvider,
-            IScoreAnimationService scoreAnimationService,
-            SpriteProvider spriteProvider)
+            SpriteProvider spriteProvider,
+            LevelPackInfoViewModel viewModel
+            )
         {
             _levelPackInfoService = levelPackInfoService;
-            _levelPackInfoView = levelPackInfoView;
-            _levelPackBackgroundView = levelPackBackgroundView;
             _entitesProvider = entitesProvider;
-            _scoreAnimationService = scoreAnimationService;
             _spriteProvider = spriteProvider;
+            _viewModel = viewModel;
         }
 
         public void Initialize()
         {
-            var data = _levelPackInfoService.GetData();
-            if (data is not null && data.NeedLoadLevel)
+            var levelTransferData = _levelPackInfoService.LevelPackTransferData;
+            
+            if (levelTransferData is not null && levelTransferData.NeedLoadLevel)
             {
-                _levelPackBackgroundView.Background.sprite = _spriteProvider.Sprites[data.LevelPack.GalacticBackgroundKey];
-
-                _targetScore = 0;
-                _levelPackInfoView.Initialize(new()
-                {
-                    CurrentLevelIndex = data.LevelIndex,
-                    AllLevelsCountFromPack = data.LevelPack.Levels.Count,
-                    Sprite = _spriteProvider.Sprites[data.LevelPack.GalacticIconKey],
-                    TargetScore = _targetScore
-                });
+                _progressInPercents = 0;
+                UpdateVisual(levelTransferData);
             }
+        }
+
+        private void UpdateVisual(ILevelPackTransferData levelTransferData)
+        {
+            _viewModel.UpdateView(new()
+            {
+                CurrentLevelIndex = levelTransferData.LevelIndex,
+                AllLevelsCountFromPack = levelTransferData.LevelPack.Levels.Count,
+                GalacticIconSprite = GetSpriteByKey(levelTransferData.LevelPack.GalacticIconKey),
+                TargetScore = _progressInPercents
+            });
+            
+            Sprite backgroundSprite = GetSpriteByKey(levelTransferData.LevelPack.GalacticBackgroundKey);
+            _viewModel.SetBackgroundSprite(backgroundSprite);
         }
 
         public void TakeOneStep()
         {
             _destroyedBlockCounter++;
 
-            if (_destroyedBlockCounter == _allBlockCounter)
+            if (IsDestroyedAll())
             {
-                _progress = 1f;
-                AnimateScore(_levelPackInfoView.LevelPassProgress, _targetScore, 100, _levelPackInfoView.UpdateProgressText);
-                LevelPassed?.Invoke();
-                
                 return;
             }
             
+            UpdateDataAndViewByStep();
+        }
+
+        private bool IsDestroyedAll()
+        {
+            if (_destroyedBlockCounter == _allBlockCounter)
+            {
+                _progress = 1f;
+                _viewModel.UpdateProgress(_progressInPercents, 100);
+                LevelPassed?.Invoke();
+
+                return true;
+            }
+
+            return false;
+        }
+
+        private void UpdateDataAndViewByStep()
+        {
             _progress += _step;
-            _targetScore = (int)Math.Round(_progress * 100f);
-            
+
+            _progressInPercents = CalculateProgressInPercents(_progress);
+            _viewModel.UpdateProgress(CalculateProgressInPercents(_progress - _step), _progressInPercents);
+
             ProgressChanged?.Invoke(_progress);
-            
-            AnimateScore(_levelPackInfoView.LevelPassProgress, (int)((_progress - _step) * 100), _targetScore, _levelPackInfoView.UpdateProgressText);
         }
 
         public void CalculateStepByLevelData(LevelData levelData)
@@ -90,12 +107,9 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.LevelProgress
             
             foreach (int index in levelData.Grid)
             {
-                if (index != 0)
+                if (index != AbsenceEntityIndex && _entitesProvider.EntityStages[index.ToString()].ICanGetDamage)
                 {
-                    if (_entitesProvider.EntityStages[index.ToString()].ICanGetDamage)
-                    {
-                        damagableCounter++;
-                    }
+                    damagableCounter++;
                 }
             }
 
@@ -107,14 +121,9 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.LevelProgress
         {
             _progress = 0f;
             _destroyedBlockCounter = 0;
-            _targetScore = 0;
+            _progressInPercents = 0;
             
-            _levelPackInfoView.UpdateProgressText(_targetScore);
-        }
-
-        private void AnimateScore(TMP_Text text, int from, int to, Action<int> ticked)
-        {
-            _scoreAnimationService.Animate(text, from, to, ticked);
+            _viewModel.SetProgress(0);
         }
 
         public void SaveProgress(LevelDataProgress levelDataProgress)
@@ -138,9 +147,18 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.LevelProgress
             _step = progressedLevelData.Step;
             _allBlockCounter = progressedLevelData.AllBlocksCounter;
             
-            _targetScore = (int)Math.Round(_progress * 100f);
-            
-            _levelPackInfoView.UpdateProgressText(_targetScore);
+            _progressInPercents = CalculateProgressInPercents(_progress);
+            _viewModel.SetProgress(_progressInPercents);
+        }
+
+        private int CalculateProgressInPercents(float progress)
+        {
+            return (int)Math.Round(progress * 100f);
+        }
+
+        private Sprite GetSpriteByKey(string key)
+        {
+            return _spriteProvider.Sprites[key];
         }
     }
 }

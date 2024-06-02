@@ -48,10 +48,11 @@ namespace App.Scripts.Scenes.MainMenuScene.ContinueLevel
 
         private void LoadSavedLevel()
         {
-            _levelPackInfoService.SetData(new LevelPackTransferData
-            {
-                NeedContinue = true
-            });
+            _levelPackInfoService.LevelPackTransferData =
+                new LevelPackTransferData
+                {
+                    NeedContinue = true
+                };
 
             _energyViewModel.Dispose();
 

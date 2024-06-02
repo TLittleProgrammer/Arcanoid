@@ -39,13 +39,14 @@ namespace App.Scripts.Scenes.MainMenuScene.Command
             
             _energyDataService.Add(-itemData.LevelPack.EnergyPrice);
             
-            _levelPackInfoService.SetData(new LevelPackTransferData
-            {
-                NeedLoadLevel = true,
-                LevelIndex = targetLevelIndex,
-                LevelPack = itemData.LevelPack,
-                PackIndex = itemData.PackIndex
-            });
+            _levelPackInfoService.LevelPackTransferData =
+                new LevelPackTransferData
+                {
+                    NeedLoadLevel = true,
+                    LevelIndex = targetLevelIndex,
+                    LevelPack = itemData.LevelPack,
+                    PackIndex = itemData.PackIndex
+                };
 
             _energyViewModel.Dispose();
 

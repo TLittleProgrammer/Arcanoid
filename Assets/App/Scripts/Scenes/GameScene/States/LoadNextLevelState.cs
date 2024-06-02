@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using App.Scripts.External.GameStateMachine;
+using App.Scripts.External.UserData;
 using App.Scripts.General.Infrastructure;
 using App.Scripts.General.LevelPackInfoService;
 using App.Scripts.General.LoadingScreen;
@@ -13,8 +14,10 @@ using App.Scripts.Scenes.GameScene.Features.Levels.General.View;
 using App.Scripts.Scenes.GameScene.Features.Levels.LevelProgress;
 using App.Scripts.Scenes.GameScene.Features.Levels.LevelView;
 using App.Scripts.Scenes.GameScene.Features.Levels.Loading;
+using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress;
 using App.Scripts.Scenes.GameScene.Features.Popups;
 using App.Scripts.Scenes.GameScene.Features.Time;
+using App.Scripts.Scenes.GameScene.MVVM.Header;
 using Cysharp.Threading.Tasks;
 
 namespace App.Scripts.Scenes.GameScene.States
@@ -24,7 +27,6 @@ namespace App.Scripts.Scenes.GameScene.States
         private readonly ILoadingScreen _loadingScreen;
         private readonly IStateMachine _gameStateMachine;
         private readonly IPopupService _popupService;
-        private readonly ILevelPackInfoView _levelPackInfoView;
         private readonly ITimeProvider _timeProvider;
         private readonly ILevelProgressService _levelProgressService;
         private readonly ITweenersLocator _tweenersLocator;
@@ -35,12 +37,13 @@ namespace App.Scripts.Scenes.GameScene.States
         private readonly ILevelLoadService _levelLoadService;
         private readonly List<IGeneralRestartable> _generalRestartables;
         private readonly SpriteProvider _spriteProvider;
+        private readonly IDataProvider<LevelDataProgress> _levelDataProgress;
+        private readonly LevelPackInfoViewModel _levelPackInfoViewModel;
 
         public LoadNextLevelState(
             ILoadingScreen loadingScreen,
             IStateMachine gameStateMachine,
             IPopupService popupService,
-            ILevelPackInfoView levelPackInfoView,
             ITimeProvider timeProvider,
             ILevelProgressService levelProgressService,
             ITweenersLocator tweenersLocator,
@@ -49,12 +52,13 @@ namespace App.Scripts.Scenes.GameScene.States
             IBallsService ballsService,
             ILevelLoadService levelLoadService,
             List<IGeneralRestartable> generalRestartables,
-            SpriteProvider spriteProvider)
+            SpriteProvider spriteProvider,
+            IDataProvider<LevelDataProgress> levelDataProgress,
+            LevelPackInfoViewModel levelPackInfoViewModel)
         {
             _loadingScreen = loadingScreen;
             _gameStateMachine = gameStateMachine;
             _popupService = popupService;
-            _levelPackInfoView = levelPackInfoView;
             _timeProvider = timeProvider;
             _levelProgressService = levelProgressService;
             _tweenersLocator = tweenersLocator;
@@ -64,12 +68,15 @@ namespace App.Scripts.Scenes.GameScene.States
             _levelLoadService = levelLoadService;
             _generalRestartables = generalRestartables;
             _spriteProvider = spriteProvider;
+            _levelDataProgress = levelDataProgress;
+            _levelPackInfoViewModel = levelPackInfoViewModel;
         }
 
         public async UniTask Enter()
         {
             await _loadingScreen.Show(false);
-
+            _levelDataProgress.GetData();
+            
             _tweenersLocator.RemoveAll();
             RestartAll();
             
@@ -77,15 +84,15 @@ namespace App.Scripts.Scenes.GameScene.States
 
             LevelData level = await _levelLoadService.LoadLevelNextLevel();
 
-            var data = _levelPackInfoService.GetData();
+            var data = _levelPackInfoService.LevelPackTransferData;
             
             _levelProgressService.CalculateStepByLevelData(level);
             
-            _levelPackInfoView.Initialize(new LevelPackInfoRecord
+            _levelPackInfoViewModel.UpdateView(new LevelPackInfoRecord
             {
                 AllLevelsCountFromPack = data.LevelPack.Levels.Count,
                 CurrentLevelIndex = data.LevelIndex,
-                Sprite = _spriteProvider.Sprites[data.LevelPack.GalacticIconKey],
+                GalacticIconSprite = _spriteProvider.Sprites[data.LevelPack.GalacticIconKey],
                 TargetScore = 0
             });
 

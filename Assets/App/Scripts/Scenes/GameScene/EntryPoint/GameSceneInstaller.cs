@@ -40,6 +40,7 @@ using App.Scripts.Scenes.GameScene.Features.ScreenInfo;
 using App.Scripts.Scenes.GameScene.Features.ServiceActivator;
 using App.Scripts.Scenes.GameScene.Features.Settings;
 using App.Scripts.Scenes.GameScene.Features.Shake;
+using App.Scripts.Scenes.GameScene.MVVM.Header;
 using App.Scripts.Scenes.GameScene.States;
 using App.Scripts.Scenes.GameScene.States.Bootstrap;
 using UnityEngine;
@@ -113,13 +114,14 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.Bind<IShowLevelAnimation>().To<SimpleShowLevelAnimation>().AsSingle();
             Container.Bind<IGetDamageService>().To<GetDamageService>().AsSingle();
             Container.BindInterfacesAndSelfTo<BallsService>().AsSingle().WhenNotInjectedInto<GameLoopState>();
-            Container.BindInterfacesAndSelfTo<LevelProgressService>().AsSingle().WithArguments(_levelPackInfoView, _levelPackBackground);
+            Container.BindInterfacesAndSelfTo<LevelPackInfoModel>().AsSingle();
+            Container.BindInterfacesAndSelfTo<LevelPackInfoViewModel>().AsSingle().WithArguments(_levelPackInfoView, _levelPackBackground);
 
             Container.Bind<SkipLevelService>().AsSingle().WithArguments(_skipLevelButton).NonLazy();
             Container.BindInterfacesAndSelfTo<LevelProgressSaveService>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<LevelProgressSaveHandler>().AsSingle().WithArguments(_gameStatements).NonLazy();
 
-            StateMachineInstaller.Install(Container, _projectStateMachine, _levelPackInfoView);
+            StateMachineInstaller.Install(Container, _projectStateMachine);
             
             Container.BindInterfacesTo<GameBootstrapper>().AsSingle();
         }

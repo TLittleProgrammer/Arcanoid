@@ -4,13 +4,12 @@ namespace App.Scripts.General.LevelPackInfoService
 {
     public interface ILevelPackInfoService
     {
+        ILevelPackTransferData LevelPackTransferData { get; set; }
+        bool NeedContinueLevel { get; }
         ILevelPackTransferData UpdateLevelPackTransferData();
-        ILevelPackTransferData GetData();
         LevelPack GetDataForNextPack();
         LevelPack GetDataForCurrentPack();
-        void SetData(ILevelPackTransferData levelPackTransferData);
         bool NeedLoadNextPackOrLevel();
         bool NeedLoadNextPack();
-        bool NeedContinueLevel { get; }
     }
 }

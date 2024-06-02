@@ -10,9 +10,9 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress
     {
         [JsonProperty("LocaleKey")]
         public string LocaleKey;
-        [JsonIgnore]
+        [JsonProperty("GalacticIconKey")]
         public string GalacticIcon;
-        [JsonIgnore]
+        [JsonProperty("GalacticBackgroundKey")]
         public string GalacticBackground;
         [JsonProperty("EnergyPrice")]
         public int EnergyPrice = 3;

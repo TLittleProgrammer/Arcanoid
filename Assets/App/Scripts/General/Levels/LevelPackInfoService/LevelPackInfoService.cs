@@ -22,6 +22,12 @@ namespace App.Scripts.General.LevelPackInfoService
 
         public bool NeedContinueLevel => _levelPackTransferData?.NeedContinue ?? false;
 
+        public ILevelPackTransferData LevelPackTransferData
+        {
+            get => _levelPackTransferData;
+            set => _levelPackTransferData = value;
+        }
+
         public ILevelPackTransferData UpdateLevelPackTransferData()
         {
             ILevelPackTransferData data = new LevelPackTransferData();

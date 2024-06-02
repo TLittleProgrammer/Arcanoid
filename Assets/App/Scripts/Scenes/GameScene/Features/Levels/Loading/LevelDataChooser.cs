@@ -20,7 +20,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.Loading
 
         public LevelData GetLevelData()
         {
-            var data = _levelPackInfoService.GetData();
+            var data = _levelPackInfoService.LevelPackTransferData;
             if (data is not null && data.NeedLoadLevel)
             {   
                 return JsonConvert.DeserializeObject<LevelData>(data.LevelPack.Levels[data.LevelIndex].text);
@@ -44,7 +44,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.Loading
 
         private void SavePackData(LevelDataProgress levelDataProgress)
         {
-            var levelData = _levelPackInfoService.GetData();
+            var levelData = _levelPackInfoService.LevelPackTransferData;
             LevelTransferPackData data = new();
             
             if (levelData is null)
@@ -105,7 +105,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.Loading
             
             levelPackTransferData.LevelPack = levelPackData;
             
-            _levelPackInfoService.SetData(levelPackTransferData);
+            _levelPackInfoService.LevelPackTransferData = levelPackTransferData;
         }
     }
 }

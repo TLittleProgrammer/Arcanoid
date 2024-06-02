@@ -5,6 +5,6 @@
         void Save(ISavable savable);
         void Load<TSavable>(ref TSavable savable) where TSavable : ISavable;
         bool Exists(string currentlevelprogressJson);
-        void Delete(string currentlevelprogressJson);
+        void Delete(string fileName);
     }
 }
