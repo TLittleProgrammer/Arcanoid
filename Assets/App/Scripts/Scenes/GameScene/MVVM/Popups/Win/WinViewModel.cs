@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using App.Scripts.General.LevelPackInfoService;
 using App.Scripts.General.Levels;
+using App.Scripts.General.Providers;
 using App.Scripts.Scenes.GameScene.Command;
 using App.Scripts.Scenes.GameScene.Command.Win;
 using App.Scripts.Scenes.GameScene.Features.Dotween;
@@ -21,6 +22,7 @@ namespace App.Scripts.Scenes.GameScene.MVVM.Popups.Win
         private readonly ILoadNextLevelCommand _loadNextLevelCommand;
         private readonly IDisableButtonsCommand _disableButtonsCommand;
         private readonly ILevelPackInfoService _levelPackInfoService;
+        private readonly SpriteProvider _spriteProvider;
 
         private IWinPopupView _winPopupView;
         
@@ -30,7 +32,8 @@ namespace App.Scripts.Scenes.GameScene.MVVM.Popups.Win
             CircleWinEffectSettings circleWinEffectSettings,
             ILoadNextLevelCommand loadNextLevelCommand,
             IDisableButtonsCommand disableButtonsCommand,
-            ILevelPackInfoService levelPackInfoService)
+            ILevelPackInfoService levelPackInfoService,
+            SpriteProvider spriteProvider)
         {
             _winContinueButtonAnimationSettings = winContinueButtonAnimationSettings;
             _tweenersLocator = tweenersLocator;
@@ -38,6 +41,7 @@ namespace App.Scripts.Scenes.GameScene.MVVM.Popups.Win
             _loadNextLevelCommand = loadNextLevelCommand;
             _disableButtonsCommand = disableButtonsCommand;
             _levelPackInfoService = levelPackInfoService;
+            _spriteProvider = spriteProvider;
         }
 
         public void InstallView(IWinPopupView winPopupView)
@@ -54,7 +58,7 @@ namespace App.Scripts.Scenes.GameScene.MVVM.Popups.Win
         private void UpdateVisual()
         {
             LevelPack currentPack = _levelPackInfoService.GetData().LevelPack;
-            _winPopupView.BottomGalacticIcon.sprite = currentPack.GalacticIcon;
+            _winPopupView.BottomGalacticIcon.sprite = _spriteProvider.Sprites[currentPack.GalacticIconKey];
             _winPopupView.GalacticName.SetToken(currentPack.LocaleKey);
             _winPopupView.PassedLevelsText.text = $"{_levelPackInfoService.GetData().LevelIndex + 1}/{currentPack.Levels.Count}";
         }
@@ -133,7 +137,7 @@ namespace App.Scripts.Scenes.GameScene.MVVM.Popups.Win
                 LevelPack currentLevelPack = _levelPackInfoService.GetData().LevelPack;
 
                 _winPopupView.TopGalacticIcon.color = Color.clear;
-                _winPopupView.TopGalacticIcon.sprite = nextPack.GalacticIcon;
+                _winPopupView.TopGalacticIcon.sprite = _spriteProvider.Sprites[nextPack.GalacticIconKey];
                 _winPopupView.ContinueButton.interactable = false;
 
                 await UniTask.Delay(2000);

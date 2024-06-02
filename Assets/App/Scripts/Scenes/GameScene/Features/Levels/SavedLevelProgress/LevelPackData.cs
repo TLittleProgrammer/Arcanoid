@@ -11,9 +11,9 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress
         [JsonProperty("LocaleKey")]
         public string LocaleKey;
         [JsonIgnore]
-        public Sprite GalacticIcon;
+        public string GalacticIcon;
         [JsonIgnore]
-        public Sprite GalacticBackground;
+        public string GalacticBackground;
         [JsonProperty("EnergyPrice")]
         public int EnergyPrice = 3;
         [JsonProperty("EnergyReward")]

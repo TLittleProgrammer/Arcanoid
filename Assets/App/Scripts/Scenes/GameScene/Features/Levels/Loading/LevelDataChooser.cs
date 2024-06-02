@@ -12,9 +12,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.Loading
         private readonly ILevelPackInfoService _levelPackInfoService;
         private readonly TextAsset _choosedFromSceneLevelData;
 
-        public LevelDataChooser(
-            ILevelPackInfoService levelPackInfoService,
-            TextAsset choosedFromSceneLevelData)
+        public LevelDataChooser(ILevelPackInfoService levelPackInfoService, TextAsset choosedFromSceneLevelData)
         {
             _levelPackInfoService = levelPackInfoService;
             _choosedFromSceneLevelData = choosedFromSceneLevelData;
@@ -61,8 +59,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.Loading
             levelPackData.EnergyPrice = levelData.LevelPack.EnergyPrice;
             levelPackData.EnergyAddForWin = levelData.LevelPack.EnergyAddForWin;
             levelPackData.LocaleKey = levelData.LevelPack.LocaleKey;
-            levelPackData.GalacticBackground = levelData.LevelPack.GalacticBackground;
-            levelPackData.GalacticIcon = levelData.LevelPack.GalacticIcon;
+            levelPackData.GalacticBackground = levelData.LevelPack.GalacticBackgroundKey;
+            levelPackData.GalacticIcon = levelData.LevelPack.GalacticIconKey;
 
             foreach (TextAsset asset in levelData.LevelPack.Levels)
             {
@@ -94,8 +92,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.Loading
             levelPackData.EnergyPrice = savedData.LevelPack.EnergyPrice;
             levelPackData.EnergyAddForWin = savedData.LevelPack.EnergyAddForWin;
             levelPackData.LocaleKey = savedData.LevelPack.LocaleKey;
-            levelPackData.GalacticIcon = savedData.LevelPack.GalacticIcon;
-            levelPackData.GalacticBackground = savedData.LevelPack.GalacticBackground;
+            levelPackData.GalacticIconKey = savedData.LevelPack.GalacticBackground;
+            levelPackData.GalacticBackgroundKey = savedData.LevelPack.GalacticBackground;
 
 
             foreach (string str in savedData.LevelPack.Levels)

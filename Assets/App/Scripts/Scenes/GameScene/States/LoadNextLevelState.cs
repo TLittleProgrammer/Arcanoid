@@ -4,6 +4,7 @@ using App.Scripts.General.Infrastructure;
 using App.Scripts.General.LevelPackInfoService;
 using App.Scripts.General.LoadingScreen;
 using App.Scripts.General.Popup;
+using App.Scripts.General.Providers;
 using App.Scripts.Scenes.GameScene.Features.Dotween;
 using App.Scripts.Scenes.GameScene.Features.Entities.Ball;
 using App.Scripts.Scenes.GameScene.Features.Levels.General;
@@ -33,6 +34,7 @@ namespace App.Scripts.Scenes.GameScene.States
         private readonly ILevelViewUpdater _levelViewUpdater;
         private readonly ILevelLoadService _levelLoadService;
         private readonly List<IGeneralRestartable> _generalRestartables;
+        private readonly SpriteProvider _spriteProvider;
 
         public LoadNextLevelState(
             ILoadingScreen loadingScreen,
@@ -46,7 +48,8 @@ namespace App.Scripts.Scenes.GameScene.States
             IShowLevelAnimation showLevelAnimation,
             IBallsService ballsService,
             ILevelLoadService levelLoadService,
-            List<IGeneralRestartable> generalRestartables)
+            List<IGeneralRestartable> generalRestartables,
+            SpriteProvider spriteProvider)
         {
             _loadingScreen = loadingScreen;
             _gameStateMachine = gameStateMachine;
@@ -60,6 +63,7 @@ namespace App.Scripts.Scenes.GameScene.States
             _ballsService = ballsService;
             _levelLoadService = levelLoadService;
             _generalRestartables = generalRestartables;
+            _spriteProvider = spriteProvider;
         }
 
         public async UniTask Enter()
@@ -81,7 +85,7 @@ namespace App.Scripts.Scenes.GameScene.States
             {
                 AllLevelsCountFromPack = data.LevelPack.Levels.Count,
                 CurrentLevelIndex = data.LevelIndex,
-                Sprite = data.LevelPack.GalacticIcon,
+                Sprite = _spriteProvider.Sprites[data.LevelPack.GalacticIconKey],
                 TargetScore = 0
             });
 

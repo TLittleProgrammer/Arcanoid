@@ -1,12 +1,14 @@
 ﻿using System;
 using App.Scripts.External.Localisation.MonoBehaviours;
 using App.Scripts.General.Levels;
+using App.Scripts.General.Providers;
 using App.Scripts.Scenes.MainMenuScene.LevelPacks.Configs;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Zenject;
 
 namespace App.Scripts.Scenes.MainMenuScene.LevelPacks
 {
@@ -55,6 +57,14 @@ namespace App.Scripts.Scenes.MainMenuScene.LevelPacks
 
         public GameObject GameObject => gameObject;
 
+        private SpriteProvider _spriteProvider;
+
+        [Inject]
+        private void Construct(SpriteProvider spriteProvider)
+        {
+            _spriteProvider = spriteProvider;
+        }
+
         public void UpdateVisual(LevelModel levelModel)
         {
             UpdateGeneralViews(levelModel.LevelViewData, levelModel.LevelPack);
@@ -82,7 +92,7 @@ namespace App.Scripts.Scenes.MainMenuScene.LevelPacks
             {
                 _energyPanel.gameObject.SetActive(true);
                 _energyText.text = levelPack.EnergyPrice.ToString();
-                GalacticIcon.sprite = levelPack.GalacticIcon;
+                GalacticIcon.sprite = _spriteProvider.Sprites[levelPack.GalacticIconKey];
                 GalacticPassedLevels.text = $"{passedLevels}/{levelPack.Levels.Count}";
                 GalacticIcon.gameObject.SetActive(true);
                 LockIcon.gameObject.SetActive(false);
