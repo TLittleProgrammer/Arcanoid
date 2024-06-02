@@ -28,7 +28,12 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General
         {
             if (!IsActive)
                 return;
-            
+
+            UpdateViewPositions();
+        }
+
+        private void UpdateViewPositions()
+        {
             foreach (BoostView view in _views)
             {
                 Vector3 delta = Vector2.down * _timeProvider.DeltaTime * BoostsConstants.BoostSpeed;

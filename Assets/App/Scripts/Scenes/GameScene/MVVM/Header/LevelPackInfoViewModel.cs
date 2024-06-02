@@ -1,5 +1,4 @@
-﻿using App.Scripts.General.Providers;
-using App.Scripts.Scenes.GameScene.Features.Levels.LevelProgress;
+﻿using App.Scripts.Scenes.GameScene.Features.Levels.LevelProgress;
 using App.Scripts.Scenes.GameScene.Features.Levels.LevelView;
 using App.Scripts.Scenes.GameScene.Features.ScoreAnimation;
 using UnityEngine;

@@ -56,7 +56,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General
 
             if (boostTypeId is not BoostTypeId.AddHealth && boostTypeId is not BoostTypeId.MinusHealth)
             {
-                _boostContainer.AddActive(view.BoostTypeId);
+                _boostContainer.AddBoost(view.BoostTypeId);
             }
             _simpleDestroyService.Destroy(view);
         }

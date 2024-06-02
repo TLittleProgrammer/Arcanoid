@@ -10,17 +10,17 @@ namespace App.Scripts.Scenes.GameScene.Command.Menu
     public sealed class BackCommand : IBackCommand
     {
         private readonly IStateMachine _stateMachine;
-        private readonly IDataProvider<LevelDataProgress> _levelDataProgres;
+        private readonly IDataProvider<LevelDataProgress> _levelDataProgress;
 
-        public BackCommand(IStateMachine stateMachine, IDataProvider<LevelDataProgress> levelDataProgres)
+        public BackCommand(IStateMachine stateMachine, IDataProvider<LevelDataProgress> levelDataProgress)
         {
             _stateMachine = stateMachine;
-            _levelDataProgres = levelDataProgres;
+            _levelDataProgress = levelDataProgress;
         }
         
         public void Execute()
         {
-            _levelDataProgres.Delete();
+            _levelDataProgress.Delete();
             _stateMachine.Enter<LoadSceneFromMainMenuState, string>(SceneNaming.MainMenu);
         }
     }

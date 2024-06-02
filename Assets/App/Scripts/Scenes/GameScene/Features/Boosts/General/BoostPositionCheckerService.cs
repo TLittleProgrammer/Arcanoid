@@ -31,17 +31,22 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General
             {
                 if (_views[i].Transform.position.y <= _minYPosition)
                 {
-                    _boostMoveService.RemoveView(_views[i]);
-
-                    if (!_boostViewPool.InactiveItems.Contains(_views[i]))
-                    {
-                        _boostViewPool.Despawn(_views[i]);
-                    }
-                    
-                    _views.Remove(_views[i]);
-                    i--;
+                    RemoveView(ref i);
                 }
             }
+        }
+
+        private void RemoveView(ref int i)
+        {
+            _boostMoveService.RemoveView(_views[i]);
+
+            if (!_boostViewPool.InactiveItems.Contains(_views[i]))
+            {
+                _boostViewPool.Despawn(_views[i]);
+            }
+
+            _views.Remove(_views[i]);
+            i--;
         }
 
         public void Add(BoostView view)

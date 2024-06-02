@@ -115,7 +115,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.Bind<IShowLevelAnimation>().To<SimpleShowLevelAnimation>().AsSingle();
             Container.Bind<IGetDamageService>().To<GetDamageService>().AsSingle();
             Container.BindInterfacesAndSelfTo<BallsService>().AsSingle().WhenNotInjectedInto<GameLoopState>();
-            Container.BindInterfacesAndSelfTo<LevelPackInfoModel>().AsSingle();
+            Container.BindInterfacesAndSelfTo<LevelPackProgressService>().AsSingle();
             Container.BindInterfacesAndSelfTo<LevelPackInfoViewModel>().AsSingle().WithArguments(_levelPackInfoView, _levelPackBackground);
 
             Container.Bind<SkipLevelService>().AsSingle().WithArguments(_skipLevelButton).NonLazy();

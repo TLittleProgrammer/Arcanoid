@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Levels.LevelProgress
 {
-    public class LevelPackInfoModel : ILevelProgressService, ILevelProgressSavable, IInitializeByLevelProgress
+    public class LevelPackProgressService : ILevelProgressService, ILevelProgressSavable, IInitializeByLevelProgress
     {
         private readonly ILevelPackInfoService _levelPackInfoService;
         private readonly EntityProvider _entitesProvider;
@@ -28,7 +28,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.LevelProgress
         public event Action<float> ProgressChanged;
         public event Action LevelPassed;
         
-        public LevelPackInfoModel(
+        public LevelPackProgressService(
             ILevelPackInfoService levelPackInfoService,
             EntityProvider entitesProvider,
             SpriteProvider spriteProvider,

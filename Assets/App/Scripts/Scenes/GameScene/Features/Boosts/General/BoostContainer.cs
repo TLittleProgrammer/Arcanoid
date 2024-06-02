@@ -44,95 +44,117 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General
             {
                 return;
             }
-            
+
+            UpdateAllTimers();
+        }
+
+        private void UpdateAllTimers()
+        {
             for (int i = 0; i < _boosts.Count; i++)
             {
                 _boosts[i].Duration -= _timeProvider.DeltaTime;
 
                 BoostTypeId currentBoostType = _boosts[i].BoostTypeId;
 
-                _viewsDictionary[currentBoostType].ScollImage.fillAmount = _boosts[i].Duration / GetDurationByType(currentBoostType);
-
-                if (_boosts[i].Duration <= 0f)
-                {
-                    RemoveItem(currentBoostType);
-                    BoostEnded?.Invoke(_boosts[i].BoostTypeId);
-                    _boosts.RemoveAt(i);
-                    i--;
-                }
+                UpdateView(currentBoostType, i);
+                TryDestroyBoost(ref i, currentBoostType);
             }
         }
 
-        public void AddActive(BoostTypeId boostTypeId)
+        private void UpdateView(BoostTypeId currentBoostType, int i)
         {
-            if (_boosts.Count(x => x.BoostTypeId == boostTypeId) != 0)
+            _viewsDictionary[currentBoostType].ScollImage.fillAmount = _boosts[i].Duration / GetDurationByType(currentBoostType);
+        }
+
+        private void TryDestroyBoost(ref int i, BoostTypeId currentBoostType)
+        {
+            if (_boosts[i].Duration <= 0f)
             {
-                UpdateBoostDuration(boostTypeId);
+                RemoveItem(currentBoostType);
+                BoostEnded?.Invoke(_boosts[i].BoostTypeId);
+                _boosts.RemoveAt(i);
+                i--;
+            }
+        }
+
+        public void AddBoost(BoostTypeId boostTypeId)
+        {
+            if (TryUpdateTimerForActivatedBoosts(boostTypeId))
+            {
                 return;
             }
 
-            CheckBallSpeedBoost(boostTypeId);
+            CheckReplaceableBoosts(boostTypeId);
         }
 
-        private void CheckBallSpeedBoost(BoostTypeId boostTypeId)
+        private bool TryUpdateTimerForActivatedBoosts(BoostTypeId boostTypeId)
         {
-            if (UpdateDurationForBoosts(boostTypeId, BoostTypeId.Fireball, _boostsSettings.FireballDuration)) return;
-            if (UpdateDurationForBoosts(boostTypeId, BoostTypeId.StickyPlatform, _boostsSettings.StickyDuration)) return;
-            if (UpdateDurationForBoosts(boostTypeId, BoostTypeId.MiniGun, _boostsSettings.MiniGunDuration)) return;
-            if (UpdateDurationForBoosts(boostTypeId, BoostTypeId.Autopilot, _boostsSettings.AutopilotDuration)) return;
+            BoostData boostData = _boosts.FirstOrDefault(x => x.BoostTypeId == boostTypeId); 
             
-            BallSpeed(boostTypeId, BoostTypeId.BallAcceleration, BoostTypeId.BallSlowdown, _boostsSettings.BallSpeedDuration);
-            BallSpeed(boostTypeId, BoostTypeId.PlayerShapeAddSize, BoostTypeId.PlayerShapeMinusSize, _boostsSettings.ShapeSizeDuration);
-            BallSpeed(boostTypeId, BoostTypeId.PlayerShapeAddSpeed, BoostTypeId.PlayerShapeMinusSpeed, _boostsSettings.ShapeSpeedDuration);
-        }
-
-        private bool UpdateDurationForBoosts(BoostTypeId boostTypeId, BoostTypeId checkBoost, float duration)
-        {
-            if (boostTypeId == checkBoost)
+            if (boostData is not null)
             {
-                if (_boosts.Count(x => x.BoostTypeId == checkBoost) != 0)
-                {
-                    UpdateBoostDuration(checkBoost);
-                }
-                else
-                {
-                    _boosts.Add(new(checkBoost, duration));
-                    CreateUiBoost(checkBoost);
-                }
-
+                UpdateBoostDuration(boostData);
                 return true;
             }
 
             return false;
         }
 
-        private void BallSpeed(BoostTypeId boostTypeId, BoostTypeId firstType, BoostTypeId secondType, float duration)
+        private void CheckReplaceableBoosts(BoostTypeId boostTypeId)
         {
-            if (boostTypeId == firstType)
+            if (TryReplaceBoosts(boostTypeId, BoostTypeId.BallAcceleration, BoostTypeId.BallSlowdown, _boostsSettings.BallSpeedDuration))
             {
-                if (_boosts.Count(x => x.BoostTypeId == secondType) != 0)
-                {
-                    BoostData boostData = _boosts.First(x => x.BoostTypeId == secondType);
-                    _boosts.Remove(boostData);
-                    RemoveItem(secondType);
-                }
-
-                _boosts.Add(new(firstType, duration));
-                CreateUiBoost(firstType);
+                return;
             }
 
-            if (boostTypeId == secondType)
+            if (TryReplaceBoosts(boostTypeId, BoostTypeId.PlayerShapeAddSize, BoostTypeId.PlayerShapeMinusSize, _boostsSettings.ShapeSizeDuration))
             {
-                if (_boosts.Count(x => x.BoostTypeId == firstType) != 0)
+                return;
+            }
+
+            if (TryReplaceBoosts(boostTypeId, BoostTypeId.PlayerShapeAddSpeed, BoostTypeId.PlayerShapeMinusSpeed, _boostsSettings.ShapeSpeedDuration))
+            {
+                return;
+            }
+
+            CreateBoost(boostTypeId);
+        }
+
+        private void CreateBoost(BoostTypeId boostTypeId)
+        {
+            BoostData boostData = new();
+            boostData.BoostTypeId = boostTypeId;
+            boostData.Duration = GetDurationByType(boostTypeId);
+
+            _boosts.Add(boostData);
+            CreateUiBoost(boostTypeId);
+        }
+
+        private bool TryReplaceBoosts(BoostTypeId boostTypeId, BoostTypeId firstType, BoostTypeId secondType, float duration)
+        {
+            bool firstRemovingResult = TryRemoveAndReplaceBoost(boostTypeId, firstType, secondType, duration);
+            bool secondRemovingResult = TryRemoveAndReplaceBoost(boostTypeId, secondType, firstType, duration);
+
+            return firstRemovingResult || secondRemovingResult;
+        }
+
+        private bool TryRemoveAndReplaceBoost(BoostTypeId inputBoost, BoostTypeId firstReplaceableBoost, BoostTypeId secondReplaceable, float duration)
+        {
+            if (inputBoost == firstReplaceableBoost)
+            {
+                BoostData boostData = _boosts.FirstOrDefault(x => x.BoostTypeId == secondReplaceable);
+                if (boostData is not null)
                 {
-                    BoostData boostData = _boosts.First(x => x.BoostTypeId == firstType);
                     _boosts.Remove(boostData);
-                    RemoveItem(firstType);
+                    RemoveItem(secondReplaceable);
                 }
 
-                _boosts.Add(new(secondType, duration));
-                CreateUiBoost(secondType);
+                _boosts.Add(new(firstReplaceableBoost, duration));
+                CreateUiBoost(firstReplaceableBoost);
+                return true;
             }
+
+            return false;
         }
 
         private void RemoveItem(BoostTypeId boostType)
@@ -149,11 +171,11 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General
             _viewsDictionary.Add(boostType, boostItemView);
         }
 
-        private void UpdateBoostDuration(BoostTypeId boostTypeId)
+        private void UpdateBoostDuration(BoostData boostData)
         {
-            float targetDuration = GetDurationByType(boostTypeId);
+            float targetDuration = GetDurationByType(boostData.BoostTypeId);
 
-            _boosts.First(x => x.BoostTypeId == boostTypeId).Duration = targetDuration;
+            boostData.Duration = targetDuration;
         }
 
         private float GetDurationByType(BoostTypeId boostTypeId)

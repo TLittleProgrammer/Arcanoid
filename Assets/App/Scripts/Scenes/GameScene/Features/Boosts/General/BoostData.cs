@@ -5,6 +5,10 @@
         public BoostTypeId BoostTypeId;
         public float Duration;
 
+        public BoostData()
+        {
+        }
+
         public BoostData(BoostTypeId boostTypeId, float duration)
         {
             BoostTypeId = boostTypeId;
