@@ -158,6 +158,14 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.General.View
                 for (int j = 0; j < _levelGridItemData.Width; j++)
                 {
                     GridItemData gridItemData = _levelGridItemData[j, i];
+
+                    if (gridItemData is null)
+                    {
+                        gridItemData = new GridItemData();
+                        gridItemData.BoostTypeId = BoostTypeId.None;
+                        gridItemData.CurrentHealth = -1;
+                    }
+                    
                     SaveGridItemData save = new(gridItemData, j, i);
 
                     levelDataProgress.EntityGridItemsData.Add(save);
@@ -173,6 +181,9 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.General.View
                 {
                     GridItemData gridItemData = _levelGridItemData[j, i];
 
+                    if(gridItemData is null)
+                        continue;
+                    
                     foreach (OnTopSprites topSprites in gridItemData.Sprites)
                     {
                         if (topSprites.gameObject.activeSelf)

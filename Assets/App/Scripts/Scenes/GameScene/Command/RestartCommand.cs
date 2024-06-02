@@ -13,7 +13,7 @@ namespace App.Scripts.Scenes.GameScene.Command
         
         public void Execute()
         {
-            _restartService.TryRestart();
+            _restartService.TryRestartLevel();
         }
     }
 }

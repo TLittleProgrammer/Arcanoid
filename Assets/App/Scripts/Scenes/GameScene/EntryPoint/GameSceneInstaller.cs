@@ -148,7 +148,8 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
                     typeof(ShapeBoostSpeed),
                     typeof(RestartState),
                     typeof(LevelProgressSaveService),
-                    typeof(BootstrapContinueLoadLevelState));
+                    typeof(BootstrapContinueLoadLevelState),
+                    typeof(RestartService));
         }
     }
 }

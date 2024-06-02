@@ -238,6 +238,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
 
         public void Restart()
         {
+            _lastSpeedMultiplier = 1f;
             SetSpeedMultiplier(1f);
         }
 
@@ -268,6 +269,9 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
 
         public void LoadProgress(LevelDataProgress levelDataProgress)
         {
+            UpdateSpeedByProgress(levelDataProgress.ProgressedLevelData.Progress);
+            _lastSpeedMultiplier = levelDataProgress.BallsData.SpeedMultiplier;
+            
             foreach (BallData ballData in levelDataProgress.BallsData.BallDatas)
             {
                 BallView ballView = _ballViewFactory.Create();
@@ -278,7 +282,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
                     ballData.Position.Y,
                     ballData.Position.Z
                 );
-
+                
                 if (ballData.IsFreeFlight)
                 {
                     ballMovement.GoFly();
@@ -288,6 +292,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
                 {
                     ballMovement.Sticky();
                 }
+                
+                AddBallPositionChecker(ballView);
                 
                 Balls.Add(ballView, ballMovement);
             }

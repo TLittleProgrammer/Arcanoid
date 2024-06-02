@@ -47,5 +47,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress
         
         [JsonIgnore]
         public string FileName => SavableConstants.CurrentLevelProgressFileName;
+
+        [JsonProperty("LevelPack")]
+        public LevelTransferPackData LevelTransferPackData;
     }
 }

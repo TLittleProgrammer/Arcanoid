@@ -17,7 +17,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball.Movement.MoveVaria
 
         private float _speed;
         private float _multiplier;
-        private float _constantSpeed;
         private Vector2 _lastDirection;
 
         public BallFreeFlight(BallView ballView, BallFlyingSettings settings, ITimeProvider timeProvider)
@@ -31,7 +30,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball.Movement.MoveVaria
 
             _speed = _settings.Speed;
             _multiplier = 1f;
-            _constantSpeed  = _speed;
             _maxSecondAngle = 180f - _settings.MaxAngle;
             _minSecondAngle = 180f - _settings.MinAngle;
         }

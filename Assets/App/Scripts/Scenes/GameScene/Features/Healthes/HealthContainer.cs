@@ -13,7 +13,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Healthes
     {
         private readonly IViewHealthPointService _viewHealthPointService;
 
-        private List<IRestartable> _restartables;
         private int _currentHealthCounter;
         private int _maxHealthCounter;
 
@@ -23,12 +22,12 @@ namespace App.Scripts.Scenes.GameScene.Features.Healthes
         }
 
         public event Action LivesAreWasted;
+        public event Action<int> GetDamage;
 
-        public async UniTask AsyncInitialize(LevelData param, List<IRestartable> restartables)
+        public async UniTask AsyncInitialize(int healthes)
         {
-            _currentHealthCounter = _maxHealthCounter = param.HealthCount == 0 ? GameConstants.DefaultHealthCount : param.HealthCount;
-            _restartables = restartables;
-            
+            _currentHealthCounter = _maxHealthCounter = healthes == 0 ? GameConstants.DefaultHealthCount : healthes;
+
             await UniTask.CompletedTask;
         }
 
@@ -36,45 +35,51 @@ namespace App.Scripts.Scenes.GameScene.Features.Healthes
         {
             if (_currentHealthCounter + healthCount > _maxHealthCounter)
             {
-                _currentHealthCounter = _maxHealthCounter;
-                
-                _viewHealthPointService.UpdateHealth(_maxHealthCounter - healthCount);
+                SetFullHP(healthCount);
             }
             else
             {
-                _currentHealthCounter += healthCount;
-                if (_currentHealthCounter < -1)
-                {
-                    _currentHealthCounter = -1;
-                }
-                
-                if (needRestart)
-                {
-                    UpdateHealthCounter();
-                    RestartServicesIfNeed(healthCount);
-                }
-                
-               
-                _viewHealthPointService.UpdateHealth(healthCount);
+                ChangeHP(healthCount, needRestart);
             }    
         }
 
-        private void UpdateHealthCounter()
+        private void ChangeHP(int healthCount, bool needRestart)
         {
-            if (_currentHealthCounter < 0)
+            _currentHealthCounter += healthCount;
+            if (_currentHealthCounter < -1)
+            {
+                _currentHealthCounter = -1;
+            }
+
+            if (needRestart)
+            {
+                IsLivesAreWasted();
+                IsDamage(healthCount);
+            }
+
+            _viewHealthPointService.UpdateHealth(healthCount);
+        }
+
+        private void SetFullHP(int healthCount)
+        {
+            _currentHealthCounter = _maxHealthCounter;
+
+            _viewHealthPointService.UpdateHealth(_maxHealthCounter - healthCount);
+        }
+
+        private void IsLivesAreWasted()
+        {
+            if(_currentHealthCounter < 0)
             {
                 LivesAreWasted?.Invoke();
             }
         }
 
-        private void RestartServicesIfNeed(int healthCount)
+        private void IsDamage(int healthCount)
         {
             if (healthCount < 0)
             {
-                foreach (IRestartable restartable in _restartables)
-                {
-                    restartable.Restart();
-                }
+                GetDamage?.Invoke(healthCount);
             }
         }
 

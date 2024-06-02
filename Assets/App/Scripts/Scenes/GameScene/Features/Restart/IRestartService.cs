@@ -2,6 +2,7 @@
 {
     public interface IRestartService
     {
-        void TryRestart();
+        void TryRestartLevel();
+        void RestartSession();
     }
 }

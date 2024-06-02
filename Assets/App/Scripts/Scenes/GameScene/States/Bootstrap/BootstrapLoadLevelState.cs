@@ -49,7 +49,7 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
         {
             LevelData levelData = await _levelLoadService.LoadLevel();
             
-            await _healthContainer.AsyncInitialize(levelData, new List<IRestartable> {_playerShapeMover});
+            await _healthContainer.AsyncInitialize(levelData.HealthCount);
             await _viewHealthPointService.AsyncInitialize(levelData);
             _levelProgressService.CalculateStepByLevelData(levelData);
 
