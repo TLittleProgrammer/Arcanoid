@@ -44,11 +44,11 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress
         
         [JsonProperty("ViewBoostData")]
         public List<SaveBoostViewData> ViewBoostDatas;
-        
-        [JsonIgnore]
-        public string FileName => SavableConstants.CurrentLevelProgressFileName;
 
         [JsonProperty("LevelPack")]
         public LevelTransferPackData LevelTransferPackData;
+
+        [JsonIgnore]
+        public string FileName => SavableConstants.CurrentLevelProgressFileName;
     }
 }

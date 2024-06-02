@@ -22,6 +22,7 @@ using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.Collisions;
 using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.Move;
 using App.Scripts.Scenes.GameScene.Features.Entities.View;
 using App.Scripts.Scenes.GameScene.Features.Entities.Walls;
+using App.Scripts.Scenes.GameScene.Features.Game;
 using App.Scripts.Scenes.GameScene.Features.Grid;
 using App.Scripts.Scenes.GameScene.Features.Healthes;
 using App.Scripts.Scenes.GameScene.Features.Healthes.View;
@@ -64,6 +65,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
         [SerializeField] private Image _menuButton;
         [SerializeField] private Button _skipLevelButton;
         [SerializeField] private OpenMenuPopupButton _openMenuPopupButton;
+        [SerializeField] private GameStatements _gameStatements;
 
         [Inject] private PoolProviders _poolProviders;
         [Inject] private IStateMachine _projectStateMachine;
@@ -114,8 +116,9 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.BindInterfacesAndSelfTo<LevelProgressService>().AsSingle().WithArguments(_levelPackInfoView, _levelPackBackground);
 
             Container.Bind<SkipLevelService>().AsSingle().WithArguments(_skipLevelButton).NonLazy();
-            Container.Bind<LevelProgressSaveService>().AsSingle().NonLazy();
-            
+            Container.BindInterfacesAndSelfTo<LevelProgressSaveService>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<LevelProgressSaveHandler>().AsSingle().WithArguments(_gameStatements).NonLazy();
+
             StateMachineInstaller.Install(Container, _projectStateMachine, _levelPackInfoView);
             
             Container.BindInterfacesTo<GameBootstrapper>().AsSingle();

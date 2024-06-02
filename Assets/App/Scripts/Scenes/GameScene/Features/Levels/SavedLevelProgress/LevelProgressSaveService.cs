@@ -1,24 +1,19 @@
 ﻿using System.Collections.Generic;
 using App.Scripts.External.UserData;
-using App.Scripts.General.LevelPackInfoService;
 using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress;
+using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Levels
 {
-    public class LevelProgressSaveService
+    public class LevelProgressSaveService : ILevelProgressSaveService
     {
         private readonly List<ILevelProgressSavable> _levelProgressSavable;
         private readonly IDataProvider<LevelDataProgress> _levelDataProgressProvider;
-        private readonly ILevelPackInfoService _levelPackInfoService;
 
-        public LevelProgressSaveService(
-            List<ILevelProgressSavable> levelProgressSavable,
-            IDataProvider<LevelDataProgress> levelDataProgressProvider,
-            ILevelPackInfoService levelPackInfoService)
+        public LevelProgressSaveService(List<ILevelProgressSavable> levelProgressSavable, IDataProvider<LevelDataProgress> levelDataProgressProvider)
         {
             _levelProgressSavable = levelProgressSavable;
             _levelDataProgressProvider = levelDataProgressProvider;
-            _levelPackInfoService = levelPackInfoService;
         }
 
         public void SaveProgress()
