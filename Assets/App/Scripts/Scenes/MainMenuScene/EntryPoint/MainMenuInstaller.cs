@@ -2,6 +2,7 @@
 using App.Scripts.General.Energy;
 using App.Scripts.General.UserData.Levels.Data;
 using App.Scripts.Scenes.Bootstrap.Buttons;
+using App.Scripts.Scenes.GameScene.Command;
 using App.Scripts.Scenes.MainMenuScene.ActivateScreens;
 using App.Scripts.Scenes.MainMenuScene.Buttons;
 using App.Scripts.Scenes.MainMenuScene.Command;
@@ -59,6 +60,14 @@ namespace App.Scripts.Scenes.MainMenuScene.Installers
             Container.BindInterfacesAndSelfTo<LevelPackModel>().AsSingle();
             Container.BindInterfacesAndSelfTo<LevelPackViewModel>().AsSingle();
             
+            BindCommands();
+
+            Container.BindInterfacesAndSelfTo<MainMenuInitalizer>().AsSingle().WithArguments(EnergyView);
+            Container.BindInterfacesAndSelfTo<LevelPacksInitializer>().AsSingle().WithArguments(LevelPackParent);
+        }
+
+        private void BindCommands()
+        {
             Container
                 .BindInterfacesTo<ChangeLocaleCommand>()
                 .AsSingle()
@@ -68,9 +77,13 @@ namespace App.Scripts.Scenes.MainMenuScene.Installers
                 .BindInterfacesTo<LoadLevelCommand>()
                 .AsSingle()
                 .WhenInjectedInto<LevelPackViewModel>();
-            
-            Container.BindInterfacesAndSelfTo<MainMenuInitalizer>().AsSingle().WithArguments(EnergyView);
-            Container.BindInterfacesAndSelfTo<LevelPacksInitializer>().AsSingle().WithArguments(LevelPackParent);
+
+            Container
+                .BindInterfacesAndSelfTo<ContinueCommand>()
+                .AsSingle()
+                .WhenInjectedInto<SettingsViewModel>();
+
+            Container.BindInterfacesAndSelfTo<DisableButtonsCommand>().AsSingle();
         }
     }
 }

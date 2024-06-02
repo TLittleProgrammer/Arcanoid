@@ -30,12 +30,6 @@ namespace App.Scripts.Scenes.MainMenuScene.Buttons
         {
             SettingsPopupView settingsView = ShowPopup();
             _settingsViewModel.FillView(settingsView);
-            
-            settingsView.ContinueButton.onClick.AddListener(() =>
-            {
-                settingsView.ContinueButton.onClick.RemoveAllListeners();
-                _popupService.Close<SettingsPopupView>();
-            });
         }
 
         private SettingsPopupView ShowPopup()
