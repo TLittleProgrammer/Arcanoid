@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General.Interfaces;
 using App.Scripts.Scenes.GameScene.Features.Constants;
+using App.Scripts.Scenes.GameScene.Features.Entities.Ball;
 using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress;
 using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress.Data;
 using App.Scripts.Scenes.GameScene.Features.Time;
@@ -23,6 +24,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General
         }
 
         public bool IsActive { get; set; }
+
+        public List<BoostView> Views => _views;
 
         public void Tick()
         {

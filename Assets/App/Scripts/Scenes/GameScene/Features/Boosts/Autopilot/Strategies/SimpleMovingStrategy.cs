@@ -1,5 +1,6 @@
 ﻿using System;
 using App.Scripts.Scenes.GameScene.Features.Boosts.Autopilot.Nodes;
+using App.Scripts.Scenes.GameScene.Features.Boosts.General.Interfaces;
 using App.Scripts.Scenes.GameScene.Features.Components;
 using App.Scripts.Scenes.GameScene.Features.Entities.Ball;
 using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape;
@@ -16,49 +17,34 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.Autopilot.Strategies
         private readonly IShapePositionChecker _shapePositionChecker;
         private readonly IPlayerShapeMover _playerShapeMover;
         private readonly ITimeProvider _timeProvider;
-        private readonly IBallsService _ballsService;
+        private readonly IGetBottomUsableItemService _getBottomUsableItemService;
 
         public SimpleMovingStrategy(
             PlayerView playerView,
             IShapePositionChecker shapePositionChecker,
             IPlayerShapeMover playerShapeMover,
             ITimeProvider timeProvider,
-            IBallsService ballsService)
+            IGetBottomUsableItemService getBottomUsableItemService)
         {
             _playerView = playerView;
             _shapePositionChecker = shapePositionChecker;
             _playerShapeMover = playerShapeMover;
             _timeProvider = timeProvider;
-            _ballsService = ballsService;
+            _getBottomUsableItemService = getBottomUsableItemService;
         }
         
         public NodeStatus Process()
         {
-            Vector3 bottomBallPosition = GetBottomBallPosition();
+            Vector3 bottomUsablePosition = _getBottomUsableItemService.GetBottomPosition();
 
-            if (Mathf.Abs(_playerView.Position.x - bottomBallPosition.x) <= BehaviourTreeConstants.Epsilon)
+            if (Mathf.Abs(_playerView.Position.x - bottomUsablePosition.x) <= BehaviourTreeConstants.Epsilon)
             {
                 return NodeStatus.Success;
             }
 
-            Move(bottomBallPosition);
+            Move(bottomUsablePosition);
 
             return NodeStatus.Running;
-        }
-
-        private Vector3 GetBottomBallPosition()
-        {
-            Vector3 position = Vector3.one * 999f;
-            
-            foreach ((BallView ballView, var garbarge) in _ballsService.Balls)
-            {
-                if (ballView.gameObject.activeSelf && ballView.transform.position.y < position.y)
-                {
-                    position = ballView.transform.position;
-                }
-            }
-
-            return position;
         }
 
         public void Reset()
@@ -91,12 +77,12 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.Autopilot.Strategies
             }
         }
 
-        private Vector2 CalculateTargetPosition(Vector3 bottomBallPosition)
+        private Vector2 CalculateTargetPosition(Vector3 bottomUsablePosition)
         {
             return Vector2.MoveTowards
             (
                 _playerView.Position,
-                new(bottomBallPosition.x, _playerView.Position.y),
+                new(bottomUsablePosition.x, _playerView.Position.y),
                 _timeProvider.DeltaTime * _playerShapeMover.Speed
             );
         }
