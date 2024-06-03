@@ -42,23 +42,14 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
             _ballsService.SetRedBall(true);
             _isActive = true;
 
-            foreach (IEntityView view in _levelLoader.Entities)
-            {
-                if (view.GameObject.activeSelf)
-                {
-                    view.BoxCollider2D.isTrigger = true;
-                }
-            }
+            UpdateTrigger(true);
         }
 
         private void OnBoostEnded(BoostTypeId boostType)
         {
             if (boostType is BoostTypeId.Fireball)
             {
-                foreach (IEntityView view in _levelLoader.Entities)
-                {
-                    view.BoxCollider2D.isTrigger = false;
-                }
+                UpdateTrigger(false);
 
                 _isActive = false;
                 _ballsService.SetRedBall(false);
@@ -79,7 +70,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
         {
             foreach (IEntityView view in _levelLoader.Entities)
             {
-                if (view.GameObject.activeSelf && view.BoxCollider2D.isTrigger)
+                if (view.GameObject.activeSelf)
                 {
                     GoThroughBallViews(view);
                 }
@@ -110,6 +101,14 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
             GridItemData gridItemData = _levelViewUpdater.LevelGridItemData[view.GridPositionX, view.GridPositionY];
             gridItemData.CurrentHealth = -1;
             _entityDestroyable.Destroy(gridItemData, view);
+        }
+
+        private void UpdateTrigger(bool value)
+        {
+            foreach (IEntityView view in _levelLoader.Entities)
+            {
+                view.BoxCollider2D.isTrigger = value;
+            }
         }
     }
 }
