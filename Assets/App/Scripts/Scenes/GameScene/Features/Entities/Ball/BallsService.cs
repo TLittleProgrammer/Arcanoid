@@ -120,9 +120,12 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
             
             _ballsPositionCheckers.Remove(_ballsPositionCheckers.First(x => x.BallPositionable.Equals(ball)));
             BallView ballView = Balls.First(x => x.Key.Position.Equals(ball.Position)).Key;
-            
-            
-            _ballViewPool.Despawn(ballView);
+
+
+            if (!_ballViewPool.InactiveItems.Contains(ballView))
+            {
+                _ballViewPool.Despawn(ballView);
+            }
             
             if (_ballsPositionCheckers.Count == 0)
             {

@@ -8,6 +8,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
     {
         public override void InstallBindings()
         {
+            Container.BindInterfacesAndSelfTo<GetBottomUsableItemService>().AsSingle();
             Container.Bind<SimpleMovingStrategy>().AsSingle();
             
             Container.Bind<BehaviourTree>().AsSingle();
