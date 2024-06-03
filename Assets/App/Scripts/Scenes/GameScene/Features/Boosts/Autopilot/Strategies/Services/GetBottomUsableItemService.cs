@@ -43,26 +43,11 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.Autopilot.Strategies
         {
             foreach (BoostView view in _boostMoveService.Views)
             {
-                if (IsPositiveBoost(view.BoostTypeId) && view.gameObject.activeSelf && view.transform.position.y < position.y)
+                if (view.BoostTypeId.IsPositiveBoost() && view.gameObject.activeSelf && view.transform.position.y < position.y)
                 {
                     position = view.transform.position;
                 }
             }
-        }
-
-        private bool IsPositiveBoost(BoostTypeId boostType)
-        {
-            return
-                boostType is
-                    BoostTypeId.Autopilot or
-                    BoostTypeId.Fireball or
-                    BoostTypeId.AddHealth or
-                    BoostTypeId.BallAcceleration or
-                    BoostTypeId.CaptiveBall or
-                    BoostTypeId.MiniGun or
-                    BoostTypeId.StickyPlatform or
-                    BoostTypeId.PlayerShapeAddSize or
-                    BoostTypeId.PlayerShapeAddSpeed;
         }
     }
 }
