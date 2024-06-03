@@ -29,7 +29,7 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
         {
             Sequence sequence = new Sequence("Moving");
             
-            sequence.AddChild(CreateNode("StickyMoving", _stickyStrategy));
+            //sequence.AddChild(CreateNode("StickyMoving", _stickyStrategy));
             sequence.AddChild(CreateNode("SimpleMoving", _simpleMovingStrategy));
             
             _behaviourTree.AddChild(sequence);
