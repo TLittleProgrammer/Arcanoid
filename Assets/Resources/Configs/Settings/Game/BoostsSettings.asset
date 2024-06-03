@@ -103,4 +103,4 @@ MonoBehaviour:
   BulletTimeOffset: 0.75
   BulletDamage: 1
   BulletSpeed: 5
-  AutopilotDuration: 10
+  AutopilotDuration: 100

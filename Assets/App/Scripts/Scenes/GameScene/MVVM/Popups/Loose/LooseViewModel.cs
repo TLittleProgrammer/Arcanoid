@@ -6,6 +6,7 @@ using App.Scripts.Scenes.GameScene.Features.Dotween;
 using App.Scripts.Scenes.GameScene.Features.Popups;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace App.Scripts.Scenes.GameScene.MVVM.Popups.Loose
@@ -39,7 +40,14 @@ namespace App.Scripts.Scenes.GameScene.MVVM.Popups.Loose
         private void AnimateView()
         {
             Sequence sequence = DOTween.Sequence();
-            sequence.Append(
+            sequence
+                .Append(
+                    _loosePopupView
+                        .GameObject
+                        .transform
+                        .DOScale(Vector3.one, 1f)
+                        .From(Vector3.zero))
+                .Append(
                     _loosePopupView.RestartButton
                         .transform
                         .DOScale(1f, 0.25f)

@@ -35,15 +35,15 @@ namespace App.Scripts.Scenes.GameScene.Features.Healthes
         {
             if (_currentHealthCounter + healthCount > _maxHealthCounter)
             {
-                SetFullHP(healthCount);
+                SetFullHealthPoints(healthCount);
             }
             else
             {
-                ChangeHP(healthCount, needRestart);
+                ChangeHealthPoints(healthCount, needRestart);
             }    
         }
 
-        private void ChangeHP(int healthCount, bool needRestart)
+        private void ChangeHealthPoints(int healthCount, bool needRestart)
         {
             _currentHealthCounter += healthCount;
             if (_currentHealthCounter < -1)
@@ -60,7 +60,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Healthes
             _viewHealthPointService.UpdateHealth(healthCount);
         }
 
-        private void SetFullHP(int healthCount)
+        private void SetFullHealthPoints(int healthCount)
         {
             _currentHealthCounter = _maxHealthCounter;
 

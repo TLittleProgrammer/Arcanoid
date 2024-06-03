@@ -47,8 +47,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
         {
             float currentWidth = _playerView.SpriteRenderer.size.x;
             await DOVirtual.Float(currentWidth, to, 0.5f, UpdateSpriteWidth);
+            
             _shapePositionChecker.ChangeShapeScale();
-
             _bulletMovement.RecalculateSpawnPositions();
         }
 

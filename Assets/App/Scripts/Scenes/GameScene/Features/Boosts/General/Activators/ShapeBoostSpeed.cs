@@ -6,13 +6,14 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
 {
     public sealed class ShapeBoostSpeed : IConcreteBoostActivator
     {
-        private readonly IBoostContainer _boostContainer;
         private readonly IPlayerShapeMover _playerShapeMover;
         private readonly BoostsSettings _boostsSettings;
 
-        public ShapeBoostSpeed(IBoostContainer boostContainer, IPlayerShapeMover playerShapeMover, BoostsSettings boostsSettings)
+        public ShapeBoostSpeed(
+            IBoostContainer boostContainer,
+            IPlayerShapeMover playerShapeMover,
+            BoostsSettings boostsSettings)
         {
-            _boostContainer = boostContainer;
             _playerShapeMover = playerShapeMover;
             _boostsSettings = boostsSettings;
 
