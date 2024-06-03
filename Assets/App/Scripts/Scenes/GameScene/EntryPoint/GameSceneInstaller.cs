@@ -157,6 +157,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
                     typeof(LevelProgressSaveService),
                     typeof(BootstrapContinueLoadLevelState),
                     typeof(RestartService),
+                    typeof(AutopilotMoveService),
                     typeof(LoadNextLevelState));
         }
     }

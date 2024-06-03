@@ -11,20 +11,28 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
         private readonly IStateMachine _stateMachine;
         private readonly BehaviourTree _behaviourTree;
         private readonly SimpleMovingStrategy _simpleMovingStrategy;
+        private readonly StickyStrategy _stickyStrategy;
 
         public BootstrapBehaviourTreeState(
             IStateMachine stateMachine,
             BehaviourTree behaviourTree,
-            SimpleMovingStrategy simpleMovingStrategy)
+            SimpleMovingStrategy simpleMovingStrategy,
+            StickyStrategy stickyStrategy)
         {
             _stateMachine = stateMachine;
             _behaviourTree = behaviourTree;
             _simpleMovingStrategy = simpleMovingStrategy;
+            _stickyStrategy = stickyStrategy;
         }
         
         public UniTask Enter()
         {
-            _behaviourTree.AddChild(CreateNode("SimpleMoving", _simpleMovingStrategy));
+            Sequence sequence = new Sequence("Moving");
+            
+            sequence.AddChild(CreateNode("StickyMoving", _stickyStrategy));
+            sequence.AddChild(CreateNode("SimpleMoving", _simpleMovingStrategy));
+            
+            _behaviourTree.AddChild(sequence);
 
             _stateMachine.Enter<BootstrapEntityDestroyerState>().Forget();
             
