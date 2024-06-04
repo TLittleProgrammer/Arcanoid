@@ -4,6 +4,7 @@ using App.Scripts.Scenes.GameScene.Features.Boosts.General.Interfaces;
 using App.Scripts.Scenes.GameScene.Features.Entities.Ball;
 using App.Scripts.Scenes.GameScene.Features.Entities.Ball.Movement;
 using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape;
+using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.PositionChecker;
 using App.Scripts.Scenes.GameScene.Features.Entities.View;
 using App.Scripts.Scenes.GameScene.Features.Grid;
 using App.Scripts.Scenes.GameScene.Features.Levels.General.View;
@@ -19,6 +20,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.Autopilot.Strategies
         private readonly ILevelViewUpdater _levelViewUpdater;
         private readonly IAutopilotMoveService _autopilotMoveService;
         private readonly PlayerView _playerView;
+        private readonly IShapePositionChecker _shapePositionChecker;
 
         private bool _isMoving;
         private Vector3 _targetPosition;
@@ -28,13 +30,15 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.Autopilot.Strategies
             ILevelLoader levelLoader,
             ILevelViewUpdater levelViewUpdater,
             IAutopilotMoveService autopilotMoveService,
-            PlayerView playerView)
+            PlayerView playerView,
+            IShapePositionChecker shapePositionChecker)
         {
             _ballsService = ballsService;
             _levelLoader = levelLoader;
             _levelViewUpdater = levelViewUpdater;
             _autopilotMoveService = autopilotMoveService;
             _playerView = playerView;
+            _shapePositionChecker = shapePositionChecker;
         }
         
         public NodeStatus Process()
@@ -60,13 +64,19 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.Autopilot.Strategies
             {
                 _autopilotMoveService.Move(_targetPosition);
 
-                if (Mathf.Abs(_playerView.Position.x - _targetPosition.x) <= BehaviourTreeConstants.StickyEpsilon)
+                if (
+                    Mathf.Abs(_playerView.Position.x - _targetPosition.x) <= BehaviourTreeConstants.StickyEpsilon ||
+                    !_shapePositionChecker.CanChangePositionTo(_targetPosition))
                 {
                     FlyAllActiveBalls();
 
                     Reset();
                     success = NodeStatus.Success;
                     return true;
+                }
+                else
+                {
+                    Debug.Log($"CURRENT POSITION: {_playerView.Position}\nTARGET POSITION: {_targetPosition}");
                 }
 
                 return true;

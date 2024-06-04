@@ -93,7 +93,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.Loading
             levelPackData.EnergyPrice = savedData.LevelPack.EnergyPrice;
             levelPackData.EnergyAddForWin = savedData.LevelPack.EnergyAddForWin;
             levelPackData.LocaleKey = savedData.LevelPack.LocaleKey;
-            levelPackData.GalacticIconKey = savedData.LevelPack.GalacticBackground;
+            levelPackData.GalacticIconKey = savedData.LevelPack.GalacticIcon;
             levelPackData.GalacticBackgroundKey = savedData.LevelPack.GalacticBackground;
 
 

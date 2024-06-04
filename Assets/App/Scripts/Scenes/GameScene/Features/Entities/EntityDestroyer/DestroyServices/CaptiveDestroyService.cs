@@ -35,7 +35,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Destroy
         {
             AddBall(entityView);
 
-            await _animatedDestroyService.Animate(new List<EntityData> { new(gridItemData, entityView) });
+            gridItemData.CurrentHealth = -1;
+            await _animatedDestroyService.Animate(entityView);
             _simpleDestroyService.Destroy(gridItemData, entityView);
         }
 

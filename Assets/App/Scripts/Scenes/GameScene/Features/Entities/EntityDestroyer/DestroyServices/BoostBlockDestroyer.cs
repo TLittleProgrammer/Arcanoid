@@ -60,15 +60,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Destroy
 
         private async UniTask DestroyBoostBlock(GridItemData gridItemData, IEntityView entityView)
         {
-            await _animatedDestroyService.Animate(new List<EntityData>()
-            {
-                new()
-                {
-                    GridItemData = null,
-                    EntityView = entityView
-                }
-            });
-            gridItemData.CurrentHealth = 0;
+            gridItemData.CurrentHealth = -1;
+            await _animatedDestroyService.Animate(entityView);
 
             _simpleDestroyService.Destroy(gridItemData, entityView);
         }

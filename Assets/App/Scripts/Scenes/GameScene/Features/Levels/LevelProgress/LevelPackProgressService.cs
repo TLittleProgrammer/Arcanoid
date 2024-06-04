@@ -4,6 +4,7 @@ using App.Scripts.General.Levels.LevelPackInfoService;
 using App.Scripts.General.Providers;
 using App.Scripts.Scenes.GameScene.Features.Entities.AssetManagement;
 using App.Scripts.Scenes.GameScene.Features.Levels.General;
+using App.Scripts.Scenes.GameScene.Features.Levels.General.View;
 using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress;
 using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress.Data;
 using App.Scripts.Scenes.GameScene.MVVM.Header;
@@ -23,7 +24,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.LevelProgress
         private int _allBlockCounter;
         private int _destroyedBlockCounter;
         private int _progressInPercents;
-        private const int AbsenceEntityIndex = 0; 
+        private const int AbsenceEntityIndex = 0;
+        private bool _progressWasLoaded;
 
         public event Action<float> ProgressChanged;
         public event Action LevelPassed;
@@ -33,7 +35,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.LevelProgress
             EntityProvider entitesProvider,
             SpriteProvider spriteProvider,
             LevelPackInfoViewModel viewModel
-            )
+        )
         {
             _levelPackInfoService = levelPackInfoService;
             _entitesProvider = entitesProvider;
@@ -43,12 +45,15 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.LevelProgress
 
         public void Initialize()
         {
-            var levelTransferData = _levelPackInfoService.LevelPackTransferData;
-            
-            if (levelTransferData is not null && levelTransferData.NeedLoadLevel)
+            if (!_progressWasLoaded)
             {
-                _progressInPercents = 0;
-                UpdateVisual(levelTransferData);
+                var levelTransferData = _levelPackInfoService.LevelPackTransferData;
+
+                if (levelTransferData is not null && levelTransferData.NeedLoadLevel)
+                {
+                    _progressInPercents = 0;
+                    UpdateVisual(levelTransferData);
+                }
             }
         }
 
@@ -76,6 +81,11 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.LevelProgress
             }
             
             UpdateDataAndViewByStep();
+        }
+
+        public void SetDestroyableEntityCounter(int counter)
+        {
+            _destroyedBlockCounter = counter;
         }
 
         private bool IsDestroyedAll()
@@ -130,7 +140,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.LevelProgress
         public void SaveProgress(LevelDataProgress levelDataProgress)
         {
             ProgressedLevelData progressedLevelData = new();
-
+            
             progressedLevelData.DestroyedBlocks = _destroyedBlockCounter;
             progressedLevelData.Progress = _progress;
             progressedLevelData.Step = _step;
@@ -142,8 +152,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.LevelProgress
         public void LoadProgress(LevelDataProgress levelDataProgress)
         {
             ProgressedLevelData progressedLevelData = levelDataProgress.ProgressedLevelData;
-
-            _destroyedBlockCounter = progressedLevelData.DestroyedBlocks;
+            
             _progress = progressedLevelData.Progress;
             _step = progressedLevelData.Step;
             _allBlockCounter = progressedLevelData.AllBlocksCounter;

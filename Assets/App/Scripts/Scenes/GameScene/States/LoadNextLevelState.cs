@@ -37,6 +37,7 @@ namespace App.Scripts.Scenes.GameScene.States
         private readonly ILevelViewUpdater _levelViewUpdater;
         private readonly ILevelLoadService _levelLoadService;
         private readonly List<IGeneralRestartable> _generalRestartables;
+        private readonly List<ICurrentLevelRestartable> _currentLevelRestartables;
         private readonly SpriteProvider _spriteProvider;
         private readonly IDataProvider<LevelDataProgress> _levelDataProgress;
         private readonly LevelPackInfoViewModel _levelPackInfoViewModel;
@@ -53,6 +54,7 @@ namespace App.Scripts.Scenes.GameScene.States
             IBallsService ballsService,
             ILevelLoadService levelLoadService,
             List<IGeneralRestartable> generalRestartables,
+            List<ICurrentLevelRestartable> currentLevelRestartables,
             SpriteProvider spriteProvider,
             IDataProvider<LevelDataProgress> levelDataProgress,
             LevelPackInfoViewModel levelPackInfoViewModel)
@@ -68,6 +70,7 @@ namespace App.Scripts.Scenes.GameScene.States
             _ballsService = ballsService;
             _levelLoadService = levelLoadService;
             _generalRestartables = generalRestartables;
+            _currentLevelRestartables = currentLevelRestartables;
             _spriteProvider = spriteProvider;
             _levelDataProgress = levelDataProgress;
             _levelPackInfoViewModel = levelPackInfoViewModel;
@@ -114,6 +117,11 @@ namespace App.Scripts.Scenes.GameScene.States
         private void RestartAll()
         {
             foreach (IGeneralRestartable restartable in _generalRestartables)
+            {
+                restartable.Restart();
+            }
+
+            foreach (ICurrentLevelRestartable restartable in _currentLevelRestartables)
             {
                 restartable.Restart();
             }

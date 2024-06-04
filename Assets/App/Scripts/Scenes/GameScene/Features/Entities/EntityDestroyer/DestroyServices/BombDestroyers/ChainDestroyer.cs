@@ -252,9 +252,9 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Destroy
         private async UniTask SimpleDestroy(GridItemData gridItemData, IEntityView entityView)
         {
             SetExplosionsEffect(entityView);
-            await _animatedDestroyService.Animate(entityView);
-
             gridItemData.CurrentHealth = -1;
+            
+            await _animatedDestroyService.Animate(entityView);
             _simpleDestroyService.Destroy(gridItemData, entityView);
         }
     }
