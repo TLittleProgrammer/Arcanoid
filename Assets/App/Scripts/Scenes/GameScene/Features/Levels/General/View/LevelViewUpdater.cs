@@ -1,24 +1,27 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using App.Scripts.External.Grid;
+using App.Scripts.General.UserData.Levels.Data;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General;
 using App.Scripts.Scenes.GameScene.Features.Entities.AssetManagement;
 using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer;
 using App.Scripts.Scenes.GameScene.Features.Entities.TopSprites;
 using App.Scripts.Scenes.GameScene.Features.Entities.View;
 using App.Scripts.Scenes.GameScene.Features.Grid;
+using App.Scripts.Scenes.GameScene.Features.Levels.LevelProgress;
 using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress;
 using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress.Data;
 using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Levels.General.View
 {
-    public class LevelViewUpdater : ILevelViewUpdater, ILevelProgressSavable
+    public class LevelViewUpdater : ILevelViewUpdater, ILevelProgressSavable, IInitializeByLevelProgress
     {
         private readonly EntityProvider _entityProvider;
         private readonly IEntityDestroyable _entityDestroyable;
         private readonly IEntityViewService _entityViewService;
         private readonly OnTopSprites.Pool _topSpritesPool;
+        private readonly ILevelProgressService _levelProgressService;
 
         private Grid<int> _levelGrid;
         private Grid<GridItemData> _levelGridItemData = new(Vector2Int.zero);
@@ -27,12 +30,14 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.General.View
             EntityProvider entityProvider,
             IEntityDestroyable entityDestroyable,
             IEntityViewService entityViewService,
-            OnTopSprites.Pool topSpritesPool)
+            OnTopSprites.Pool topSpritesPool,
+            ILevelProgressService levelProgressService)
         {
             _entityProvider = entityProvider;
             _entityDestroyable = entityDestroyable;
             _entityViewService = entityViewService;
             _topSpritesPool = topSpritesPool;
+            _levelProgressService = levelProgressService;
         }
 
         public Grid<GridItemData> LevelGridItemData => _levelGridItemData;
@@ -123,7 +128,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.General.View
         {
             _levelGridItemData[view.GridPositionX, view.GridPositionY].CurrentHealth = health;
         }
-
+        
         private bool ReturnIfCurrentHealthIsEqualsOrLessZero(IEntityView entityView, GridItemData itemData)
         {
             if (itemData.CurrentHealth <= 0)
@@ -194,6 +199,22 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.General.View
                     }
                 }
             }
+        }
+
+        public void LoadProgress(LevelDataProgress levelDataProgress)
+        {
+            
+            int liveEntityCounter = 0;
+
+            foreach (SaveGridItemData gridItemData in levelDataProgress.EntityGridItemsData)
+            {
+                if (gridItemData.CurrentHealth > 0)
+                {
+                    liveEntityCounter++;
+                }
+            }
+            
+            _levelProgressService.SetDestroyableEntityCounter(levelDataProgress.EntityGridItemsData.Count - liveEntityCounter);
         }
     }
 }

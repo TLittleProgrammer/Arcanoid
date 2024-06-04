@@ -11,5 +11,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.LevelProgress
         event Action LevelPassed;
         void CalculateStepByLevelData(LevelData levelData);
         void TakeOneStep();
+        void SetDestroyableEntityCounter(int counter);
     }
 }

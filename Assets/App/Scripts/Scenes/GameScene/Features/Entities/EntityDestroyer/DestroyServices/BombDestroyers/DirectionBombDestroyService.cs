@@ -207,7 +207,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Destroy
 
             currentBlock.GridItemData.CurrentHealth = -1;
 
-            await _animatedDestroyService.Animate(new List<EntityData> { currentBlock });
+            await _animatedDestroyService.Animate(currentBlock.EntityView);
             _simpleDestroyService.Destroy(currentBlock.GridItemData, currentBlock.EntityView);
             
             for (int i = 0; i < maxSize; i++)

@@ -77,17 +77,11 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Destroy
         private async UniTask AnimateAll(EntityView bomb, List<EntityData> immediateEntityDatas, List<EntityData> diagonalsEntityDatas)
         {
             SetExplosionsEffect(bomb);
-
-            await _animatedDestroyService.Animate(new List<EntityData>()
-            {
-                new()
-                {
-                    GridItemData = null,
-                    EntityView = bomb
-                }
-            });
-
             GridItemData gridItemData = _levelViewUpdater.LevelGridItemData[bomb.GridPositionX, bomb.GridPositionY];
+            gridItemData.CurrentHealth = -1;
+            
+            await _animatedDestroyService.Animate(bomb);
+            
             _simpleDestroyService.Destroy(gridItemData, bomb);
 
             foreach (EntityData data in immediateEntityDatas)
