@@ -79,7 +79,7 @@ namespace App.Scripts.General.Levels.LevelPackInfoService
             }
 
             return _levelPackProgressDataService.GetPassedLevelsForPackIndex(_levelPackTransferData.PackIndex + 1) == 0 ||
-                   _levelPackTransferData.LevelIndex + 1 < _levelPackTransferData.LevelPack.Levels.Count;;
+                   _levelPackTransferData.LevelIndex + 1 < _levelPackTransferData.LevelPack.Levels.Count;
         }
 
         public bool NeedLoadNextPack()
