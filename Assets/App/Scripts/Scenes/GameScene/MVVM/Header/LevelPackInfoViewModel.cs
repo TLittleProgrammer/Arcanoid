@@ -32,6 +32,8 @@ namespace App.Scripts.Scenes.GameScene.MVVM.Header
             _levelPackInfoView.GalacticIcon.sprite = info.GalacticIconSprite;
             _levelPackInfoView.PassedLevels.text = levelPassText;
             _levelPackInfoView.LevelPassProgress.text = progressText;
+
+            _levelPackBackgroundView.Background.sprite = info.GalacticBackgroundSprite;
         }
 
         public void UpdateProgress(int from, int to)

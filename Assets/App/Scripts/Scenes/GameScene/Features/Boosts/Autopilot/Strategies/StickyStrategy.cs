@@ -74,10 +74,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.Autopilot.Strategies
                     success = NodeStatus.Success;
                     return true;
                 }
-                else
-                {
-                    Debug.Log($"CURRENT POSITION: {_playerView.Position}\nTARGET POSITION: {_targetPosition}");
-                }
 
                 return true;
             }
