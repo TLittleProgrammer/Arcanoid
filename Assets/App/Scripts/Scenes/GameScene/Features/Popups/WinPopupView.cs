@@ -20,6 +20,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Popups
         [SerializeField] private RectTransform _targetPositionForTextFalling;
         [SerializeField] private EnergyView _energyView;
         [SerializeField] private Transform _circleEffect;
+        [SerializeField] private Transform _packViewTransform;
 
         public UILocale GalacticName => _galacticName;
         public TMP_Text PassedLevelsText => _passedLevelsText;
@@ -29,6 +30,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Popups
         public RectTransform TextFalling => _textFalling;
         public RectTransform TargetPositionForTextFalling => _targetPositionForTextFalling;
         public Transform CircleEffect => _circleEffect;
+        public Transform PackViewTransform => _packViewTransform;
         public EnergyView EnergyView => _energyView;
         public Transform Transform => transform;
 
