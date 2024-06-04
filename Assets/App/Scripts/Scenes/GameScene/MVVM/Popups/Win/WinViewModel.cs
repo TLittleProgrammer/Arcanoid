@@ -136,27 +136,31 @@ namespace App.Scripts.Scenes.GameScene.MVVM.Popups.Win
             if (_levelPackInfoService.NeedLoadNextPack())
             {
                 LevelPack nextPack = _levelPackInfoService.GetDataForNextPack();
-                LevelPack currentLevelPack = _levelPackInfoService.LevelPackTransferData.LevelPack;
 
-                _winPopupView.TopGalacticIcon.color = Color.clear;
-                _winPopupView.TopGalacticIcon.sprite = _spriteProvider.Sprites[nextPack.GalacticIconKey];
-                _winPopupView.ContinueButton.interactable = false;
-
-                await UniTask.Delay(2000);
-                await DOVirtual.Float(1f, 0f, 1f, HideObjects);
-
-                _winPopupView.GalacticName.SetToken(nextPack.LocaleKey);
-
-                DOVirtual.Float(0f, 1f, 1f, ShowObjects).ToUniTask().Forget();
-                await DOVirtual.Float(0f, 1f, 1f, (value) =>
+                if (nextPack is not null)
                 {
-                    int currentLevel = (int)Mathf.Lerp(currentLevelPack.Levels.Count, 0, value);
-                    int maxLevelsCount = (int)Mathf.Lerp(currentLevelPack.Levels.Count, nextPack.Levels.Count, value);
+                    LevelPack currentLevelPack = _levelPackInfoService.LevelPackTransferData.LevelPack;
 
-                    _winPopupView.PassedLevelsText.text = $"{currentLevel.ToString()}/{maxLevelsCount.ToString()}";
-                });
+                    _winPopupView.TopGalacticIcon.color = Color.clear;
+                    _winPopupView.TopGalacticIcon.sprite = _spriteProvider.Sprites[nextPack.GalacticIconKey];
+                    _winPopupView.ContinueButton.interactable = false;
 
-                _winPopupView.ContinueButton.interactable = true;
+                    await UniTask.Delay(2000);
+                    await DOVirtual.Float(1f, 0f, 1f, HideObjects);
+
+                    _winPopupView.GalacticName.SetToken(nextPack.LocaleKey);
+
+                    DOVirtual.Float(0f, 1f, 1f, ShowObjects).ToUniTask().Forget();
+                    await DOVirtual.Float(0f, 1f, 1f, (value) =>
+                    {
+                        int currentLevel = (int)Mathf.Lerp(currentLevelPack.Levels.Count, 0, value);
+                        int maxLevelsCount = (int)Mathf.Lerp(currentLevelPack.Levels.Count, nextPack.Levels.Count, value);
+
+                        _winPopupView.PassedLevelsText.text = $"{currentLevel.ToString()}/{maxLevelsCount.ToString()}";
+                    });
+
+                    _winPopupView.ContinueButton.interactable = true;
+                }
             }
 
         }
