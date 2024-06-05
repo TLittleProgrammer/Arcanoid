@@ -86,7 +86,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
             {
                 Bounds ballBounds = ballView.Collider2D.bounds;
 
-                if (viewBounds.Intersects(ballBounds))
+                if (viewBounds.Intersects(ballBounds) && _levelViewUpdater.LevelGridItemData[view.GridPositionX, view.GridPositionY].CurrentHealth > 0)
                 {
                     DestroyView(view);
                 }
