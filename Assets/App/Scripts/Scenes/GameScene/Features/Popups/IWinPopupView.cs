@@ -1,5 +1,6 @@
 ﻿using App.Scripts.External.Components;
 using App.Scripts.External.Localisation.MonoBehaviours;
+using App.Scripts.General.Energy;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,5 +17,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Popups
         RectTransform TextFalling { get; }
         RectTransform TargetPositionForTextFalling { get; }
         Transform CircleEffect { get; }
+        Transform PackViewTransform { get; }
+        EnergyView EnergyView { get; }
     }
 }

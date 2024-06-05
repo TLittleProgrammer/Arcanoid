@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using App.Scripts.General.Command;
 using App.Scripts.General.Levels;
 using App.Scripts.General.Levels.LevelPackInfoService;
@@ -91,13 +92,17 @@ namespace App.Scripts.Scenes.GameScene.MVVM.Popups.Win
 
         private async void AnimateShow()
         {
-            _winPopupView.Transform.DOScale(Vector3.one, 1f).From(Vector3.zero).SetEase(Ease.Linear).ToUniTask().Forget();
-
-            await _winPopupView.Transform.DORotate(new Vector3(0, 360f * 5f * GetDirection(), 0f), 1f,
-                    RotateMode.FastBeyond360)
-                .SetEase(Ease.Linear);
+            _winPopupView.EnergyView.transform.localScale = Vector3.zero;
+            _winPopupView.ContinueButton.transform.localScale = Vector3.zero;
+            _winPopupView.PackViewTransform.transform.localScale = Vector3.zero;
+            
+            await _winPopupView.Transform.DOScale(Vector3.one, 0.5f).From(Vector3.zero).SetEase(Ease.OutBounce).ToUniTask();
+            await _winPopupView.EnergyView.transform.DOScale(Vector3.one, 0.75f).From(Vector3.zero).SetEase(Ease.OutBounce).ToUniTask();
+            await _winPopupView.PackViewTransform.transform.DOScale(Vector3.one, 0.5f).From(Vector3.zero).SetEase(Ease.OutBounce).ToUniTask();
             
             _winPopupView.TextFalling.DOMoveY(_winPopupView.TargetPositionForTextFalling.transform.position.y, 0.5f).SetEase(Ease.OutBounce).ToUniTask().Forget();
+            
+            await _winPopupView.ContinueButton.transform.DOScale(Vector3.one, 0.5f).From(Vector3.zero).SetEase(Ease.OutBounce).ToUniTask();
             
             Sequence sequence = DOTween.Sequence();
 
@@ -136,41 +141,71 @@ namespace App.Scripts.Scenes.GameScene.MVVM.Popups.Win
             if (_levelPackInfoService.NeedLoadNextPack())
             {
                 LevelPack nextPack = _levelPackInfoService.GetDataForNextPack();
-                LevelPack currentLevelPack = _levelPackInfoService.LevelPackTransferData.LevelPack;
 
-                _winPopupView.TopGalacticIcon.color = Color.clear;
-                _winPopupView.TopGalacticIcon.sprite = _spriteProvider.Sprites[nextPack.GalacticIconKey];
-                _winPopupView.ContinueButton.interactable = false;
-
-                await UniTask.Delay(2000);
-                await DOVirtual.Float(1f, 0f, 1f, HideObjects);
-
-                _winPopupView.GalacticName.SetToken(nextPack.LocaleKey);
-
-                DOVirtual.Float(0f, 1f, 1f, ShowObjects).ToUniTask().Forget();
-                await DOVirtual.Float(0f, 1f, 1f, (value) =>
+                if (nextPack is not null)
                 {
-                    int currentLevel = (int)Mathf.Lerp(currentLevelPack.Levels.Count, 0, value);
-                    int maxLevelsCount = (int)Mathf.Lerp(currentLevelPack.Levels.Count, nextPack.Levels.Count, value);
+                    LevelPack currentLevelPack = _levelPackInfoService.LevelPackTransferData.LevelPack;
 
-                    _winPopupView.PassedLevelsText.text = $"{currentLevel.ToString()}/{maxLevelsCount.ToString()}";
-                });
+                    _winPopupView.TopGalacticIcon.sprite = _spriteProvider.Sprites[nextPack.GalacticIconKey];
+                    _winPopupView.ContinueButton.interactable = false;
+                    
+                    await UniTask.Delay(2000);
 
-                _winPopupView.ContinueButton.interactable = true;
+                    UpdateIconPositions();
+                    
+                    await UpdatePackNaming(nextPack, currentLevelPack);
+
+                    _winPopupView.ContinueButton.interactable = true;
+                }
             }
 
         }
 
-        private void ShowObjects(float value)
+        private void UpdateIconPositions()
         {
-            _winPopupView.GalacticName.Text.color = new Color(1f, 1f, 1f, value);
-            _winPopupView.TopGalacticIcon.color = new Color(1f, 1f, 1f, value);
+            Vector2 firstAnchoredPosition = _winPopupView.TopGalacticIcon.rectTransform.anchoredPosition;
+            Vector2 secondAnchoredPosition = _winPopupView.BottomGalacticIcon.rectTransform.anchoredPosition;
+            
+            DOVirtual.Float(0f, 1f, 0.75f, value =>
+            {
+                _winPopupView.TopGalacticIcon.rectTransform.anchoredPosition =
+                    Vector2.Lerp(firstAnchoredPosition, new Vector2(-firstAnchoredPosition.x, firstAnchoredPosition.y), value);
+                
+                _winPopupView.BottomGalacticIcon.rectTransform.anchoredPosition =
+                    Vector2.Lerp(secondAnchoredPosition, new Vector2(-secondAnchoredPosition.x, secondAnchoredPosition.y), value);
+            });
         }
 
-        private void HideObjects(float value)
+        private async UniTask UpdatePackNaming(LevelPack nextPack, LevelPack currentLevelPack)
+        {
+            DOVirtual.Float(1f, 0f, 1f, HideObjectsText).ToUniTask().Forget();
+
+            _winPopupView.GalacticName.SetToken(nextPack.LocaleKey);
+
+            DOVirtual.Float(0f, 1f, 1f, ShowObjectsText).ToUniTask().Forget();
+
+            await ChangeLevelText(currentLevelPack, nextPack);
+        }
+
+        private async UniTask ChangeLevelText(LevelPack currentLevelPack, LevelPack nextPack)
+        {
+            await DOVirtual.Float(0f, 1f, 1f, (value) =>
+            {
+                int currentLevel = (int)Mathf.Lerp(currentLevelPack.Levels.Count, 0, value);
+                int maxLevelsCount = (int)Mathf.Lerp(currentLevelPack.Levels.Count, nextPack.Levels.Count, value);
+
+                _winPopupView.PassedLevelsText.text = $"{currentLevel.ToString()}/{maxLevelsCount.ToString()}";
+            });
+        }
+
+        private void ShowObjectsText(float value)
         {
             _winPopupView.GalacticName.Text.color = new Color(1f, 1f, 1f, value);
-            _winPopupView.BottomGalacticIcon.color = new Color(1f, 1f, 1f, value);
+        }
+
+        private void HideObjectsText(float value)
+        {
+            _winPopupView.GalacticName.Text.color = new Color(1f, 1f, 1f, value);
         }
     }
 }

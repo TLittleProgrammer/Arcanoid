@@ -17,7 +17,8 @@
         "UserData",
         "Localisation",
         "Unity.PlasticSCM.Editor",
-        "CustomData"
+        "CustomData",
+        "ObjectPool"
     ],
     "includePlatforms": [
         "Android",

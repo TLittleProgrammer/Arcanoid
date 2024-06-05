@@ -76,10 +76,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.Loading.Loader
 
             foreach (IEntityView view in _entityViews)
             {
-                Debug.Log($"X: {view.GridPositionX}, Y: {view.GridPositionY}, TYPE: {view.BoostTypeId}");
                 if (view.GameObject.activeSelf)
                 {
-                    Debug.Log("Despawn it");
                     _entityViewPool.Despawn(view as EntityView);
                 }
             }

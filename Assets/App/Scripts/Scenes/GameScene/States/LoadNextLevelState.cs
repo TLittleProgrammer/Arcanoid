@@ -97,6 +97,7 @@ namespace App.Scripts.Scenes.GameScene.States
                 AllLevelsCountFromPack = data.LevelPack.Levels.Count,
                 CurrentLevelIndex = data.LevelIndex,
                 GalacticIconSprite = _spriteProvider.Sprites[data.LevelPack.GalacticIconKey],
+                GalacticBackgroundSprite = _spriteProvider.Sprites[data.LevelPack.GalacticBackgroundKey],
                 TargetScore = 0
             });
 

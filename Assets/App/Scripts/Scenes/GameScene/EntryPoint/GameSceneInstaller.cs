@@ -15,6 +15,7 @@ using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun;
 using App.Scripts.Scenes.GameScene.Features.Camera;
 using App.Scripts.Scenes.GameScene.Features.Damage;
 using App.Scripts.Scenes.GameScene.Features.Dotween;
+using App.Scripts.Scenes.GameScene.Features.Effects;
 using App.Scripts.Scenes.GameScene.Features.Entities.Ball;
 using App.Scripts.Scenes.GameScene.Features.Entities.Bird;
 using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape;
@@ -22,6 +23,7 @@ using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.Collisions;
 using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.Move;
 using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.PositionChecker;
 using App.Scripts.Scenes.GameScene.Features.Entities.View;
+using App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions;
 using App.Scripts.Scenes.GameScene.Features.Entities.Walls;
 using App.Scripts.Scenes.GameScene.Features.Game;
 using App.Scripts.Scenes.GameScene.Features.Grid;
@@ -71,13 +73,14 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
 
         [Inject] private PoolProviders _poolProviders;
         [Inject] private IStateMachine _projectStateMachine;
+        [Inject] private EffectsPrefabProvider _effectsPrefabProvider;
 
         public override void InstallBindings()
         {
             BindInitializeDependencies();
 
             TimeProviderInstaller.Install(Container);
-            PoolsInstaller.Install(Container, _poolProviders);
+            PoolsInstaller.Install(Container, _poolProviders, _effectsPrefabProvider);
             FactoriesInstaller.Install(Container, _boostItemViewPrefab);
             InputInstaller.Install(Container);
             LevelServicesInstaller.Install(Container);
@@ -117,6 +120,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.BindInterfacesAndSelfTo<BallsService>().AsSingle().WhenNotInjectedInto<GameLoopState>();
             Container.BindInterfacesAndSelfTo<LevelPackProgressService>().AsSingle();
             Container.BindInterfacesAndSelfTo<LevelPackInfoViewModel>().AsSingle().WithArguments(_levelPackInfoView, _levelPackBackground);
+            Container.BindInterfacesAndSelfTo<EntityCollisionsService>().AsSingle();
 
             Container.Bind<SkipLevelService>().AsSingle().WithArguments(_skipLevelButton).NonLazy();
             Container.BindInterfacesAndSelfTo<LevelProgressSaveService>().AsSingle().NonLazy();

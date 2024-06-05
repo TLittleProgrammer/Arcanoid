@@ -8,5 +8,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.LevelProgress
         public int CurrentLevelIndex;
         public int AllLevelsCountFromPack;
         public int TargetScore;
+        public Sprite GalacticBackgroundSprite;
     }
 }   

@@ -11,7 +11,6 @@ using App.Scripts.Scenes.GameScene.Features.Entities.View;
 using App.Scripts.Scenes.GameScene.Features.Factories;
 using App.Scripts.Scenes.GameScene.Features.Factories.Ball;
 using App.Scripts.Scenes.GameScene.Features.Factories.Boosts;
-using App.Scripts.Scenes.GameScene.Features.Factories.CircleEffect;
 using App.Scripts.Scenes.GameScene.Features.Factories.Entity;
 using App.Scripts.Scenes.GameScene.Features.Factories.Health;
 using App.Scripts.Scenes.GameScene.Features.Factories.OnTopSprite;
@@ -33,7 +32,6 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
         {
             Container.BindFactory<string, IEntityView, IEntityView.Factory>().FromFactory<EntityFactory>();
             Container.BindFactory<ITransformable, IHealthPointView, IHealthPointView.Factory>().FromFactory<HealthFactory>();
-            Container.BindFactory<EntityView, CircleEffects, CircleEffects.Factory>().FromFactory<CircleEffectFactory>();
             Container.BindFactory<IEntityView, OnTopSprites, OnTopSprites.Factory>().FromFactory<OnTopSpriteFactory>();
             Container.BindFactory<BoostTypeId, BoostView, BoostView.Factory>().FromFactory<BoostViewFactory>();
             Container.BindFactory<BallView, IBallMovementService, BallMovementFactory>().FromFactory<BallMovementServiceFactory>();

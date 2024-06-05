@@ -1,6 +1,4 @@
-﻿using App.Scripts.Scenes.GameScene.Features.Entities.View;
-using UnityEngine;
-using Zenject;
+﻿using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Effects
 {
@@ -19,16 +17,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Effects
         public float ScaleForSubParticles
         {
             set => _subParticlesMainModule.startSize = value;
-        }
-        
-        public class Pool : MonoMemoryPool<CircleEffects>
-        {
-            
-        }
-        
-        public class Factory : PlaceholderFactory<EntityView, CircleEffects>
-        {
-            
         }
     }
 }
