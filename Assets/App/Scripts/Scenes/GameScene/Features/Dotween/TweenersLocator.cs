@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using App.Scripts.General.Infrastructure;
 using DG.Tweening;
 
 namespace App.Scripts.Scenes.GameScene.Features.Dotween
 {
-    public class TweenersLocator : ITweenersLocator
+    public class TweenersLocator : ITweenersLocator, ICurrentLevelRestartable
     {
         private List<Tweener> _tweeners = new();
         private List<Sequence> _sequences = new();
@@ -38,6 +39,11 @@ namespace App.Scripts.Scenes.GameScene.Features.Dotween
             
             _sequences.Clear();
             _tweeners.Clear();
+        }
+
+        public void Restart()
+        {
+            RemoveAll();
         }
     }
 }

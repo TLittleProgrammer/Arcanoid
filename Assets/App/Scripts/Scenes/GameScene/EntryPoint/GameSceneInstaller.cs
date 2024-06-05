@@ -90,7 +90,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             MVVMInstaller.Install(Container, _openMenuPopupButton);
             MiniGunInstaller.Install(Container);
             
-            Container.Bind<ITweenersLocator>().To<TweenersLocator>().AsSingle();
+            Container.BindInterfacesAndSelfTo<TweenersLocator>().AsSingle();
             Container.Bind<IScoreAnimationService>().To<ScoreAnimationService>().AsSingle();
             Container.Bind<IShakeService>().To<ShakeService>().AsSingle();
             Container.Bind<IRectMousePositionChecker>().To<RectMousePositionChecker>().AsSingle().WithArguments(_rectTransformableViews.ToList());
@@ -104,6 +104,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.BindInterfacesAndSelfTo<MechanicsByLevelActivator>().AsSingle();
             Container.BindInterfacesAndSelfTo<LevelDataChooser>().AsSingle();
             Container.BindInterfacesAndSelfTo<LevelLoadService>().AsSingle();
+            Container.BindInterfacesAndSelfTo<UpdateServiceForNewLevel>().AsSingle();
 
             Container.BindInterfacesTo<GridPositionResolver>().AsSingle().WithArguments(_header);
             Container.Bind<IShapePositionChecker>().To<PlayerShapePositionChecker>().AsSingle().WithArguments(_playerShape);
