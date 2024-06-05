@@ -27,12 +27,12 @@ namespace App.Scripts.Scenes.GameScene.Features.Effects
             set => _particlesMainModule.startSize = value;
         }
 
-        public virtual void PlayEffect()
+        public void PlayEffect()
         {
             _particleSystem.Play();
         }
 
-        public virtual void StopEffect()
+        public void StopEffect()
         {
             _particleSystem.Stop();
         }
