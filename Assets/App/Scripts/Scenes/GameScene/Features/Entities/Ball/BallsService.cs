@@ -243,6 +243,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
             ballView.TrailRenderer.enabled = false;
             ballView.gameObject.SetActive(true);
             ballData.Value.Restart();
+            _ballsPositionCheckers.Clear();
             
             AddBallPositionChecker(ballData.Key);
         }
