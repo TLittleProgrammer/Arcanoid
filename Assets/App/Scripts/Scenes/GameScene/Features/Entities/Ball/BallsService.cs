@@ -233,6 +233,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
             _lastSpeedMultiplier = 1f;
             SetSpeedMultiplier(1f);
             UpdateSpeedByProgress(0f);
+            
+            DespawnAll();
         }
 
         private void Reset()
