@@ -84,6 +84,11 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
 
             foreach (BallView ballView in ballViews)
             {
+                if (!ballView.gameObject.activeSelf)
+                {
+                    continue;
+                }
+                
                 Bounds ballBounds = ballView.Collider2D.bounds;
 
                 if (viewBounds.Intersects(ballBounds) && _levelViewUpdater.LevelGridItemData[view.GridPositionX, view.GridPositionY].CurrentHealth > 0)
