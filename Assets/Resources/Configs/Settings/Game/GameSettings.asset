@@ -24,3 +24,5 @@ MonoBehaviour:
   BoostsSettings: {fileID: 11400000, guid: ef5701660e48f98419e36f570f74ee14, type: 2}
   BirdSettings: {fileID: 11400000, guid: 712c0cbc7232be247b9d5f3664b1a6e3, type: 2}
   ShapeMoverSettings: {fileID: 11400000, guid: 649338a7f89f1724487ab0c68e0d29b5, type: 2}
+  EffectCollisionProvider: {fileID: 11400000, guid: b1d068ea4a6f65f459e9de4bd9d36b5d, type: 2}
+  EffectsPrefabProvider: {fileID: 11400000, guid: e906a9831f204df45868737d37910d8c, type: 2}

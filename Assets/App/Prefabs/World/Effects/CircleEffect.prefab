@@ -9754,5 +9754,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25bb046b71974f058046f6e77d0bf8b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _particleSystem: {fileID: 8910909405961740459}
+  PoolabeKey: circleEffect
+  ParticleSystem: {fileID: 8910909405961740459}
   _subParticleSystem: {fileID: 3555876342162701229}

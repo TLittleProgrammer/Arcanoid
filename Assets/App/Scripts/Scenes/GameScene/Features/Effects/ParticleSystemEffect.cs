@@ -1,40 +1,34 @@
-﻿using App.Scripts.Scenes.GameScene.Features.Components;
+﻿using System;
+using App.Scripts.Scenes.GameScene.Features.Components;
+using App.Scripts.Scenes.GameScene.Features.Effects.ObjectPool;
 using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Effects
 {
     [RequireComponent(typeof(ParticleSystem))]
-    public abstract class ParticleSystemEffect : MonoBehaviour, IPositionable, IScalable<float>
+    public abstract class ParticleSystemEffect : AbstractEffect
     {
-        [SerializeField] private ParticleSystem _particleSystem;
-
         private ParticleSystem.MainModule _particlesMainModule;
         
         protected void Awake()
         {
-            _particlesMainModule = _particleSystem.main;
+            _particlesMainModule = ParticleSystem.main;
         }
-
-        public Vector3 Position
-        {
-            get => transform.position;
-            set => transform.position = value;
-        }
-
-        public float Scale
+        
+        public override float Scale
         {
             get => _particlesMainModule.startSize.constant;
             set => _particlesMainModule.startSize = value;
         }
 
-        public void PlayEffect()
+        public override void PlayEffect()
         {
-            _particleSystem.Play();
+            ParticleSystem.Play();
         }
 
-        public void StopEffect()
+        public override void StopEffect()
         {
-            _particleSystem.Stop();
+            ParticleSystem.Stop();
         }
     }
 }

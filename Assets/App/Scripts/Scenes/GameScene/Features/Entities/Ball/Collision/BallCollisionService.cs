@@ -12,7 +12,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball.Collision
     public class BallCollisionService : IBallCollisionService
     {
         private readonly BallView _ball;
-        private readonly CircleEffects.Factory _circleEffectFactory;
         private readonly ILevelViewUpdater _levelViewUpdater;
         private readonly IShakeService _shakeService;
         private readonly PlazmaEffect.Pool _plazmaEffectPool;
@@ -22,14 +21,12 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball.Collision
 
         public BallCollisionService(
             BallView ball,
-            CircleEffects.Factory circleEffectFactory,
             ILevelViewUpdater levelViewUpdater,
             IShakeService shakeService,
             PlazmaEffect.Pool plazmaEffectPool,
             IScreenInfoProvider screenInfoProvider)
         {
             _ball = ball;
-            _circleEffectFactory = circleEffectFactory;
             _levelViewUpdater = levelViewUpdater;
             _shakeService = shakeService;
             _plazmaEffectPool = plazmaEffectPool;
@@ -43,8 +40,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball.Collision
         {
             if (collider.TryGetComponent(out EntityView entityView))
             {
-                PlayCircleEffects(entityView);
-
                 _shakeService.Shake(entityView.transform);
                 _levelViewUpdater.UpdateVisual(entityView, 1);
             }
@@ -77,12 +72,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball.Collision
             
             await UniTask.Delay(1000);
             _plazmaEffectPool.Despawn(plazmaEffect);
-        }
-
-        private void PlayCircleEffects(EntityView entityView)
-        {
-            CircleEffects circleEffects = _circleEffectFactory.Create(entityView);
-            circleEffects.PlayEffect();
         }
     }
 }

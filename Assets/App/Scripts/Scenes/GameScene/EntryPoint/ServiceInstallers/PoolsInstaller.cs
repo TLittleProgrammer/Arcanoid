@@ -1,10 +1,14 @@
-﻿using App.Scripts.External.Extensions.ZenjectExtensions;
+﻿using System;
+using System.Collections.Generic;
+using App.Scripts.External.Extensions.ZenjectExtensions;
+using App.Scripts.External.ObjectPool;
 using App.Scripts.General.Infrastructure;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General;
 using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun;
 using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.Bullets;
 using App.Scripts.Scenes.GameScene.Features.Effects;
 using App.Scripts.Scenes.GameScene.Features.Effects.Bombs;
+using App.Scripts.Scenes.GameScene.Features.Effects.ObjectPool;
 using App.Scripts.Scenes.GameScene.Features.Entities.Ball;
 using App.Scripts.Scenes.GameScene.Features.Entities.Bird;
 using App.Scripts.Scenes.GameScene.Features.Entities.TopSprites;
@@ -14,37 +18,58 @@ using App.Scripts.Scenes.GameScene.Features.Pools;
 using App.Scripts.Scenes.GameScene.Features.Settings;
 using UnityEngine;
 using Zenject;
+using Object = UnityEngine.Object;
 
 namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
 {
-    public class PoolsInstaller : Installer<PoolProviders, PoolsInstaller>
+    public class PoolsInstaller : Installer<PoolProviders, EffectsPrefabProvider, PoolsInstaller>
     {
         private readonly PoolProviders _poolProviders;
+        private readonly EffectsPrefabProvider _effectsPrefabProvider;
 
-        public PoolsInstaller(PoolProviders poolProviders)
+        public PoolsInstaller(PoolProviders poolProviders, EffectsPrefabProvider effectsPrefabProvider)
         {
             _poolProviders = poolProviders;
+            _effectsPrefabProvider = effectsPrefabProvider;
         }
         
         public override void InstallBindings()
         {
-            BindPool<EntityView, EntityView.Pool>(PoolTypeId.EntityView);
-            BindPool<CircleEffects, CircleEffects.Pool>(PoolTypeId.CircleEffect);
-            BindPool<HealthPointView, HealthPointView.Pool>(PoolTypeId.HealthPointView);
-            BindPool<OnTopSprites, OnTopSprites.Pool>(PoolTypeId.OnTopSprite);
-            BindPool<BoostView, BoostView.Pool>(PoolTypeId.Boosts);
-            BindPool<BulletView, BulletView.Pool>(PoolTypeId.Bullets);
-            BindPool<BulletEffectView, BulletEffectView.Pool>(PoolTypeId.BulletEffect);
-            BindPool<BallView, BallView.Pool>(PoolTypeId.BallView);
-            BindPool<LaserEffect, LaserEffect.Pool>(PoolTypeId.Laser);
-            BindPool<PlazmaEffect, PlazmaEffect.Pool>(PoolTypeId.Plazma);
-            BindPool<ExplosionEffect, ExplosionEffect.Pool>(PoolTypeId.Explosion);
-            BindPool<BirdView, BirdView.Pool>(PoolTypeId.BirdView);
+            BindZenjectPool<EntityView, EntityView.Pool>(PoolTypeId.EntityView);
+            BindZenjectPool<HealthPointView, HealthPointView.Pool>(PoolTypeId.HealthPointView);
+            BindZenjectPool<OnTopSprites, OnTopSprites.Pool>(PoolTypeId.OnTopSprite);
+            BindZenjectPool<BoostView, BoostView.Pool>(PoolTypeId.Boosts);
+            BindZenjectPool<BulletView, BulletView.Pool>(PoolTypeId.Bullets);
+            BindZenjectPool<BulletEffectView, BulletEffectView.Pool>(PoolTypeId.BulletEffect);
+            BindZenjectPool<BallView, BallView.Pool>(PoolTypeId.BallView);
+            BindZenjectPool<LaserEffect, LaserEffect.Pool>(PoolTypeId.Laser);
+            BindZenjectPool<PlazmaEffect, PlazmaEffect.Pool>(PoolTypeId.Plazma);
+            BindZenjectPool<ExplosionEffect, ExplosionEffect.Pool>(PoolTypeId.Explosion);
+            BindZenjectPool<BirdView, BirdView.Pool>(PoolTypeId.BirdView);
+
+            BindOwnPool<CircleEffects>();
+
+            Container.BindInterfacesAndSelfTo<EffectKeyObjectPool>().AsSingle();
         }
 
-        private void BindPool<TInstance, TPool>(PoolTypeId poolType) where TPool : IMemoryPool where TInstance : MonoBehaviour 
+        private void BindOwnPool<TEffectPool>() where TEffectPool : AbstractEffect
+        {
+            EffectData effectData = _effectsPrefabProvider.Provider[typeof(TEffectPool)];
+
+            Container
+                .BindInterfacesAndSelfTo<MonoObjectPool<AbstractEffect>>()
+                .AsSingle()
+                .WithArguments(EffectSpawner<TEffectPool>(effectData), effectData.InitialSize, effectData.PoolParentName, effectData.PoolKey);
+        }
+
+        private void BindZenjectPool<TInstance, TPool>(PoolTypeId poolType) where TPool : IMemoryPool where TInstance : MonoBehaviour 
         {
             Container.BindPool<TInstance, TPool>(_poolProviders.Pools[poolType].InitialSize, _poolProviders.Pools[poolType].View.GetComponent<TInstance>(), _poolProviders.Pools[poolType].ParentName);
+        }
+
+        private Func<TEffect> EffectSpawner<TEffect>(EffectData effectData) where TEffect : AbstractEffect
+        {
+            return () => Object.Instantiate(effectData.Prefab).GetComponent<TEffect>();
         }
     }
 }

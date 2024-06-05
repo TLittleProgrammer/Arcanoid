@@ -1,4 +1,5 @@
-﻿using App.Scripts.External.Components;
+﻿using System;
+using App.Scripts.External.Components;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General;
 using App.Scripts.Scenes.GameScene.Features.Components;
 using UnityEngine;
@@ -14,6 +15,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.View
         int EntityId { get; set; }
         public int GridPositionX { get; set; }
         public int GridPositionY { get; set; }
+        event Action<IEntityView, Collision2D> Colliderable;
         
         public class Factory : PlaceholderFactory<string, IEntityView>
         {

@@ -1,16 +1,35 @@
 ﻿using System;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace App.Scripts.External.ObjectPool
 {
-    public class MonoObjectPool<TMono> : ObjectPool<TMono> where TMono : MonoBehaviour
+    public class MonoObjectPool<TMono> : ObjectPool<TMono>, IKeyablePool where TMono : MonoBehaviour
     {
-        private readonly Transform _parent;
+        private Transform _parent;
 
-        public MonoObjectPool(Func<TMono> spawner, int initialSize, Transform parent) : base(spawner, initialSize)
+        public MonoObjectPool(Func<TMono> spawner, int initialSize, string parentName, string key) : base(spawner, initialSize)
         {
-            _parent = parent;
+            Key = key;
+
+            Initialize(parentName);
         }
+
+        private void Initialize(string parentName)
+        {
+            GameObject parentGameObject = GameObject.Find(parentName);
+
+            if (parentGameObject is not null)
+            {
+                _parent = parentGameObject.transform;
+                return;
+            }
+
+            GameObject gameObject = new GameObject(parentName);
+            _parent = gameObject.transform;
+        }
+
+        public string Key { get; set; }
 
         protected override void OnItemSpawned(TMono item)
         {
@@ -40,5 +59,10 @@ namespace App.Scripts.External.ObjectPool
         {
             targetItem.gameObject.SetActive(false);
         }
+    }
+
+    public interface IKeyablePool
+    {
+        public string Key { get; set; }
     }
 }
