@@ -2,6 +2,7 @@
 using App.Scripts.General.Energy;
 using App.Scripts.General.Levels;
 using App.Scripts.General.LoadingScreen.Settings;
+using App.Scripts.General.Popup.AssetManagment;
 using App.Scripts.General.ProjectInitialization.Settings;
 using App.Scripts.General.Providers;
 using UnityEngine;
@@ -18,6 +19,7 @@ namespace App.Scripts.General.ProjectInitialization.Installers
         public EnergySettings EnergySettings;
         public SpriteProvider SpriteProvider;
         public LocaleProvider LocaleProvider;
+        public ViewPopupMapping ViewPopupMapping;
 
         public override void InstallBindings()
         {
@@ -27,6 +29,7 @@ namespace App.Scripts.General.ProjectInitialization.Installers
             Container.Bind<EnergySettings>().FromInstance(EnergySettings).IfNotBound();
             Container.Bind<SpriteProvider>().FromInstance(SpriteProvider).IfNotBound();
             Container.Bind<LocaleProvider>().FromInstance(LocaleProvider).IfNotBound();
+            Container.Bind<ViewPopupMapping>().FromInstance(ViewPopupMapping).IfNotBound();
         }
     }
 }
