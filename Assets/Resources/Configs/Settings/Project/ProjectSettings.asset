@@ -18,3 +18,4 @@ MonoBehaviour:
   EnergySettings: {fileID: 11400000, guid: aa8d26db1d2f2e247a54cbe94fe7fc53, type: 2}
   SpriteProvider: {fileID: 11400000, guid: d7c8c044fecd3144886594bc84a39698, type: 2}
   LocaleProvider: {fileID: 11400000, guid: edd0156c9b956d846a76a5332b0a2355, type: 2}
+  ViewPopupMapping: {fileID: 11400000, guid: eca8c7889e0fd8d4a860bc7d40e984ce, type: 2}

@@ -37,9 +37,8 @@ namespace App.Scripts.General.ProjectInitialization.Installers
             Container.Bind<IDateTimeService>().To<DateTimeService>().AsSingle();
             Container.Bind<IGlobalDataService>().To<GlobalDataService>().AsSingle();
             Container.Bind<InfoBetweenScenes.InfoBetweenScenes>().AsSingle();
-            Container.Bind<IPopupProvider>().To<ResourcesPopupProvider>().AsSingle();
             Container.Bind<IPopupFactory>().To<PopupFactory>().AsSingle();
-            Container.Bind(typeof(IPopupService), typeof(IGeneralRestartable)).To<PopupService>().AsSingle();
+            Container.Bind<IPopupService>().To<PopupService>().AsSingle();
 
             Container.BindInterfacesAndSelfTo<EnergyDataService>().AsSingle();
             Container.BindInterfacesAndSelfTo<LoadingSceneState>().AsSingle();

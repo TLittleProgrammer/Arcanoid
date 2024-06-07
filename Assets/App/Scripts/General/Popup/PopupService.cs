@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace App.Scripts.General.Popup
 {
-    public sealed class PopupService : IPopupService, IGeneralRestartable
+    public sealed class PopupService : IPopupService
     {
         private readonly IPopupFactory _factory;
         private readonly IBackPopupPlane _backPopupPlane;
@@ -77,17 +77,6 @@ namespace App.Scripts.General.Popup
             _popupsList.Clear();
             
             return UniTask.CompletedTask;
-        }
-
-        public void Restart()
-        {
-            foreach (IPopupView viewPopupProvider in _popupsList)
-            {
-                Object.Destroy(viewPopupProvider.GameObject);
-            }
-
-            UpdateRaycastTargetForBackPanel(false);
-            _popupsList.Clear();
         }
 
         private IPopupView FindPopup<TPopup>() where TPopup : IPopupView

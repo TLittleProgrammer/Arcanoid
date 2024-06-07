@@ -14,20 +14,17 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
     {
         private readonly IStateMachine _stateMachine;
         private readonly IWallLoader _wallLoader;
-        private readonly IPopupProvider _popupProvider;
         private readonly IShowLevelAnimation _showLevelAnimation;
         private readonly ILevelPackInfoService _levelPackInfoService;
 
         public BootstrapInitializeOtherServicesState(
             IStateMachine stateMachine,
             IWallLoader wallLoader,
-            IPopupProvider popupProvider,
             IShowLevelAnimation showLevelAnimation,
             ILevelPackInfoService levelPackInfoService)
         {
             _stateMachine = stateMachine;
             _wallLoader = wallLoader;
-            _popupProvider = popupProvider;
             _showLevelAnimation = showLevelAnimation;
             _levelPackInfoService = levelPackInfoService;
         }
@@ -35,7 +32,6 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
         public async UniTask Enter()
         {
             await _wallLoader.AsyncInitialize();
-            await _popupProvider.AsyncInitialize(Pathes.PathToPopups);
 
             if (!_levelPackInfoService.NeedContinueLevel)
             {
