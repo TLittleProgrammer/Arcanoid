@@ -1,0 +1,15 @@
+Galactic_Sigara Sigara
+Galactic_Sombrero Sombrero
+Galactic_Sunflower Sunflower
+Menu Menu
+Play Play
+Continue Continue
+Galactic Galactic
+Settings Settings
+ru_itemView Russian
+en_itemView English
+Back Back
+You_are_loose You are loose!
+Restart Restart
+You_won You won!
+Galactic_not_found Not found

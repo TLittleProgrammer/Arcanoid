@@ -25,8 +25,6 @@ namespace App.Scripts.General.ProjectInitialization.Installers
 {
     public class ProjectInstaller : MonoInstaller
     {
-        public TextAsset Localisation;
-
         public override void InstallBindings()
         {
             Container.BindInterfacesAndSelfTo<TimeTicker>().AsSingle();
@@ -47,11 +45,12 @@ namespace App.Scripts.General.ProjectInitialization.Installers
             Container.BindInterfacesAndSelfTo<LoadingSceneState>().AsSingle();
             Container.BindInterfacesAndSelfTo<EnergyModel>().AsSingle();
             Container.BindInterfacesAndSelfTo<EnergyViewModel>().AsSingle();
+            Container.BindInterfacesAndSelfTo<LocaleMappingFromTextAsset>().AsSingle();
             
             Container.Bind<ILevelPackInfoService>().To<LevelPackInfoService>().AsSingle();
             BindStatemachine();
             
-            Container.BindInterfacesAndSelfTo<ProjectInitializer>().AsSingle().WithArguments(Localisation);
+            Container.BindInterfacesAndSelfTo<ProjectInitializer>().AsSingle();
         }
 
         private void BindStatemachine()

@@ -11,13 +11,11 @@ namespace App.Scripts.Scenes.MainMenuScene.EntryPoint
     {
         public LevelPackProvider LevelPackProvider;
         public LevelItemViewByTypeProvider LevelItemViewByTypeProvider;
-        public LocaleProvider LocaleProvider;
 
         public override void InstallBindings()
         {
             Container.Bind<LevelPackProvider>().FromInstance(LevelPackProvider).IfNotBound();
             Container.Bind<LevelItemViewByTypeProvider>().FromInstance(LevelItemViewByTypeProvider).IfNotBound();
-            Container.Bind<LocaleProvider>().FromInstance(LocaleProvider).IfNotBound();
         }
     }
 }

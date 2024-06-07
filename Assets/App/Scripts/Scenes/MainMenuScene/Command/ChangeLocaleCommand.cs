@@ -13,7 +13,7 @@ namespace App.Scripts.Scenes.MainMenuScene.Command
         
         public void Execute(string localeKey)
         {
-            _localeService.SetLocale(localeKey);
+            _localeService.SetLocaleKey(localeKey);
         }
     }
 }
