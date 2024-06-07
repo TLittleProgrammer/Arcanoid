@@ -1,0 +1,15 @@
+Galactic_Sigara Сигара
+Galactic_Sombrero Сомбреро
+Galactic_Sunflower Подсолнух
+Menu Меню
+Play Играть
+Continue Продолжить
+Galactic Галактика
+Settings Настройки
+ru_itemView Русский
+en_itemView Английский
+Back Назад
+You_are_loose Вы проиграли!
+Restart Рестарт
+You_won Вы победили!
+Galactic_not_found Не обнаружена

@@ -5,9 +5,9 @@ namespace App.Scripts.External.Localisation
 {
     public interface ILocaleService
     {
+        string CurrentLanguageKey { get; }
         event Action LocaleWasChanged;
-        void SetLocale(string localeKey);
-        void SetStorage(Dictionary<string, Dictionary<string, string>> storage);
+        void SetLocaleKey(string localeKey);
         string GetTextByToken(string token);
     }
 }

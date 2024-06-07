@@ -5,39 +5,36 @@ namespace App.Scripts.External.Localisation
 {
     public class LocaleService : ILocaleService
     {
-        private Dictionary<string, Dictionary<string, string>> _localeStorage = new();
-        private string _currentLanguageKey = LocaleConstants.DefaultLocaleKey;
+        private readonly ILocaleMappingFromTextAsset _localeMappingFromTextAsset;
+        
+        private Dictionary<string, string> _localeStorage = new();
+        private string _currentLanguageKey;
 
+        public string CurrentLanguageKey => _currentLanguageKey;
         public event Action LocaleWasChanged;
 
-        public void SetStorage(Dictionary<string, Dictionary<string, string>> storage)
+        public LocaleService(ILocaleMappingFromTextAsset localeMappingFromTextAsset)
         {
-            _localeStorage = storage;
-            
-            LocaleWasChanged?.Invoke();
+            _localeMappingFromTextAsset = localeMappingFromTextAsset;
         }
 
-        public void SetLocale(string localeKey)
+        public void SetLocaleKey(string localeKey)
         {
-            string targetKey = _localeStorage.ContainsKey(localeKey) ? localeKey : LocaleConstants.DefaultLocaleKey;
-
-            if (!targetKey.Equals(_currentLanguageKey, StringComparison.CurrentCultureIgnoreCase))
+            LocaleData localeData = _localeMappingFromTextAsset.GetLocaleMapping(localeKey);
+            
+            if (!localeData.Key.Equals(_currentLanguageKey, StringComparison.CurrentCultureIgnoreCase))
             {
-                _currentLanguageKey = targetKey;
+                _localeStorage = localeData.Translates;
+                _currentLanguageKey = localeData.Key;
                 LocaleWasChanged?.Invoke();
             }
         }
 
         public string GetTextByToken(string token)
         {
-            if (!_localeStorage.ContainsKey(_currentLanguageKey))
+            if (_localeStorage.ContainsKey(token))
             {
-                return string.Format(LocaleConstants.LanguageNotFound, _currentLanguageKey);
-            }
-            
-            if (_localeStorage[_currentLanguageKey].ContainsKey(token))
-            {
-                return _localeStorage[_currentLanguageKey][token];
+                return _localeStorage[token];
             }
 
             return LocaleConstants.TokenNotFoundText;

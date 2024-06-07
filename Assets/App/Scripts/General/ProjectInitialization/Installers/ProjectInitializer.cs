@@ -17,8 +17,6 @@ namespace App.Scripts.General.ProjectInitialization.Installers
     {
         private readonly ApplicationSettings _applicationSettings;
         private readonly ILocaleService _localeService;
-        private readonly IConverter _converter;
-        private readonly TextAsset _localisation;
         private readonly EnergyModel _energyModel;
         private readonly IEnergyDataService _energyDataService;
         private readonly IDataProvider<GlobalData> _globalDataProvider;
@@ -29,8 +27,6 @@ namespace App.Scripts.General.ProjectInitialization.Installers
         public ProjectInitializer(
             ApplicationSettings applicationSettings,
             ILocaleService localeService,
-            IConverter converter,
-            TextAsset localisation,
             EnergyModel energyModel,
             IEnergyDataService energyDataService,
             IDataProvider<GlobalData> globalDataProvider,
@@ -40,8 +36,6 @@ namespace App.Scripts.General.ProjectInitialization.Installers
         {
             _applicationSettings = applicationSettings;
             _localeService = localeService;
-            _converter = converter;
-            _localisation = localisation;
             _energyModel = energyModel;
             _energyDataService = energyDataService;
             _globalDataProvider = globalDataProvider;
@@ -54,8 +48,8 @@ namespace App.Scripts.General.ProjectInitialization.Installers
         {
             Application.targetFrameRate = _applicationSettings.TargetFPS;
             QualitySettings.vSyncCount = _applicationSettings.VSyncCounter;
-            
-            InitializeLocale();
+
+            _localeService.SetLocaleKey(LocaleConstants.DefaultLocaleKey);
             
             GlobalData globalData = _globalDataProvider.GetData();
             
@@ -97,50 +91,6 @@ namespace App.Scripts.General.ProjectInitialization.Installers
             else
             {
                 _energyDataService.Add(_energySettings.InitialEnergyCount);
-            }
-        }
-
-        private void InitializeLocale()
-        {
-            string[,] csvGrid = _converter.ConvertFileToGrid(_localisation.text);
-
-            Dictionary<string, Dictionary<string, string>> localeStorage = new();
-
-            InitializeLocaleStorage(csvGrid, localeStorage);
-            FillStorage(csvGrid, ref localeStorage);
-            
-            _localeService.SetStorage(localeStorage);
-        }
-
-        private static void InitializeLocaleStorage(string[,] csvGrid, Dictionary<string, Dictionary<string, string>> localeStorage)
-        {
-            for (int x = 1; x < csvGrid.GetLength(0); x++)
-            {
-                string languageKey = csvGrid[x, 0];
-
-                if (!string.IsNullOrEmpty(languageKey))
-                {
-                    localeStorage.Add(languageKey, new Dictionary<string, string>());
-                }
-            }
-        }
-
-        private void FillStorage(string[,] csvGrid, ref Dictionary<string, Dictionary<string, string>> localeStorage)
-        {
-            for (int i = 1; i < csvGrid.GetLength(0); i++)
-            {
-                string languageKey = csvGrid[i, 0];
-
-                if (string.IsNullOrEmpty(languageKey))
-                    continue;
-
-                for (int j = 1; j < csvGrid.GetLength(1) - 1; j++)
-                {
-                    if (csvGrid[0, j] is not null)
-                    {
-                        localeStorage[languageKey].Add(csvGrid[0, j], csvGrid[i, j]);
-                    }
-                }
             }
         }
     }

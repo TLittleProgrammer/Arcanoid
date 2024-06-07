@@ -1,7 +1,7 @@
 {
     "name": "LocaleEditor",
     "rootNamespace": "",
-    "references": [],
+    "references": ["GUID:43cbe3d324a96a242bf56312e8828778"],
     "includePlatforms": [
         "Editor"
     ],
