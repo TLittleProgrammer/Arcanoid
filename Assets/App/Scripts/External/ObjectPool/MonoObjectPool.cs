@@ -1,10 +1,9 @@
 ﻿using System;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace App.Scripts.External.ObjectPool
 {
-    public class MonoObjectPool<TMono> : ObjectPool<TMono>, IKeyablePool where TMono : MonoBehaviour
+    public class MonoObjectPool<TMono> : ObjectPool<TMono> where TMono : MonoBehaviour
     {
         private Transform _parent;
 
@@ -28,8 +27,6 @@ namespace App.Scripts.External.ObjectPool
             GameObject gameObject = new GameObject(parentName);
             _parent = gameObject.transform;
         }
-
-        public string Key { get; set; }
 
         protected override void OnItemSpawned(TMono item)
         {
@@ -59,10 +56,5 @@ namespace App.Scripts.External.ObjectPool
         {
             targetItem.gameObject.SetActive(false);
         }
-    }
-
-    public interface IKeyablePool
-    {
-        public string Key { get; set; }
     }
 }

@@ -3,7 +3,6 @@ using App.Scripts.External.ObjectPool;
 using App.Scripts.General.Infrastructure;
 using App.Scripts.Scenes.GameScene.Features.Effects;
 using App.Scripts.Scenes.GameScene.Features.Effects.ObjectPool;
-using Cysharp.Threading.Tasks.Triggers;
 using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions
@@ -11,10 +10,10 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions
     public sealed class EntityCollisionsService : IEntityCollisionService, IGeneralRestartable
     {
         private readonly List<IEntityView> _views;
-        private readonly IKeyObjectPool<AbstractEffect> _keyPool;
+        private readonly IKeyObjectPool<IEffect> _keyPool;
         private readonly EffectCollisionProvider _effectCollisionProvider;
 
-        public EntityCollisionsService(IKeyObjectPool<AbstractEffect> keyPool, EffectCollisionProvider effectCollisionProvider)
+        public EntityCollisionsService(IKeyObjectPool<IEffect> keyPool, EffectCollisionProvider effectCollisionProvider)
         {
             _views = new();
             _keyPool = keyPool;
@@ -51,25 +50,21 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions
             {
                 foreach (string effectName in effects)
                 {
-                    AbstractEffect effect = _keyPool.Spawn(effectName);
+                    IEffect effect = _keyPool.Spawn(effectName);
 
-                    effect.Position = entity.Position;
-                    effect.Scale = entity.Scale.x;
+                    effect.PlayEffect(entity.GameObject.transform, collider.transform);
 
-                    if (effect is CircleEffects circle)
+                    effect.Disabled += disabledEffect =>
                     {
-                        circle.ScaleForSubParticles = effect.Scale / 10f;
-                    }
-                    
-                    effect.PlayEffect();
-                    effect.Disabled += OnEffectDisabled;
+                        OnEffectDisabled(effectName, disabledEffect);
+                    };
                 }
             }
         }
 
-        private void OnEffectDisabled(AbstractEffect effect)
+        private void OnEffectDisabled(string effectName, IEffect disabledEffect)
         {
-            _keyPool.Despawn(effect);
+            _keyPool.Despawn(effectName, disabledEffect);
         }
     }
 }

@@ -49,7 +49,11 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
 
             BindOwnPool<CircleEffects>();
 
-            Container.BindInterfacesAndSelfTo<EffectKeyObjectPool>().AsSingle();
+            Container
+                .Bind<IKeyObjectPool<IEffect>>()
+                .To<KeyObjectPool<IEffect>>()
+                .AsSingle()
+                .NonLazy();
         }
 
         private void BindOwnPool<TEffectPool>() where TEffectPool : AbstractEffect
@@ -57,7 +61,8 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
             EffectData effectData = _effectsPrefabProvider.Provider[typeof(TEffectPool)];
 
             Container
-                .BindInterfacesAndSelfTo<MonoObjectPool<AbstractEffect>>()
+                .Bind<IKeyableObjectPool<IEffect>>()
+                .To<MonoObjectPool<TEffectPool>>()
                 .AsSingle()
                 .WithArguments(EffectSpawner<TEffectPool>(effectData), effectData.InitialSize, effectData.PoolParentName, effectData.PoolKey);
         }
@@ -67,7 +72,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
             Container.BindPool<TInstance, TPool>(_poolProviders.Pools[poolType].InitialSize, _poolProviders.Pools[poolType].View.GetComponent<TInstance>(), _poolProviders.Pools[poolType].ParentName);
         }
 
-        private Func<TEffect> EffectSpawner<TEffect>(EffectData effectData) where TEffect : AbstractEffect
+        private Func<TEffect> EffectSpawner<TEffect>(EffectData effectData)
         {
             return () => Object.Instantiate(effectData.Prefab).GetComponent<TEffect>();
         }
