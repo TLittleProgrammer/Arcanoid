@@ -2,6 +2,7 @@
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Infrastructure;
 using App.Scripts.General.LoadingScreen;
+using App.Scripts.General.Popup;
 using App.Scripts.Scenes.GameScene.Features.Dotween;
 using App.Scripts.Scenes.GameScene.Features.Entities.Ball;
 using App.Scripts.Scenes.GameScene.Features.Levels.General.Animations;
@@ -19,6 +20,7 @@ namespace App.Scripts.Scenes.GameScene.States
         private readonly IShowLevelAnimation _showLevelAnimation;
         private readonly IBallsService _ballsService;
         private readonly List<IGeneralRestartable> _generalRestartables;
+        private readonly IPopupService _popupService;
 
         public RestartState(
             ILoadingScreen loadingScreen,
@@ -27,7 +29,8 @@ namespace App.Scripts.Scenes.GameScene.States
             ITweenersLocator tweenersLocator,
             IShowLevelAnimation showLevelAnimation,
             IBallsService ballsService,
-            List<IGeneralRestartable> generalRestartables
+            List<IGeneralRestartable> generalRestartables,
+            IPopupService popupService
         )
         {
             _loadingScreen = loadingScreen;
@@ -37,14 +40,16 @@ namespace App.Scripts.Scenes.GameScene.States
             _showLevelAnimation = showLevelAnimation;
             _ballsService = ballsService;
             _generalRestartables = generalRestartables;
+            _popupService = popupService;
         }
         
         public async UniTask Enter()
         {
             await _loadingScreen.Show(false);
-
-            _tweenersLocator.RemoveAll();
+            await _popupService.CloseAll();
             
+            _tweenersLocator.RemoveAll();
+
             foreach (IGeneralRestartable generalRestartable in _generalRestartables)
             {
                 generalRestartable.Restart();
