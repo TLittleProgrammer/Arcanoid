@@ -6,6 +6,11 @@ namespace App.Scripts.Scenes.GameScene.Features.ServiceActivator
     public sealed class ServiceActivator : IServicesActivator
     {
         private List<IActivable> _activablesList = new();
+
+        public ServiceActivator(List<IActivable> activables)
+        {
+            _activablesList = activables;
+        }
         
         public void AddActivable(IActivable activable)
         {
