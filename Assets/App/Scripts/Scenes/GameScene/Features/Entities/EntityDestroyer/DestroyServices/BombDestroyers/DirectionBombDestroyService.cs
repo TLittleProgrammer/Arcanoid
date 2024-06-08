@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using App.Scripts.External.ObjectPool;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General;
 using App.Scripts.Scenes.GameScene.Features.Effects;
 using App.Scripts.Scenes.GameScene.Features.Effects.Bombs;
@@ -10,6 +11,7 @@ using App.Scripts.Scenes.GameScene.Features.Grid;
 using App.Scripts.Scenes.GameScene.Features.Levels.General.View;
 using App.Scripts.Scenes.GameScene.Features.Levels.Loading.Loader;
 using App.Scripts.Scenes.GameScene.Features.ScreenInfo;
+using App.Scripts.Scenes.GameScene.Features.Settings;
 using Cysharp.Threading.Tasks;
 using Unity.Mathematics;
 using UnityEngine;
@@ -34,7 +36,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Destroy
             IAnimatedDestroyService animatedDestroyService,
             IScreenInfoProvider screenInfoProvider,
             LaserEffect.Pool laserEffectPool,
-            ExplosionEffect.Pool explosionsPool) : base(levelViewUpdater, explosionsPool)
+            DestroyEntityEffectMapping destroyEntityEffectMapping,
+            IKeyObjectPool<IEffect> keyObjectPool) : base(levelViewUpdater, destroyEntityEffectMapping, keyObjectPool)
         {
             _levelViewUpdater = levelViewUpdater;
             _entityDestroyable = entityDestroyable;

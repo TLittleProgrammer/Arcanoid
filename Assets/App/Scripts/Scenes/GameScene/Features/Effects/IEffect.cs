@@ -1,10 +1,11 @@
-﻿using System.Diagnostics;
+﻿using System;
+using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Effects
 {
     public interface IEffect
     {
-        void PlayEffect();
-        void StopEffect();
+        event Action<IEffect> Disabled;
+        void PlayEffect(Transform initialEntityTransform, Transform colliderEntityTransform);
     }
 }

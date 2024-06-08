@@ -18,5 +18,16 @@ namespace App.Scripts.Scenes.GameScene.Features.Effects
         {
             set => _subParticlesMainModule.startSize = value;
         }
+
+        public override void PlayEffect(Transform initialEntityTransform, Transform colliderEntityTransform)
+        {
+            var initialEntityScale = initialEntityTransform.localScale;
+            
+            Position = initialEntityTransform.position;
+            Scale = initialEntityScale.x;
+            ScaleForSubParticles = initialEntityScale.x / 10f;
+            
+            ParticleSystem.Play();
+        }
     }
 }

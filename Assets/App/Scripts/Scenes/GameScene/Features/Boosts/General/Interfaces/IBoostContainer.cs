@@ -9,5 +9,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Interfaces
     {
         event Action<BoostTypeId> BoostEnded;
         void AddBoost(BoostTypeId boostTypeId);
+        bool BoostIsActive(BoostTypeId boostTypeId);
     }
 }

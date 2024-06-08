@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using App.Scripts.External.GameStateMachine;
-using App.Scripts.General.Infrastructure;
+﻿using App.Scripts.External.GameStateMachine;
 using App.Scripts.Scenes.GameScene.Features.Entities.Ball;
 using App.Scripts.Scenes.GameScene.Features.Entities.Ball.Movement.MoveVariants;
-using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.Move;
 using App.Scripts.Scenes.GameScene.Features.Healthes;
 using App.Scripts.Scenes.GameScene.Features.Levels.General;
 using App.Scripts.Scenes.GameScene.Features.Levels.LevelProgress;
@@ -17,7 +14,6 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
         private readonly IStateMachine _stateMachine;
         private readonly IViewHealthPointService _viewHealthPointService;
         private readonly IHealthContainer _healthContainer;
-        private readonly IPlayerShapeMover _playerShapeMover;
         private readonly IBallMover _ballMover;
         private readonly ILevelLoadService _levelLoadService;
         private readonly ILevelProgressService _levelProgressService;
@@ -28,7 +24,6 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             IStateMachine stateMachine,
             IViewHealthPointService viewHealthPointService,
             IHealthContainer healthContainer,
-            IPlayerShapeMover playerShapeMover,
             ILevelLoadService levelLoadService,
             ILevelProgressService levelProgressService,
             IBallsService ballsService,
@@ -38,7 +33,6 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             _stateMachine = stateMachine;
             _viewHealthPointService = viewHealthPointService;
             _healthContainer = healthContainer;
-            _playerShapeMover = playerShapeMover;
             _levelLoadService = levelLoadService;
             _levelProgressService = levelProgressService;
             _ballsService = ballsService;
@@ -52,7 +46,7 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             await _healthContainer.AsyncInitialize(levelData.HealthCount);
             await _viewHealthPointService.AsyncInitialize(levelData);
             _levelProgressService.CalculateStepByLevelData(levelData);
-
+            
             _ballsService.AddBall(_ballViewPool.Spawn());
             
             _stateMachine.Enter<BootstrapInitializeOtherServicesState>().Forget();

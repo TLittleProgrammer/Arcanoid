@@ -1,9 +1,5 @@
 ﻿using System.Collections.Generic;
-using App.Scripts.External.ObjectPool;
 using App.Scripts.General.Infrastructure;
-using App.Scripts.Scenes.GameScene.Features.Effects;
-using App.Scripts.Scenes.GameScene.Features.Effects.ObjectPool;
-using Cysharp.Threading.Tasks.Triggers;
 using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions
@@ -11,18 +7,14 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions
     public sealed class EntityCollisionsService : IEntityCollisionService, IGeneralRestartable
     {
         private readonly List<IEntityView> _views;
-        private readonly IKeyObjectPool<AbstractEffect> _keyPool;
-        private readonly EffectCollisionProvider _effectCollisionProvider;
+        private readonly IEffectActivator _effectActivator;
 
-        public EntityCollisionsService(IKeyObjectPool<AbstractEffect> keyPool, EffectCollisionProvider effectCollisionProvider)
+        public EntityCollisionsService(IEffectActivator effectActivator)
         {
             _views = new();
-            _keyPool = keyPool;
-            _effectCollisionProvider = effectCollisionProvider;
+            _effectActivator = effectActivator;
         }
-
-        private Dictionary<int, List<string>> EffectMapping => _effectCollisionProvider.EntityIdToEffectNameMapping;
-
+        
         public void AddEntity(IEntityView entityView)
         {
             _views.Add(entityView);
@@ -45,31 +37,9 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions
             Clear();
         }
 
-        private void OnEntityCollidired(IEntityView entity, Collision2D collider)
+        private void OnEntityCollidired(IEntityView entity, Collider2D collider)
         {
-            if (EffectMapping.TryGetValue(entity.EntityId, out List<string> effects))
-            {
-                foreach (string effectName in effects)
-                {
-                    AbstractEffect effect = _keyPool.Spawn(effectName);
-
-                    effect.Position = entity.Position;
-                    effect.Scale = entity.Scale.x;
-
-                    if (effect is CircleEffects circle)
-                    {
-                        circle.ScaleForSubParticles = effect.Scale / 10f;
-                    }
-                    
-                    effect.PlayEffect();
-                    effect.Disabled += OnEffectDisabled;
-                }
-            }
-        }
-
-        private void OnEffectDisabled(AbstractEffect effect)
-        {
-            _keyPool.Despawn(effect);
+            _effectActivator.ActivateEffect(entity, collider);
         }
     }
 }

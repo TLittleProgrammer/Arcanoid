@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using App.Scripts.External.ObjectPool;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General;
 using App.Scripts.Scenes.GameScene.Features.Effects;
 using App.Scripts.Scenes.GameScene.Features.Entities.AssetManagement;
@@ -9,6 +10,7 @@ using App.Scripts.Scenes.GameScene.Features.Entities.View;
 using App.Scripts.Scenes.GameScene.Features.Grid;
 using App.Scripts.Scenes.GameScene.Features.Levels.General.View;
 using App.Scripts.Scenes.GameScene.Features.Levels.Loading.Loader;
+using App.Scripts.Scenes.GameScene.Features.Settings;
 using Cysharp.Threading.Tasks;
 using Unity.Mathematics;
 
@@ -25,7 +27,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Destroy
             ILevelLoader levelLoader,
             IAnimatedDestroyService animatedDestroyService,
             SimpleDestroyService simpleDestroyService,
-            ExplosionEffect.Pool explosionsPool) : base(levelViewUpdater, explosionsPool)
+            DestroyEntityEffectMapping destroyEntityEffectMapping,
+            IKeyObjectPool<IEffect> keyObjectPool) : base(levelViewUpdater, destroyEntityEffectMapping, keyObjectPool)
         {
             _levelLoader = levelLoader;
             _animatedDestroyService = animatedDestroyService;

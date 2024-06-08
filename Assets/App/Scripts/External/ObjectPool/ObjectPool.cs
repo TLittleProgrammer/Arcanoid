@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace App.Scripts.External.ObjectPool
 {
-    public abstract class ObjectPool<TType> : IObjectPool, IObjectPool<TType> where TType : class
+    public abstract class ObjectPool<TType> : IObjectPool, IKeyableObjectPool<TType>
     {
         private readonly Func<TType> _spawner;
         private readonly Queue<TType> _items = new();
@@ -21,6 +21,8 @@ namespace App.Scripts.External.ObjectPool
             Resize(DefaultPoolSize);
         }
 
+        public string Key { get; set; }
+
         protected ObjectPool(Func<TType> spawner, int initialSize)
         {
             _spawner = spawner;
@@ -28,7 +30,8 @@ namespace App.Scripts.External.ObjectPool
         }
 
         public int ItemCount => _items.Count;
-        
+
+
         public void Resize(int itemCount)
         {
             int itemCountDifference = itemCount - ItemCount;

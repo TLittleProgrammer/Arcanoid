@@ -89,6 +89,8 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             CommandsInstaller.Install(Container);
             MVVMInstaller.Install(Container, _openMenuPopupButton);
             MiniGunInstaller.Install(Container);
+            ConditionsInstaller.Install(Container);
+            ShowLevelInstaller.Install(Container);
             
             Container.BindInterfacesAndSelfTo<TweenersLocator>().AsSingle();
             Container.Bind<IScoreAnimationService>().To<ScoreAnimationService>().AsSingle();
@@ -105,6 +107,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.BindInterfacesAndSelfTo<LevelDataChooser>().AsSingle();
             Container.BindInterfacesAndSelfTo<LevelLoadService>().AsSingle();
             Container.BindInterfacesAndSelfTo<UpdateServiceForNewLevel>().AsSingle();
+            Container.BindInterfacesAndSelfTo<EffectActivator>().AsSingle();
 
             Container.BindInterfacesTo<GridPositionResolver>().AsSingle().WithArguments(_header);
             Container.Bind<IShapePositionChecker>().To<PlayerShapePositionChecker>().AsSingle().WithArguments(_playerShape);
@@ -116,7 +119,6 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.Bind<IWallLoader>().To<WallLoader>().AsSingle().WithArguments(_wallPrefab);
             Container.Bind<IEntityViewService>().To<EntityViewService>().AsSingle();
             Container.Bind<IServicesActivator>().To<ServiceActivator>().AsSingle();
-            Container.Bind<IShowLevelAnimation>().To<SimpleShowLevelAnimation>().AsSingle();
             Container.Bind<IGetDamageService>().To<GetDamageService>().AsSingle();
             Container.BindInterfacesAndSelfTo<BallsService>().AsSingle().WhenNotInjectedInto<GameLoopState>();
             Container.BindInterfacesAndSelfTo<LevelPackProgressService>().AsSingle();

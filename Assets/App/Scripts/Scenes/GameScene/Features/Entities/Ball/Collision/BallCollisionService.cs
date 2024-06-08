@@ -1,10 +1,10 @@
-﻿using App.Scripts.Scenes.GameScene.Features.Effects;
+﻿using App.Scripts.External.ObjectPool;
+using App.Scripts.Scenes.GameScene.Features.Constants;
+using App.Scripts.Scenes.GameScene.Features.Effects;
 using App.Scripts.Scenes.GameScene.Features.Entities.View;
 using App.Scripts.Scenes.GameScene.Features.Entities.Walls;
 using App.Scripts.Scenes.GameScene.Features.Levels.General.View;
-using App.Scripts.Scenes.GameScene.Features.ScreenInfo;
 using App.Scripts.Scenes.GameScene.Features.Shake;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball.Collision
@@ -14,24 +14,19 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball.Collision
         private readonly BallView _ball;
         private readonly ILevelViewUpdater _levelViewUpdater;
         private readonly IShakeService _shakeService;
-        private readonly PlazmaEffect.Pool _plazmaEffectPool;
+        private readonly IKeyObjectPool<IEffect> _keyObjectPool;
         private readonly float _minBallYPosition;
-
-        private readonly float _screenWidth;
 
         public BallCollisionService(
             BallView ball,
             ILevelViewUpdater levelViewUpdater,
             IShakeService shakeService,
-            PlazmaEffect.Pool plazmaEffectPool,
-            IScreenInfoProvider screenInfoProvider)
+            IKeyObjectPool<IEffect> keyObjectPool)
         {
             _ball = ball;
             _levelViewUpdater = levelViewUpdater;
             _shakeService = shakeService;
-            _plazmaEffectPool = plazmaEffectPool;
-
-            _screenWidth = screenInfoProvider.WidthInWorld / 2f;
+            _keyObjectPool = keyObjectPool;
 
             _ball.Collidered += OnCollidered;
         }
@@ -45,33 +40,22 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball.Collision
             }
             else if (collider.TryGetComponent(out WallView wallView))
             {
-                PlayPlazmaEffect(wallView.transform.position.x, view.Position);
+                PlayPlazmaEffect(wallView.gameObject.transform);
             }
         }
 
-        private async void PlayPlazmaEffect(float positionX, Vector3 viewPosition)
+        private void PlayPlazmaEffect(Transform wallTransform)
         {
-            PlazmaEffect plazmaEffect = _plazmaEffectPool.Spawn();
-            ParticleSystem.MainModule mainModule = plazmaEffect.ParticleSystem.main;
+            IEffect effect = _keyObjectPool.Spawn(PoolConstants.PlazmaEffectKey);
             
-            if (positionX > _screenWidth)
-            {
-                mainModule.startRotation = 180f * Mathf.Deg2Rad;
-            }
-            else if(positionX < -_screenWidth)
-            {
-                mainModule.startRotation = 0f;
-            }
-            else
-            {
-                mainModule.startRotation = 90f * Mathf.Deg2Rad;
-            }
+            effect.PlayEffect(_ball.transform, wallTransform);
 
-            plazmaEffect.transform.position = viewPosition;
-            plazmaEffect.ParticleSystem.Play();
-            
-            await UniTask.Delay(1000);
-            _plazmaEffectPool.Despawn(plazmaEffect);
+            effect.Disabled += OnPlazmaEffectDisabled;
+        }
+
+        private void OnPlazmaEffectDisabled(IEffect effect)
+        {
+            _keyObjectPool.Despawn(PoolConstants.PlazmaEffectKey, effect);
         }
     }
 }

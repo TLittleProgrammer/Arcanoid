@@ -13,4 +13,9 @@
     {
         TType Spawn();
     }
+    
+    public interface IKeyableObjectPool<out TType> : IObjectPool<TType>
+    {
+        string Key { get; }
+    }
 }

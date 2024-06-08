@@ -3,6 +3,7 @@
     public interface IKeyObjectPool<TType>
     {
         TType Spawn(string key);
-        void Despawn(TType type);
+        void Despawn(string key, object item);
+        void Clear();
     }
 }

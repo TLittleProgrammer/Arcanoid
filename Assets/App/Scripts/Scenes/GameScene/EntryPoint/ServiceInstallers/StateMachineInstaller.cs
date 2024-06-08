@@ -48,7 +48,6 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
             Container.BindInterfacesAndSelfTo<GameLoopState>().AsSingle().WhenNotInjectedInto<GameLoopState>();
 
             Container.BindInterfacesTo<BootstrapState>().AsSingle().WithArguments(stateMachine);
-            Container.BindInterfacesTo<BootstrapServiceActivatorState>().AsSingle().WithArguments(stateMachine);
             Container.BindInterfacesTo<BootstrapBehaviourTreeState>().AsSingle().WithArguments(stateMachine);
             Container.BindInterfacesTo<BootstrapLoadLevelState>().AsSingle().WithArguments(stateMachine);
             Container.BindInterfacesTo<BootstrapEntityDestroyerState>().AsSingle().WithArguments(stateMachine);

@@ -4,6 +4,6 @@
     {
         public static int DefaultHealthCount = 3;
         public static float MaxBallSpeed = 8f;
-        public static float ShowLevelDuration = 0.5f;
+        public static float ShowLevelDuration = 1.25f;
     }
 }

@@ -23,8 +23,8 @@ MonoBehaviour:
     SerializationNodes:
     - Name: EntityIdToEffectNameMapping
       Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[System.Collections.Generic.List`1[[System.String,
-        mscorlib]], mscorlib]], mscorlib
+      Data: 0|System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[System.Collections.Generic.List`1[[App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game]], mscorlib]], mscorlib
     - Name: comparer
       Entry: 7
       Data: 1|System.Collections.Generic.GenericEqualityComparer`1[[System.Int32,
@@ -34,22 +34,40 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 22
+      Data: 21
     - Name: 
       Entry: 7
       Data: 
     - Name: $k
       Entry: 3
-      Data: 0
+      Data: 1
     - Name: $v
       Entry: 7
-      Data: 2|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 2|System.Collections.Generic.List`1[[App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 3|App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game
+    - Name: Condition
+      Entry: 7
+      Data: 4|App.Scripts.Scenes.GameScene.Features.Effects.Conditions.Concrete.CircleCondition,
+        Game
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectNames
+      Entry: 7
+      Data: 5|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 1
-      Data: circleEffect
+      Data: circleEffects
     - Name: 
       Entry: 13
       Data: 
@@ -61,19 +79,33 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 1
-    - Name: $v
+      Data: 6|App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game
+    - Name: Condition
       Entry: 7
-      Data: 3|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 7|App.Scripts.Scenes.GameScene.Features.Effects.Conditions.Concrete.ExplosionByFireballCondition,
+        Game
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectNames
+      Entry: 7
+      Data: 8|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 1
-      Data: circleEffect
+      Data: explosionEffect
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 13
       Data: 
@@ -91,13 +123,69 @@ MonoBehaviour:
       Data: 2
     - Name: $v
       Entry: 7
-      Data: 4|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 9|System.Collections.Generic.List`1[[App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 10|App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game
+    - Name: Condition
+      Entry: 7
+      Data: 11|App.Scripts.Scenes.GameScene.Features.Effects.Conditions.Concrete.CircleCondition,
+        Game
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectNames
+      Entry: 7
+      Data: 12|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 1
-      Data: circleEffect
+      Data: circleEffects
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 13|App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game
+    - Name: Condition
+      Entry: 7
+      Data: 14|App.Scripts.Scenes.GameScene.Features.Effects.Conditions.Concrete.ExplosionByFireballCondition,
+        Game
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectNames
+      Entry: 7
+      Data: 15|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: explosionEffect
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 13
       Data: 
@@ -115,13 +203,69 @@ MonoBehaviour:
       Data: 3
     - Name: $v
       Entry: 7
-      Data: 5|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 16|System.Collections.Generic.List`1[[App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 17|App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game
+    - Name: Condition
+      Entry: 7
+      Data: 18|App.Scripts.Scenes.GameScene.Features.Effects.Conditions.Concrete.CircleCondition,
+        Game
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectNames
+      Entry: 7
+      Data: 19|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 1
-      Data: circleEffect
+      Data: circleEffects
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 20|App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game
+    - Name: Condition
+      Entry: 7
+      Data: 21|App.Scripts.Scenes.GameScene.Features.Effects.Conditions.Concrete.ExplosionByFireballCondition,
+        Game
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectNames
+      Entry: 7
+      Data: 22|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: explosionEffect
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 13
       Data: 
@@ -139,13 +283,69 @@ MonoBehaviour:
       Data: 4
     - Name: $v
       Entry: 7
-      Data: 6|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 23|System.Collections.Generic.List`1[[App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 24|App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game
+    - Name: Condition
+      Entry: 7
+      Data: 25|App.Scripts.Scenes.GameScene.Features.Effects.Conditions.Concrete.CircleCondition,
+        Game
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectNames
+      Entry: 7
+      Data: 26|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 1
-      Data: circleEffect
+      Data: circleEffects
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 27|App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game
+    - Name: Condition
+      Entry: 7
+      Data: 28|App.Scripts.Scenes.GameScene.Features.Effects.Conditions.Concrete.ExplosionByFireballCondition,
+        Game
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectNames
+      Entry: 7
+      Data: 29|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: explosionEffect
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 13
       Data: 
@@ -163,13 +363,69 @@ MonoBehaviour:
       Data: 5
     - Name: $v
       Entry: 7
-      Data: 7|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 30|System.Collections.Generic.List`1[[App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 31|App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game
+    - Name: Condition
+      Entry: 7
+      Data: 32|App.Scripts.Scenes.GameScene.Features.Effects.Conditions.Concrete.CircleCondition,
+        Game
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectNames
+      Entry: 7
+      Data: 33|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 1
-      Data: circleEffect
+      Data: circleEffects
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 34|App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game
+    - Name: Condition
+      Entry: 7
+      Data: 35|App.Scripts.Scenes.GameScene.Features.Effects.Conditions.Concrete.ExplosionByFireballCondition,
+        Game
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectNames
+      Entry: 7
+      Data: 36|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: explosionEffect
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 13
       Data: 
@@ -187,13 +443,69 @@ MonoBehaviour:
       Data: 6
     - Name: $v
       Entry: 7
-      Data: 8|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 37|System.Collections.Generic.List`1[[App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 38|App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game
+    - Name: Condition
+      Entry: 7
+      Data: 39|App.Scripts.Scenes.GameScene.Features.Effects.Conditions.Concrete.CircleCondition,
+        Game
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectNames
+      Entry: 7
+      Data: 40|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 1
-      Data: circleEffect
+      Data: circleEffects
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 41|App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game
+    - Name: Condition
+      Entry: 7
+      Data: 42|App.Scripts.Scenes.GameScene.Features.Effects.Conditions.Concrete.ExplosionByFireballCondition,
+        Game
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectNames
+      Entry: 7
+      Data: 43|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: explosionEffect
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 13
       Data: 
@@ -211,13 +523,69 @@ MonoBehaviour:
       Data: 7
     - Name: $v
       Entry: 7
-      Data: 9|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 44|System.Collections.Generic.List`1[[App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 45|App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game
+    - Name: Condition
+      Entry: 7
+      Data: 46|App.Scripts.Scenes.GameScene.Features.Effects.Conditions.Concrete.CircleCondition,
+        Game
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectNames
+      Entry: 7
+      Data: 47|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 1
-      Data: circleEffect
+      Data: circleEffects
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 48|App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game
+    - Name: Condition
+      Entry: 7
+      Data: 49|App.Scripts.Scenes.GameScene.Features.Effects.Conditions.Concrete.ExplosionByFireballCondition,
+        Game
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectNames
+      Entry: 7
+      Data: 50|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: explosionEffect
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 13
       Data: 
@@ -235,13 +603,69 @@ MonoBehaviour:
       Data: 8
     - Name: $v
       Entry: 7
-      Data: 10|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 51|System.Collections.Generic.List`1[[App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 52|App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game
+    - Name: Condition
+      Entry: 7
+      Data: 53|App.Scripts.Scenes.GameScene.Features.Effects.Conditions.Concrete.CircleCondition,
+        Game
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectNames
+      Entry: 7
+      Data: 54|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 1
-      Data: circleEffect
+      Data: circleEffects
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 55|App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game
+    - Name: Condition
+      Entry: 7
+      Data: 56|App.Scripts.Scenes.GameScene.Features.Effects.Conditions.Concrete.ExplosionByFireballCondition,
+        Game
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectNames
+      Entry: 7
+      Data: 57|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: explosionEffect
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 13
       Data: 
@@ -259,13 +683,69 @@ MonoBehaviour:
       Data: 9
     - Name: $v
       Entry: 7
-      Data: 11|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 58|System.Collections.Generic.List`1[[App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 59|App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game
+    - Name: Condition
+      Entry: 7
+      Data: 60|App.Scripts.Scenes.GameScene.Features.Effects.Conditions.Concrete.CircleCondition,
+        Game
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectNames
+      Entry: 7
+      Data: 61|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 1
-      Data: circleEffect
+      Data: circleEffects
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 62|App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game
+    - Name: Condition
+      Entry: 7
+      Data: 63|App.Scripts.Scenes.GameScene.Features.Effects.Conditions.Concrete.ExplosionByFireballCondition,
+        Game
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectNames
+      Entry: 7
+      Data: 64|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: explosionEffect
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 13
       Data: 
@@ -283,13 +763,69 @@ MonoBehaviour:
       Data: 10
     - Name: $v
       Entry: 7
-      Data: 12|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 65|System.Collections.Generic.List`1[[App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 66|App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game
+    - Name: Condition
+      Entry: 7
+      Data: 67|App.Scripts.Scenes.GameScene.Features.Effects.Conditions.Concrete.CircleCondition,
+        Game
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectNames
+      Entry: 7
+      Data: 68|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 1
-      Data: circleEffect
+      Data: circleEffects
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 69|App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game
+    - Name: Condition
+      Entry: 7
+      Data: 70|App.Scripts.Scenes.GameScene.Features.Effects.Conditions.Concrete.ExplosionByFireballCondition,
+        Game
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectNames
+      Entry: 7
+      Data: 71|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: explosionEffect
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 13
       Data: 
@@ -307,13 +843,69 @@ MonoBehaviour:
       Data: 11
     - Name: $v
       Entry: 7
-      Data: 13|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 72|System.Collections.Generic.List`1[[App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 73|App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game
+    - Name: Condition
+      Entry: 7
+      Data: 74|App.Scripts.Scenes.GameScene.Features.Effects.Conditions.Concrete.CircleCondition,
+        Game
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectNames
+      Entry: 7
+      Data: 75|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 1
-      Data: circleEffect
+      Data: circleEffects
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 76|App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game
+    - Name: Condition
+      Entry: 7
+      Data: 77|App.Scripts.Scenes.GameScene.Features.Effects.Conditions.Concrete.ExplosionByFireballCondition,
+        Game
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectNames
+      Entry: 7
+      Data: 78|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: explosionEffect
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 13
       Data: 
@@ -331,13 +923,69 @@ MonoBehaviour:
       Data: 12
     - Name: $v
       Entry: 7
-      Data: 14|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 79|System.Collections.Generic.List`1[[App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 80|App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game
+    - Name: Condition
+      Entry: 7
+      Data: 81|App.Scripts.Scenes.GameScene.Features.Effects.Conditions.Concrete.CircleCondition,
+        Game
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectNames
+      Entry: 7
+      Data: 82|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 1
-      Data: circleEffect
+      Data: circleEffects
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 83|App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game
+    - Name: Condition
+      Entry: 7
+      Data: 84|App.Scripts.Scenes.GameScene.Features.Effects.Conditions.Concrete.ExplosionByFireballCondition,
+        Game
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectNames
+      Entry: 7
+      Data: 85|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: explosionEffect
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 13
       Data: 
@@ -355,13 +1003,69 @@ MonoBehaviour:
       Data: 13
     - Name: $v
       Entry: 7
-      Data: 15|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 86|System.Collections.Generic.List`1[[App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 87|App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game
+    - Name: Condition
+      Entry: 7
+      Data: 88|App.Scripts.Scenes.GameScene.Features.Effects.Conditions.Concrete.CircleCondition,
+        Game
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectNames
+      Entry: 7
+      Data: 89|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 1
-      Data: circleEffect
+      Data: circleEffects
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 90|App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game
+    - Name: Condition
+      Entry: 7
+      Data: 91|App.Scripts.Scenes.GameScene.Features.Effects.Conditions.Concrete.ExplosionByFireballCondition,
+        Game
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectNames
+      Entry: 7
+      Data: 92|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: explosionEffect
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 13
       Data: 
@@ -379,13 +1083,69 @@ MonoBehaviour:
       Data: 14
     - Name: $v
       Entry: 7
-      Data: 16|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 93|System.Collections.Generic.List`1[[App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 94|App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game
+    - Name: Condition
+      Entry: 7
+      Data: 95|App.Scripts.Scenes.GameScene.Features.Effects.Conditions.Concrete.CircleCondition,
+        Game
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectNames
+      Entry: 7
+      Data: 96|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 1
-      Data: circleEffect
+      Data: circleEffects
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 97|App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game
+    - Name: Condition
+      Entry: 7
+      Data: 98|App.Scripts.Scenes.GameScene.Features.Effects.Conditions.Concrete.ExplosionByFireballCondition,
+        Game
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectNames
+      Entry: 7
+      Data: 99|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: explosionEffect
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 13
       Data: 
@@ -403,13 +1163,69 @@ MonoBehaviour:
       Data: 15
     - Name: $v
       Entry: 7
-      Data: 17|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 100|System.Collections.Generic.List`1[[App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 101|App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game
+    - Name: Condition
+      Entry: 7
+      Data: 102|App.Scripts.Scenes.GameScene.Features.Effects.Conditions.Concrete.CircleCondition,
+        Game
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectNames
+      Entry: 7
+      Data: 103|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 1
-      Data: circleEffect
+      Data: circleEffects
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 104|App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game
+    - Name: Condition
+      Entry: 7
+      Data: 105|App.Scripts.Scenes.GameScene.Features.Effects.Conditions.Concrete.ExplosionByFireballCondition,
+        Game
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectNames
+      Entry: 7
+      Data: 106|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: explosionEffect
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 13
       Data: 
@@ -427,13 +1243,69 @@ MonoBehaviour:
       Data: 16
     - Name: $v
       Entry: 7
-      Data: 18|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 107|System.Collections.Generic.List`1[[App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 108|App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game
+    - Name: Condition
+      Entry: 7
+      Data: 109|App.Scripts.Scenes.GameScene.Features.Effects.Conditions.Concrete.CircleCondition,
+        Game
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectNames
+      Entry: 7
+      Data: 110|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 1
-      Data: circleEffect
+      Data: circleEffects
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 111|App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game
+    - Name: Condition
+      Entry: 7
+      Data: 112|App.Scripts.Scenes.GameScene.Features.Effects.Conditions.Concrete.ExplosionByFireballCondition,
+        Game
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectNames
+      Entry: 7
+      Data: 113|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: explosionEffect
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 13
       Data: 
@@ -451,13 +1323,69 @@ MonoBehaviour:
       Data: 17
     - Name: $v
       Entry: 7
-      Data: 19|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 114|System.Collections.Generic.List`1[[App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 115|App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game
+    - Name: Condition
+      Entry: 7
+      Data: 116|App.Scripts.Scenes.GameScene.Features.Effects.Conditions.Concrete.CircleCondition,
+        Game
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectNames
+      Entry: 7
+      Data: 117|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 1
-      Data: circleEffect
+      Data: circleEffects
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 118|App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game
+    - Name: Condition
+      Entry: 7
+      Data: 119|App.Scripts.Scenes.GameScene.Features.Effects.Conditions.Concrete.ExplosionByFireballCondition,
+        Game
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectNames
+      Entry: 7
+      Data: 120|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: explosionEffect
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 13
       Data: 
@@ -475,13 +1403,69 @@ MonoBehaviour:
       Data: 18
     - Name: $v
       Entry: 7
-      Data: 20|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 121|System.Collections.Generic.List`1[[App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 122|App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game
+    - Name: Condition
+      Entry: 7
+      Data: 123|App.Scripts.Scenes.GameScene.Features.Effects.Conditions.Concrete.CircleCondition,
+        Game
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectNames
+      Entry: 7
+      Data: 124|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 1
-      Data: circleEffect
+      Data: circleEffects
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 125|App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game
+    - Name: Condition
+      Entry: 7
+      Data: 126|App.Scripts.Scenes.GameScene.Features.Effects.Conditions.Concrete.ExplosionByFireballCondition,
+        Game
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectNames
+      Entry: 7
+      Data: 127|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: explosionEffect
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 13
       Data: 
@@ -499,13 +1483,69 @@ MonoBehaviour:
       Data: 19
     - Name: $v
       Entry: 7
-      Data: 21|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 128|System.Collections.Generic.List`1[[App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 129|App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game
+    - Name: Condition
+      Entry: 7
+      Data: 130|App.Scripts.Scenes.GameScene.Features.Effects.Conditions.Concrete.CircleCondition,
+        Game
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectNames
+      Entry: 7
+      Data: 131|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 1
-      Data: circleEffect
+      Data: circleEffects
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 132|App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game
+    - Name: Condition
+      Entry: 7
+      Data: 133|App.Scripts.Scenes.GameScene.Features.Effects.Conditions.Concrete.ExplosionByFireballCondition,
+        Game
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectNames
+      Entry: 7
+      Data: 134|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: explosionEffect
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 13
       Data: 
@@ -523,13 +1563,69 @@ MonoBehaviour:
       Data: 20
     - Name: $v
       Entry: 7
-      Data: 22|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 135|System.Collections.Generic.List`1[[App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 136|App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game
+    - Name: Condition
+      Entry: 7
+      Data: 137|App.Scripts.Scenes.GameScene.Features.Effects.Conditions.Concrete.CircleCondition,
+        Game
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectNames
+      Entry: 7
+      Data: 138|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 1
-      Data: circleEffect
+      Data: circleEffects
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 139|App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game
+    - Name: Condition
+      Entry: 7
+      Data: 140|App.Scripts.Scenes.GameScene.Features.Effects.Conditions.Concrete.ExplosionByFireballCondition,
+        Game
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectNames
+      Entry: 7
+      Data: 141|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: explosionEffect
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 13
       Data: 
@@ -547,13 +1643,65 @@ MonoBehaviour:
       Data: 21
     - Name: $v
       Entry: 7
-      Data: 23|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 142|System.Collections.Generic.List`1[[App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 143|App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game
+    - Name: Condition
+      Entry: 6
+      Data: 
+    - Name: EffectNames
+      Entry: 7
+      Data: 144|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
     - Name: 
       Entry: 1
-      Data: circleEffect
+      Data: circleEffects
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 145|App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+        Game
+    - Name: Condition
+      Entry: 7
+      Data: 146|App.Scripts.Scenes.GameScene.Features.Effects.Conditions.Concrete.ExplosionByFireballCondition,
+        Game
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: EffectNames
+      Entry: 7
+      Data: 147|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: explosionEffect
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 13
       Data: 

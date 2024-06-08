@@ -7,6 +7,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions
     [CreateAssetMenu(menuName = "Configs/Game/Effects/EffectsProvider", fileName = "CollisionsEffectsProvider")]
     public class EffectCollisionProvider : SerializedScriptableObject
     {
-        public Dictionary<int, List<string>> EntityIdToEffectNameMapping;
+        public Dictionary<int, List<ConditionToEffectMapping>> EntityIdToEffectNameMapping;
     }
 }

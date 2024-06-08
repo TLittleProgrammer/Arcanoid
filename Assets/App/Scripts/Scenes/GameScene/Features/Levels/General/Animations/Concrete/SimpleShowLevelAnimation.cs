@@ -34,10 +34,19 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.General.Animations
 
             List<IEntityView> sortedList = _levelLoader.Entities.OrderBy(x => x.GridPositionY).ThenBy(x => x.GridPositionX).ToList();
 
+            int index = 0;
             foreach (IEntityView view in sortedList)
             {
-                view.GameObject.transform.DOScale(_gridPositionResolver.GetCellSize(), timeOffset).SetEase(Ease.InOutBounce).ToUniTask().Forget();
-                await UniTask.Delay((int)(timeOffset * 1000));
+                view
+                    .GameObject
+                    .transform
+                    .DOScale(_gridPositionResolver.GetCellSize(), timeOffset)
+                    .SetDelay(timeOffset * index - timeOffset * 0.75f)
+                    .SetEase(Ease.OutBack)
+                    .ToUniTask()
+                    .Forget();
+
+                index++;
             }
 
             _menuButton.raycastTarget = true;

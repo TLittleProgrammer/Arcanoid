@@ -19,10 +19,9 @@ namespace App.Scripts.Scenes.GameScene.States
         private readonly IStateMachine _gameStateMachine;
         private readonly IPopupService _popupService;
         private readonly ITimeProvider _timeProvider;
-        private readonly IShowLevelAnimation _showLevelAnimation;
+        private readonly IShowLevelService _showLevelService;
         private readonly ILevelViewUpdater _levelViewUpdater;
-        private readonly List<IGeneralRestartable> _generalRestartables;
-        private readonly List<ICurrentLevelRestartable> _currentLevelRestartables;
+        private readonly List<IRestartable> _generalRestartables;
         private readonly IUpdateServiceForNewLevel _updateServiceForNewLevel;
 
         public LoadNextLevelState(
@@ -30,18 +29,16 @@ namespace App.Scripts.Scenes.GameScene.States
             IStateMachine gameStateMachine,
             IPopupService popupService,
             ITimeProvider timeProvider,
-            IShowLevelAnimation showLevelAnimation,
-            List<IGeneralRestartable> generalRestartables,
-            List<ICurrentLevelRestartable> currentLevelRestartables,
+            IShowLevelService showLevelService,
+            List<IRestartable> generalRestartables,
             IUpdateServiceForNewLevel updateServiceForNewLevel)
         {
             _loadingScreen = loadingScreen;
             _gameStateMachine = gameStateMachine;
             _popupService = popupService;
             _timeProvider = timeProvider;
-            _showLevelAnimation = showLevelAnimation;
+            _showLevelService = showLevelService;
             _generalRestartables = generalRestartables;
-            _currentLevelRestartables = currentLevelRestartables;
             _updateServiceForNewLevel = updateServiceForNewLevel;
         }
 
@@ -54,7 +51,7 @@ namespace App.Scripts.Scenes.GameScene.States
             await ClosePopups();
             await _updateServiceForNewLevel.Update();
             await _loadingScreen.Hide();
-            await _showLevelAnimation.Show();
+            await _showLevelService.Show();
             
             _gameStateMachine.Enter<GameLoopState>().Forget();
         }
@@ -67,12 +64,7 @@ namespace App.Scripts.Scenes.GameScene.States
 
         private void RestartAll()
         {
-            foreach (IGeneralRestartable restartable in _generalRestartables)
-            {
-                restartable.Restart();
-            }
-
-            foreach (ICurrentLevelRestartable restartable in _currentLevelRestartables)
+            foreach (IRestartable restartable in _generalRestartables)
             {
                 restartable.Restart();
             }

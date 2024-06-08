@@ -1,6 +1,4 @@
-﻿using System;
-using App.Scripts.Scenes.GameScene.Features.Components;
-using App.Scripts.Scenes.GameScene.Features.Effects.ObjectPool;
+﻿using App.Scripts.Scenes.GameScene.Features.Effects.ObjectPool;
 using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Effects
@@ -15,20 +13,9 @@ namespace App.Scripts.Scenes.GameScene.Features.Effects
             _particlesMainModule = ParticleSystem.main;
         }
         
-        public override float Scale
+        public new float Scale
         {
-            get => _particlesMainModule.startSize.constant;
             set => _particlesMainModule.startSize = value;
-        }
-
-        public override void PlayEffect()
-        {
-            ParticleSystem.Play();
-        }
-
-        public override void StopEffect()
-        {
-            ParticleSystem.Stop();
         }
     }
 }
