@@ -40,7 +40,6 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
             BindZenjectPool<OnTopSprites, OnTopSprites.Pool>(PoolTypeId.OnTopSprite);
             BindZenjectPool<BoostView, BoostView.Pool>(PoolTypeId.Boosts);
             BindZenjectPool<BulletView, BulletView.Pool>(PoolTypeId.Bullets);
-            BindZenjectPool<BulletEffectView, BulletEffectView.Pool>(PoolTypeId.BulletEffect);
             BindZenjectPool<BallView, BallView.Pool>(PoolTypeId.BallView);
             BindZenjectPool<LaserEffect, LaserEffect.Pool>(PoolTypeId.Laser);
             BindZenjectPool<PlazmaEffect, PlazmaEffect.Pool>(PoolTypeId.Plazma);
@@ -48,6 +47,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
 
             BindOwnPool<CircleEffects>();
             BindOwnPool<ExplosionEffect>();
+            BindOwnPool<BulletEffectView>();
 
             Container
                 .Bind<IKeyObjectPool<IEffect>>()

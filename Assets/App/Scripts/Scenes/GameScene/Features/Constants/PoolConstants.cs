@@ -2,6 +2,6 @@
 {
     public static class PoolConstants
     {
-        public static string CircleEffectKey = "circleEffect";
+        public static string BulletEffectKey = "bulletEffect";
     }
 }

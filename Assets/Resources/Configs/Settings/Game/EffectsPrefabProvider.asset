@@ -18,6 +18,7 @@ MonoBehaviour:
     ReferencedUnityObjects:
     - {fileID: 8910909405961740457, guid: 044e1a9c74b748548b8acfd2c24c68f1, type: 3}
     - {fileID: 3123562649251334629, guid: d2e43e720584388498a15751b0507a76, type: 3}
+    - {fileID: 4012334311179545399, guid: d8a2216d67968424ab4de5564823df95, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -36,7 +37,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 2
+      Data: 3
     - Name: 
       Entry: 7
       Data: 
@@ -97,6 +98,40 @@ MonoBehaviour:
     - Name: PoolParentName
       Entry: 1
       Data: ExplosionEffect
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 7
+      Data: 6|System.RuntimeType, mscorlib
+    - Name: 
+      Entry: 1
+      Data: App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.Bullets.BulletEffectView,
+        Game
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: $v
+      Entry: 7
+      Data: 7|App.Scripts.Scenes.GameScene.Features.Effects.EffectData, Game
+    - Name: Prefab
+      Entry: 10
+      Data: 2
+    - Name: InitialSize
+      Entry: 3
+      Data: 6
+    - Name: PoolKey
+      Entry: 1
+      Data: bulletEffect
+    - Name: PoolParentName
+      Entry: 1
+      Data: BulletEffect
     - Name: 
       Entry: 8
       Data: 
