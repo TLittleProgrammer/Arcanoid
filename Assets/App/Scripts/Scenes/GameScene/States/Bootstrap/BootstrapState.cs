@@ -14,7 +14,7 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
 
         public UniTask Enter()
         {
-            _stateMachine.Enter<BootstrapServiceActivatorState>().Forget();
+            _stateMachine.Enter<BootstrapBehaviourTreeState>().Forget();
             
             return UniTask.CompletedTask;
         }

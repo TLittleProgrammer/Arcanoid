@@ -48,6 +48,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
             BindZenjectPool<BirdView, BirdView.Pool>(PoolTypeId.BirdView);
 
             BindOwnPool<CircleEffects>();
+            BindOwnPool<ExplosionEffect>();
 
             Container
                 .Bind<IKeyObjectPool<IEffect>>()
@@ -56,7 +57,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
                 .NonLazy();
         }
 
-        private void BindOwnPool<TEffectPool>() where TEffectPool : AbstractEffect
+        private void BindOwnPool<TEffectPool>() where TEffectPool : MonoEffect
         {
             EffectData effectData = _effectsPrefabProvider.Provider[typeof(TEffectPool)];
 

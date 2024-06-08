@@ -17,6 +17,7 @@ MonoBehaviour:
     SerializedBytes: 
     ReferencedUnityObjects:
     - {fileID: 8910909405961740457, guid: 044e1a9c74b748548b8acfd2c24c68f1, type: 3}
+    - {fileID: 3123562649251334629, guid: d2e43e720584388498a15751b0507a76, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -35,7 +36,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 1
+      Data: 2
     - Name: 
       Entry: 7
       Data: 
@@ -59,10 +60,43 @@ MonoBehaviour:
       Data: 10
     - Name: PoolKey
       Entry: 1
-      Data: circleEffect
+      Data: circleEffects
     - Name: PoolParentName
       Entry: 1
       Data: CircleEffect
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 7
+      Data: 4|System.RuntimeType, mscorlib
+    - Name: 
+      Entry: 1
+      Data: App.Scripts.Scenes.GameScene.Features.Effects.ExplosionEffect, Game
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: $v
+      Entry: 7
+      Data: 5|App.Scripts.Scenes.GameScene.Features.Effects.EffectData, Game
+    - Name: Prefab
+      Entry: 10
+      Data: 1
+    - Name: InitialSize
+      Entry: 3
+      Data: 10
+    - Name: PoolKey
+      Entry: 1
+      Data: explosionEffect
+    - Name: PoolParentName
+      Entry: 1
+      Data: ExplosionEffect
     - Name: 
       Entry: 8
       Data: 

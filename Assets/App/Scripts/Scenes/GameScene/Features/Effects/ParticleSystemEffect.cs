@@ -13,7 +13,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Effects
             _particlesMainModule = ParticleSystem.main;
         }
         
-        public float Scale
+        public new float Scale
         {
             set => _particlesMainModule.startSize = value;
         }

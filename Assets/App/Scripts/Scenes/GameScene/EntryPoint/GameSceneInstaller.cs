@@ -89,6 +89,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             CommandsInstaller.Install(Container);
             MVVMInstaller.Install(Container, _openMenuPopupButton);
             MiniGunInstaller.Install(Container);
+            ConditionsInstaller.Install(Container);
             
             Container.BindInterfacesAndSelfTo<TweenersLocator>().AsSingle();
             Container.Bind<IScoreAnimationService>().To<ScoreAnimationService>().AsSingle();
