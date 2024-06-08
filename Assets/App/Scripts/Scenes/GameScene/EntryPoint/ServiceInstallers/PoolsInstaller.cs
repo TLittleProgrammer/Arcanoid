@@ -42,12 +42,12 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
             BindZenjectPool<BulletView, BulletView.Pool>(PoolTypeId.Bullets);
             BindZenjectPool<BallView, BallView.Pool>(PoolTypeId.BallView);
             BindZenjectPool<LaserEffect, LaserEffect.Pool>(PoolTypeId.Laser);
-            BindZenjectPool<PlazmaEffect, PlazmaEffect.Pool>(PoolTypeId.Plazma);
             BindZenjectPool<BirdView, BirdView.Pool>(PoolTypeId.BirdView);
 
             BindOwnPool<CircleEffects>();
             BindOwnPool<ExplosionEffect>();
             BindOwnPool<BulletEffectView>();
+            BindOwnPool<PlazmaEffect>();
 
             Container
                 .Bind<IKeyObjectPool<IEffect>>()

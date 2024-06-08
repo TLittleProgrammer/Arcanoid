@@ -3,5 +3,6 @@
     public static class PoolConstants
     {
         public static string BulletEffectKey = "bulletEffect";
+        public static string PlazmaEffectKey = "plazmaEffect";
     }
 }

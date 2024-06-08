@@ -9,7 +9,6 @@
         Bullets         = 5,
         BallView        = 7,
         Laser           = 8,
-        Plazma          = 9,
         BirdView        = 11,
     }
 }
