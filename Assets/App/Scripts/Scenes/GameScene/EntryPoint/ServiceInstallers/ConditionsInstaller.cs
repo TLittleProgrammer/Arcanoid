@@ -1,4 +1,5 @@
 ﻿using App.Scripts.Scenes.GameScene.Features.Effects.Conditions;
+using App.Scripts.Scenes.GameScene.Features.Effects.Conditions.Concrete;
 using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
@@ -8,7 +9,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
         public override void InstallBindings()
         {
             Container.BindInterfacesAndSelfTo<CircleCondition>().AsSingle();
-            Container.BindInterfacesAndSelfTo<ExplosionCondition>().AsSingle();
+            Container.BindInterfacesAndSelfTo<ExplosionByFireballCondition>().AsSingle();
             
             Container.BindInterfacesAndSelfTo<ConditionService>().AsSingle();
         }

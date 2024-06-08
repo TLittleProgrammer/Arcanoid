@@ -106,6 +106,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.BindInterfacesAndSelfTo<LevelDataChooser>().AsSingle();
             Container.BindInterfacesAndSelfTo<LevelLoadService>().AsSingle();
             Container.BindInterfacesAndSelfTo<UpdateServiceForNewLevel>().AsSingle();
+            Container.BindInterfacesAndSelfTo<EffectActivator>().AsSingle();
 
             Container.BindInterfacesTo<GridPositionResolver>().AsSingle().WithArguments(_header);
             Container.Bind<IShapePositionChecker>().To<PlayerShapePositionChecker>().AsSingle().WithArguments(_playerShape);

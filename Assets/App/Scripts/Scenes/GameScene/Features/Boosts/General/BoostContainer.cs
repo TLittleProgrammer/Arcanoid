@@ -87,6 +87,11 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General
             CheckReplaceableBoosts(boostTypeId);
         }
 
+        public bool BoostIsActive(BoostTypeId boostTypeId)
+        {
+            return _viewsDictionary.ContainsKey(boostTypeId);
+        }
+
         private bool TryUpdateTimerForActivatedBoosts(BoostTypeId boostTypeId)
         {
             BoostData boostData = _boosts.FirstOrDefault(x => x.BoostTypeId == boostTypeId); 

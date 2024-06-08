@@ -6,6 +6,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Effects.Conditions
 {
     public interface IConditionService
     {
-        bool Execute(Type conditionType, IEntityView entityView, Collision2D collision2D);
+        bool Execute(Type conditionType, IEntityView entityView, Collider2D collider2D);
     }
 }

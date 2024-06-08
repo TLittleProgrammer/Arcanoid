@@ -15,7 +15,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Effects.Conditions
             _conditions = conditions.ToDictionary(x => x.GetType(), x => x);
         }
 
-        public bool Execute(Type conditionType, IEntityView entityView, Collision2D collision2D)
+        public bool Execute(Type conditionType, IEntityView entityView, Collider2D collision2D)
         {
             if (_conditions.TryGetValue(conditionType, out ICondition condition))
             {

@@ -15,8 +15,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.View
         int EntityId { get; set; }
         public int GridPositionX { get; set; }
         public int GridPositionY { get; set; }
-        event Action<IEntityView, Collision2D> Colliderable;
-        
+        event Action<IEntityView, Collider2D> Colliderable;
+
         public class Factory : PlaceholderFactory<string, IEntityView>
         {
             

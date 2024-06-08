@@ -15,11 +15,11 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.View
         public int GridPositionX { get; set; }
         public int GridPositionY { get; set; }
         public GameObject GameObject => gameObject;
-        public event Action<IEntityView, Collision2D> Colliderable;
+        public event Action<IEntityView, Collider2D> Colliderable;
 
         private void OnCollisionEnter2D(Collision2D col)
         {
-            Colliderable?.Invoke(this, col);
+            Colliderable?.Invoke(this, col.collider);
         }
 
         public Sprite MainSprite

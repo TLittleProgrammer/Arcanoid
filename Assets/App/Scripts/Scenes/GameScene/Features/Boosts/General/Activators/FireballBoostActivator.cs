@@ -19,6 +19,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
         private readonly IEntityDestroyable _entityDestroyable;
         private readonly ILevelViewUpdater _levelViewUpdater;
         private readonly IBallsService _ballsService;
+        private readonly IEffectActivator _effectActivator;
         private bool _isActive = false;
         
         public FireballBoostActivator(
@@ -26,13 +27,15 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
             ILevelLoader levelLoader,
             IEntityDestroyable entityDestroyable,
             ILevelViewUpdater levelViewUpdater,
-            IBallsService ballsService)
+            IBallsService ballsService,
+            IEffectActivator effectActivator)
         {
             _boostContainer = boostContainer;
             _levelLoader = levelLoader;
             _entityDestroyable = entityDestroyable;
             _levelViewUpdater = levelViewUpdater;
             _ballsService = ballsService;
+            _effectActivator = effectActivator;
 
             _boostContainer.BoostEnded += OnBoostEnded;
         }
@@ -93,18 +96,21 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
 
                 if (viewBounds.Intersects(ballBounds) && _levelViewUpdater.LevelGridItemData[view.GridPositionX, view.GridPositionY].CurrentHealth > 0)
                 {
-                    DestroyView(view);
+                    DestroyView(view, ballView);
                 }
             }
         }
 
-        private void DestroyView(IEntityView view)
+        private void DestroyView(IEntityView view, BallView ballView)
         {
             view.BoxCollider2D.isTrigger = false;
             view.BoxCollider2D.enabled = false;
 
             GridItemData gridItemData = _levelViewUpdater.LevelGridItemData[view.GridPositionX, view.GridPositionY];
             gridItemData.CurrentHealth = -1;
+            
+            _effectActivator.ActivateEffect(view, ballView.Collider2D);
+            
             _entityDestroyable.Destroy(gridItemData, view);
         }
 
