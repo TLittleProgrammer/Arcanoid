@@ -25,6 +25,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
         public ShapeMoverSettings ShapeMoverSettings;
         public EffectCollisionProvider EffectCollisionProvider;
         public EffectsPrefabProvider EffectsPrefabProvider;
+        public DestroyEntityEffectMapping DestroyEntityEffectMapping;
 
         public override void InstallBindings()
         {
@@ -42,6 +43,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.Bind<ShapeMoverSettings>().FromInstance(ShapeMoverSettings).IfNotBound();
             Container.Bind<EffectCollisionProvider>().FromInstance(EffectCollisionProvider).IfNotBound();
             Container.Bind<EffectsPrefabProvider>().FromInstance(EffectsPrefabProvider).IfNotBound();
+            Container.Bind<DestroyEntityEffectMapping>().FromInstance(DestroyEntityEffectMapping).IfNotBound();
         }
     }
 }

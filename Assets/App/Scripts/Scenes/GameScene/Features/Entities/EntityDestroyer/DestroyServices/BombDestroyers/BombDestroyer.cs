@@ -1,33 +1,53 @@
-﻿using App.Scripts.Scenes.GameScene.Features.Effects;
+﻿using System.Collections.Generic;
+using App.Scripts.External.ObjectPool;
+using App.Scripts.Scenes.GameScene.Features.Effects;
 using App.Scripts.Scenes.GameScene.Features.Entities.View;
 using App.Scripts.Scenes.GameScene.Features.Grid;
 using App.Scripts.Scenes.GameScene.Features.Levels.General.View;
-using UnityEngine;
+using App.Scripts.Scenes.GameScene.Features.Settings;
 
 namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.DestroyServices.BombDestroyers
 {
     public abstract class BombDestroyer : DestroyService
     {
-        private readonly ExplosionEffect.Pool _explosionsEffectPool;
-        public abstract override void Destroy(GridItemData gridItemData, IEntityView entityView);
+        private readonly DestroyEntityEffectMapping _destroyEntityEffectMapping;
+        private readonly IKeyObjectPool<IEffect> _keyObjectPool;
 
         protected BombDestroyer(
             ILevelViewUpdater levelViewUpdater,
-            ExplosionEffect.Pool explosionsEffectPool) : base(levelViewUpdater)
+            DestroyEntityEffectMapping destroyEntityEffectMapping,
+            IKeyObjectPool<IEffect> keyObjectPool) : base(levelViewUpdater)
         {
-            _explosionsEffectPool = explosionsEffectPool;
+            _destroyEntityEffectMapping = destroyEntityEffectMapping;
+            _keyObjectPool = keyObjectPool;
         }
+        
+        private Dictionary<string, List<string>> EffectsByIdMapping => _destroyEntityEffectMapping.DestroyEffectsMapping;
 
         protected void SetExplosionsEffect(IEntityView entityView)
         {
-            float bombSize = entityView.GameObject.transform.localScale.x;
-            
-            ExplosionEffect effect = _explosionsEffectPool.Spawn();
-            ParticleSystem.MainModule explosionMain = effect.Explosion.main;
-            explosionMain.startSizeX = bombSize * 1.431f;
+            string id = entityView.EntityId.ToString();
 
-            effect.transform.position = entityView.Position;
-            effect.Explosion.Play();
+            if (EffectsByIdMapping.ContainsKey(id))
+            {
+                foreach (string effectName in EffectsByIdMapping[id])
+                {
+                    IEffect effect = _keyObjectPool.Spawn(effectName);
+                    
+                    effect.PlayEffect(entityView.GameObject.transform, entityView.GameObject.transform);
+                    effect.Disabled += needDisableEffect =>
+                    {
+                        OnEffectDisabled(needDisableEffect, effectName);
+                    };
+                }
+            }
         }
+
+        private void OnEffectDisabled(IEffect effect, string effectName)
+        {
+            _keyObjectPool.Despawn(effectName, effect);
+        }
+
+        public abstract override void Destroy(GridItemData gridItemData, IEntityView entityView);
     }
 }

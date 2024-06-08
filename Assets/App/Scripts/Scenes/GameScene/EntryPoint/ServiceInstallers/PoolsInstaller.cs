@@ -44,7 +44,6 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
             BindZenjectPool<BallView, BallView.Pool>(PoolTypeId.BallView);
             BindZenjectPool<LaserEffect, LaserEffect.Pool>(PoolTypeId.Laser);
             BindZenjectPool<PlazmaEffect, PlazmaEffect.Pool>(PoolTypeId.Plazma);
-            BindZenjectPool<ExplosionEffect, ExplosionEffect.Pool>(PoolTypeId.Explosion);
             BindZenjectPool<BirdView, BirdView.Pool>(PoolTypeId.BirdView);
 
             BindOwnPool<CircleEffects>();

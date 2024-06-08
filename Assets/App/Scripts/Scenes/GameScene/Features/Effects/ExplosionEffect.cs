@@ -7,11 +7,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Effects
     {
         public ParticleSystem Explosion;
 
-        public class Pool : MonoMemoryPool<ExplosionEffect>
-        {
-            
-        }
-
         public override void PlayEffect(Transform initialEntityTransform, Transform colliderEntityTransform)
         {
             ParticleSystem.MainModule explosionMain = Explosion.main;
