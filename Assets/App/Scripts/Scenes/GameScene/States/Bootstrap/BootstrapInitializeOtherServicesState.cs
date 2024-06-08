@@ -1,8 +1,5 @@
 ﻿using App.Scripts.External.GameStateMachine;
-using App.Scripts.General.Constants;
 using App.Scripts.General.Levels.LevelPackInfoService;
-using App.Scripts.General.Popup.AssetManagment;
-using App.Scripts.Scenes.GameScene.Features.Entities.Ball;
 using App.Scripts.Scenes.GameScene.Features.Entities.Walls;
 using App.Scripts.Scenes.GameScene.Features.Levels.General.Animations;
 using App.Scripts.Scenes.GameScene.States.Gameloop;
@@ -14,18 +11,18 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
     {
         private readonly IStateMachine _stateMachine;
         private readonly IWallLoader _wallLoader;
-        private readonly IShowLevelAnimation _showLevelAnimation;
+        private readonly IShowLevelService _showLevelService;
         private readonly ILevelPackInfoService _levelPackInfoService;
 
         public BootstrapInitializeOtherServicesState(
             IStateMachine stateMachine,
             IWallLoader wallLoader,
-            IShowLevelAnimation showLevelAnimation,
+            IShowLevelService showLevelService,
             ILevelPackInfoService levelPackInfoService)
         {
             _stateMachine = stateMachine;
             _wallLoader = wallLoader;
-            _showLevelAnimation = showLevelAnimation;
+            _showLevelService = showLevelService;
             _levelPackInfoService = levelPackInfoService;
         }
         
@@ -35,7 +32,8 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
 
             if (!_levelPackInfoService.NeedContinueLevel)
             {
-                await _showLevelAnimation.Show();
+                await UniTask.Delay(1000);
+                await _showLevelService.Show();
             }
 
             _stateMachine.Enter<GameLoopState>().Forget();

@@ -90,6 +90,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             MVVMInstaller.Install(Container, _openMenuPopupButton);
             MiniGunInstaller.Install(Container);
             ConditionsInstaller.Install(Container);
+            ShowLevelInstaller.Install(Container);
             
             Container.BindInterfacesAndSelfTo<TweenersLocator>().AsSingle();
             Container.Bind<IScoreAnimationService>().To<ScoreAnimationService>().AsSingle();
@@ -118,7 +119,6 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.Bind<IWallLoader>().To<WallLoader>().AsSingle().WithArguments(_wallPrefab);
             Container.Bind<IEntityViewService>().To<EntityViewService>().AsSingle();
             Container.Bind<IServicesActivator>().To<ServiceActivator>().AsSingle();
-            Container.Bind<IShowLevelAnimation>().To<SimpleShowLevelAnimation>().AsSingle();
             Container.Bind<IGetDamageService>().To<GetDamageService>().AsSingle();
             Container.BindInterfacesAndSelfTo<BallsService>().AsSingle().WhenNotInjectedInto<GameLoopState>();
             Container.BindInterfacesAndSelfTo<LevelPackProgressService>().AsSingle();
