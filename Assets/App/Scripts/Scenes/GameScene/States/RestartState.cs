@@ -17,7 +17,7 @@ namespace App.Scripts.Scenes.GameScene.States
         private readonly List<ICurrentLevelRestartable> _currentLevelRestartables;
         private readonly IStateMachine _gameStateMachine;
         private readonly ITweenersLocator _tweenersLocator;
-        private readonly IShowLevelAnimation _showLevelAnimation;
+        private readonly IShowLevelService _showLevelAnimation;
         private readonly IBallsService _ballsService;
         private readonly List<IGeneralRestartable> _generalRestartables;
         private readonly IPopupService _popupService;
@@ -27,7 +27,7 @@ namespace App.Scripts.Scenes.GameScene.States
             List<ICurrentLevelRestartable> currentLevelRestartables,
             IStateMachine gameStateMachine,
             ITweenersLocator tweenersLocator,
-            IShowLevelAnimation showLevelAnimation,
+            IShowLevelService showLevelAnimation,
             IBallsService ballsService,
             List<IGeneralRestartable> generalRestartables,
             IPopupService popupService
