@@ -17,6 +17,7 @@ using App.Scripts.Scenes.GameScene.Features.Damage;
 using App.Scripts.Scenes.GameScene.Features.Dotween;
 using App.Scripts.Scenes.GameScene.Features.Effects;
 using App.Scripts.Scenes.GameScene.Features.Entities.Ball;
+using App.Scripts.Scenes.GameScene.Features.Entities.Ball.Systems;
 using App.Scripts.Scenes.GameScene.Features.Entities.Bird;
 using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape;
 using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.Collisions;
@@ -108,6 +109,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.BindInterfacesAndSelfTo<LevelLoadService>().AsSingle();
             Container.BindInterfacesAndSelfTo<UpdateServiceForNewLevel>().AsSingle();
             Container.BindInterfacesAndSelfTo<EffectActivator>().AsSingle();
+            Container.BindInterfacesAndSelfTo<BallsMovementSystem>().AsSingle();
 
             Container.BindInterfacesTo<GridPositionResolver>().AsSingle().WithArguments(_header);
             Container.Bind<IShapePositionChecker>().To<PlayerShapePositionChecker>().AsSingle().WithArguments(_playerShape);

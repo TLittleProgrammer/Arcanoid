@@ -22,7 +22,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
         {
             _isActive = true;
 
-            foreach ((BallView view, var garbarge)in _ballsService.Balls)
+            foreach (BallView view in _ballsService.Balls)
             {
                 view.Collidered += OnCollidered;
             }
@@ -50,7 +50,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
             {
                 _isActive = false;
 
-                foreach ((BallView view, var garbarge) in _ballsService.Balls)
+                foreach (BallView view in _ballsService.Balls)
                 {
                     _ballsService.Fly(view);
                     view.Collidered -= OnCollidered;

@@ -20,7 +20,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball.Movement
             IsFreeFlight = false;
         }
 
-        public bool IsFreeFlight { get; set; }
+        public bool IsFreeFlight { get; private set; }
         public Vector2 Velocity => _ballFreeFlightMover.Velocity;
 
         public void Tick()

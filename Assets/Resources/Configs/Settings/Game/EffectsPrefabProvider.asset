@@ -92,7 +92,7 @@ MonoBehaviour:
       Data: 1
     - Name: InitialSize
       Entry: 3
-      Data: 10
+      Data: 60
     - Name: PoolKey
       Entry: 1
       Data: explosionEffect
