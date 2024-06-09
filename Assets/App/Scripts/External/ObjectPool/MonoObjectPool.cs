@@ -7,11 +7,12 @@ namespace App.Scripts.External.ObjectPool
     {
         private Transform _parent;
 
-        public MonoObjectPool(Func<TMono> spawner, int initialSize, string parentName, string key) : base(spawner, initialSize)
+        public MonoObjectPool(Func<TMono> spawner, int initialSize, string parentName, string key) : base(spawner)
         {
             Key = key;
 
             Initialize(parentName);
+            Resize(initialSize);
         }
 
         private void Initialize(string parentName)
