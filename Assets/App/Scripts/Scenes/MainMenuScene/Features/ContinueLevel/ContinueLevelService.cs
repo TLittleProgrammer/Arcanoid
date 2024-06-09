@@ -16,20 +16,17 @@ namespace App.Scripts.Scenes.MainMenuScene.Features.ContinueLevel
         private readonly ISaveLoadService _saveLoadService;
         private readonly IStateMachine _stateMachine;
         private readonly ILevelPackInfoService _levelPackInfoService;
-        private readonly EnergyViewModel _energyViewModel;
 
         public ContinueLevelService(
             Button playButton,
             ISaveLoadService saveLoadService,
             IStateMachine stateMachine,
-            ILevelPackInfoService levelPackInfoService,
-            EnergyViewModel energyViewModel)
+            ILevelPackInfoService levelPackInfoService)
         {
             _playButton = playButton;
             _saveLoadService = saveLoadService;
             _stateMachine = stateMachine;
             _levelPackInfoService = levelPackInfoService;
-            _energyViewModel = energyViewModel;
         }
 
         public void Initialize()
@@ -51,8 +48,6 @@ namespace App.Scripts.Scenes.MainMenuScene.Features.ContinueLevel
                 {
                     NeedContinue = true
                 };
-
-            _energyViewModel.Dispose();
 
             _stateMachine.Enter<LoadingSceneState, string>(SceneNaming.Game);
         }

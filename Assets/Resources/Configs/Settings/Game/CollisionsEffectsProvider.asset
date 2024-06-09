@@ -1653,11 +1653,15 @@ MonoBehaviour:
       Data: 143|App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
         Game
     - Name: Condition
-      Entry: 6
+      Entry: 7
+      Data: 144|App.Scripts.Scenes.GameScene.Features.Effects.Conditions.Concrete.CircleCondition,
+        Game
+    - Name: 
+      Entry: 8
       Data: 
     - Name: EffectNames
       Entry: 7
-      Data: 144|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 145|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -1675,18 +1679,18 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 145|App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
+      Data: 146|App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions.ConditionToEffectMapping,
         Game
     - Name: Condition
       Entry: 7
-      Data: 146|App.Scripts.Scenes.GameScene.Features.Effects.Conditions.Concrete.ExplosionByFireballCondition,
+      Data: 147|App.Scripts.Scenes.GameScene.Features.Effects.Conditions.Concrete.ExplosionByFireballCondition,
         Game
     - Name: 
       Entry: 8
       Data: 
     - Name: EffectNames
       Entry: 7
-      Data: 147|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 148|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1

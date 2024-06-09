@@ -19,7 +19,7 @@ namespace App.Scripts.Scenes.MainMenuScene.EntryPoint.Initializers
         
         public void Initialize()
         {
-            _energyViewModel.AddView(_energyView);
+            _energyView.Initialize(_energyViewModel);
         }
     }
 }
