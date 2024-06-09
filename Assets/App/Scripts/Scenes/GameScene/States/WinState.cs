@@ -46,14 +46,13 @@ namespace App.Scripts.Scenes.GameScene.States
 
         public async UniTask Exit()
         {
-            _energyViewModel.RemoveView(_winPopupView.EnergyView);
-            
             await UniTask.CompletedTask;
         }
+        
         private void ShowPopup()
         {
             _winPopupView = _popupService.Show<WinPopupView>();
-            _energyViewModel.AddView(_winPopupView.EnergyView);
+            _winPopupView.EnergyView.Initialize(_energyViewModel);
             
             _winViewModel.InstallView(_winPopupView);
         }

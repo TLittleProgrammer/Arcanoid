@@ -79,6 +79,12 @@ namespace App.Scripts.General.Levels.LevelPackInfoService
                 return false;
             }
 
+            if (_levelPackProgressDataService.GetPassedLevelsForPackIndex(_levelPackTransferData.PackIndex + 1) != 0)
+            {
+                return false;
+            }
+            
+
             return true;
         }
 

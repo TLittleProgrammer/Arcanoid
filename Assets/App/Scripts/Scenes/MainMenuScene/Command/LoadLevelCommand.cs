@@ -48,8 +48,6 @@ namespace App.Scripts.Scenes.MainMenuScene.Command
                     PackIndex = itemData.PackIndex
                 };
 
-            _energyViewModel.Dispose();
-
             _stateMachine.Enter<LoadingSceneState, string>(SceneNaming.Game);
         }
     }

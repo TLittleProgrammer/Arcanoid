@@ -1,26 +1,25 @@
 ﻿using System;
 using App.Scripts.General.Energy;
+using App.Scripts.General.Reactive;
 using App.Scripts.General.Time;
 using App.Scripts.General.UserData.Energy;
+using UnityEngine;
 using Zenject;
 
 namespace App.Scripts.General.MVVM.Energy
 {
     public class EnergyModel : IInitializable
     {
+        public readonly ReactiveProperty<int> SecondsToAddEnergy = new();
+        public readonly ReactiveProperty<int> CurrentEnergy = new();
+        
         private readonly ITimeTicker _timeTicker;
         private readonly EnergySettings _energySettings;
         private readonly IEnergyDataService _energyDataService;
 
         private bool _isTickes;
-        private int _secondsToAddEnergy;
 
-        public event Action<int> RemainingSeconds;
-        public event Action<int, int> ValueChanged;
-
-        public int SecondsRemaining => _secondsToAddEnergy;
         public int MaxEnergy => _energySettings.MaxEnergyCount;
-        public int CurrentEnergy => _energyDataService.CurrentValue;
 
         public EnergyModel(
             ITimeTicker timeTicker,
@@ -40,22 +39,21 @@ namespace App.Scripts.General.MVVM.Energy
                 _timeTicker.SecondsTicked += OnSecondsTicked;
             }
             
-            _energyDataService.ValueChanged += OnValueChanged;
-            _secondsToAddEnergy = _energySettings.SecondsToRecoveryEnergy;
+            _energyDataService.ValueChanged += OnEnergyValueChanged;
+            CurrentEnergy.Value = _energyDataService.CurrentValue;
+            SecondsToAddEnergy.Value = _energySettings.SecondsToRecoveryEnergy;
         }
 
         public void SetRemainingSeconds(int seconds)
         {
-            _secondsToAddEnergy = seconds;
+            SecondsToAddEnergy.Value = seconds;
         }
 
         private void OnSecondsTicked()
         {
-            _secondsToAddEnergy--;
+            SecondsToAddEnergy.Value--;
             
-            RemainingSeconds?.Invoke(_secondsToAddEnergy);
-            
-            if (_secondsToAddEnergy <= 0)
+            if (SecondsToAddEnergy.Value <= 0)
             {
                 _isTickes = false;
                 _timeTicker.SecondsTicked -= OnSecondsTicked;
@@ -63,9 +61,9 @@ namespace App.Scripts.General.MVVM.Energy
             }
         }
 
-        private void OnValueChanged(int newValue)
+        private void OnEnergyValueChanged(int newValue)
         {
-            ValueChanged?.Invoke(newValue, _energySettings.MaxEnergyCount);
+            CurrentEnergy.Value = newValue;
             
             if (newValue >= _energySettings.MaxEnergyCount)
             {
@@ -79,7 +77,7 @@ namespace App.Scripts.General.MVVM.Energy
                     _timeTicker.SecondsTicked += OnSecondsTicked;
                 } 
                 
-                _secondsToAddEnergy = _energySettings.SecondsToRecoveryEnergy;
+                SecondsToAddEnergy.Value = _energySettings.SecondsToRecoveryEnergy;
             }
         }
     }
