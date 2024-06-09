@@ -82,10 +82,9 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
 
         private void GoThroughBallViews(IEntityView view)
         {
-            List<BallView> ballViews = _ballsService.Balls.Keys.ToList();
             Bounds viewBounds = view.BoxCollider2D.bounds;
 
-            foreach (BallView ballView in ballViews)
+            foreach (BallView ballView in _ballsService.Balls.ToArray())
             {
                 if (!ballView.gameObject.activeSelf)
                 {

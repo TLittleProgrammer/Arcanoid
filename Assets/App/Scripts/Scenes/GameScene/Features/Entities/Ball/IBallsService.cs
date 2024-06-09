@@ -8,7 +8,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
 {
     public interface IBallsService : ITickable, IGeneralRestartable
     {
-        Dictionary<BallView, IBallMovementService> Balls { get; }
+        List<BallView> Balls { get; }
         event Action<BallView> BallAdded;
         
         void AddBall(BallView ballView, bool isFreeFlight = false);

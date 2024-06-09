@@ -7,7 +7,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball.Movement
 {
     public interface IBallMovementService : ITickable, IRestartable
     {
-        bool IsFreeFlight { get; set; }
+        bool IsFreeFlight { get; }
         Vector2 Velocity { get; }
         void UpdateSpeed(float progress);
         void GoFly();

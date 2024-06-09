@@ -3,6 +3,7 @@ using App.Scripts.Scenes.GameScene.Features.Boosts.General;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General.Interfaces;
 using App.Scripts.Scenes.GameScene.Features.Entities.Ball;
 using App.Scripts.Scenes.GameScene.Features.Entities.Ball.Movement;
+using App.Scripts.Scenes.GameScene.Features.Entities.Ball.Systems;
 using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape;
 using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.PositionChecker;
 using App.Scripts.Scenes.GameScene.Features.Entities.View;
@@ -21,6 +22,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.Autopilot.Strategies
         private readonly IAutopilotMoveService _autopilotMoveService;
         private readonly PlayerView _playerView;
         private readonly IShapePositionChecker _shapePositionChecker;
+        private readonly IBallsMovementSystem _ballsMovementSystem;
 
         private bool _isMoving;
         private Vector3 _targetPosition;
@@ -31,7 +33,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.Autopilot.Strategies
             ILevelViewUpdater levelViewUpdater,
             IAutopilotMoveService autopilotMoveService,
             PlayerView playerView,
-            IShapePositionChecker shapePositionChecker)
+            IShapePositionChecker shapePositionChecker,
+            IBallsMovementSystem ballsMovementSystem)
         {
             _ballsService = ballsService;
             _levelLoader = levelLoader;
@@ -39,6 +42,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.Autopilot.Strategies
             _autopilotMoveService = autopilotMoveService;
             _playerView = playerView;
             _shapePositionChecker = shapePositionChecker;
+            _ballsMovementSystem = ballsMovementSystem;
         }
         
         public NodeStatus Process()
@@ -83,7 +87,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.Autopilot.Strategies
 
         private void FlyAllActiveBalls()
         {
-            foreach ((BallView ballView, IBallMovementService movementService) in _ballsService.Balls)
+            foreach (BallView ballView in _ballsService.Balls)
             {
                 if (ballView.gameObject.activeSelf)
                 {
@@ -146,12 +150,13 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.Autopilot.Strategies
 
         private void CheckAllBalls(ref int activeBallsCounter, ref int notFreeFlightBallsCounter)
         {
-            foreach ((BallView ballView, IBallMovementService movementService) in _ballsService.Balls)
+            foreach (BallView ballView in _ballsService.Balls)
             {
                 if (ballView.gameObject.activeSelf)
                 {
                     activeBallsCounter++;
 
+                    var movementService = _ballsMovementSystem.GetMovementService(ballView);
                     if (!movementService.IsFreeFlight)
                     {
                         notFreeFlightBallsCounter++;

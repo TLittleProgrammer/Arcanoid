@@ -6,8 +6,7 @@ using App.Scripts.Scenes.GameScene.Features.Components;
 using App.Scripts.Scenes.GameScene.Features.Damage;
 using App.Scripts.Scenes.GameScene.Features.Entities.Ball.Movement;
 using App.Scripts.Scenes.GameScene.Features.Entities.Ball.PositionChecker;
-using App.Scripts.Scenes.GameScene.Features.Factories;
-using App.Scripts.Scenes.GameScene.Features.Factories.Ball;
+using App.Scripts.Scenes.GameScene.Features.Entities.Ball.Systems;
 using App.Scripts.Scenes.GameScene.Features.Input;
 using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress;
 using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress.Data;
@@ -19,41 +18,36 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
 {
     public class BallsService : IBallsService, IActivable, ILevelProgressSavable, IInitializeByLevelProgress
     {
-        private readonly IGetDamageService _getDamageService;
-        private readonly BallMovementFactory _ballMovementFactory;
-        private readonly BallView.Pool _ballViewPool;
         private readonly float _minBallYPosition;
+        private readonly BallView.Pool _ballViewPool;
+        private readonly IBallsMovementSystem _ballsMovementSystem;
+        private readonly IGetDamageService _getDamageService;
 
-        private readonly List<IBallPositionChecker> _ballsPositionCheckers = new();
-        private float _speedMultiplier;
         private float _levelProgress;
+        private float _speedMultiplier = 1f;
+        private float _lastSpeedMultiplier = 1f;
+        private bool _isActive = true;
         private bool _redBallActivated;
-        private float _lastSpeedMultiplier;
-        private bool _isActive;
+        private readonly List<IBallPositionChecker> _ballsPositionCheckers = new();
 
         public BallsService(
             IScreenInfoProvider screenInfoProvider,
             IGetDamageService getDamageService,
             IClickDetector clickDetector,
-            BallMovementFactory ballMovementFactory,
-            BallView.Pool ballViewPool)
+            BallView.Pool ballViewPool,
+            IBallsMovementSystem ballsMovementSystem)
         {
             _getDamageService = getDamageService;
-            _ballMovementFactory = ballMovementFactory;
             _ballViewPool = ballViewPool;
+            _ballsMovementSystem = ballsMovementSystem;
             _minBallYPosition = -screenInfoProvider.HeightInWorld / 2f;
-            _speedMultiplier = _lastSpeedMultiplier = 1f;
-            _levelProgress = 0f;
-            _isActive = true;
-            
+
             Balls = new();
             clickDetector.MouseUp += OnMouseUp;
         }
 
-        public Dictionary<BallView, IBallMovementService> Balls { get; set; }
+        public List<BallView> Balls { get; }
         public event Action<BallView> BallAdded;
-
-        public float SpeedMultiplier => _speedMultiplier;
 
         public bool IsActive
         {
@@ -62,7 +56,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
             {
                 if (value is false)
                 {
-                    _lastSpeedMultiplier = SpeedMultiplier;
+                    _lastSpeedMultiplier = _speedMultiplier;
                     SetSpeedMultiplier(0f);
                 }
                 else
@@ -74,43 +68,34 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
             }
         }
 
+        public void Tick()
+        {
+            if (!IsActive)
+                return;
+
+            foreach (IBallPositionChecker ballPositionChecker in _ballsPositionCheckers)
+            {
+                ballPositionChecker.Tick();
+            }
+        }
+
         public void AddBall(BallView ballView, bool isFreeFlight = false)
         {
-            if (!Balls.ContainsKey(ballView))
-            {
-                IBallMovementService ballMovement = _ballMovementFactory.Create(ballView);
-                Balls.Add(ballView, ballMovement);
-            }
-            
-            AddBallPositionChecker(ballView);
+            _ballsMovementSystem.AddBall(ballView);
+            Balls.Add(ballView);
+
+            AddBallPositionCheckerForBall(ballView);
             BallAdded?.Invoke(ballView);
 
             ballView.RedBall.gameObject.SetActive(_redBallActivated);
             
             if (isFreeFlight)
             {
-                Balls[ballView].UpdateSpeed(_levelProgress);
-                Balls[ballView].SetSpeedMultiplier(_speedMultiplier);
-                Balls[ballView].GoFly();
-            }
-        }
-
-        public void Tick()
-        {
-            if (!IsActive)
-                return;
-
-            foreach ((BallView ballView, IBallMovementService ballMovementService) in Balls)
-            {
-                if (ballView.gameObject.activeSelf)
-                {
-                    ballMovementService.Tick();
-                }
-            }
-            
-            foreach (IBallPositionChecker ballPositionChecker in _ballsPositionCheckers)
-            {
-                ballPositionChecker.Tick();
+                var movementService = _ballsMovementSystem.GetMovementService(ballView);
+                
+                movementService.UpdateSpeed(_levelProgress);
+                movementService.SetSpeedMultiplier(_speedMultiplier);
+                movementService.GoFly();
             }
         }
 
@@ -119,8 +104,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
             await UniTask.Yield(PlayerLoopTiming.LastUpdate);
             
             _ballsPositionCheckers.Remove(_ballsPositionCheckers.First(x => x.BallPositionable.Equals(ball)));
-            BallView ballView = Balls.First(x => x.Key.Position.Equals(ball.Position)).Key;
-
+            BallView ballView = Balls.First(x => x.Position.Equals(ball.Position));
 
             if (!_ballViewPool.InactiveItems.Contains(ballView))
             {
@@ -139,8 +123,9 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
         {
             _levelProgress = progress;
 
-            foreach ((var garbarge, IBallMovementService movementService) in Balls)
+            foreach (BallView view in Balls)
             {
+                var movementService = _ballsMovementSystem.GetMovementService(view);
                 movementService.UpdateSpeed(_levelProgress);
             }
         }
@@ -149,7 +134,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
         {
             _redBallActivated = activated;
             
-            foreach ((BallView view, var garbarge) in Balls)
+            foreach (BallView view in Balls)
             {
                 view.RedBall.gameObject.SetActive(activated);
             }
@@ -157,12 +142,12 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
 
         public void SetSticky(BallView view)
         {
-            Balls[view].Sticky();
+            _ballsMovementSystem.GetMovementService(view).Sticky();
         }
 
         public void Fly(BallView view)
         {
-            IBallMovementService movementService = Balls[view];
+            IBallMovementService movementService = _ballsMovementSystem.GetMovementService(view);
 
             if (!movementService.IsFreeFlight)
             {
@@ -170,13 +155,14 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
                 {
                     view.TrailRenderer.enabled = true;
                 }
+                
                 movementService.GoFly();
             }
         }
 
         public void DespawnAll()
         {
-            foreach ((BallView view, var movementService) in Balls)
+            foreach (BallView view in Balls)
             {
                 if (view.gameObject.activeSelf)
                 {
@@ -193,8 +179,10 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
 
             bool needTrail = _speedMultiplier > 1f;
             
-            foreach ((BallView view, IBallMovementService movementService) in Balls)
+            foreach (BallView view in Balls)
             {
+                var movementService = _ballsMovementSystem.GetMovementService(view);
+                
                 if (movementService.IsFreeFlight)
                 {
                     view.TrailRenderer.enabled = needTrail;
@@ -206,21 +194,13 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
 
         private void OnMouseUp()
         {
-            foreach ((BallView view, IBallMovementService movementService) in Balls)
+            foreach (BallView view in Balls)
             {
-                if (!movementService.IsFreeFlight)
-                {
-                    if (_speedMultiplier > 1f)
-                    {
-                        view.TrailRenderer.enabled = true;
-                    }
-
-                    movementService.GoFly();
-                }
+                Fly(view);
             }
         }
 
-        private void AddBallPositionChecker(BallView ballView)
+        private void AddBallPositionCheckerForBall(BallView ballView)
         {
             var ballPositionChecker = new BallPositionChecker(ballView, _minBallYPosition);
             ballPositionChecker.BallFallen += OnBallFallen;
@@ -240,14 +220,15 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
         private void Reset()
         {
             BallView ballView = _ballViewPool.Spawn();
-            var ballData = Balls.First(x => x.Key.Equals(ballView));
-
-            ballView.TrailRenderer.enabled = false;
-            ballView.gameObject.SetActive(true);
-            ballData.Value.Restart();
+            var firstBall = Balls.First(x => x.Equals(ballView));
+            var movementService = _ballsMovementSystem.GetMovementService(firstBall);
+            
+            firstBall.TrailRenderer.enabled = false;
+            firstBall.gameObject.SetActive(true);
+            movementService.Restart();
             _ballsPositionCheckers.Clear();
             
-            AddBallPositionChecker(ballData.Key);
+            AddBallPositionCheckerForBall(firstBall);
         }
 
         public void SaveProgress(LevelDataProgress levelDataProgress)
@@ -257,13 +238,15 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
             ballsSaveData.SpeedMultiplier = _speedMultiplier;
             ballsSaveData.BallDatas = new();
 
-            foreach ((BallView view, IBallMovementService ballMovementService) in Balls)
+            foreach (BallView view in Balls)
             {
                 if (view.gameObject.activeSelf)
                 {
+                    var ballMovementService = _ballsMovementSystem.GetMovementService(view);
+                    
                     BallData data = new();
                     data.Velocity = new Float2(ballMovementService.Velocity.x, ballMovementService.Velocity.y);
-                    data.Position = new PositionData()
+                    data.Position = new PositionData
                     {
                         X = view.transform.position.x,
                         Y = view.transform.position.y,
@@ -286,7 +269,9 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
             foreach (BallData ballData in levelDataProgress.BallsData.BallDatas)
             {
                 BallView ballView = _ballViewPool.Spawn();
-                IBallMovementService ballMovement = _ballMovementFactory.Create(ballView);
+                _ballsMovementSystem.AddBall(ballView);
+
+                IBallMovementService ballMovement = _ballsMovementSystem.GetMovementService(ballView);
                 
                 ballView.Position = new Vector3(
                     ballData.Position.X,
@@ -304,9 +289,9 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
                     ballMovement.Sticky();
                 }
                 
-                AddBallPositionChecker(ballView);
+                AddBallPositionCheckerForBall(ballView);
                 
-                Balls.Add(ballView, ballMovement);
+                Balls.Add(ballView);
             }
             
             SetSpeedMultiplier(levelDataProgress.BallsData.SpeedMultiplier);
