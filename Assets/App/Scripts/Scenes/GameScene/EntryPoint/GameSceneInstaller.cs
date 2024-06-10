@@ -93,14 +93,15 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             ConditionsInstaller.Install(Container);
             ShowLevelInstaller.Install(Container);
             
+            Container.Bind<ICameraService>().To<CameraService>().AsSingle().WithArguments(_camera);
+            Container.BindInterfacesAndSelfTo<ScreenInfoProvider>().AsSingle();
+            
             Container.BindInterfacesAndSelfTo<TweenersLocator>().AsSingle();
             Container.Bind<IScoreAnimationService>().To<ScoreAnimationService>().AsSingle();
             Container.Bind<IShakeService>().To<ShakeService>().AsSingle();
             Container.Bind<IRectMousePositionChecker>().To<RectMousePositionChecker>().AsSingle().WithArguments(_rectTransformableViews.ToList());
-            Container.Bind<ICameraService>().To<CameraService>().AsSingle().WithArguments(_camera);
-            Container.Bind<IScreenInfoProvider>().To<ScreenInfoProvider>().AsSingle();
             Container.Bind<IDataProvider<LevelDataProgress>>().To<DataProvider<LevelDataProgress>>().AsSingle();
-            
+
             Container.BindInterfacesAndSelfTo<BirdsService>().AsSingle();
             Container.BindInterfacesAndSelfTo<BirdRespawnService>().AsSingle();
             Container.BindInterfacesAndSelfTo<BirdsHealthContainer>().AsSingle();
@@ -110,8 +111,9 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.BindInterfacesAndSelfTo<UpdateServiceForNewLevel>().AsSingle();
             Container.BindInterfacesAndSelfTo<EffectActivator>().AsSingle();
             Container.BindInterfacesAndSelfTo<BallsMovementSystem>().AsSingle();
-
-            Container.BindInterfacesTo<GridPositionResolver>().AsSingle().WithArguments(_header);
+            Container.BindInterfacesAndSelfTo<GridDataService>().AsSingle().WithArguments(_header);
+            Container.BindInterfacesTo<GridPositionResolver>().AsSingle();
+            
             Container.Bind<IShapePositionChecker>().To<PlayerShapePositionChecker>().AsSingle().WithArguments(_playerShape);
             Container.Bind<PlayerCollisionService>().AsSingle().WithArguments(_playerShape).NonLazy();
             

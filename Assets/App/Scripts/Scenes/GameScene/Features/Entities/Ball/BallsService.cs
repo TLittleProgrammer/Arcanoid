@@ -41,6 +41,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
             _ballViewPool = ballViewPool;
             _ballsMovementSystem = ballsMovementSystem;
             _minBallYPosition = -screenInfoProvider.HeightInWorld / 2f;
+            Debug.Log(_minBallYPosition);
 
             Balls = new();
             clickDetector.MouseUp += OnMouseUp;
