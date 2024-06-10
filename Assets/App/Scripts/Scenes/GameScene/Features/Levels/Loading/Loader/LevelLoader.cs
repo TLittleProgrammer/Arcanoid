@@ -119,12 +119,10 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.Loading.Loader
                     continue;
                 }
 
-                Vector2 targetPosition =
-                    _gridPositionResolver.GetPositionByCoordinates(entityData.GridPositionX, entityData.GridPositionY);
+                Vector2 targetPosition = _gridPositionResolver.GetPositionByCoordinates(entityData.GridPositionX, entityData.GridPositionY);
 
                 levelGrid[entityData.GridPositionX, entityData.GridPositionY] = entityData.EntityId;
-                SpawnBlock(targetPosition, entityData.GridPositionX, entityData.GridPositionY, entityData.EntityId,
-                    _gridPositionResolver.GetCellSize());
+                SpawnBlock(targetPosition, entityData.GridPositionX, entityData.GridPositionY, entityData.EntityId, _gridPositionResolver.GetCellSize());
             }
             
             _levelViewUpdater.SetGrid(levelGrid, _entityViews);

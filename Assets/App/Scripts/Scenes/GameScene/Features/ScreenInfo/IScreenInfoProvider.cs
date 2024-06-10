@@ -1,4 +1,6 @@
-﻿namespace App.Scripts.Scenes.GameScene.Features.ScreenInfo
+﻿using UnityEngine;
+
+namespace App.Scripts.Scenes.GameScene.Features.ScreenInfo
 {
     public interface IScreenInfoProvider
     {
@@ -6,5 +8,7 @@
         float HeightInPixels { get; }
         float WidthInWorld { get; }
         float HeightInWorld { get; }
+        
+        Vector2 ScreenWorldSize { get; }
     }
 }
