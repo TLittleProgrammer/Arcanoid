@@ -8,6 +8,5 @@ namespace App.Scripts.Scenes.GameScene.Features.Settings
         public float MaxAngle;
         public float MinAngle;
         public float Speed;
-        public float AddSpeedAfterBlockDestroying = 0.15f;
     }
 }
