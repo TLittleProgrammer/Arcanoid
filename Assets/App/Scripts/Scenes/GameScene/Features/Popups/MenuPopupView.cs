@@ -12,6 +12,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Popups
         [SerializeField] private Button _restartButton;
         [SerializeField] private Button _backButton;
         [SerializeField] private Button _continueButton;
+        [SerializeField] private Button _skipLevelButton;
 
         private Sequence _sequence;
         private IRestartService _restartService;
@@ -19,6 +20,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Popups
         public Button RestartButton => _restartButton;
         public Button BackButton => _backButton;
         public Button ContinueButton => _continueButton;
+        public Button SkipLevelButton => _skipLevelButton;
         public Transform Transform => transform;
 
         public override UniTask Show()

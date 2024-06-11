@@ -13,3 +13,4 @@ You_are_loose You are loose!
 Restart Restart
 You_won You won!
 Galactic_not_found Not found
+Skip_Level Skip

@@ -18,6 +18,7 @@ namespace App.Scripts.Scenes.GameScene.MVVM.Popups.Menu
         private readonly IContinueCommand _continueCommand;
         private readonly IBackCommand _backCommand;
         private readonly IRestartCommand _restartCommand;
+        private readonly ISkipLevelCommand _skipLevelCommand;
         private readonly IDisableButtonsCommand _disableButtonsCommand;
         private readonly ITweenersLocator _tweenersLocator;
 
@@ -27,12 +28,14 @@ namespace App.Scripts.Scenes.GameScene.MVVM.Popups.Menu
             IContinueCommand continueCommand,
             IBackCommand backCommand,
             IRestartCommand restartCommand,
+            ISkipLevelCommand skipLevelCommand,
             IDisableButtonsCommand disableButtonsCommand,
             ITweenersLocator tweenersLocator)
         {
             _continueCommand = continueCommand;
             _backCommand = backCommand;
             _restartCommand = restartCommand;
+            _skipLevelCommand = skipLevelCommand;
             _disableButtonsCommand = disableButtonsCommand;
             _tweenersLocator = tweenersLocator;
         }
@@ -51,7 +54,8 @@ namespace App.Scripts.Scenes.GameScene.MVVM.Popups.Menu
                 .Append(_menuPopupView.Transform.DOScale(Vector3.one, 1f).From(Vector3.zero))
                 .Append(_menuPopupView.RestartButton.transform.DOScale(Vector3.one, 0.25f).From(Vector3.zero).SetEase(Ease.OutBounce))
                 .Append(_menuPopupView.BackButton.transform.DOScale(Vector3.one, 0.25f).From(Vector3.zero).SetEase(Ease.OutBounce))
-                .Append(_menuPopupView.ContinueButton.transform.DOScale(Vector3.one, 0.25f).From(Vector3.zero).SetEase(Ease.OutBounce));
+                .Append(_menuPopupView.ContinueButton.transform.DOScale(Vector3.one, 0.25f).From(Vector3.zero).SetEase(Ease.OutBounce))
+                .Append(_menuPopupView.SkipLevelButton.transform.DOScale(Vector3.one, 0.25f).From(Vector3.zero).SetEase(Ease.OutBounce));
         }
 
         private void SubscribeOnCommands(IMenuPopupView menuPopupView)
@@ -59,6 +63,7 @@ namespace App.Scripts.Scenes.GameScene.MVVM.Popups.Menu
             menuPopupView.ContinueButton.onClick.AddListener(Continue);
             menuPopupView.RestartButton.onClick.AddListener(Restart);
             menuPopupView.BackButton.onClick.AddListener(Back);
+            menuPopupView.SkipLevelButton.onClick.AddListener(SkipLevel);
         }
 
         private void Restart()
@@ -81,6 +86,12 @@ namespace App.Scripts.Scenes.GameScene.MVVM.Popups.Menu
             DisableButtons();
 
             _backCommand.Execute();
+        }
+
+        private void SkipLevel()
+        {
+            DisableButtons();
+            _skipLevelCommand.Execute();
         }
 
         private UniTask CloseView()

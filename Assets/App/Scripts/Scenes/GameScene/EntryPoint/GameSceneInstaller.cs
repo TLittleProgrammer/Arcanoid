@@ -68,7 +68,6 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
         [SerializeField] private BoostItemView _boostItemViewPrefab;
         [SerializeField] private BoostsViewContainer _boostsViewContainer;
         [SerializeField] private Image _menuButton;
-        [SerializeField] private Button _skipLevelButton;
         [SerializeField] private OpenMenuPopupButton _openMenuPopupButton;
         [SerializeField] private GameStatements _gameStatements;
 
@@ -129,7 +128,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.BindInterfacesAndSelfTo<LevelPackInfoViewModel>().AsSingle().WithArguments(_levelPackInfoView, _levelPackBackground);
             Container.BindInterfacesAndSelfTo<EntityCollisionsService>().AsSingle();
 
-            Container.Bind<SkipLevelService>().AsSingle().WithArguments(_skipLevelButton).NonLazy();
+            Container.BindInterfacesAndSelfTo<SkipLevelService>().AsSingle();
             Container.BindInterfacesAndSelfTo<LevelProgressSaveService>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<LevelProgressSaveHandler>().AsSingle().WithArguments(_gameStatements).NonLazy();
 

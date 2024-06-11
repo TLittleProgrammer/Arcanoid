@@ -8,5 +8,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Popups
         Button RestartButton { get; }
         Button BackButton { get; }
         Button ContinueButton { get; }
+        Button SkipLevelButton { get; }
     }
 }
