@@ -1,6 +1,4 @@
 ﻿using System;
-using System.IO;
-using Codice.Client.Commands;
 using UnityEngine;
 
 namespace App.Scripts.External.Localisation.AssetManagment
