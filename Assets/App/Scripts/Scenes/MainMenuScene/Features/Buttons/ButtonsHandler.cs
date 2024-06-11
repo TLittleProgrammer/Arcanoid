@@ -1,6 +1,7 @@
 ﻿using App.Scripts.General.Components;
 using App.Scripts.General.Popup;
 using App.Scripts.Scenes.MainMenuScene.MVVM.Settings;
+using Cysharp.Threading.Tasks;
 using Zenject;
 
 namespace App.Scripts.Scenes.MainMenuScene.Features.Buttons
@@ -26,15 +27,18 @@ namespace App.Scripts.Scenes.MainMenuScene.Features.Buttons
             _settingsButton.Button.onClick.AddListener(ShowSettings);
         }
 
-        private void ShowSettings()
+        private async void ShowSettings()
         {
-            SettingsPopupView settingsView = ShowPopup();
+            SettingsPopupView settingsView = await ShowPopup();
             _settingsViewModel.FillView(settingsView);
         }
 
-        private SettingsPopupView ShowPopup()
+        private async UniTask<SettingsPopupView> ShowPopup()
         {
-            return _popupService.Show<SettingsPopupView>();
+            SettingsPopupView settingsPopupView = _popupService.GetPopup<SettingsPopupView>();
+
+            await settingsPopupView.Show();
+            return settingsPopupView;
         }
     }
 }

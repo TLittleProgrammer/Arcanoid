@@ -16,12 +16,6 @@ namespace App.Scripts.General.Popup.Factory
             _diContainer = diContainer;
         }
 
-        public async UniTask AsyncInitialize(DiContainer param)
-        {
-            _diContainer = param;
-            await UniTask.CompletedTask;
-        }
-
         public IPopupView Create<TViewPopupProvider>() where TViewPopupProvider : IPopupView
         {
             IPopupView prefab = _popupProvider.ViewPopupProviderMapping.First(x => x is TViewPopupProvider);
