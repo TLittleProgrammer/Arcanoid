@@ -8,6 +8,5 @@ namespace App.Scripts.External.Localisation.Config
     public class LocaleProvider : SerializedScriptableObject
     {
         public List<LocaleConfig> Configs;
-        public Dictionary<string, TextAsset> LanguageAndTranslateMapping;
     }
 }
