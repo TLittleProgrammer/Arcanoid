@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using App.Scripts.External.Localisation.AssetManagment;
 using App.Scripts.External.Localisation.Config;
 using UnityEngine;
 
@@ -8,17 +10,27 @@ namespace App.Scripts.External.Localisation
     public sealed class LocaleMappingFromTextAsset : ILocaleMappingFromTextAsset
     {
         private readonly LocaleProvider _localeProvider;
+        private readonly ILocaleAssetProvider _localeAssetProvider;
+        private List<string> _availableKeys;
 
-        public LocaleMappingFromTextAsset(LocaleProvider localeProvider)
+        public LocaleMappingFromTextAsset(LocaleProvider localeProvider, ILocaleAssetProvider localeAssetProvider)
         {
             _localeProvider = localeProvider;
+            _localeAssetProvider = localeAssetProvider;
+
+            Initialize();
         }
-        
+
+        private void Initialize()
+        {
+            _availableKeys = _localeProvider.Configs.Select(x => x.Key).ToList();
+        }
+
         public LocaleData GetLocaleMapping(string localeKey)
         {
-            localeKey = _localeProvider.LanguageAndTranslateMapping.ContainsKey(localeKey) ? localeKey : LocaleConstants.DefaultLocaleKey;
+            localeKey = _availableKeys.Contains(localeKey) ? localeKey : LocaleConstants.DefaultLocaleKey;
 
-            TextAsset localeMapping = _localeProvider.LanguageAndTranslateMapping[localeKey];
+            TextAsset localeMapping = _localeAssetProvider.LoadTextByKey(localeKey);
             Dictionary<string, string> translates = GetTranslatesFromFile(localeMapping);
 
             return new LocaleData

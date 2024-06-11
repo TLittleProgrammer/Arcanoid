@@ -2,6 +2,7 @@
 using App.Scripts.Scenes.GameScene.Features.Entities.Ball;
 using App.Scripts.Scenes.GameScene.Features.Healthes;
 using App.Scripts.Scenes.GameScene.Features.Levels.LevelProgress;
+using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.States.Gameloop
 {
@@ -22,19 +23,19 @@ namespace App.Scripts.Scenes.GameScene.States.Gameloop
             _levelProgressService = levelProgressService;
             _stateMachine = stateMachine;
             _healthContainer = healthContainer;
+            
+            _levelProgressService.LevelPassed += OnLevelPassed;
         }
         
         public void SubscribeAll()
         {
             _levelProgressService.ProgressChanged += _ballsService.UpdateSpeedByProgress;
-            _levelProgressService.LevelPassed += OnLevelPassed;
             _healthContainer.LivesAreWasted   += OnLivesAreWasted;
         }
 
         public void DescribeAll()
         {
             _levelProgressService.ProgressChanged -= _ballsService.UpdateSpeedByProgress;
-            _levelProgressService.LevelPassed -= OnLevelPassed;
             _healthContainer.LivesAreWasted   -= OnLivesAreWasted;
         }
         

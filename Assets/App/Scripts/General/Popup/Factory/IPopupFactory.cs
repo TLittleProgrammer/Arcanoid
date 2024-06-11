@@ -1,9 +1,6 @@
-﻿using App.Scripts.External.Initialization;
-using Zenject;
-
-namespace App.Scripts.General.Popup.Factory
+﻿namespace App.Scripts.General.Popup.Factory
 {
-    public interface IPopupFactory : IAsyncInitializable<DiContainer>
+    public interface IPopupFactory
     {
         IPopupView Create<TPopupView>() where TPopupView : IPopupView;
     }

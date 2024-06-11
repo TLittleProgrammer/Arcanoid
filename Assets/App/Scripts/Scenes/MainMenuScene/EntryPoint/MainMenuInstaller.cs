@@ -37,11 +37,6 @@ namespace App.Scripts.Scenes.MainMenuScene.EntryPoint
             Container.Bind<ILevelItemView>().FromInstance(LevelItemView);
             Container.Bind<ILocaleItemView>().FromInstance(LocaleItemView);
             Container.BindInterfacesTo<ContinueLevelService>().AsSingle().WithArguments(ContinueButton).NonLazy();
-            
-            Container
-                .BindInterfacesAndSelfTo<ActivateScreensService>()
-                .AsSingle()
-                .WithArguments(PlayButton, BackButton, InitialScreen, LevelPacksScreen, ScreenTransitionIamge);
 
             Container
                 .BindFactory<ILevelItemView, ILevelItemView.Factory>()
@@ -60,6 +55,11 @@ namespace App.Scripts.Scenes.MainMenuScene.EntryPoint
             
             BindCommands();
 
+            Container
+                .BindInterfacesAndSelfTo<ActivateScreensService>()
+                .AsSingle()
+                .WithArguments(PlayButton, BackButton, InitialScreen, LevelPacksScreen, ScreenTransitionIamge);
+
             Container.BindInterfacesAndSelfTo<MainMenuInitalizer>().AsSingle().WithArguments(EnergyView);
             Container.BindInterfacesAndSelfTo<LevelPacksInitializer>().AsSingle().WithArguments(LevelPackParent);
         }
@@ -74,7 +74,7 @@ namespace App.Scripts.Scenes.MainMenuScene.EntryPoint
             Container
                 .BindInterfacesTo<LoadLevelCommand>()
                 .AsSingle()
-                .WhenInjectedInto<LevelPackViewModel>();
+                .WhenInjectedInto(typeof(LevelPackViewModel), typeof(ActivateScreensService));
 
             Container
                 .BindInterfacesAndSelfTo<ContinueCommand>()

@@ -27,11 +27,11 @@ namespace App.Scripts.Scenes.GameScene.States
         public async UniTask Enter()
         {
             _timeProvider.TimeScale = 0f;
-            LoosePopupView loosePopupView = _popupService.Show<LoosePopupView>();
-
+            
+            LoosePopupView loosePopupView = _popupService.GetPopup<LoosePopupView>();
             _looseViewModel.InstallView(loosePopupView);
             
-            await UniTask.CompletedTask;
+            await loosePopupView.Show();
         }
 
         public async UniTask Exit()

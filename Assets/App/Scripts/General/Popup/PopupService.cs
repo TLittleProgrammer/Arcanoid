@@ -25,7 +25,7 @@ namespace App.Scripts.General.Popup
             _popupsList = new();
         }
 
-        public TPopupView Show<TPopupView>(ITransformable parent = null) where TPopupView : IPopupView
+        public TPopupView GetPopup<TPopupView>(ITransformable parent = null) where TPopupView : IPopupView
         {
             ITransformable choosedParent = parent ?? _defaultParent;
             IPopupView popupView = _factory.Create<TPopupView>();
@@ -36,7 +36,6 @@ namespace App.Scripts.General.Popup
             UpdateSiblingPosition();
             
             _popupsList.Add(popupView);
-            popupView.Show();
             
             return (TPopupView)popupView;
         }
@@ -66,17 +65,16 @@ namespace App.Scripts.General.Popup
             await UniTask.CompletedTask;
         }
 
-        public UniTask CloseAll()
+        public async UniTask CloseAll()
         {
             foreach (IPopupView view in _popupsList)
             {
+                await view.Close();
                 Object.Destroy(view.GameObject);
             }
             
             UpdateRaycastTargetForBackPanel(false);
             _popupsList.Clear();
-            
-            return UniTask.CompletedTask;
         }
 
         private IPopupView FindPopup<TPopup>() where TPopup : IPopupView

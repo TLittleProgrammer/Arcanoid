@@ -51,10 +51,12 @@ namespace App.Scripts.Scenes.GameScene.States
         
         private void ShowPopup()
         {
-            _winPopupView = _popupService.Show<WinPopupView>();
-            _winPopupView.EnergyView.Initialize(_energyViewModel);
+            _winPopupView = _popupService.GetPopup<WinPopupView>();
             
+            _winPopupView.EnergyView.Initialize(_energyViewModel);
             _winViewModel.InstallView(_winPopupView);
+
+            _winPopupView.Show().Forget();
         }
     }
 }

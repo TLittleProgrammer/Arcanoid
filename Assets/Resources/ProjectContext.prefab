@@ -79,7 +79,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1be807ca1f643bd98eea078cb24c71a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Localisation: {fileID: 4900000, guid: e6a040dd274819143940bf51d5e62796, type: 3}
+  PathToLocaleResources: Assets/Resources/Configs/Localisation
 --- !u!114 &-1072723989868995469
 MonoBehaviour:
   m_ObjectHideFlags: 0

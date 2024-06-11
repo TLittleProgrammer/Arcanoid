@@ -9,10 +9,9 @@ namespace App.Scripts.Scenes.MainMenuScene.MVVM.LevelPacks
     {
         private readonly LevelPackProvider _levelPackProvider;
         private readonly ILevelItemView.Factory _levelItemFactory;
+        private List<LevelItemData> _itemDatas;
 
-        public LevelPackModel(
-            LevelPackProvider levelPackProvider,
-            ILevelItemView.Factory levelItemFactory)
+        public LevelPackModel(LevelPackProvider levelPackProvider, ILevelItemView.Factory levelItemFactory)
         {
             _levelPackProvider = levelPackProvider;
             _levelItemFactory = levelItemFactory;
@@ -20,17 +19,22 @@ namespace App.Scripts.Scenes.MainMenuScene.MVVM.LevelPacks
 
         public List<LevelItemData> GetLevelItemDatas()
         {
-            List<LevelItemData> itemDatas = new();
+            _itemDatas = new();
             int packCounters = 0;
             
             foreach (LevelPack levelPack in _levelPackProvider.LevelPacks)
             {
                 ILevelItemView levelItemView = _levelItemFactory.Create();
                 
-                itemDatas.Add(new(levelPack, levelItemView, packCounters++));
+                _itemDatas.Add(new(levelPack, levelItemView, packCounters++));
             }
 
-            return itemDatas;
+            return _itemDatas;
+        }
+
+        public LevelItemData GetFirstLevelItemData()
+        {
+            return _itemDatas[0];
         }
     }
 }

@@ -1,4 +1,9 @@
-﻿using App.Scripts.General.InfoBetweenScenes;
+﻿using App.Scripts.External.UserData;
+using App.Scripts.External.UserData.SaveLoad;
+using App.Scripts.General.InfoBetweenScenes;
+using App.Scripts.General.UserData.Levels.Data;
+using App.Scripts.Scenes.MainMenuScene.Command;
+using App.Scripts.Scenes.MainMenuScene.MVVM.LevelPacks;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
@@ -15,6 +20,9 @@ namespace App.Scripts.Scenes.MainMenuScene.Features.ActivateScreens
         private readonly GameObject _initialScreen;
         private readonly GameObject _levelPacks;
         private readonly Image _screenTransitionImage;
+        private readonly ILoadLevelCommand _loadLevelCommand;
+        private readonly LevelPackModel _levelPackModel;
+        private readonly LevelPackProgressDictionary _levelPacksProgress;
 
         public ActivateScreensService(
             InfoBetweenScenes infoBetweenScenes,
@@ -22,7 +30,10 @@ namespace App.Scripts.Scenes.MainMenuScene.Features.ActivateScreens
             Button backButton,
             GameObject initialScreen,
             GameObject levelPacks,
-            Image screenTransitionImage)
+            Image screenTransitionImage,
+            IDataProvider<LevelPackProgressDictionary> levelPacksProgress,
+            ILoadLevelCommand loadLevelCommand,
+            LevelPackModel levelPackModel)
         {
             _infoBetweenScenes = infoBetweenScenes;
             _playButton = playButton;
@@ -30,6 +41,9 @@ namespace App.Scripts.Scenes.MainMenuScene.Features.ActivateScreens
             _initialScreen = initialScreen;
             _levelPacks = levelPacks;
             _screenTransitionImage = screenTransitionImage;
+            _loadLevelCommand = loadLevelCommand;
+            _levelPackModel = levelPackModel;
+            _levelPacksProgress = levelPacksProgress.GetData();
         }
 
         public void Initialize()
@@ -45,7 +59,14 @@ namespace App.Scripts.Scenes.MainMenuScene.Features.ActivateScreens
             
             _playButton.onClick.AddListener(() =>
             {
-                SwitchScreens(false);
+                if (_levelPacksProgress.GetPassedLevelCount(0) == 0)
+                {
+                    _loadLevelCommand.Execute(_levelPackModel.GetFirstLevelItemData(), 0);
+                }
+                else
+                {
+                    SwitchScreens(false);
+                }
             });
             
             _backButton.onClick.AddListener(() =>

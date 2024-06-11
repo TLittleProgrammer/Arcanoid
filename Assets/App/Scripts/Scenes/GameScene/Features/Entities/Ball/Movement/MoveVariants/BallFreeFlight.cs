@@ -125,19 +125,20 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball.Movement.MoveVaria
 
         private float ChooseTargetAngle(float absCurrentAngle, float currentAngle)
         {
+            float multiplier = currentAngle > 0 ? 1f : -1f;
             if (absCurrentAngle < _settings.MinAngle)
             {
-                return currentAngle > 0 ? _settings.MinAngle : -_settings.MinAngle;
+                return  _settings.MinAngle * multiplier;
             }
 
             if (absCurrentAngle > _settings.MaxAngle && _maxSecondAngle > absCurrentAngle)
             {
-                return currentAngle > 0 ? _settings.MaxAngle : -_settings.MaxAngle;
+                return _settings.MaxAngle * multiplier;
             }
 
             if (absCurrentAngle > _minSecondAngle)
             {
-                return currentAngle > 0 ? _minSecondAngle : -_minSecondAngle;
+                return _minSecondAngle * multiplier;
             }
 
             return currentAngle;

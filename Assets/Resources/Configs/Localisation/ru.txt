@@ -13,3 +13,4 @@ You_are_loose Вы проиграли!
 Restart Рестарт
 You_won Вы победили!
 Galactic_not_found Не обнаружена
+Skip_Level Пропустить

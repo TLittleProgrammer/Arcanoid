@@ -17,11 +17,10 @@ namespace App.Scripts.Scenes.GameScene.States
         
         public async UniTask Enter(MenuViewModel menuViewModel)
         {
-            MenuPopupView menuPopupView = _popupService.Show<MenuPopupView>();
+            MenuPopupView menuPopupView = _popupService.GetPopup<MenuPopupView>();
             
             menuViewModel.InitializeView(menuPopupView);
-            
-            await UniTask.CompletedTask;
+            await menuPopupView.Show();
         }
 
         public async UniTask Exit()

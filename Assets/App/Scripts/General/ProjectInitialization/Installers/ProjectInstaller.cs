@@ -2,22 +2,20 @@
 using App.Scripts.External.DotweenContainerService;
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.External.Localisation;
+using App.Scripts.External.Localisation.AssetManagment;
 using App.Scripts.External.Localisation.Converters;
 using App.Scripts.External.SceneManagment;
 using App.Scripts.General.DateTime;
-using App.Scripts.General.Energy;
-using App.Scripts.General.Infrastructure;
 using App.Scripts.General.Levels.LevelPackInfoService;
 using App.Scripts.General.MVVM.Energy;
 using App.Scripts.General.Popup;
-using App.Scripts.General.Popup.AssetManagment;
 using App.Scripts.General.Popup.Factory;
 using App.Scripts.General.States;
 using App.Scripts.General.Time;
 using App.Scripts.General.UserData.Energy;
 using App.Scripts.General.UserData.Global;
 using App.Scripts.General.UserData.Levels;
-using UnityEngine;
+using Sirenix.OdinInspector;
 using Zenject;
 using EnergyViewModel = App.Scripts.General.MVVM.Energy.EnergyViewModel;
 
@@ -25,6 +23,9 @@ namespace App.Scripts.General.ProjectInitialization.Installers
 {
     public class ProjectInstaller : MonoInstaller
     {
+        [FolderPath]
+        public string PathToLocaleResources;
+        
         public override void InstallBindings()
         {
             Container.BindInterfacesAndSelfTo<TimeTicker>().AsSingle();
@@ -44,6 +45,7 @@ namespace App.Scripts.General.ProjectInitialization.Installers
             Container.BindInterfacesAndSelfTo<LoadingSceneState>().AsSingle();
             Container.BindInterfacesAndSelfTo<EnergyModel>().AsSingle();
             Container.BindInterfacesAndSelfTo<EnergyViewModel>().AsSingle();
+            Container.BindInterfacesAndSelfTo<ResourcesLocaleAssetProvider>().AsSingle().WithArguments(PathToLocaleResources);
             Container.BindInterfacesAndSelfTo<LocaleMappingFromTextAsset>().AsSingle();
             
             Container.Bind<ILevelPackInfoService>().To<LevelPackInfoService>().AsSingle();

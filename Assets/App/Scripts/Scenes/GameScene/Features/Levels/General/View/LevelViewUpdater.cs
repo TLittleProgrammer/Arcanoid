@@ -106,7 +106,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.General.View
             
             itemData.CurrentHealth -= damage;
 
-            if (ReturnIfCurrentHealthIsEqualsOrLessZero(entityView, itemData))
+            if (CurrentHealthIsEqualsOrLessZero(entityView, itemData))
             {
                 return;
             }
@@ -129,7 +129,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.General.View
             _levelGridItemData[view.GridPositionX, view.GridPositionY].CurrentHealth = health;
         }
         
-        private bool ReturnIfCurrentHealthIsEqualsOrLessZero(IEntityView entityView, GridItemData itemData)
+        private bool CurrentHealthIsEqualsOrLessZero(IEntityView entityView, GridItemData itemData)
         {
             if (itemData.CurrentHealth <= 0)
             {
