@@ -10,12 +10,11 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
         private readonly IBallsService _ballsService;
         private bool _isActive;
         
-        public StickyBoostActivator(IBoostContainer boostContainer, IBallsService ballsService)
+        public StickyBoostActivator(IBallsService ballsService)
         {
             _ballsService = ballsService;
 
             _ballsService.BallAdded += OnBallAdded;
-            boostContainer.BoostEnded += OnBoostEnded;
         }
 
         public void Activate(BoostTypeId boostTypeId)
@@ -25,6 +24,17 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
             foreach (BallView view in _ballsService.Balls)
             {
                 view.Collidered += OnCollidered;
+            }
+        }
+
+        public void Deactivate()
+        {
+            _isActive = false;
+
+            foreach (BallView view in _ballsService.Balls)
+            {
+                _ballsService.Fly(view);
+                view.Collidered -= OnCollidered;
             }
         }
 
@@ -41,20 +51,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
             if (_isActive)
             {
                 view.Collidered += OnCollidered;
-            }
-        }
-
-        private void OnBoostEnded(BoostTypeId boostType)
-        {
-            if (boostType is BoostTypeId.StickyPlatform)
-            {
-                _isActive = false;
-
-                foreach (BallView view in _ballsService.Balls)
-                {
-                    _ballsService.Fly(view);
-                    view.Collidered -= OnCollidered;
-                }
             }
         }
     }

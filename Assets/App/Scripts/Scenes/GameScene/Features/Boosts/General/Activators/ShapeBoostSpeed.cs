@@ -9,15 +9,10 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
         private readonly IPlayerShapeMover _playerShapeMover;
         private readonly BoostsSettings _boostsSettings;
 
-        public ShapeBoostSpeed(
-            IBoostContainer boostContainer,
-            IPlayerShapeMover playerShapeMover,
-            BoostsSettings boostsSettings)
+        public ShapeBoostSpeed(IPlayerShapeMover playerShapeMover, BoostsSettings boostsSettings)
         {
             _playerShapeMover = playerShapeMover;
             _boostsSettings = boostsSettings;
-
-            boostContainer.BoostEnded += OnBoostEnded;
         }
 
         public void Activate(BoostTypeId boostTypeId)
@@ -32,12 +27,9 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
             }
         }
 
-        private void OnBoostEnded(BoostTypeId boostType)
+        public void Deactivate()
         {
-            if (boostType is BoostTypeId.PlayerShapeAddSpeed or BoostTypeId.PlayerShapeMinusSpeed)
-            {
-                _playerShapeMover.ChangeSpeed(1f);
-            }
+            _playerShapeMover.ChangeSpeed(1f);
         }
     }
 }

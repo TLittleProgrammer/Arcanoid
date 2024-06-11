@@ -6,18 +6,14 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
 {
     public sealed class BallMoverBoostActivator : IConcreteBoostActivator
     {
-        private readonly IBoostContainer _boostContainer;
         private readonly BoostsSettings _boostsSettings;
         private readonly IBallsService _ballsService;
         private readonly float _initialBallSpeed;
 
-        public BallMoverBoostActivator(IBoostContainer boostContainer, BoostsSettings boostsSettings, IBallsService ballsService)
+        public BallMoverBoostActivator(BoostsSettings boostsSettings, IBallsService ballsService)
         {
-            _boostContainer = boostContainer;
             _boostsSettings = boostsSettings;
             _ballsService = ballsService;
-
-            _boostContainer.BoostEnded += OnBoostEnded;
         }
 
         public void Activate(BoostTypeId boostTypeId)
@@ -33,12 +29,9 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
             _ballsService.SetSpeedMultiplier(multiplier);
         }
 
-        private void OnBoostEnded(BoostTypeId boostType)
+        public void Deactivate()
         {
-            if (boostType is BoostTypeId.BallAcceleration or BoostTypeId.BallSlowdown)
-            {
-                _ballsService.SetSpeedMultiplier(1f);
-            }
+            _ballsService.SetSpeedMultiplier(1f);
         }
     }
 }

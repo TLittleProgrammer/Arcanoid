@@ -8,10 +8,9 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
     {
         private readonly IMiniGunService _miniGunService;
 
-        public MiniGunBoostActivator(IBoostContainer boostContainer, IMiniGunService miniGunService)
+        public MiniGunBoostActivator(IMiniGunService miniGunService)
         {
             _miniGunService = miniGunService;
-            boostContainer.BoostEnded += OnBoostEnded;
         }
 
         public void Activate(BoostTypeId boostTypeId)
@@ -19,12 +18,9 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
             _miniGunService.ActiveMiniGun = true;
         }
 
-        private void OnBoostEnded(BoostTypeId boostType)
+        public void Deactivate()
         {
-            if (boostType is BoostTypeId.MiniGun)
-            {
-                _miniGunService.ActiveMiniGun = false;
-            }
+            _miniGunService.ActiveMiniGun = false;
         }
     }
 }

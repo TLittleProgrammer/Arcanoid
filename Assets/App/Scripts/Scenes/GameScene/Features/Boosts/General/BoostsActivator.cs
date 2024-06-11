@@ -46,6 +46,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General
                 [BoostTypeId.MiniGun] = miniGunBoostActivator,
                 [BoostTypeId.Autopilot] = autopilotBoostActivator,
             };
+
+            _boostContainer.BoostEnded += OnBoostEnded;
         }
 
         public void Activate(BoostView view)
@@ -59,6 +61,11 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General
                 _boostContainer.AddBoost(view.BoostTypeId);
             }
             _simpleDestroyService.Destroy(view);
+        }
+
+        private void OnBoostEnded(BoostTypeId boostType)
+        {
+            _activators[boostType].Deactivate();
         }
 
         public void LoadProgress(LevelDataProgress levelDataProgress)
