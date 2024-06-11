@@ -20,15 +20,12 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
             PlayerView playerView,
             IShapePositionChecker shapePositionChecker,
             BoostsSettings boostsSettings,
-            IBoostContainer boostContainer,
             IBulletMovement bulletMovement)
         {
             _playerView = playerView;
             _shapePositionChecker = shapePositionChecker;
             _boostsSettings = boostsSettings;
             _bulletMovement = bulletMovement;
-
-            boostContainer.BoostEnded += OnBoostEnded;
         }
 
         public void Activate(BoostTypeId boostTypeId)
@@ -41,6 +38,15 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
             {
                 UpdateWidth(_boostsSettings.MinusPercent).Forget();
             }
+        }
+
+        public async void Deactivate()
+        {
+            float currentWidth = _playerView.SpriteRenderer.size.x;
+            await DOVirtual.Float(currentWidth, 1.5f, 0.5f, UpdateSpriteWidth);
+                
+            _shapePositionChecker.ChangeShapeScale();
+            _bulletMovement.RecalculateSpawnPositions();
         }
 
         private async UniTask UpdateWidth(float to)
@@ -61,18 +67,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
             _playerView.BoxCollider2D.size = spriteRendererSize;
             
             _shapePositionChecker.ChangeShapeScale();
-        }
-
-        private async void OnBoostEnded(BoostTypeId boostType)
-        {
-            if (boostType is BoostTypeId.PlayerShapeMinusSize or BoostTypeId.PlayerShapeAddSize)
-            {
-                float currentWidth = _playerView.SpriteRenderer.size.x;
-                await DOVirtual.Float(currentWidth, 1.5f, 0.5f, UpdateSpriteWidth);
-                
-                _shapePositionChecker.ChangeShapeScale();
-                _bulletMovement.RecalculateSpawnPositions();
-            }
         }
     }
 }

@@ -26,5 +26,10 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
                 _healthContainer.UpdateHealth(-_boostsSettings.MinusHealth, false);
             }
         }
+
+        public void Deactivate()
+        {
+            
+        }
     }
 }

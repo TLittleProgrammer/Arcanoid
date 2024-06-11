@@ -3,5 +3,6 @@
     public interface IConcreteBoostActivator
     {
         void Activate(BoostTypeId boostTypeId);
+        void Deactivate();
     }
 }

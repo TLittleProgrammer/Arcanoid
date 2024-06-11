@@ -12,15 +12,10 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
         private readonly IPlayerShapeMover _playerShapeMover;
         public bool IsActive { get; set; }
         
-        public AutopilotBoostActivator(
-            BehaviourTree behaviourTree,
-            IBoostContainer boostContainer,
-            IPlayerShapeMover playerShapeMover)
+        public AutopilotBoostActivator(BehaviourTree behaviourTree, IPlayerShapeMover playerShapeMover)
         {
             _behaviourTree = behaviourTree;
             _playerShapeMover = playerShapeMover;
-
-            boostContainer.BoostEnded += OnBoostEnded;
         }
 
         public void Activate(BoostTypeId boostTypeId)
@@ -39,13 +34,10 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
             _behaviourTree.Process();
         }
 
-        private void OnBoostEnded(BoostTypeId boostType)
+        public void Deactivate()
         {
-            if (boostType is BoostTypeId.Autopilot)
-            {
-                _playerShapeMover.IsActive = true;
-                IsActive = false;
-            }
+            _playerShapeMover.IsActive = true;
+            IsActive = false;
         }
     }
 }

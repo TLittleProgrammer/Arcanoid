@@ -14,7 +14,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
 {
     public class FireballBoostActivator : IConcreteBoostActivator, ITickable
     {
-        private readonly IBoostContainer _boostContainer;
         private readonly ILevelLoader _levelLoader;
         private readonly IEntityDestroyable _entityDestroyable;
         private readonly ILevelViewUpdater _levelViewUpdater;
@@ -23,21 +22,17 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
         private bool _isActive = false;
         
         public FireballBoostActivator(
-            IBoostContainer boostContainer,
             ILevelLoader levelLoader,
             IEntityDestroyable entityDestroyable,
             ILevelViewUpdater levelViewUpdater,
             IBallsService ballsService,
             IEffectActivator effectActivator)
         {
-            _boostContainer = boostContainer;
             _levelLoader = levelLoader;
             _entityDestroyable = entityDestroyable;
             _levelViewUpdater = levelViewUpdater;
             _ballsService = ballsService;
             _effectActivator = effectActivator;
-
-            _boostContainer.BoostEnded += OnBoostEnded;
         }
 
         public void Activate(BoostTypeId boostTypeId)
@@ -48,17 +43,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
             UpdateTrigger(true);
         }
 
-        private void OnBoostEnded(BoostTypeId boostType)
-        {
-            if (boostType is BoostTypeId.Fireball)
-            {
-                UpdateTrigger(false);
-
-                _isActive = false;
-                _ballsService.SetRedBall(false);
-            }
-        }
-
         public void Tick()
         {
             if (_isActive is false)
@@ -67,6 +51,14 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
             }
 
             CheckCollisions();
+        }
+
+        public void Deactivate()
+        {
+            UpdateTrigger(false);
+
+            _isActive = false;
+            _ballsService.SetRedBall(false);
         }
 
         private void CheckCollisions()
