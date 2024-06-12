@@ -13,28 +13,27 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
     {
         private readonly IStateMachine _stateMachine;
         private readonly List<IInitializeByLevelProgress> _initializeByLevelProgresses;
-        private readonly ISaveLoadService _saveLoadService;
+        private readonly IDataProvider<LevelDataProgress> _dataProvider;
         private readonly IGridPositionResolver _gridPositionResolver;
         private readonly ILevelProgressService _levelProgressService;
 
         public BootstrapContinueLoadLevelState(
             IStateMachine stateMachine,
             List<IInitializeByLevelProgress> initializeByLevelProgresses,
-            ISaveLoadService saveLoadService,
+            IDataProvider<LevelDataProgress> dataProvider,
             IGridPositionResolver gridPositionResolver,
             ILevelProgressService levelProgressService)
         {
             _stateMachine = stateMachine;
             _initializeByLevelProgresses = initializeByLevelProgresses;
-            _saveLoadService = saveLoadService;
+            _dataProvider = dataProvider;
             _gridPositionResolver = gridPositionResolver;
             _levelProgressService = levelProgressService;
         }
         
         public async UniTask Enter()
         {
-            LevelDataProgress levelDataProgress = new();
-            _saveLoadService.Load(ref levelDataProgress);
+            LevelDataProgress levelDataProgress = _dataProvider.GetData();
             
             await _gridPositionResolver.AsyncInitialize(levelDataProgress.LevelData);
 

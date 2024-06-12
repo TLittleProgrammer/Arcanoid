@@ -8,11 +8,11 @@ namespace App.Scripts.External.UserData.SaveLoad
 {
     public class SaveLoadService : ISaveLoadService
     {
-        public void Save(ISavable savable)
+        public void Save(ISavable savable, string fileName)
         {
             string text = JsonConvert.SerializeObject(savable, Formatting.Indented, new Int2Converter());
 
-            string pathToFile = Path.Combine(Application.persistentDataPath, savable.FileName);
+            string pathToFile = Path.Combine(Application.persistentDataPath, fileName);
 
             if (!CreateFileIfTheFileDoesNotExists(pathToFile))
             {
@@ -22,9 +22,9 @@ namespace App.Scripts.External.UserData.SaveLoad
             File.WriteAllText(pathToFile, text);
         }
 
-        public void Load<TSavable>(ref TSavable savable) where TSavable : ISavable
+        public void Load<TSavable>(ref TSavable savable, string fileName) where TSavable : ISavable
         {
-            string pathToFile = GetPath(savable.FileName);
+            string pathToFile = GetPath(fileName);
 
             CreateFileIfTheFileDoesNotExists(pathToFile);
 

@@ -6,31 +6,32 @@ namespace App.Scripts.External.UserData
     public sealed class DataProvider<TClassSavable> : IDataProvider<TClassSavable> where TClassSavable : class, ISavable
     {
         private readonly ISaveLoadService _saveLoadService;
+        private readonly string _fileName;
+        
+        private TClassSavable _savable;
 
-        public DataProvider(ISaveLoadService saveLoadService)
+        public DataProvider(ISaveLoadService saveLoadService, string fileName)
         {
             _saveLoadService = saveLoadService;
+            _fileName = fileName;
+            _savable = (TClassSavable)Activator.CreateInstance(typeof(TClassSavable));
         }
 
         public TClassSavable GetData()
         {
-            TClassSavable classSavable = (TClassSavable)Activator.CreateInstance(typeof(TClassSavable));
-            
-            _saveLoadService.Load(ref classSavable);
+            _saveLoadService.Load(ref _savable, _fileName);
 
-            return classSavable;
+            return _savable;
         }
 
         public void SaveData(TClassSavable savable)
         {
-            _saveLoadService.Save(savable);
+            _saveLoadService.Save(savable, _fileName);
         }
 
         public void Delete()
         {
-            TClassSavable classSavable = (TClassSavable)Activator.CreateInstance(typeof(TClassSavable));
-
-            _saveLoadService.Delete(classSavable.FileName);
+            _saveLoadService.Delete(_fileName);
         }
     }
 }

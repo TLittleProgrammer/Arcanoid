@@ -6,6 +6,7 @@ using App.Scripts.External.UserData;
 using App.Scripts.General.Infrastructure;
 using App.Scripts.General.Providers;
 using App.Scripts.General.RootUI;
+using App.Scripts.General.UserData.Constants;
 using App.Scripts.Scenes.GameScene.EntryPoint.Bootstrap;
 using App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers;
 using App.Scripts.Scenes.GameScene.Features.Boosts.Autopilot.Strategies;
@@ -99,7 +100,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.Bind<IScoreAnimationService>().To<ScoreAnimationService>().AsSingle();
             Container.Bind<IShakeService>().To<ShakeService>().AsSingle();
             Container.Bind<IRectMousePositionChecker>().To<RectMousePositionChecker>().AsSingle().WithArguments(_rectTransformableViews.ToList());
-            Container.Bind<IDataProvider<LevelDataProgress>>().To<DataProvider<LevelDataProgress>>().AsSingle();
+            Container.Bind<IDataProvider<LevelDataProgress>>().To<DataProvider<LevelDataProgress>>().AsSingle().WithArguments(SavableConstants.CurrentLevelProgressFileName);
 
             Container.BindInterfacesAndSelfTo<BirdsService>().AsSingle();
             Container.BindInterfacesAndSelfTo<BirdRespawnService>().AsSingle();

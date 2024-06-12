@@ -12,8 +12,5 @@ namespace App.Scripts.General.UserData.Global
         public bool IsFirstEnter = true;
         [JsonProperty("LastTimestampEnter")]
         public long LastTimestampEnter;
-
-        [JsonIgnore]
-        public string FileName => SavableConstants.GlobalFileName;
     }
 }
