@@ -1,4 +1,8 @@
-﻿using App.Scripts.Scenes.GameScene.Features.Boosts.General;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using App.Scripts.Scenes.GameScene.Features.Boosts;
+using App.Scripts.Scenes.GameScene.Features.Boosts.General;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General.Systems;
 using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer;
@@ -6,13 +10,20 @@ using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.DestroyServ
 using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.DestroyServices.BombDestroyers;
 using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Helpers;
 using App.Scripts.Scenes.GameScene.Features.ServiceActivator;
+using UnityEngine;
 using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
 {
-    public class EntityDestroyableInstaller : Installer<EntityDestroyableInstaller>
+    public class EntityDestroyableInstaller : Installer<EntityDestroySettings, EntityDestroyableInstaller>
     {
+        private readonly EntityDestroySettings _entityDestroySettings;
 
+        public EntityDestroyableInstaller(EntityDestroySettings entityDestroySettings)
+        {
+            _entityDestroySettings = entityDestroySettings;
+        }
+        
         public override void InstallBindings()
         {
             Container.Bind<IAnimatedDestroyService>().To<AnimatedDestroyService>().AsSingle();
@@ -26,6 +37,9 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
             Container.BindInterfacesAndSelfTo<BoostBlockDestroyer>().AsSingle();
             Container.BindInterfacesAndSelfTo<DirectionBombDestroyService>().AsSingle();
             Container.BindInterfacesAndSelfTo<ChainDestroyer>().AsSingle();
+            
+            Container.Bind<Dictionary<string, IBlockDestroyService>>().FromMethod(CreateBoostsDictionary).AsSingle();
+
 
             Container.Bind<IEntityDestroyable>().To<EntityDestroyer>().AsSingle();
         }
@@ -39,6 +53,29 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
             Container.BindInterfacesAndSelfTo<AutopilotSystem>().AsSingle().WhenNotInjectedInto<ServiceActivator>();
 
             Container.BindInterfacesAndSelfTo<BoostsActivator>().AsSingle();
+        }
+
+        private Dictionary<string, IBlockDestroyService> CreateBoostsDictionary()
+        {
+            Dictionary<string, IBlockDestroyService> result = new();
+
+            List<IBlockDestroyService> blockDestroyServices = Container.ResolveAll<IBlockDestroyService>().ToList();
+
+            foreach (DestroySettingsServiceData data in _entityDestroySettings.DestroyServiceDatas)
+            {
+                foreach (IBlockDestroyService destroyService in blockDestroyServices)
+                {
+                    if (data.BlockDestroyService.GetType() == destroyService.GetType())
+                    {
+                        foreach (string id in data.DestroyingIds)
+                        {
+                            result.Add(id, destroyService);
+                        }
+                    }
+                }
+            }
+            
+            return result;
         }
     }
 }

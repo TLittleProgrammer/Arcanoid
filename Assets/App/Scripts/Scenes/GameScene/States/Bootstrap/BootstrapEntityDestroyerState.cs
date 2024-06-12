@@ -12,26 +12,25 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
     {
         private readonly IStateMachine _stateMachine;
         private readonly IEntityDestroyable _entityDestroyable;
-        private readonly List<IBlockDestroyService> _entityDestroyers;
         private readonly ILevelPackInfoService _levelPackInfoService;
+        private Dictionary<string,IBlockDestroyService> _destroyServices;
 
         public BootstrapEntityDestroyerState(
             IStateMachine stateMachine,
             IEntityDestroyable entityDestroyable,
-            List<IBlockDestroyService> entityDestroyers,
-            ILevelPackInfoService levelPackInfoService
+            ILevelPackInfoService levelPackInfoService,
+            Dictionary<string,IBlockDestroyService> destroyServices
         )
         {
             _stateMachine = stateMachine;
             _entityDestroyable = entityDestroyable;
-            _entityDestroyers = entityDestroyers;
             _levelPackInfoService = levelPackInfoService;
+            _destroyServices = destroyServices;
         }
         
         public UniTask Enter()
         {
-            InitializeItemsDestroyable();
-
+            _entityDestroyable.AsyncInitialize(_destroyServices);
             if (_levelPackInfoService.NeedContinueLevel)
             {
                 _stateMachine.Enter<BootstrapContinueLoadLevelState>().Forget();
@@ -44,33 +43,9 @@ namespace App.Scripts.Scenes.GameScene.States.Bootstrap
             return UniTask.CompletedTask;
         }
 
-        private void InitializeItemsDestroyable()
-        {
-            List<DestroyServiceData> datas = new();
-
-            foreach (IBlockDestroyService destroyer in _entityDestroyers)
-            {
-                foreach (BoostTypeId boost in destroyer.ProccessingBoostTypes)
-                {
-                    datas.Add(BuildDestroyDataService(boost, destroyer));
-                }
-            }
-            
-            _entityDestroyable.AsyncInitialize(datas);
-        }
-
         public async UniTask Exit()
         {
             await UniTask.CompletedTask;
-        }
-        
-        private DestroyServiceData BuildDestroyDataService(BoostTypeId boostTypeId, IBlockDestroyService blockDestroyService)
-        {
-            return new()
-            {
-                BoostTypeId = boostTypeId,
-                BlockDestroyService = blockDestroyService
-            };
         }
     }
 }

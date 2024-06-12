@@ -14,12 +14,12 @@ namespace App.Scripts.Scenes.GameScene.Features.Factories.OnTopSprite
             _onTopSprites = onTopSprites;
         }
         
-        public OnTopSprites Create(IEntityView targetType)
+        public OnTopSprites Create(IEntityView boostId)
         {
             OnTopSprites sprite = _onTopSprites.Spawn();
 
             Transform spriteTransform     = sprite.transform;
-            spriteTransform.parent        = targetType.GameObject.transform;
+            spriteTransform.parent        = boostId.GameObject.transform;
             spriteTransform.localPosition = Vector3.zero;
             spriteTransform.localScale    = Vector3.one;
 

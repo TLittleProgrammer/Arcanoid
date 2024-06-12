@@ -42,11 +42,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Destroy
             _simpleDestroyService = simpleDestroyService;
         }
 
-        public override BoostTypeId[] ProccessingBoostTypes => new[]
-        {
-            BoostTypeId.Bomb
-        };
-
         public override async void Destroy(GridItemData gridItemData, IEntityView iEntityView)
         {
             EntityView entityView = iEntityView as EntityView;

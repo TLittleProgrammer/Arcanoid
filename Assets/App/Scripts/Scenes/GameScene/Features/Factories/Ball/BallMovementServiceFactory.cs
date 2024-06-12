@@ -19,11 +19,11 @@ namespace App.Scripts.Scenes.GameScene.Features.Factories.Ball
             _playerView = playerView;
         }
         
-        public IBallMovementService Create(BallView ballView)
+        public IBallMovementService Create(BallView boostId)
         {
-            IBallFollowMover ballFollowMover = _sceneContext.Instantiate<BallFollowMover>(new object[] {ballView, _playerView});
-            IBallFreeFlightMover ballFreeFlightMover = _sceneContext.Instantiate<BallFreeFlight>(new[] { ballView });
-            _sceneContext.Instantiate<BallCollisionService>(new[] { ballView });
+            IBallFollowMover ballFollowMover = _sceneContext.Instantiate<BallFollowMover>(new object[] {boostId, _playerView});
+            IBallFreeFlightMover ballFreeFlightMover = _sceneContext.Instantiate<BallFreeFlight>(new[] { boostId });
+            _sceneContext.Instantiate<BallCollisionService>(new[] { boostId });
                 
             ballFollowMover.AsyncInitialize().Forget();
                 

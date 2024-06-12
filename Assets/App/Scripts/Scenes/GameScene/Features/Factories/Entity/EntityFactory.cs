@@ -22,14 +22,14 @@ namespace App.Scripts.Scenes.GameScene.Features.Factories.Entity
             _entityCollisionService = entityCollisionService;
         }
 
-        public IEntityView Create(string targetType)
+        public IEntityView Create(string boostId)
         {
-            if (!_entityProvider.EntityStages.ContainsKey(targetType))
+            if (!_entityProvider.EntityStages.ContainsKey(boostId))
             {
                 return null;
             }
 
-            EntityStage entityStage = _entityProvider.EntityStages[targetType];
+            EntityStage entityStage = _entityProvider.EntityStages[boostId];
             EntityView entityView   = _entityViewPool.Spawn();
 
             entityView.MainSprite   = entityStage.Sprite;

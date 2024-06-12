@@ -57,7 +57,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Systems
         {
             Bounds viewBounds = view.BoxCollider2D.bounds;
 
-            foreach (BallView ballView in _ballsService.Balls)
+            foreach (BallView ballView in _ballsService.Balls.ToArray())
             {
                 if (!ballView.gameObject.activeSelf)
                 {

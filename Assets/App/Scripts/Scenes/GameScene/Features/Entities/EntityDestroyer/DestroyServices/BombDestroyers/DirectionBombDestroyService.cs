@@ -48,12 +48,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Destroy
             _laserEffectPool = laserEffectPool;
         }
 
-        public override BoostTypeId[] ProccessingBoostTypes => new[]
-        {
-            BoostTypeId.HorizontalBomb,
-            BoostTypeId.VerticalBomb
-        };
-
         public override async void Destroy(GridItemData gridItemData, IEntityView entityView)
         {
             GetDirection(entityView, out Direction firstDirection, out Direction secondDirection);

@@ -1,6 +1,7 @@
 ﻿using App.Scripts.Scenes.GameScene.Features.Boosts;
 using App.Scripts.Scenes.GameScene.Features.Effects;
 using App.Scripts.Scenes.GameScene.Features.Entities.AssetManagement;
+using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer;
 using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape;
 using App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions;
 using App.Scripts.Scenes.GameScene.Features.Settings;
@@ -28,6 +29,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
         public EffectsPrefabProvider EffectsPrefabProvider;
         public DestroyEntityEffectMapping DestroyEntityEffectMapping;
         public BoostSettingsContainer BoostSettingsContainer;
+        public EntityDestroySettings EntityDestroySettings;
 
         public override void InstallBindings()
         {
@@ -47,6 +49,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.Bind<EffectsPrefabProvider>().FromInstance(EffectsPrefabProvider).IfNotBound();
             Container.Bind<DestroyEntityEffectMapping>().FromInstance(DestroyEntityEffectMapping).IfNotBound();
             Container.Bind<BoostSettingsContainer>().FromInstance(BoostSettingsContainer).IfNotBound();
+            Container.Bind<EntityDestroySettings>().FromInstance(EntityDestroySettings).IfNotBound();
         }
     }
 }

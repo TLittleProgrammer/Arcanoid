@@ -22,6 +22,7 @@ using App.Scripts.Scenes.GameScene.Features.Entities.Ball;
 using App.Scripts.Scenes.GameScene.Features.Entities.Ball.Movement.MoveVariants;
 using App.Scripts.Scenes.GameScene.Features.Entities.Ball.Systems;
 using App.Scripts.Scenes.GameScene.Features.Entities.Bird;
+using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer;
 using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape;
 using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.Collisions;
 using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.Move;
@@ -78,6 +79,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
         [Inject] private IStateMachine _projectStateMachine;
         [Inject] private EffectsPrefabProvider _effectsPrefabProvider;
         [Inject] private BoostSettingsContainer _boostSettingsContainer;
+        [Inject] private EntityDestroySettings _entityDestroySettings;
 
         public override void InstallBindings()
         {
@@ -88,7 +90,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             FactoriesInstaller.Install(Container, _boostItemViewPrefab);
             InputInstaller.Install(Container);
             LevelServicesInstaller.Install(Container);
-            EntityDestroyableInstaller.Install(Container);
+            EntityDestroyableInstaller.Install(Container, _entityDestroySettings);
             BehaviourTreeInstaller.Install(Container);
             CommandsInstaller.Install(Container);
             MVVMInstaller.Install(Container, _openMenuPopupButton);

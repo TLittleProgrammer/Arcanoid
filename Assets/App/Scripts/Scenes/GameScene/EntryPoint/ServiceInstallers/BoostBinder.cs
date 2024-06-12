@@ -16,18 +16,19 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
         
         public override void InstallBindings()
         {
-            Container.Bind<Dictionary<string, IConcreteBoostActivator>>().FromMethod(CreateBoostsDictionary).AsSingle().NonLazy();
+            Container.Bind<Dictionary<string, BoostSettingsData>>().FromMethod(CreateBoostsDictionary).AsSingle().NonLazy();
         }
 
-        private Dictionary<string, IConcreteBoostActivator> CreateBoostsDictionary()
+        private Dictionary<string, BoostSettingsData> CreateBoostsDictionary()
         {
-            Dictionary<string, IConcreteBoostActivator> result = new();
+            Dictionary<string, BoostSettingsData> result = new();
 
             foreach (BoostSettingsData data in _boostSettingsContainer.BoostSettingsDatas)
             {
                 var activator = DependencyInjector.CreateInstanceWithDependencies(data.ConcreteBoostActivator, Container);
+                data.ConcreteBoostActivator = activator;
                 
-                result.Add(data.Key, activator);
+                result.Add(data.Key, data);
             }
             
             return result;

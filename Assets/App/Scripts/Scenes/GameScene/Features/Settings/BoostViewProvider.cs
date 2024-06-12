@@ -8,7 +8,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Settings
     [CreateAssetMenu(menuName = "Configs/Game/BoostViewProvider", fileName = "BoostViewProvider")]
     public class BoostViewProvider : SerializedScriptableObject
     {
-        public Dictionary<BoostTypeId, Sprite> Sprites;
         public Dictionary<BoostTypeId, Sprite> Icons;
     }
 }

@@ -12,14 +12,14 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General
     {
         private readonly SimpleDestroyService _simpleDestroyService;
         private readonly IBoostContainer _boostContainer;
-        private readonly Dictionary<string, IConcreteBoostActivator> _concreteBoostActivators;
+        private readonly Dictionary<string, BoostSettingsData> _concreteBoostActivators;
 
         private float _initialBallSpeed;
 
         public BoostsActivator(
             SimpleDestroyService simpleDestroyService,
             IBoostContainer boostContainer,
-            Dictionary<string, IConcreteBoostActivator> concreteBoostActivators)
+            Dictionary<string, BoostSettingsData> concreteBoostActivators)
         {
             _simpleDestroyService = simpleDestroyService;
             _boostContainer = boostContainer;
@@ -32,9 +32,9 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General
         {
             string boostId = view.BoostTypeId.ToString();
             
-            _concreteBoostActivators[boostId].Activate();
+            _concreteBoostActivators[boostId].ConcreteBoostActivator.Activate();
 
-            if (_concreteBoostActivators[boostId].IsTimeableBoost)
+            if (_concreteBoostActivators[boostId].ConcreteBoostActivator.IsTimeableBoost)
             {
                 _boostContainer.AddBoost(view.BoostTypeId);
             }
@@ -44,14 +44,14 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General
 
         private void OnBoostEnded(BoostTypeId boostType)
         {
-            _concreteBoostActivators[boostType.ToString()].Deactivate();
+            _concreteBoostActivators[boostType.ToString()].ConcreteBoostActivator.Deactivate();
         }
 
         public void LoadProgress(LevelDataProgress levelDataProgress)
         {
             foreach (SaveActiveBoostData boostData in levelDataProgress.ActiveBoostDatas)
             {
-                _concreteBoostActivators[boostData.BoostTypeId.ToString()].Activate();
+                _concreteBoostActivators[boostData.BoostTypeId.ToString()].ConcreteBoostActivator.Activate();
             }
         }
     }

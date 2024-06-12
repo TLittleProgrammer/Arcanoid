@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using App.Scripts.Scenes.GameScene.Features.Boosts.General;
 using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.DestroyServices;
 using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Helpers;
 using App.Scripts.Scenes.GameScene.Features.Entities.View;
@@ -13,28 +11,26 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer
     {
         private readonly SimpleDestroyService _simpleDestroyService;
         private readonly IAnimatedDestroyService _animatedDestroyService;
-
-        private Dictionary<BoostTypeId,IBlockDestroyService> _destroyServices;
+        private Dictionary<string,IBlockDestroyService> _destroyServices;
 
         public EntityDestroyer(SimpleDestroyService simpleDestroyService, IAnimatedDestroyService animatedDestroyService)
         {
             _simpleDestroyService = simpleDestroyService;
             _animatedDestroyService = animatedDestroyService;
         }
-        
-        public async UniTask AsyncInitialize(List<DestroyServiceData> param)
-        {
-            _destroyServices = param.ToDictionary(x => x.BoostTypeId, x => x.BlockDestroyService);
 
-            await UniTask.CompletedTask;
+        public UniTask AsyncInitialize(Dictionary<string, IBlockDestroyService> param)
+        {
+            _destroyServices = param;
+            return UniTask.CompletedTask;
         }
 
         public async void Destroy(GridItemData gridItemData, IEntityView entityView)
         {
             entityView.BoxCollider2D.enabled = false;
-            if (_destroyServices.ContainsKey(gridItemData.BoostTypeId))
+            if (_destroyServices.ContainsKey(gridItemData.BoostTypeId.ToString()))
             {
-                _destroyServices[gridItemData.BoostTypeId].Destroy(gridItemData, entityView);
+                _destroyServices[gridItemData.BoostTypeId.ToString()].Destroy(gridItemData, entityView);
                 return;
             }
 

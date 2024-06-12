@@ -16,7 +16,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Destroy
             LevelViewUpdater = levelViewUpdater;
         }
 
-        public abstract BoostTypeId[] ProccessingBoostTypes { get; }
         public abstract void Destroy(GridItemData gridItemData, IEntityView entityView);
         
         protected int2[] GetAllPointsByDirection(int2 initialPoint, Direction direction)
