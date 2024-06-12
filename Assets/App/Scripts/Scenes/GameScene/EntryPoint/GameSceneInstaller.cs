@@ -9,6 +9,7 @@ using App.Scripts.General.RootUI;
 using App.Scripts.General.UserData.Constants;
 using App.Scripts.Scenes.GameScene.EntryPoint.Bootstrap;
 using App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers;
+using App.Scripts.Scenes.GameScene.Features.Boosts;
 using App.Scripts.Scenes.GameScene.Features.Boosts.Autopilot.Strategies;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General.UI;
@@ -76,6 +77,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
         [Inject] private PoolProviders _poolProviders;
         [Inject] private IStateMachine _projectStateMachine;
         [Inject] private EffectsPrefabProvider _effectsPrefabProvider;
+        [Inject] private BoostSettingsContainer _boostSettingsContainer;
 
         public override void InstallBindings()
         {
@@ -93,10 +95,12 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             MiniGunInstaller.Install(Container);
             ConditionsInstaller.Install(Container);
             ShowLevelInstaller.Install(Container);
-            
+            BoostBinder.Install(Container, _boostSettingsContainer);
+
+
             Container.Bind<ICameraService>().To<CameraService>().AsSingle().WithArguments(_camera);
             Container.BindInterfacesAndSelfTo<ScreenInfoProvider>().AsSingle();
-            
+
             Container.BindInterfacesAndSelfTo<TweenersLocator>().AsSingle();
             Container.Bind<IScoreAnimationService>().To<ScoreAnimationService>().AsSingle();
             Container.Bind<IShakeService>().To<ShakeService>().AsSingle();
@@ -159,19 +163,8 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container
                 .BindInterfacesTo<PlayerShapeMover>()
                 .AsSingle()
-                .WithArguments(_playerShape)
-                .WhenInjectedInto(
-                    typeof(GameLoopState), 
-                    typeof(AutopilotBoostActivator),
-                    typeof(SimpleMovingStrategy),
-                    typeof(BootstrapLoadLevelState),
-                    typeof(ShapeBoostSpeed),
-                    typeof(RestartState),
-                    typeof(LevelProgressSaveService),
-                    typeof(BootstrapContinueLoadLevelState),
-                    typeof(RestartService),
-                    typeof(AutopilotMoveService),
-                    typeof(LoadNextLevelState));
+                .WithArguments(_playerShape).
+                WhenNotInjectedInto<TickableManager>();
         }
     }
 }

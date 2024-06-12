@@ -27,3 +27,4 @@ MonoBehaviour:
   EffectCollisionProvider: {fileID: 11400000, guid: b1d068ea4a6f65f459e9de4bd9d36b5d, type: 2}
   EffectsPrefabProvider: {fileID: 11400000, guid: e906a9831f204df45868737d37910d8c, type: 2}
   DestroyEntityEffectMapping: {fileID: 11400000, guid: 0a46bc410273e5a4aa7194d89fa36756, type: 2}
+  BoostSettingsContainer: {fileID: 11400000, guid: 66fd56caebd43824f909e477be271d48, type: 2}

@@ -14,11 +14,11 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
 {
     public class FireballBoostActivator : IConcreteBoostActivator, ITickable
     {
-        private readonly ILevelLoader _levelLoader;
-        private readonly IEntityDestroyable _entityDestroyable;
-        private readonly ILevelViewUpdater _levelViewUpdater;
-        private readonly IBallsService _ballsService;
-        private readonly IEffectActivator _effectActivator;
+        private ILevelLoader _levelLoader;
+        private IEntityDestroyable _entityDestroyable;
+        private ILevelViewUpdater _levelViewUpdater;
+        private IBallsService _ballsService;
+        private IEffectActivator _effectActivator;
         private bool _isActive = false;
         
         public FireballBoostActivator(
@@ -37,7 +37,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
 
         public bool IsTimeableBoost => true;
 
-        public void Activate(BoostTypeId boostTypeId)
+        public void Activate()
         {
             _ballsService.SetRedBall(true);
             _isActive = true;

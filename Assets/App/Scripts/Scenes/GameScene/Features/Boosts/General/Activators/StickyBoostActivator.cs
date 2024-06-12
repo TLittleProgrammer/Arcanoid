@@ -7,7 +7,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
 {
     public class StickyBoostActivator : IConcreteBoostActivator
     {
-        private readonly IBallsService _ballsService;
+        private IBallsService _ballsService;
         private bool _isActive;
         
         public StickyBoostActivator(IBallsService ballsService)
@@ -19,7 +19,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
         
         public bool IsTimeableBoost => true;
 
-        public void Activate(BoostTypeId boostTypeId)
+        public void Activate()
         {
             _isActive = true;
 
@@ -28,7 +28,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
                 view.Collidered += OnCollidered;
             }
         }
-
+        
         public void Deactivate()
         {
             _isActive = false;

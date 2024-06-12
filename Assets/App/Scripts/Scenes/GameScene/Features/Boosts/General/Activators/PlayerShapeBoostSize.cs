@@ -11,35 +11,27 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
 {
     public sealed class PlayerShapeBoostSize : IConcreteBoostActivator
     {
-        private readonly PlayerView _playerView;
-        private readonly IShapePositionChecker _shapePositionChecker;
-        private readonly BoostsSettings _boostsSettings;
-        private readonly IBulletMovement _bulletMovement;
+        private PlayerView _playerView;
+        private IShapePositionChecker _shapePositionChecker;
+        private IBulletMovement _bulletMovement;
+
+        public float NewSize;
 
         public PlayerShapeBoostSize(
             PlayerView playerView,
             IShapePositionChecker shapePositionChecker,
-            BoostsSettings boostsSettings,
             IBulletMovement bulletMovement)
         {
             _playerView = playerView;
             _shapePositionChecker = shapePositionChecker;
-            _boostsSettings = boostsSettings;
             _bulletMovement = bulletMovement;
         }
         
         public bool IsTimeableBoost => true;
         
-        public void Activate(BoostTypeId boostTypeId)
+        public void Activate()
         {
-            if (boostTypeId is BoostTypeId.PlayerShapeAddSize)
-            {
-                UpdateWidth(_boostsSettings.AddPercent).Forget();
-            }
-            else
-            {
-                UpdateWidth(_boostsSettings.MinusPercent).Forget();
-            }
+            UpdateWidth(NewSize).Forget();
         }
 
         public async void Deactivate()

@@ -5,28 +5,20 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
 {
     public sealed class HealthAndDeathBoost : IConcreteBoostActivator
     {
-        private readonly IHealthContainer _healthContainer;
+        private IHealthContainer _healthContainer;
 
-        private readonly BoostsSettings _boostsSettings;
+        public int AddHealthCount;
 
-        public HealthAndDeathBoost(IHealthContainer healthContainer, BoostsSettings boostsSettings)
+        public HealthAndDeathBoost(IHealthContainer healthContainer)
         {
             _healthContainer = healthContainer;
-            _boostsSettings = boostsSettings;
         }
         
         public bool IsTimeableBoost => false;
         
-        public void Activate(BoostTypeId boostTypeId)
+        public void Activate()
         {
-            if (boostTypeId is BoostTypeId.AddHealth)
-            {
-                _healthContainer.UpdateHealth(_boostsSettings.AddHealth, false);
-            }
-            else
-            {
-                _healthContainer.UpdateHealth(-_boostsSettings.MinusHealth, false);
-            }
+            _healthContainer.UpdateHealth(AddHealthCount, false);
         }
 
         public void Deactivate()

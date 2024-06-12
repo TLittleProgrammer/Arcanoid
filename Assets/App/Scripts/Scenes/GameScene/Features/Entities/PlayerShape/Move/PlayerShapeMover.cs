@@ -48,6 +48,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.Move
             if (!IsActive)
                 return;
             
+            Debug.Log("Tick");
+            
             if (_inputService.UserClickDown && _rectMousePositionChecker.MouseOnRect(_inputService.CurrentMousePosition))
             {
                 Vector2 targetPosition = CalculateTargetPosition();

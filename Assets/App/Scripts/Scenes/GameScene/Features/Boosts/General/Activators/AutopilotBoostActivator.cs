@@ -8,8 +8,9 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
 {
     public class AutopilotBoostActivator : IConcreteBoostActivator, ITickable, IActivable
     {
-        private readonly BehaviourTree _behaviourTree;
-        private readonly IPlayerShapeMover _playerShapeMover;
+        private BehaviourTree _behaviourTree;
+        private IPlayerShapeMover _playerShapeMover;
+        
         public bool IsActive { get; set; }
         
         public AutopilotBoostActivator(BehaviourTree behaviourTree, IPlayerShapeMover playerShapeMover)
@@ -20,7 +21,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
 
         public bool IsTimeableBoost => true;
 
-        public void Activate(BoostTypeId boostTypeId)
+        public void Activate()
         {
             IsActive = true;
             _playerShapeMover.IsActive = false;

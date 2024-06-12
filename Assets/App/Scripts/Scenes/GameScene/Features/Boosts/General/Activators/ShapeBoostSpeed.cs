@@ -6,32 +6,26 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
 {
     public sealed class ShapeBoostSpeed : IConcreteBoostActivator
     {
-        private readonly IPlayerShapeMover _playerShapeMover;
-        private readonly BoostsSettings _boostsSettings;
+        private IPlayerShapeMover _playerShapeMover;
+        private const float _defaultSpeedMultiplier = 1f; 
+        
+        public float NewSpeed;
 
-        public ShapeBoostSpeed(IPlayerShapeMover playerShapeMover, BoostsSettings boostsSettings)
+        public ShapeBoostSpeed(IPlayerShapeMover playerShapeMover)
         {
             _playerShapeMover = playerShapeMover;
-            _boostsSettings = boostsSettings;
         }
         
         public bool IsTimeableBoost => true;
 
-        public void Activate(BoostTypeId boostTypeId)
+        public void Activate()
         {
-            if (boostTypeId is BoostTypeId.PlayerShapeAddSpeed)
-            {
-                _playerShapeMover.ChangeSpeed(_boostsSettings.AddPercentSpeed);
-            }
-            else
-            {
-                _playerShapeMover.ChangeSpeed(_boostsSettings.MinusPercentSpeed);
-            }
+            _playerShapeMover.ChangeSpeed(NewSpeed);
         }
 
         public void Deactivate()
         {
-            _playerShapeMover.ChangeSpeed(1f);
+            _playerShapeMover.ChangeSpeed(_defaultSpeedMultiplier);
         }
     }
 }

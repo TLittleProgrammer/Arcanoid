@@ -6,7 +6,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
 {
     public class MiniGunBoostActivator : IConcreteBoostActivator
     {
-        private readonly IMiniGunService _miniGunService;
+        private IMiniGunService _miniGunService;
 
         public MiniGunBoostActivator(IMiniGunService miniGunService)
         {
@@ -15,7 +15,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
         
         public bool IsTimeableBoost => true;
         
-        public void Activate(BoostTypeId boostTypeId)
+        public void Activate()
         {
             _miniGunService.ActiveMiniGun = true;
         }

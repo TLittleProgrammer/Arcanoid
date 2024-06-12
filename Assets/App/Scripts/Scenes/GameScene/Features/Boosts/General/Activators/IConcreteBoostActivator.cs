@@ -3,7 +3,7 @@
     public interface IConcreteBoostActivator
     {
         bool IsTimeableBoost { get; }
-        void Activate(BoostTypeId boostTypeId);
+        void Activate();
         void Deactivate();
     }
 }
