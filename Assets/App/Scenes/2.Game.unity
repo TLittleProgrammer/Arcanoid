@@ -924,7 +924,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _camera: {fileID: 519420031}
   _header: {fileID: 333490954}
-  _levelData: {fileID: 4900000, guid: 4d7e465e5a324fb41af019f30ea380ef, type: 3}
+  _levelData: {fileID: 4900000, guid: 47cd837f452f75f47a6c24454c967444, type: 3}
   _playerShape: {fileID: 206752683}
   _levelPackInfoView: {fileID: 333490955}
   _levelPackBackground: {fileID: 333490956}
@@ -935,7 +935,6 @@ MonoBehaviour:
   _boostItemViewPrefab: {fileID: 5042898095734243459, guid: 46281c87ff569f34ea883aaa8a268c42, type: 3}
   _boostsViewContainer: {fileID: 961067312}
   _menuButton: {fileID: 1393945891}
-  _skipLevelButton: {fileID: 0}
   _openMenuPopupButton: {fileID: 1393945896}
   _gameStatements: {fileID: 526714221}
 --- !u!1 &1917643949

@@ -85,6 +85,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
             Balls.Add(ballView);
 
             AddBallPositionCheckerForBall(ballView);
+            
             BallAdded?.Invoke(ballView);
 
             ballView.RedBall.gameObject.SetActive(_redBallActivated);
@@ -292,6 +293,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
                 AddBallPositionCheckerForBall(ballView);
                 
                 Balls.Add(ballView);
+                BallAdded?.Invoke(ballView);
             }
             
             SetSpeedMultiplier(levelDataProgress.BallsData.SpeedMultiplier);

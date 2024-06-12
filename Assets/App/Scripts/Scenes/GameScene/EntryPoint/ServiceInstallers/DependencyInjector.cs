@@ -19,14 +19,19 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
             
             ParameterInfo[] parameters = constructor.GetParameters();
 
-            // Создаем экземпляры зависимостей
             for (int i = 0; i < parameters.Length; i++)
             {
-
                 string fieldName = "_" + parameters[i].Name;
                 FieldInfo field = type.GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Instance);
 
                 field.SetValue(service, container.Resolve(field.FieldType));
+            }
+            
+            MethodInfo methodInfo = type.GetMethod("Initialize", BindingFlags.Public | BindingFlags.Instance);
+            
+            if (methodInfo != null && methodInfo.ReturnType == typeof(void) && methodInfo.GetParameters().Length == 0)
+            {
+                methodInfo.Invoke(service, null);
             }
 
             return service;
