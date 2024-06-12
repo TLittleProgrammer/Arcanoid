@@ -56,10 +56,11 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General
             
             _activators[boostTypeId].Activate(boostTypeId);
 
-            if (boostTypeId is not BoostTypeId.AddHealth && boostTypeId is not BoostTypeId.MinusHealth)
+            if (_activators[boostTypeId].IsTimeableBoost)
             {
                 _boostContainer.AddBoost(view.BoostTypeId);
             }
+            
             _simpleDestroyService.Destroy(view);
         }
 
