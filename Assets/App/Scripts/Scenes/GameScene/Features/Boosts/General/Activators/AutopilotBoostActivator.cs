@@ -18,6 +18,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
             _playerShapeMover = playerShapeMover;
         }
 
+        public bool IsTimeableBoost => true;
+
         public void Activate(BoostTypeId boostTypeId)
         {
             IsActive = true;

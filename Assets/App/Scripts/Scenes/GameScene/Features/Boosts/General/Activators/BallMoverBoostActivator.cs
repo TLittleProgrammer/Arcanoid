@@ -16,6 +16,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
             _ballsService = ballsService;
         }
 
+        public bool IsTimeableBoost => true;
+
         public void Activate(BoostTypeId boostTypeId)
         {
             float multiplier = boostTypeId switch

@@ -27,7 +27,9 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
             _boostsSettings = boostsSettings;
             _bulletMovement = bulletMovement;
         }
-
+        
+        public bool IsTimeableBoost => true;
+        
         public void Activate(BoostTypeId boostTypeId)
         {
             if (boostTypeId is BoostTypeId.PlayerShapeAddSize)

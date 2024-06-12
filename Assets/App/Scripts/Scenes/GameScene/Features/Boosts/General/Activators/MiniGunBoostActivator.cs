@@ -12,7 +12,9 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
         {
             _miniGunService = miniGunService;
         }
-
+        
+        public bool IsTimeableBoost => true;
+        
         public void Activate(BoostTypeId boostTypeId)
         {
             _miniGunService.ActiveMiniGun = true;

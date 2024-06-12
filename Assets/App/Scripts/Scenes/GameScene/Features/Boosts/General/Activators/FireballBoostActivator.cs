@@ -35,6 +35,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
             _effectActivator = effectActivator;
         }
 
+        public bool IsTimeableBoost => true;
+
         public void Activate(BoostTypeId boostTypeId)
         {
             _ballsService.SetRedBall(true);
