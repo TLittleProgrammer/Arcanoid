@@ -36,6 +36,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
             Container.BindInterfacesAndSelfTo<BoostPositionCheckerService>().AsSingle();
             Container.BindInterfacesAndSelfTo<BoostContainer>().AsSingle();
             Container.BindInterfacesAndSelfTo<FireballSystem>().AsSingle().WhenNotInjectedInto<ServiceActivator>();
+            Container.BindInterfacesAndSelfTo<AutopilotSystem>().AsSingle().WhenNotInjectedInto<ServiceActivator>();
 
             Container.BindInterfacesAndSelfTo<BoostsActivator>().AsSingle();
         }

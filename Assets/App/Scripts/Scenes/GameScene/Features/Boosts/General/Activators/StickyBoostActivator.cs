@@ -56,7 +56,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
 
         private void OnBallAdded(BallView view)
         {
-            Debug.Log("A");
             if (_balls is not null && !_balls.Contains(view))
             {
                 _balls.Add(view);
