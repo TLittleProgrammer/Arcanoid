@@ -21,7 +21,6 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
         public StopGameSettings StopGameSettings;
         public WinContinueButtonAnimationSettings WinContinueButtonAnimationSettings;
         public BoxCollidersAroundScreenSettings BoxCollidersAroundScreenSettings;
-        public BoostViewProvider BoostViewProvider;
         public BoostsSettings BoostsSettings;
         public BirdSettings BirdSettings;
         public ShapeMoverSettings ShapeMoverSettings;
@@ -41,7 +40,6 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.Bind<StopGameSettings>().FromInstance(StopGameSettings).IfNotBound();
             Container.Bind<WinContinueButtonAnimationSettings>().FromInstance(WinContinueButtonAnimationSettings).IfNotBound();
             Container.Bind<BoxCollidersAroundScreenSettings>().FromInstance(BoxCollidersAroundScreenSettings).IfNotBound();
-            Container.Bind<BoostViewProvider>().FromInstance(BoostViewProvider).IfNotBound();
             Container.Bind<BoostsSettings>().FromInstance(BoostsSettings).IfNotBound();
             Container.Bind<BirdSettings>().FromInstance(BirdSettings).IfNotBound();
             Container.Bind<ShapeMoverSettings>().FromInstance(ShapeMoverSettings).IfNotBound();
