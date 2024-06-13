@@ -6,6 +6,7 @@ using App.Scripts.External.UserData;
 using App.Scripts.General.Infrastructure;
 using App.Scripts.General.Providers;
 using App.Scripts.General.RootUI;
+using App.Scripts.General.UserData.Constants;
 using App.Scripts.Scenes.GameScene.EntryPoint.Bootstrap;
 using App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers;
 using App.Scripts.Scenes.GameScene.Features.Boosts.Autopilot.Strategies;
@@ -17,6 +18,7 @@ using App.Scripts.Scenes.GameScene.Features.Damage;
 using App.Scripts.Scenes.GameScene.Features.Dotween;
 using App.Scripts.Scenes.GameScene.Features.Effects;
 using App.Scripts.Scenes.GameScene.Features.Entities.Ball;
+using App.Scripts.Scenes.GameScene.Features.Entities.Ball.Movement.MoveVariants;
 using App.Scripts.Scenes.GameScene.Features.Entities.Ball.Systems;
 using App.Scripts.Scenes.GameScene.Features.Entities.Bird;
 using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape;
@@ -99,7 +101,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.Bind<IScoreAnimationService>().To<ScoreAnimationService>().AsSingle();
             Container.Bind<IShakeService>().To<ShakeService>().AsSingle();
             Container.Bind<IRectMousePositionChecker>().To<RectMousePositionChecker>().AsSingle().WithArguments(_rectTransformableViews.ToList());
-            Container.Bind<IDataProvider<LevelDataProgress>>().To<DataProvider<LevelDataProgress>>().AsSingle();
+            Container.Bind<IDataProvider<LevelDataProgress>>().To<DataProvider<LevelDataProgress>>().AsSingle().WithArguments(SavableConstants.CurrentLevelProgressFileName);
 
             Container.BindInterfacesAndSelfTo<BirdsService>().AsSingle();
             Container.BindInterfacesAndSelfTo<BirdRespawnService>().AsSingle();
@@ -111,6 +113,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.BindInterfacesAndSelfTo<EffectActivator>().AsSingle();
             Container.BindInterfacesAndSelfTo<BallsMovementSystem>().AsSingle();
             Container.BindInterfacesAndSelfTo<GridDataService>().AsSingle().WithArguments(_header);
+            Container.BindInterfacesAndSelfTo<AngleCorrector>().AsSingle();
             Container.BindInterfacesTo<GridPositionResolver>().AsSingle();
             
             Container.Bind<IShapePositionChecker>().To<PlayerShapePositionChecker>().AsSingle().WithArguments(_playerShape);

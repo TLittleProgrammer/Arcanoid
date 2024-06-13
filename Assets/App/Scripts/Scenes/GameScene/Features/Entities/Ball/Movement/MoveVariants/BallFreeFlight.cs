@@ -12,6 +12,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball.Movement.MoveVaria
     {
         private readonly BallFlyingSettings _settings;
         private readonly ITimeProvider _timeProvider;
+        private readonly IAngleCorrector _angleCorrector;
         private readonly IRigidablebody _ballRigidbody;
         private readonly float _maxSecondAngle;
         private readonly float _minSecondAngle;
@@ -20,19 +21,22 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball.Movement.MoveVaria
         private float _multiplier;
         private Vector2 _lastDirection;
 
-        public BallFreeFlight(BallView ballView, BallFlyingSettings settings, ITimeProvider timeProvider)
+        public BallFreeFlight(
+            BallView ballView,
+            BallFlyingSettings settings,
+            ITimeProvider timeProvider,
+            IAngleCorrector angleCorrector)
         {
             _ballRigidbody = ballView;
             _settings = settings;
             _timeProvider = timeProvider;
-            
+            _angleCorrector = angleCorrector;
+
             _ballRigidbody.Collidered += OnCollidered;
             _timeProvider.TimeScaleChanged += OnTimeScaleChanged;
 
             _speed = _settings.Speed;
             _multiplier = 1f;
-            _maxSecondAngle = 180f - _settings.MaxAngle;
-            _minSecondAngle = 180f - _settings.MinAngle;
         }
 
         public async UniTask AsyncInitialize(Vector2 param)
@@ -108,43 +112,11 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball.Movement.MoveVaria
 
         private void OnCollidered(BallView view, Collider2D collider)
         {
-            ChangeAngleForDirection();
+            float targetAngle = _angleCorrector.CorrectAngleByDirection(Velocity);
+            UpdateVelocityByAngle(targetAngle);
         }
 
-        private void ChangeAngleForDirection()
-        {
-            float currentAngle = Mathf.Atan2(Velocity.y, Velocity.x) * Mathf.Rad2Deg;
-            float absCurrentAngle = Mathf.Abs(currentAngle);
-            
-            float targetAngle = ChooseTargetAngle(absCurrentAngle, currentAngle);
-            
-            if(Math.Abs(currentAngle - targetAngle) > 0.001f) {
-                UpdateVelocity(targetAngle);
-            }
-        }
-
-        private float ChooseTargetAngle(float absCurrentAngle, float currentAngle)
-        {
-            float multiplier = currentAngle > 0 ? 1f : -1f;
-            if (absCurrentAngle < _settings.MinAngle)
-            {
-                return  _settings.MinAngle * multiplier;
-            }
-
-            if (absCurrentAngle > _settings.MaxAngle && _maxSecondAngle > absCurrentAngle)
-            {
-                return _settings.MaxAngle * multiplier;
-            }
-
-            if (absCurrentAngle > _minSecondAngle)
-            {
-                return _minSecondAngle * multiplier;
-            }
-
-            return currentAngle;
-        }
-
-        private void UpdateVelocity(float targetAngle)
+        private void UpdateVelocityByAngle(float targetAngle)
         {
             float speed = Velocity.magnitude;
             

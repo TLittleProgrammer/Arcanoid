@@ -85,10 +85,13 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.General.Animations
 
             while (currentRow < allRows && currentColumn < allColumns)
             {
-                IEntityView view = _levelLoader.Entities.First(x => x.GridPositionX == currentColumn && x.GridPositionY == currentRow);
+                IEntityView view = _levelLoader.Entities.FirstOrDefault(x => x.GridPositionX == currentColumn && x.GridPositionY == currentRow);
 
-                views.Add(view);
-                
+                if (view is not null)
+                {
+                    views.Add(view);
+                }
+
                 currentRow++;
                 currentColumn++;
             }
