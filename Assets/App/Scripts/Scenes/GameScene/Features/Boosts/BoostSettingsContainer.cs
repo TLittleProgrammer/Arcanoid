@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators;
+using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer;
 using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEngine;
@@ -18,6 +19,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts
         public float Duration = 10f;
         public List<string> KeysThatCanBlockThisBoost;
         public IConcreteBoostActivator ConcreteBoostActivator;
+        public IBoostDataProvider BoostDataProvider;
     }
 
     [CreateAssetMenu(menuName = "Configs/AvailableBoostList", fileName = "AvailableBoostList")]

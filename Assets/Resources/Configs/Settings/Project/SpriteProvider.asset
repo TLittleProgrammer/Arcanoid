@@ -44,6 +44,7 @@ MonoBehaviour:
     - {fileID: 21300000, guid: b3055e55e89ed5645b0cfac6adf48b4e, type: 3}
     - {fileID: 21300000, guid: 5a4ea25f1adb18f4d97b8c4436aa378c, type: 3}
     - {fileID: 21300000, guid: 8c479c6c8d9f3964f9606abde33b3c30, type: 3}
+    - {fileID: 21300000, guid: 8cc9b43d8041b2c40b12d4653f1f41a9, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -62,7 +63,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 28
+      Data: 30
     - Name: 
       Entry: 7
       Data: 
@@ -248,7 +249,7 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 1
-      Data: StickyPlatform
+      Data: StickyPlatform_block
     - Name: $v
       Entry: 10
       Data: 15
@@ -396,6 +397,30 @@ MonoBehaviour:
     - Name: $v
       Entry: 10
       Data: 27
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: PlayerShapeAddSpeed_icon
+    - Name: $v
+      Entry: 10
+      Data: 28
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: PlayerShapeMinusSpeed_icon
+    - Name: $v
+      Entry: 10
+      Data: 21
     - Name: 
       Entry: 8
       Data: 

@@ -1,4 +1,5 @@
 ﻿using App.Scripts.Scenes.GameScene.Features.Entities.Ball;
+using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer;
 
 namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
 {
@@ -16,9 +17,11 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
 
         public bool IsTimeableBoost => true;
 
-        public void Activate()
+        public void Activate(IBoostDataProvider boostDataProvider)
         {
-            _ballsService.SetSpeedMultiplier(SpeedMultiplier);
+            FloatBoostData floatBoostData = (FloatBoostData)boostDataProvider;
+            
+            _ballsService.SetSpeedMultiplier(floatBoostData.Value);
         }
 
         public void Deactivate()

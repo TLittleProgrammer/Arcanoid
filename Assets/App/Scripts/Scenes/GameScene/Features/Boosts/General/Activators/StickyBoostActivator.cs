@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General.Interfaces;
 using App.Scripts.Scenes.GameScene.Features.Entities.Ball;
+using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer;
 using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape;
 using UnityEngine;
 
@@ -15,17 +16,13 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
         public StickyBoostActivator(IBallsService ballsService)
         {
             _ballsService = ballsService;
+            _ballsService.BallAdded += OnBallAdded;
+            _balls = new();
         }
         
         public bool IsTimeableBoost => true;
 
-        public void Initialize()
-        {
-            _ballsService.BallAdded += OnBallAdded;
-            _balls = new();
-        }
-
-        public void Activate()
+        public void Activate(IBoostDataProvider boostDataProvider)
         {
             _isActive = true;
             

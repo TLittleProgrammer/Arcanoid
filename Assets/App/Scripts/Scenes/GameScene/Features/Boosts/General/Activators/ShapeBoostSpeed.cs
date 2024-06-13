@@ -1,4 +1,5 @@
 ﻿using App.Scripts.Scenes.GameScene.Features.Boosts.General.Interfaces;
+using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer;
 using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.Move;
 using App.Scripts.Scenes.GameScene.Features.Settings;
 
@@ -18,9 +19,11 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
         
         public bool IsTimeableBoost => true;
 
-        public void Activate()
+        public void Activate(IBoostDataProvider boostDataProvider)
         {
-            _playerShapeMover.ChangeSpeed(NewSpeed);
+            FloatBoostData floatBoostData = (FloatBoostData)boostDataProvider;
+            
+            _playerShapeMover.ChangeSpeed(floatBoostData.Value);
         }
 
         public void Deactivate()

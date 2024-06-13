@@ -36,7 +36,7 @@ MonoBehaviour:
       Data: BallAcceleration
     - Name: Duration
       Entry: 4
-      Data: 0
+      Data: 6
     - Name: KeysThatCanBlockThisBoost
       Entry: 7
       Data: 2|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
@@ -62,21 +62,31 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+    - Name: BoostDataProvider
+      Entry: 7
+      Data: 4|App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.FloatBoostData,
+        Game
+    - Name: Value
+      Entry: 4
+      Data: 1.5
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 7
-      Data: 4|App.Scripts.Scenes.GameScene.Features.Boosts.BoostSettingsData, Game
+      Data: 5|App.Scripts.Scenes.GameScene.Features.Boosts.BoostSettingsData, Game
     - Name: Key
       Entry: 1
       Data: BallSlowdown
     - Name: Duration
       Entry: 4
-      Data: 0
+      Data: 6
     - Name: KeysThatCanBlockThisBoost
       Entry: 7
-      Data: 5|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 6|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -91,9 +101,19 @@ MonoBehaviour:
       Data: 
     - Name: ConcreteBoostActivator
       Entry: 7
-      Data: 6|App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators.BallMoverBoostActivator,
+      Data: 7|App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators.BallMoverBoostActivator,
         Game
     - Name: SpeedMultiplier
+      Entry: 4
+      Data: 0.5
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: BoostDataProvider
+      Entry: 7
+      Data: 8|App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.FloatBoostData,
+        Game
+    - Name: Value
       Entry: 4
       Data: 0.5
     - Name: 
@@ -104,16 +124,16 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 7|App.Scripts.Scenes.GameScene.Features.Boosts.BoostSettingsData, Game
+      Data: 9|App.Scripts.Scenes.GameScene.Features.Boosts.BoostSettingsData, Game
     - Name: Key
       Entry: 1
       Data: PlayerShapeAddSize
     - Name: Duration
       Entry: 4
-      Data: 0
+      Data: 6
     - Name: KeysThatCanBlockThisBoost
       Entry: 7
-      Data: 8|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 10|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -128,7 +148,7 @@ MonoBehaviour:
       Data: 
     - Name: ConcreteBoostActivator
       Entry: 7
-      Data: 9|App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators.PlayerShapeBoostSize,
+      Data: 11|App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators.PlayerShapeBoostSize,
         Game
     - Name: NewSize
       Entry: 4
@@ -136,40 +156,13 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
+    - Name: BoostDataProvider
       Entry: 7
-      Data: 10|App.Scripts.Scenes.GameScene.Features.Boosts.BoostSettingsData, Game
-    - Name: Key
-      Entry: 1
-      Data: PlayerShapeMinusSize
-    - Name: Duration
-      Entry: 4
-      Data: 0
-    - Name: KeysThatCanBlockThisBoost
-      Entry: 7
-      Data: 11|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 1
-      Data: PlayerShapeAddSize
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: ConcreteBoostActivator
-      Entry: 7
-      Data: 12|App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators.PlayerShapeBoostSize,
+      Data: 12|App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.FloatBoostData,
         Game
-    - Name: NewSize
+    - Name: Value
       Entry: 4
-      Data: 1
+      Data: 2
     - Name: 
       Entry: 8
       Data: 
@@ -181,13 +174,60 @@ MonoBehaviour:
       Data: 13|App.Scripts.Scenes.GameScene.Features.Boosts.BoostSettingsData, Game
     - Name: Key
       Entry: 1
-      Data: PlayerShapeAddSpeed
+      Data: PlayerShapeMinusSize
     - Name: Duration
       Entry: 4
-      Data: 0
+      Data: 6
     - Name: KeysThatCanBlockThisBoost
       Entry: 7
       Data: 14|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 1
+      Data: PlayerShapeAddSize
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: ConcreteBoostActivator
+      Entry: 7
+      Data: 15|App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators.PlayerShapeBoostSize,
+        Game
+    - Name: NewSize
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: BoostDataProvider
+      Entry: 7
+      Data: 16|App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.FloatBoostData,
+        Game
+    - Name: Value
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 17|App.Scripts.Scenes.GameScene.Features.Boosts.BoostSettingsData, Game
+    - Name: Key
+      Entry: 1
+      Data: PlayerShapeAddSpeed
+    - Name: Duration
+      Entry: 4
+      Data: 6
+    - Name: KeysThatCanBlockThisBoost
+      Entry: 7
+      Data: 18|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -202,9 +242,19 @@ MonoBehaviour:
       Data: 
     - Name: ConcreteBoostActivator
       Entry: 7
-      Data: 15|App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators.ShapeBoostSpeed,
+      Data: 19|App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators.ShapeBoostSpeed,
         Game
     - Name: NewSpeed
+      Entry: 4
+      Data: 1.5
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: BoostDataProvider
+      Entry: 7
+      Data: 20|App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.FloatBoostData,
+        Game
+    - Name: Value
       Entry: 4
       Data: 1.5
     - Name: 
@@ -215,16 +265,16 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 16|App.Scripts.Scenes.GameScene.Features.Boosts.BoostSettingsData, Game
+      Data: 21|App.Scripts.Scenes.GameScene.Features.Boosts.BoostSettingsData, Game
     - Name: Key
       Entry: 1
       Data: PlayerShapeMinusSpeed
     - Name: Duration
       Entry: 4
-      Data: 0
+      Data: 6
     - Name: KeysThatCanBlockThisBoost
       Entry: 7
-      Data: 17|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 22|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 1
@@ -239,7 +289,7 @@ MonoBehaviour:
       Data: 
     - Name: ConcreteBoostActivator
       Entry: 7
-      Data: 18|App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators.ShapeBoostSpeed,
+      Data: 23|App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators.ShapeBoostSpeed,
         Game
     - Name: NewSpeed
       Entry: 4
@@ -247,71 +297,13 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
+    - Name: BoostDataProvider
       Entry: 7
-      Data: 19|App.Scripts.Scenes.GameScene.Features.Boosts.BoostSettingsData, Game
-    - Name: Key
-      Entry: 1
-      Data: AddHealth
-    - Name: Duration
-      Entry: 4
-      Data: 0
-    - Name: KeysThatCanBlockThisBoost
-      Entry: 7
-      Data: 20|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: ConcreteBoostActivator
-      Entry: 7
-      Data: 21|App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators.HealthAndDeathBoost,
+      Data: 24|App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.FloatBoostData,
         Game
-    - Name: AddHealthCount
-      Entry: 3
-      Data: 1
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 22|App.Scripts.Scenes.GameScene.Features.Boosts.BoostSettingsData, Game
-    - Name: Key
-      Entry: 1
-      Data: MinusHealth
-    - Name: Duration
+    - Name: Value
       Entry: 4
-      Data: 0
-    - Name: KeysThatCanBlockThisBoost
-      Entry: 7
-      Data: 23|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
-    - Name: 
-      Entry: 12
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: ConcreteBoostActivator
-      Entry: 7
-      Data: 24|App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators.HealthAndDeathBoost,
-        Game
-    - Name: AddHealthCount
-      Entry: 3
-      Data: -1
+      Data: 0.5
     - Name: 
       Entry: 8
       Data: 
@@ -323,10 +315,10 @@ MonoBehaviour:
       Data: 25|App.Scripts.Scenes.GameScene.Features.Boosts.BoostSettingsData, Game
     - Name: Key
       Entry: 1
-      Data: Fireball
+      Data: AddHealth
     - Name: Duration
       Entry: 4
-      Data: 0
+      Data: 6
     - Name: KeysThatCanBlockThisBoost
       Entry: 7
       Data: 26|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
@@ -341,8 +333,21 @@ MonoBehaviour:
       Data: 
     - Name: ConcreteBoostActivator
       Entry: 7
-      Data: 27|App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators.FireballBoostActivator,
+      Data: 27|App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators.HealthAndDeathBoost,
         Game
+    - Name: AddHealthCount
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: BoostDataProvider
+      Entry: 7
+      Data: 28|App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.IntBoostData,
+        Game
+    - Name: Value
+      Entry: 3
+      Data: 1
     - Name: 
       Entry: 8
       Data: 
@@ -351,16 +356,94 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 7
-      Data: 28|App.Scripts.Scenes.GameScene.Features.Boosts.BoostSettingsData, Game
+      Data: 29|App.Scripts.Scenes.GameScene.Features.Boosts.BoostSettingsData, Game
+    - Name: Key
+      Entry: 1
+      Data: MinusHealth
+    - Name: Duration
+      Entry: 4
+      Data: 6
+    - Name: KeysThatCanBlockThisBoost
+      Entry: 7
+      Data: 30|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: ConcreteBoostActivator
+      Entry: 7
+      Data: 31|App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators.HealthAndDeathBoost,
+        Game
+    - Name: AddHealthCount
+      Entry: 3
+      Data: -1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: BoostDataProvider
+      Entry: 7
+      Data: 32|App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.IntBoostData,
+        Game
+    - Name: Value
+      Entry: 3
+      Data: -1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 33|App.Scripts.Scenes.GameScene.Features.Boosts.BoostSettingsData, Game
+    - Name: Key
+      Entry: 1
+      Data: Fireball
+    - Name: Duration
+      Entry: 4
+      Data: 6
+    - Name: KeysThatCanBlockThisBoost
+      Entry: 7
+      Data: 34|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: ConcreteBoostActivator
+      Entry: 7
+      Data: 35|App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators.FireballBoostActivator,
+        Game
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: BoostDataProvider
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 36|App.Scripts.Scenes.GameScene.Features.Boosts.BoostSettingsData, Game
     - Name: Key
       Entry: 1
       Data: StickyPlatform
     - Name: Duration
       Entry: 4
-      Data: 0
+      Data: 6
     - Name: KeysThatCanBlockThisBoost
       Entry: 7
-      Data: 29|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 37|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -372,26 +455,29 @@ MonoBehaviour:
       Data: 
     - Name: ConcreteBoostActivator
       Entry: 7
-      Data: 30|App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators.StickyBoostActivator,
+      Data: 38|App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators.StickyBoostActivator,
         Game
     - Name: 
       Entry: 8
+      Data: 
+    - Name: BoostDataProvider
+      Entry: 6
       Data: 
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 7
-      Data: 31|App.Scripts.Scenes.GameScene.Features.Boosts.BoostSettingsData, Game
+      Data: 39|App.Scripts.Scenes.GameScene.Features.Boosts.BoostSettingsData, Game
     - Name: Key
       Entry: 1
       Data: MiniGun
     - Name: Duration
       Entry: 4
-      Data: 0
+      Data: 6
     - Name: KeysThatCanBlockThisBoost
       Entry: 7
-      Data: 32|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 40|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -403,26 +489,29 @@ MonoBehaviour:
       Data: 
     - Name: ConcreteBoostActivator
       Entry: 7
-      Data: 33|App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators.MiniGunBoostActivator,
+      Data: 41|App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators.MiniGunBoostActivator,
         Game
     - Name: 
       Entry: 8
+      Data: 
+    - Name: BoostDataProvider
+      Entry: 6
       Data: 
     - Name: 
       Entry: 8
       Data: 
     - Name: 
       Entry: 7
-      Data: 34|App.Scripts.Scenes.GameScene.Features.Boosts.BoostSettingsData, Game
+      Data: 42|App.Scripts.Scenes.GameScene.Features.Boosts.BoostSettingsData, Game
     - Name: Key
       Entry: 1
       Data: Autopilot
     - Name: Duration
       Entry: 4
-      Data: 0
+      Data: 6
     - Name: KeysThatCanBlockThisBoost
       Entry: 7
-      Data: 35|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+      Data: 43|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
     - Name: 
       Entry: 12
       Data: 0
@@ -434,10 +523,13 @@ MonoBehaviour:
       Data: 
     - Name: ConcreteBoostActivator
       Entry: 7
-      Data: 36|App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators.AutopilotBoostActivator,
+      Data: 44|App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators.AutopilotBoostActivator,
         Game
     - Name: 
       Entry: 8
+      Data: 
+    - Name: BoostDataProvider
+      Entry: 6
       Data: 
     - Name: 
       Entry: 8

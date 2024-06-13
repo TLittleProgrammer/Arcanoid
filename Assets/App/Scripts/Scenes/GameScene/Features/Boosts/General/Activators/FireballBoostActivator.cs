@@ -1,5 +1,6 @@
 ﻿using App.Scripts.Scenes.GameScene.Features.Boosts.General.Systems;
 using App.Scripts.Scenes.GameScene.Features.Entities.Ball;
+using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer;
 using App.Scripts.Scenes.GameScene.Features.Entities.View;
 using App.Scripts.Scenes.GameScene.Features.Levels.Loading.Loader;
 
@@ -7,8 +8,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
 {
     public class FireballBoostActivator : IConcreteBoostActivator
     {
-        private ILevelLoader _levelLoader;
-        private IBallsService _ballsService;
+        private readonly ILevelLoader _levelLoader;
+        private readonly IBallsService _ballsService;
         private readonly IFireballSystem _fireballSystem;
 
         public FireballBoostActivator(
@@ -23,7 +24,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
 
         public bool IsTimeableBoost => true;
 
-        public void Activate()
+        public void Activate(IBoostDataProvider boostDataProvider)
         {
             SetFlag(true);
         }

@@ -130,6 +130,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General
             {
                 if (_viewsDictionary.ContainsKey(settingsData.Key) && settingsData.KeysThatCanBlockThisBoost.Contains(boostTypeId))
                 {
+                    var boostData = _boosts.First(x => x.BoostTypeId.Equals(settingsData.Key));
+                    _boosts.Remove(boostData);
                     RemoveItem(settingsData.Key);
                 }
             }

@@ -1,6 +1,7 @@
 ﻿using App.Scripts.Scenes.GameScene.Features.Boosts.General.Interfaces;
 using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun;
 using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.Movement;
+using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer;
 using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape;
 using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.PositionChecker;
 using App.Scripts.Scenes.GameScene.Features.Settings;
@@ -29,9 +30,10 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
         
         public bool IsTimeableBoost => true;
         
-        public void Activate()
+        public void Activate(IBoostDataProvider boostDataProvider)
         {
-            UpdateWidth(NewSize).Forget();
+            FloatBoostData floatBoostData = (FloatBoostData)boostDataProvider;
+            UpdateWidth(floatBoostData.Value).Forget();
         }
 
         public async void Deactivate()

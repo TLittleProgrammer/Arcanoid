@@ -1,4 +1,5 @@
 ﻿using App.Scripts.Scenes.GameScene.Features.Boosts.General.Systems;
+using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer;
 using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.Move;
 
 namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
@@ -16,10 +17,9 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
 
         public bool IsTimeableBoost => true;
 
-        public void Activate()
+        public void Activate(IBoostDataProvider boostDataProvider)
         {
             SetFlag(true);
-            
         }
 
         public void Deactivate()
