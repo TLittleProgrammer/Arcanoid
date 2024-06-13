@@ -9,7 +9,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.UI
         public Image BoostIcon;
         public Image ScollImage;
 
-        public class Factory : PlaceholderFactory<BoostTypeId, BoostItemView>
+        public class Factory : PlaceholderFactory<string, BoostItemView>
         {
             
         }

@@ -33,12 +33,12 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
             Container.BindFactory<string, IEntityView, IEntityView.Factory>().FromFactory<EntityFactory>();
             Container.BindFactory<ITransformable, IHealthPointView, IHealthPointView.Factory>().FromFactory<HealthFactory>();
             Container.BindFactory<IEntityView, OnTopSprites, OnTopSprites.Factory>().FromFactory<OnTopSpriteFactory>();
-            Container.BindFactory<BoostTypeId, BoostView, BoostView.Factory>().FromFactory<BoostViewFactory>();
+            Container.BindFactory<string, BoostView, BoostView.Factory>().FromFactory<BoostViewFactory>();
             Container.BindFactory<BallView, IBallMovementService, BallMovementFactory>().FromFactory<BallMovementServiceFactory>();
             Container.BindFactory<BirdView, BirdView.Factory>().FromFactory<BirdViewFactory>();
 
             Container.Bind<BoostItemView>().FromInstance(_prefab).WhenInjectedInto<BoostItemViewFactory>();
-            Container.BindFactory<BoostTypeId, BoostItemView, BoostItemView.Factory>().FromFactory<BoostItemViewFactory>();
+            Container.BindFactory<string, BoostItemView, BoostItemView.Factory>().FromFactory<BoostItemViewFactory>();
         }
     }
 }

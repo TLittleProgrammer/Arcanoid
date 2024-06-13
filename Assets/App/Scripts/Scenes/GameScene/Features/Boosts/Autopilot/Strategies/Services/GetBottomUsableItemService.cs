@@ -51,10 +51,10 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.Autopilot.Strategies
             
             foreach (BoostView view in _boostMoveService.Views)
             {
-                if (view.BoostTypeId.IsPositiveBoost() && view.gameObject.activeSelf && view.transform.position.y < boostBottomPosition.y)
-                {
-                    boostBottomPosition = view.transform.position;
-                }
+                //if (view.BoostTypeId.IsPositiveBoost() && view.gameObject.activeSelf && view.transform.position.y < boostBottomPosition.y)
+                //{
+                //    boostBottomPosition = view.transform.position;
+                //}
             }
 
             if (boostBottomPosition.y < position.y && position.y - boostBottomPosition.y >= 1f)

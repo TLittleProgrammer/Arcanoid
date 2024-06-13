@@ -215,3 +215,10 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
+  ActiveBoosts:
+  - 
+  - Bomb
+  - HorizontalBomb
+  - VerticalBomb
+  - CaptiveBall
+  - ChainBomb

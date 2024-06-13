@@ -75,7 +75,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Destroy
             ParticleSystem.MainModule firstMainModule = firstLaser.Laser.main;
             ParticleSystem.MainModule secondMainModule = secondLaser.Laser.main;
 
-            if (entityView.BoostTypeId is BoostTypeId.HorizontalBomb)
+            if (entityView.BoostTypeId.Equals("HorizontalBomb"))
             {
                 SetLasersAsHorizontal(entityView, firstMainModule, secondMainModule, firstLaser, secondLaser);
             }
@@ -256,7 +256,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Destroy
 
         private void GetDirection(IEntityView entityView, out Direction firstDirection, out Direction secondDirection)
         {
-            if (entityView.BoostTypeId is BoostTypeId.HorizontalBomb)
+            if (entityView.BoostTypeId.Equals("HorizontalBomb"))
             {
                 firstDirection = Direction.Left;
                 secondDirection = Direction.Right;

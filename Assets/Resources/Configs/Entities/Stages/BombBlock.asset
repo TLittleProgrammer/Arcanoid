@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e8708079ad64275a5e6a4a88f2c2b6c, type: 3}
   m_Name: BombBlock
   m_EditorClassIdentifier: 
-  BoostTypeId: 1
+  BoostTypeId: Bomb
   Damage: 2
   Sprite: {fileID: 21300000, guid: ced56ed448d75654c95ed243c6d97a60, type: 3}
   MaxHealthCounter: 2

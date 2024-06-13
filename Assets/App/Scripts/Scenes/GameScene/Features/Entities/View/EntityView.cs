@@ -34,7 +34,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.View
             set => _onTopSpriteRenderer.sprite = value;
         }
 
-        public BoostTypeId BoostTypeId { get; set; }
+        public string BoostTypeId { get; set; }
         public int EntityId { get; set; }
 
         public Vector3 Position

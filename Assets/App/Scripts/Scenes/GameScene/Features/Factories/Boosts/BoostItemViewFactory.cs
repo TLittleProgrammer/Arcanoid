@@ -7,7 +7,7 @@ using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.Features.Factories.Boosts
 {
-    public class BoostItemViewFactory : IFactory<BoostTypeId, BoostItemView>
+    public class BoostItemViewFactory : IFactory<string, BoostItemView>
     {
         private readonly BoostItemView _prefab;
         private readonly SpriteProvider _spriteProvider;
@@ -18,11 +18,11 @@ namespace App.Scripts.Scenes.GameScene.Features.Factories.Boosts
             _spriteProvider = spriteProvider;
         }
         
-        public BoostItemView Create(BoostTypeId boostId)
+        public BoostItemView Create(string boostId)
         {
             BoostItemView spawned = Object.Instantiate(_prefab);
 
-            spawned.BoostIcon.sprite = _spriteProvider.Sprites[boostId.ToString() + "_block"];
+            spawned.BoostIcon.sprite = _spriteProvider.Sprites[boostId + "_block"];
             
             return spawned;
         }

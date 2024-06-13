@@ -42,16 +42,16 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General
             _simpleDestroyService.Destroy(view);
         }
 
-        private void OnBoostEnded(BoostTypeId boostType)
+        private void OnBoostEnded(string boostType)
         {
-            _concreteBoostActivators[boostType.ToString()].ConcreteBoostActivator.Deactivate();
+            _concreteBoostActivators[boostType].ConcreteBoostActivator.Deactivate();
         }
 
         public void LoadProgress(LevelDataProgress levelDataProgress)
         {
             foreach (SaveActiveBoostData boostData in levelDataProgress.ActiveBoostDatas)
             {
-                _concreteBoostActivators[boostData.BoostTypeId.ToString()].ConcreteBoostActivator.Activate();
+                _concreteBoostActivators[boostData.BoostTypeId].ConcreteBoostActivator.Activate();
             }
         }
     }

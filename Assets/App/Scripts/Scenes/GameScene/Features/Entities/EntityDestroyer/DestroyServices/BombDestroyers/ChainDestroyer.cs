@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using App.Scripts.External.ObjectPool;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General;
@@ -239,7 +240,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Destroy
 
         private bool ThisBlockIsNotSimple(EntityStage entityStage, IEntityView entity)
         {
-            return entityStage.ICanGetDamage is false || entityStage.BoostTypeId != BoostTypeId.None || entity.BoxCollider2D.enabled == false;
+            return entityStage.ICanGetDamage is false || entityStage.BoostTypeId != String.Empty || entity.BoxCollider2D.enabled == false;
         }
 
         private async UniTask DestroyOnlyCurrentBlock(GridItemData gridItemData, IEntityView entityView)

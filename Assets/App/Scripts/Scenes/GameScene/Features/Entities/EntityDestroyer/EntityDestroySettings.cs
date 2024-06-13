@@ -9,6 +9,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer
     public class EntityDestroySettings : SerializedScriptableObject
     {
         public List<DestroySettingsServiceData> DestroyServiceDatas;
+        public List<string> ActiveBoosts;
     }
 
     public class DestroySettingsServiceData

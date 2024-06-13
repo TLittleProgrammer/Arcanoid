@@ -8,7 +8,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress.Data
     public class SaveActiveBoostData
     {
         [JsonProperty("Type")]
-        public BoostTypeId BoostTypeId;
+        public string BoostTypeId;
         [JsonProperty("Duration")]
         public float Duration;
 
@@ -17,7 +17,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress.Data
         }
 
         [JsonConstructor]
-        public SaveActiveBoostData(BoostTypeId type, float duration)
+        public SaveActiveBoostData(string type, float duration)
         {
             BoostTypeId = type;
             Duration = duration;

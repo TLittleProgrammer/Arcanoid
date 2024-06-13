@@ -9,7 +9,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress.Data
     public class SaveGridItemData
     {
         [JsonProperty("BoostTypeId")]
-        public BoostTypeId BoostTypeId;
+        public string BoostTypeId;
         [JsonProperty("CurrentHealth")]
         public int CurrentHealth;
 
@@ -23,7 +23,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress.Data
         }
 
         [JsonConstructor]
-        public SaveGridItemData(BoostTypeId boostTypeId, int currentHealth, int gridPositionX, int gridPositionY)
+        public SaveGridItemData(string boostTypeId, int currentHealth, int gridPositionX, int gridPositionY)
         {
             BoostTypeId = boostTypeId;
             CurrentHealth = currentHealth;

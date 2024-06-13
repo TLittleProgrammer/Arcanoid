@@ -8,7 +8,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress.Data
     public class SaveBoostViewData
     {
         [JsonProperty("BoostType")]
-        public BoostTypeId BoostTypeId;
+        public string BoostTypeId;
         
         [JsonProperty("PositionX")]
         public float PositionX;
@@ -20,7 +20,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress.Data
         }
 
         [JsonConstructor]
-        public SaveBoostViewData(BoostTypeId boostType, float positionX, float positionY)
+        public SaveBoostViewData(string boostType, float positionX, float positionY)
         {
             BoostTypeId = boostType;
             PositionX = positionX;

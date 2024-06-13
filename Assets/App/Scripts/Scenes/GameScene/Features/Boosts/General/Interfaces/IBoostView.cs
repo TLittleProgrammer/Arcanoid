@@ -5,6 +5,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Interfaces
 {
     public interface IBoostView : ITransformable, ISpriteRenderable
     {
-        public BoostTypeId BoostTypeId { get; set; }
+        public string BoostTypeId { get; set; }
     }
 }

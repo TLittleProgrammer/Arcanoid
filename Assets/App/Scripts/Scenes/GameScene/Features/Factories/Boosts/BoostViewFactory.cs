@@ -6,7 +6,7 @@ using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.Features.Factories.Boosts
 {
-    public class BoostViewFactory : IFactory<BoostTypeId, BoostView>
+    public class BoostViewFactory : IFactory<string, BoostView>
     {
         private readonly SpriteProvider _spriteProvider;
         private readonly BoostView.Pool _boostViewPool;
@@ -17,11 +17,11 @@ namespace App.Scripts.Scenes.GameScene.Features.Factories.Boosts
             _boostViewPool = boostViewPool;
         }
         
-        public BoostView Create(BoostTypeId boostId)
+        public BoostView Create(string boostId)
         {
             BoostView boostView = _boostViewPool.Spawn();
 
-            boostView.SpriteRenderer.sprite = _spriteProvider.Sprites[boostId.ToString() + "_block"];
+            boostView.SpriteRenderer.sprite = _spriteProvider.Sprites[boostId + "_block"];
             boostView.BoostTypeId = boostId;
 
             return boostView;

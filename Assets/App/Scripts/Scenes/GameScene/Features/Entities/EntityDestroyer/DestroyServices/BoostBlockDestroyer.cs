@@ -55,7 +55,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Destroy
             }
         }
 
-        private void AddBoostOnMap(BoostTypeId boostTypeId, Vector2 position)
+        private void AddBoostOnMap(string boostTypeId, Vector2 position)
         {
             BoostView boostView = _boostViewFactory.Create(boostTypeId);
             boostView.Transform.position = position;

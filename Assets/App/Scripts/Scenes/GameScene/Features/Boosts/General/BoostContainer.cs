@@ -17,24 +17,27 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General
         private readonly ITimeProvider _timeProvider;
         private readonly BoostItemView.Factory _boostItemFactory;
         private readonly BoostsViewContainer _boostsViewContainer;
-        
+        private readonly Dictionary<string, BoostSettingsData> _boostSettingsDatas;
+
         private List<BoostData> _boosts;
-        private Dictionary<BoostTypeId, BoostItemView> _viewsDictionary = new();
+        private Dictionary<string, BoostItemView> _viewsDictionary = new();
 
         public bool IsActive { get; set; }
-        public event Action<BoostTypeId> BoostEnded;
+        public event Action<string> BoostEnded;
 
         public BoostContainer(
             BoostsSettings boostsSettings,
             ITimeProvider timeProvider,
             BoostItemView.Factory boostItemFactory,
-            BoostsViewContainer boostsViewContainer
+            BoostsViewContainer boostsViewContainer,
+            Dictionary<string, BoostSettingsData> boostSettingsDatas
             )
         {
             _boostsSettings = boostsSettings;
             _timeProvider = timeProvider;
             _boostItemFactory = boostItemFactory;
             _boostsViewContainer = boostsViewContainer;
+            _boostSettingsDatas = boostSettingsDatas;
             _boosts = new();
         }
 
@@ -54,19 +57,19 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General
             {
                 _boosts[i].Duration -= _timeProvider.DeltaTime;
 
-                BoostTypeId currentBoostType = _boosts[i].BoostTypeId;
+                string currentBoostType = _boosts[i].BoostTypeId;
 
                 UpdateView(currentBoostType, i);
                 TryDestroyBoost(ref i, currentBoostType);
             }
         }
 
-        private void UpdateView(BoostTypeId currentBoostType, int i)
+        private void UpdateView(string currentBoostType, int i)
         {
-            _viewsDictionary[currentBoostType].ScollImage.fillAmount = _boosts[i].Duration / GetDurationByType(currentBoostType);
+            _viewsDictionary[currentBoostType].ScollImage.fillAmount = _boosts[i].Duration / _boostSettingsDatas[currentBoostType].Duration;
         }
 
-        private void TryDestroyBoost(ref int i, BoostTypeId currentBoostType)
+        private void TryDestroyBoost(ref int i, string currentBoostType)
         {
             if (_boosts[i].Duration <= 0f)
             {
@@ -77,7 +80,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General
             }
         }
 
-        public void AddBoost(BoostTypeId boostTypeId)
+        public void AddBoost(string boostTypeId)
         {
             if (TryUpdateTimerForActivatedBoosts(boostTypeId))
             {
@@ -87,12 +90,12 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General
             CheckReplaceableBoosts(boostTypeId);
         }
 
-        public bool BoostIsActive(BoostTypeId boostTypeId)
+        public bool BoostIsActive(string boostTypeId)
         {
             return _viewsDictionary.ContainsKey(boostTypeId);
         }
 
-        private bool TryUpdateTimerForActivatedBoosts(BoostTypeId boostTypeId)
+        private bool TryUpdateTimerForActivatedBoosts(string boostTypeId)
         {
             BoostData boostData = _boosts.FirstOrDefault(x => x.BoostTypeId == boostTypeId); 
             
@@ -105,70 +108,40 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General
             return false;
         }
 
-        private void CheckReplaceableBoosts(BoostTypeId boostTypeId)
+        private void CheckReplaceableBoosts(string boostTypeId)
         {
-            if (TryReplaceBoosts(boostTypeId, BoostTypeId.BallAcceleration, BoostTypeId.BallSlowdown, _boostsSettings.BallSpeedDuration))
-            {
-                return;
-            }
-
-            if (TryReplaceBoosts(boostTypeId, BoostTypeId.PlayerShapeAddSize, BoostTypeId.PlayerShapeMinusSize, _boostsSettings.ShapeSizeDuration))
-            {
-                return;
-            }
-
-            if (TryReplaceBoosts(boostTypeId, BoostTypeId.PlayerShapeAddSpeed, BoostTypeId.PlayerShapeMinusSpeed, _boostsSettings.ShapeSpeedDuration))
-            {
-                return;
-            }
-
+            DeleteBoosts(boostTypeId);
             CreateBoost(boostTypeId);
         }
 
-        private void CreateBoost(BoostTypeId boostTypeId)
+        private void CreateBoost(string boostTypeId)
         {
             BoostData boostData = new();
             boostData.BoostTypeId = boostTypeId;
-            boostData.Duration = GetDurationByType(boostTypeId);
+            boostData.Duration = _boostSettingsDatas[boostTypeId].Duration;
 
             _boosts.Add(boostData);
             CreateUiBoost(boostTypeId);
         }
 
-        private bool TryReplaceBoosts(BoostTypeId boostTypeId, BoostTypeId firstType, BoostTypeId secondType, float duration)
+        private void DeleteBoosts(string boostTypeId)
         {
-            bool firstRemovingResult = TryRemoveAndReplaceBoost(boostTypeId, firstType, secondType, duration);
-            bool secondRemovingResult = TryRemoveAndReplaceBoost(boostTypeId, secondType, firstType, duration);
-
-            return firstRemovingResult || secondRemovingResult;
-        }
-
-        private bool TryRemoveAndReplaceBoost(BoostTypeId inputBoost, BoostTypeId firstReplaceableBoost, BoostTypeId secondReplaceable, float duration)
-        {
-            if (inputBoost == firstReplaceableBoost)
+            foreach (BoostSettingsData settingsData in _boostSettingsDatas.Values)
             {
-                BoostData boostData = _boosts.FirstOrDefault(x => x.BoostTypeId == secondReplaceable);
-                if (boostData is not null)
+                if (_viewsDictionary.ContainsKey(settingsData.Key) && settingsData.KeysThatCanBlockThisBoost.Contains(boostTypeId))
                 {
-                    _boosts.Remove(boostData);
-                    RemoveItem(secondReplaceable);
+                    RemoveItem(settingsData.Key);
                 }
-
-                _boosts.Add(new(firstReplaceableBoost, duration));
-                CreateUiBoost(firstReplaceableBoost);
-                return true;
             }
-
-            return false;
         }
 
-        private void RemoveItem(BoostTypeId boostType)
+        private void RemoveItem(string boostType)
         {
             Object.Destroy(_viewsDictionary[boostType].gameObject);
             _viewsDictionary.Remove(boostType);
         }
 
-        private void CreateUiBoost(BoostTypeId boostType)
+        private void CreateUiBoost(string boostType)
         {
             BoostItemView boostItemView = _boostItemFactory.Create(boostType);
             boostItemView.transform.SetParent(_boostsViewContainer.BoostsParent, false);
@@ -178,28 +151,9 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General
 
         private void UpdateBoostDuration(BoostData boostData)
         {
-            float targetDuration = GetDurationByType(boostData.BoostTypeId);
+            float targetDuration = _boostSettingsDatas[boostData.BoostTypeId].Duration;
 
             boostData.Duration = targetDuration;
-        }
-
-        private float GetDurationByType(BoostTypeId boostTypeId)
-        {
-            return boostTypeId switch
-            {
-                BoostTypeId.BallAcceleration => _boostsSettings.BallSpeedDuration,
-                BoostTypeId.BallSlowdown => _boostsSettings.BallSpeedDuration,
-                BoostTypeId.PlayerShapeAddSize => _boostsSettings.ShapeSizeDuration,
-                BoostTypeId.PlayerShapeMinusSize => _boostsSettings.ShapeSizeDuration,
-                BoostTypeId.PlayerShapeAddSpeed => _boostsSettings.ShapeSpeedDuration,
-                BoostTypeId.PlayerShapeMinusSpeed => _boostsSettings.ShapeSpeedDuration,
-                BoostTypeId.Fireball => _boostsSettings.FireballDuration,
-                BoostTypeId.StickyPlatform => _boostsSettings.StickyDuration,
-                BoostTypeId.MiniGun => _boostsSettings.MiniGunDuration,
-                BoostTypeId.Autopilot => _boostsSettings.AutopilotDuration,
-
-                _ => 0f
-            };
         }
 
         public void Restart()

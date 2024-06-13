@@ -15,6 +15,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts
     public class BoostSettingsData
     {
         public string Key;
+        public float Duration = 10f;
+        public List<string> KeysThatCanBlockThisBoost;
         public IConcreteBoostActivator ConcreteBoostActivator;
     }
 
