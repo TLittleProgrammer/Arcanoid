@@ -6,9 +6,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
 {
     public sealed class HealthAndDeathBoost : IConcreteBoostActivator
     {
-        private IHealthContainer _healthContainer;
-
-        public int AddHealthCount;
+        private readonly IHealthContainer _healthContainer;
 
         public HealthAndDeathBoost(IHealthContainer healthContainer)
         {

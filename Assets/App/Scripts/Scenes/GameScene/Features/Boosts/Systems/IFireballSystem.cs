@@ -1,10 +1,10 @@
-﻿using App.Scripts.Scenes.GameScene.Features.Components;
-using Zenject;
+﻿using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Systems
 {
-    public interface IFireballSystem : ITickable, IActivable
+    public interface IFireballSystem
     {
-        
+        void Activate();
+        void Disable();
     }
 }

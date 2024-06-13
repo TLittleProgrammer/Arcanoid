@@ -7,8 +7,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
     {
         private IBallsService _ballsService;
         private float _initialBallSpeed;
-
-        public float SpeedMultiplier;
         
         public BallMoverBoostActivator(IBallsService ballsService)
         {

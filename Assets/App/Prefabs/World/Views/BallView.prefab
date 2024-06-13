@@ -10,6 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 911213644714911466}
   - component: {fileID: 2887803427881987385}
+  - component: {fileID: 4333797220627455802}
+  - component: {fileID: 458973540282593526}
+  - component: {fileID: 5483652360506105574}
   m_Layer: 9
   m_Name: Circle
   m_TagString: Untagged
@@ -85,6 +88,56 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &4333797220627455802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2728415224844519704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 483b6bd3b8384851ba5be209169b0ffe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _ballView: {fileID: 7817871088878114702}
+--- !u!58 &458973540282593526
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2728415224844519704}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.13
+--- !u!50 &5483652360506105574
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2728415224844519704}
+  m_BodyType: 0
+  m_Simulated: 0
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
 --- !u!1 &4526333473040182195
 GameObject:
   m_ObjectHideFlags: 0
@@ -187,7 +240,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TrailRenderer: {fileID: 4704407069546029745}
-  RedBall: {fileID: 2728415224844519704}
+  RedBall: {fileID: 4333797220627455802}
   Collider2D: {fileID: 6579586282220855631}
 --- !u!58 &6579586282220855631
 CircleCollider2D:

@@ -26,17 +26,18 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
 
         public void Activate(IBoostDataProvider boostDataProvider)
         {
+            _fireballSystem.Activate();
             SetFlag(true);
         }
 
         public void Deactivate()
         {
+            _fireballSystem.Disable();
             SetFlag(false);
         }
 
         private void SetFlag(bool flag)
         {
-            _fireballSystem.IsActive = flag;
             _ballsService.SetRedBall(flag);
             UpdateEntitiesTrigger(flag);
         }

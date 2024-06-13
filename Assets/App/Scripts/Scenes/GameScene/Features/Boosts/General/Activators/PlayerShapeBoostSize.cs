@@ -1,10 +1,7 @@
-﻿using App.Scripts.Scenes.GameScene.Features.Boosts.General.Interfaces;
-using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun;
-using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.Movement;
+﻿using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.Movement;
 using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer;
 using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape;
 using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.PositionChecker;
-using App.Scripts.Scenes.GameScene.Features.Settings;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 
@@ -12,11 +9,10 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
 {
     public sealed class PlayerShapeBoostSize : IConcreteBoostActivator
     {
-        private PlayerView _playerView;
-        private IShapePositionChecker _shapePositionChecker;
-        private IBulletMovement _bulletMovement;
-
-        public float NewSize;
+        private readonly PlayerView _playerView;
+        private readonly IShapePositionChecker _shapePositionChecker;
+        private readonly IBulletMovement _bulletMovement;
+        private readonly float _defaultShapeSize;
 
         public PlayerShapeBoostSize(
             PlayerView playerView,
@@ -26,6 +22,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
             _playerView = playerView;
             _shapePositionChecker = shapePositionChecker;
             _bulletMovement = bulletMovement;
+
+            _defaultShapeSize = _playerView.BoxCollider2D.size.x;
         }
         
         public bool IsTimeableBoost => true;
@@ -36,13 +34,9 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
             UpdateWidth(floatBoostData.Value).Forget();
         }
 
-        public async void Deactivate()
+        public void Deactivate()
         {
-            float currentWidth = _playerView.SpriteRenderer.size.x;
-            await DOVirtual.Float(currentWidth, 1.5f, 0.5f, UpdateSpriteWidth);
-                
-            _shapePositionChecker.ChangeShapeScale();
-            _bulletMovement.RecalculateSpawnPositions();
+            UpdateWidth(_defaultShapeSize).Forget();
         }
 
         private async UniTask UpdateWidth(float to)

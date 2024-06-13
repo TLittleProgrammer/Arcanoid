@@ -10,69 +10,55 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Systems
 {
     public class FireballSystem : IFireballSystem
     {
-        private readonly ILevelLoader _levelLoader;
         private readonly IEntityDestroyable _entityDestroyable;
         private readonly ILevelViewUpdater _levelViewUpdater;
-        private readonly IBallsService _ballsService;
         private readonly IEffectActivator _effectActivator;
+        private readonly ILevelLoader _levelLoader;
 
         public FireballSystem(
-            ILevelLoader levelLoader,
             IEntityDestroyable entityDestroyable,
             ILevelViewUpdater levelViewUpdater,
-            IBallsService ballsService,
-            IEffectActivator effectActivator)
+            IEffectActivator effectActivator,
+            ILevelLoader levelLoader)
         {
-            _levelLoader = levelLoader;
             _entityDestroyable = entityDestroyable;
             _levelViewUpdater = levelViewUpdater;
-            _ballsService = ballsService;
             _effectActivator = effectActivator;
+            _levelLoader = levelLoader;
         }
-        
-        public bool IsActive { get; set; }
 
-        public void Tick()
+        public void Activate()
         {
-            if (IsActive is false)
+            foreach (IEntityView entityView in _levelLoader.Entities)
             {
-                return;
-            }
-
-            CheckCollisions();
-        }
-        
-        private void CheckCollisions()
-        {
-            foreach (IEntityView view in _levelLoader.Entities)
-            {
-                if (view.GameObject.activeSelf)
-                {
-                    GoThroughBallViews(view);
-                }
+                entityView.TriggerColliderable += OnEntityTriggerCollidered;
             }
         }
 
-        private void GoThroughBallViews(IEntityView view)
+        public void Disable()
         {
-            Bounds viewBounds = view.BoxCollider2D.bounds;
-
-            foreach (BallView ballView in _ballsService.Balls.ToArray())
+            foreach (IEntityView entityView in _levelLoader.Entities)
             {
-                if (!ballView.gameObject.activeSelf)
-                {
-                    continue;
-                }
-                
-                Bounds ballBounds = ballView.Collider2D.bounds;
+                entityView.TriggerColliderable -= OnEntityTriggerCollidered;
+            }
+        }
 
-                if (viewBounds.Intersects(ballBounds) && _levelViewUpdater.LevelGridItemData[view.GridPositionX, view.GridPositionY].CurrentHealth > 0)
+        private void OnEntityTriggerCollidered(IEntityView view, Collider2D collider)
+        {
+            if (collider.TryGetComponent(out BallView ballView))
+            {
+                if (CanDestroy(view) && ballView.RedBall.gameObject.activeSelf)
                 {
                     DestroyView(view, ballView);
                 }
             }
         }
-        
+
+        private bool CanDestroy(IEntityView entityView)
+        {
+            return _levelViewUpdater.LevelGridItemData[entityView.GridPositionX, entityView.GridPositionY].CurrentHealth > 0;
+        }
+
         private void DestroyView(IEntityView view, BallView ballView)
         {
             view.BoxCollider2D.isTrigger = false;

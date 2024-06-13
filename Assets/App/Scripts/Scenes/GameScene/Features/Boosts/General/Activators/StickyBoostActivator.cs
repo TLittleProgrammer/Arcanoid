@@ -9,7 +9,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
 {
     public class StickyBoostActivator : IConcreteBoostActivator
     {
-        private IBallsService _ballsService;
+        private readonly IBallsService _ballsService;
+        
         private bool _isActive;
         private List<BallView> _balls;
         

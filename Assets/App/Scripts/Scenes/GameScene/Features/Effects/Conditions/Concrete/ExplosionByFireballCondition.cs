@@ -10,7 +10,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Effects.Conditions.Concrete
         {
             if (collider2D.TryGetComponent(out BallView ballView))
             {
-                return ballView.RedBall.activeSelf;
+                return ballView.RedBall.gameObject.activeSelf;
             }
 
             return false;

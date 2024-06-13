@@ -6,8 +6,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
 {
     public class AutopilotBoostActivator : IConcreteBoostActivator
     {
-        private IAutopilotSystem _autopilotSystem;
-        private IPlayerShapeMover _playerShapeMover;
+        private readonly IAutopilotSystem _autopilotSystem;
+        private readonly IPlayerShapeMover _playerShapeMover;
         
         public AutopilotBoostActivator(IAutopilotSystem autopilotSystem, IPlayerShapeMover playerShapeMover)
         {

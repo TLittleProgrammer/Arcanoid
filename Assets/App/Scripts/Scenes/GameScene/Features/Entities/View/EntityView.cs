@@ -1,6 +1,7 @@
 ﻿using System;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General;
 using App.Scripts.Scenes.GameScene.Features.Components;
+using App.Scripts.Scenes.GameScene.Features.Entities.Ball;
 using UnityEngine;
 using Zenject;
 
@@ -16,10 +17,16 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.View
         public int GridPositionY { get; set; }
         public GameObject GameObject => gameObject;
         public event Action<IEntityView, Collider2D> Colliderable;
+        public event Action<IEntityView, Collider2D> TriggerColliderable;
 
         private void OnCollisionEnter2D(Collision2D col)
         {
             Colliderable?.Invoke(this, col.collider);
+        }
+
+        private void OnTriggerEnter2D(Collider2D col)
+        {
+            TriggerColliderable?.Invoke(this, col);
         }
 
         public Sprite MainSprite

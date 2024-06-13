@@ -7,7 +7,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
 {
     public class MiniGunBoostActivator : IConcreteBoostActivator
     {
-        private IMiniGunService _miniGunService;
+        private readonly IMiniGunService _miniGunService;
 
         public MiniGunBoostActivator(IMiniGunService miniGunService)
         {
