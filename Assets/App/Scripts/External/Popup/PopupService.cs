@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using App.Scripts.External.Components;
-using App.Scripts.General.Infrastructure;
 using App.Scripts.General.Popup.Factory;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
