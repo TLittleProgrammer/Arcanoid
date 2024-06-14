@@ -98,7 +98,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             ConditionsInstaller.Install(Container);
             ShowLevelInstaller.Install(Container);
             BoostBinder.Install(Container, _boostSettingsContainer);
-
+            BirdsInstaller.Install(Container);
 
             Container.Bind<ICameraService>().To<CameraService>().AsSingle().WithArguments(_camera);
             Container.BindInterfacesAndSelfTo<ScreenInfoProvider>().AsSingle();
@@ -109,7 +109,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.Bind<IRectMousePositionChecker>().To<RectMousePositionChecker>().AsSingle().WithArguments(_rectTransformableViews.ToList());
             Container.Bind<IDataProvider<LevelDataProgress>>().To<DataProvider<LevelDataProgress>>().AsSingle().WithArguments(SavableConstants.CurrentLevelProgressFileName);
 
-            Container.BindInterfacesAndSelfTo<BirdsService>().AsSingle();
+            Container.BindInterfacesAndSelfTo<BirdsSystem>().AsSingle();
             Container.BindInterfacesAndSelfTo<BirdRespawnService>().AsSingle();
             Container.BindInterfacesAndSelfTo<BirdsHealthContainer>().AsSingle();
             Container.BindInterfacesAndSelfTo<MechanicsByLevelActivator>().AsSingle();

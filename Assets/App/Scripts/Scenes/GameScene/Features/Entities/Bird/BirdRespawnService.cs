@@ -18,9 +18,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Bird
 
         public event Action<BirdView> BirdRespawned;
 
-        public BirdRespawnService(
-            BirdSettings birdSettings,
-            ITimeProvider timeProvider)
+        public BirdRespawnService(BirdSettings birdSettings, ITimeProvider timeProvider)
         {
             _birdSettings = birdSettings;
             _timeProvider = timeProvider;
@@ -44,9 +42,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Bird
         {
             foreach (BirdView birdView in _needRespawn)
             {
-                var turple = _timeDictionary.First(x => x.Item1.Equals(birdView));
-                _timeDictionary.Remove(turple);
-
                 BirdRespawned?.Invoke(birdView);
             }
             _needRespawn.Clear();
@@ -64,6 +59,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Bird
                 if (tuple.Item2 <= 0f)
                 {
                     _needRespawn.Add(tuple.Item1);
+                    _timeDictionary.Remove(tuple);
+                    i--;
                 }
             }
         }

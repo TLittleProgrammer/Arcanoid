@@ -1,15 +1,11 @@
-﻿using System.Collections.Generic;
-using App.Scripts.General.Infrastructure;
-using App.Scripts.Scenes.GameScene.Features.Components;
+﻿using App.Scripts.General.Infrastructure;
 
 namespace App.Scripts.Scenes.GameScene.Features.Entities.Bird.Interfaces
 {
-    public interface IBirdsService : IGeneralRestartable, IActivable
+    public interface IBirdsService : IGeneralRestartable
     {
-        Dictionary<BirdView, IBirdMovement> Birds { get; }
         void AddBird(BirdView birdView);
-        void GoFly(BirdView birdView);
-        void Destroy(BirdView birdView);
+        void EnableView(BirdView birdView);
         void StopAll();
     }
 }

@@ -10,11 +10,11 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Bird
         public SpriteRenderer SpriteRenderer;
         public Transform Transform => transform;
 
-        public event Action<BirdView> Collidered; 
+        public event Action<BirdView, Collision2D> Collidered; 
 
         private void OnCollisionEnter2D(Collision2D collision)
         {
-            Collidered?.Invoke(this);
+            Collidered?.Invoke(this, collision);
         }
 
         public class Pool : MonoMemoryPool<BirdView>
