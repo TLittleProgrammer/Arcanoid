@@ -1,27 +1,28 @@
-﻿using App.Scripts.Scenes.GameScene.Features.Boosts.General;
+﻿using App.Scripts.General.Providers;
+using App.Scripts.Scenes.GameScene.Features.Boosts.General;
 using App.Scripts.Scenes.GameScene.Features.Pools;
 using App.Scripts.Scenes.GameScene.Features.Settings;
 using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.Features.Factories.Boosts
 {
-    public class BoostViewFactory : IFactory<BoostTypeId, BoostView>
+    public class BoostViewFactory : IFactory<string, BoostView>
     {
-        private readonly BoostViewProvider _boostViewProvider;
+        private readonly SpriteProvider _spriteProvider;
         private readonly BoostView.Pool _boostViewPool;
 
-        public BoostViewFactory(BoostViewProvider boostViewProvider, BoostView.Pool boostViewPool)
+        public BoostViewFactory(SpriteProvider spriteProvider, BoostView.Pool boostViewPool)
         {
-            _boostViewProvider = boostViewProvider;
+            _spriteProvider = spriteProvider;
             _boostViewPool = boostViewPool;
         }
         
-        public BoostView Create(BoostTypeId targetType)
+        public BoostView Create(string boostId)
         {
             BoostView boostView = _boostViewPool.Spawn();
 
-            boostView.SpriteRenderer.sprite = _boostViewProvider.Sprites[targetType];
-            boostView.BoostTypeId = targetType;
+            boostView.SpriteRenderer.sprite = _spriteProvider.Sprites[boostId + "_block"];
+            boostView.BoostTypeId = boostId;
 
             return boostView;
         }

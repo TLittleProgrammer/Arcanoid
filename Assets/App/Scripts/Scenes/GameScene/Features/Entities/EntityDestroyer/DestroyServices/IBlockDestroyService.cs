@@ -6,7 +6,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Destroy
 {
     public interface IBlockDestroyService
     {
-        BoostTypeId[] ProccessingBoostTypes { get; }
         void Destroy(GridItemData gridItemData, IEntityView entityView);
     }
 }

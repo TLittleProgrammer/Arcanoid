@@ -26,11 +26,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Destroy
             _simpleDestroyService = simpleDestroyService;
         }
 
-        public BoostTypeId[] ProccessingBoostTypes => new[]
-        {
-            BoostTypeId.CaptiveBall
-        };
-
         public async void Destroy(GridItemData gridItemData, IEntityView entityView)
         {
             AddBall(entityView);

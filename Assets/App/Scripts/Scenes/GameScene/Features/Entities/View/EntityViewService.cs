@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using App.Scripts.External.Extensions.ListExtensions;
+using App.Scripts.General.Providers;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General;
 using App.Scripts.Scenes.GameScene.Features.Entities.AssetManagement;
 using App.Scripts.Scenes.GameScene.Features.Entities.TopSprites;
@@ -13,19 +14,19 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.View
     public class EntityViewService : IEntityViewService
     {
         private readonly OnTopSprites.Factory _spritesFactory;
-        private readonly BoostViewProvider _boostViewProvider;
+        private readonly SpriteProvider _spriteProvider;
 
         public EntityViewService(
             OnTopSprites.Factory spritesFactory,
-            BoostViewProvider boostViewProvider)
+            SpriteProvider spriteProvider)
         {
             _spritesFactory = spritesFactory;
-            _boostViewProvider = boostViewProvider;
+            _spriteProvider = spriteProvider;
         }
 
-        public void AddBoostSprite(IEntityView entityView, GridItemData itemData, BoostTypeId boostTypeId)
+        public void AddBoostSprite(IEntityView entityView, GridItemData itemData, string boostTypeId)
         {
-            Sprite boostSprite = _boostViewProvider.Icons[boostTypeId];
+            Sprite boostSprite = _spriteProvider.Sprites[boostTypeId + "_icon"];
             
             OnTopSprites topSprite = _spritesFactory.Create(entityView);
             topSprite.SetSprite(boostSprite);

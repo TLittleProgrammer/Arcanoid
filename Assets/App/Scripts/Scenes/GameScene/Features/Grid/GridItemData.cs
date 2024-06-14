@@ -8,7 +8,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Grid
     [Serializable]
     public class GridItemData
     {
-        public BoostTypeId BoostTypeId;
+        public string BoostTypeId;
         public int Damage;
         public bool CanGetDamage;
         public int CurrentHealth;

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e8708079ad64275a5e6a4a88f2c2b6c, type: 3}
   m_Name: ChainBomb
   m_EditorClassIdentifier: 
-  BoostTypeId: 14
+  BoostTypeId: ChainBomb
   Damage: 0
   Sprite: {fileID: 21300000, guid: 879102cd80045114aa7490d73aaa2dd7, type: 3}
   MaxHealthCounter: 1

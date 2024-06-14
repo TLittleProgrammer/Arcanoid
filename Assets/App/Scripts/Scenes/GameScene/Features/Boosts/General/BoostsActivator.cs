@@ -1,79 +1,86 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General.Interfaces;
 using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Helpers;
 using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress;
 using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress.Data;
-using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Boosts.General
 {
     public class BoostsActivator : IBoostsActivator, IInitializeByLevelProgress
     {
-        private readonly SimpleDestroyService _simpleDestroyService;
         private readonly IBoostContainer _boostContainer;
-        private readonly Dictionary<BoostTypeId, IConcreteBoostActivator> _activators;
+        private readonly Dictionary<string, BoostSettingsData> _concreteBoostActivatorsSettings;
 
         private float _initialBallSpeed;
+        private readonly Dictionary<Type,IConcreteBoostActivator> _concreteBoostActivators;
 
         public BoostsActivator(
-            SimpleDestroyService simpleDestroyService,
             IBoostContainer boostContainer,
-            BallMoverBoostActivator ballMoverBoostActivator,
-            PlayerShapeBoostSize playerShapeBoostSize,
-            ShapeBoostSpeed shapeBoostSpeed,
-            HealthAndDeathBoost healthAndDeathBoost,
-            FireballBoostActivator fireballBoostActivator,
-            StickyBoostActivator stickyBoostActivator,
-            MiniGunBoostActivator miniGunBoostActivator,
-            AutopilotBoostActivator autopilotBoostActivator)
+            Dictionary<string, BoostSettingsData> concreteBoostActivatorsSettingsSettings,
+            List<IConcreteBoostActivator> concreteBoostActivators)
         {
-            _simpleDestroyService = simpleDestroyService;
             _boostContainer = boostContainer;
-
-            _activators = new()
-            {
-                [BoostTypeId.BallAcceleration] = ballMoverBoostActivator,
-                [BoostTypeId.BallSlowdown] = ballMoverBoostActivator,
-                [BoostTypeId.PlayerShapeAddSize] = playerShapeBoostSize,
-                [BoostTypeId.PlayerShapeMinusSize] = playerShapeBoostSize,
-                [BoostTypeId.PlayerShapeAddSpeed] = shapeBoostSpeed,
-                [BoostTypeId.PlayerShapeMinusSpeed] = shapeBoostSpeed,
-                [BoostTypeId.AddHealth] = healthAndDeathBoost,
-                [BoostTypeId.MinusHealth] = healthAndDeathBoost,
-                [BoostTypeId.Fireball] = fireballBoostActivator,
-                [BoostTypeId.StickyPlatform] = stickyBoostActivator,
-                [BoostTypeId.MiniGun] = miniGunBoostActivator,
-                [BoostTypeId.Autopilot] = autopilotBoostActivator,
-            };
+            _concreteBoostActivatorsSettings = concreteBoostActivatorsSettingsSettings;
+            _concreteBoostActivators = concreteBoostActivators
+                .ToDictionary(x => x.GetType(), x => x);
 
             _boostContainer.BoostEnded += OnBoostEnded;
         }
 
         public void Activate(BoostView view)
         {
-            BoostTypeId boostTypeId = view.BoostTypeId;
-            
-            _activators[boostTypeId].Activate(boostTypeId);
+            string boostId = view.BoostTypeId;
 
-            if (boostTypeId is not BoostTypeId.AddHealth && boostTypeId is not BoostTypeId.MinusHealth)
+            bool activated = ActivateBoostById(view.BoostTypeId);
+
+            if (activated && _concreteBoostActivatorsSettings[boostId].ConcreteBoostActivator.IsTimeableBoost)
             {
-                _boostContainer.AddBoost(view.BoostTypeId);
+                _boostContainer.AddBoost(boostId);
             }
-            _simpleDestroyService.Destroy(view);
         }
 
-        private void OnBoostEnded(BoostTypeId boostType)
+        private void OnBoostEnded(string boostId)
         {
-            _activators[boostType].Deactivate();
+            DeactivateBoostById(boostId);
         }
 
         public void LoadProgress(LevelDataProgress levelDataProgress)
         {
             foreach (SaveActiveBoostData boostData in levelDataProgress.ActiveBoostDatas)
             {
-                _activators[boostData.BoostTypeId].Activate(boostData.BoostTypeId);
+                ActivateBoostById(boostData.BoostTypeId);
             }
+        }
+
+        private bool ActivateBoostById(string id)
+        {
+            BoostSettingsData boostSettingsData = _concreteBoostActivatorsSettings[id];
+            Type activatorType = boostSettingsData.ConcreteBoostActivator.GetType();
+
+            if (_concreteBoostActivators.ContainsKey(activatorType))
+            {
+                _concreteBoostActivators[activatorType].Activate(boostSettingsData.BoostDataProvider);
+                return true;
+            }
+
+            return false;
+        }
+        
+        private bool DeactivateBoostById(string id)
+        {
+            BoostSettingsData boostSettingsData = _concreteBoostActivatorsSettings[id];
+            Type activatorType = boostSettingsData.ConcreteBoostActivator.GetType();
+
+            if (_concreteBoostActivators.ContainsKey(activatorType))
+            {
+                _concreteBoostActivators[activatorType].Deactivate();
+                return true;
+            }
+
+            return false;
         }
     }
 }

@@ -1,40 +1,48 @@
 ﻿using App.Scripts.External.Components;
 using App.Scripts.Scenes.GameScene.Features.Entities.Bird.Interfaces;
+using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer;
 using App.Scripts.Scenes.GameScene.Features.Settings;
 using App.Scripts.Scenes.GameScene.Features.Time;
-using Cysharp.Threading.Tasks;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Entities.Bird
 {
-    public class BirdMovementService : IBirdMovement
+    public class BirdMovementSystem : IBirdMovement
     {
         private readonly ITransformable _bird;
         private readonly BirdSettings _birdSettings;
         private readonly ITimeProvider _timeProvider;
 
-        private float _allTime = 0f;
+        private float _allTime;
         private Vector2 _direction;
 
-        public BirdMovementService(ITransformable bird, BirdSettings birdSettings, ITimeProvider timeProvider)
+        public BirdMovementSystem(
+            ITransformable bird, 
+            BirdSettings birdSettings, 
+            ITimeProvider timeProvider)
         {
             _bird = bird;
             _birdSettings = birdSettings;
             _timeProvider = timeProvider;
         }
-
+        
         public bool IsActive { get; set; }
 
-        public async UniTask AsyncInitialize(Vector2 direction)
+        public Direction Direction
         {
-            _direction = direction;
+            get => _direction.x < 0f ? Direction.Left : Direction.Right;
+            set
+            {
+                int2 vector = value.ToVector();
 
-            await UniTask.CompletedTask;
+                _direction = new(vector.x, vector.y);
+            }
         }
 
         public void Tick()
         {
-            if (!IsActive)
+            if (IsActive == false)
                 return;
 
             Fly();

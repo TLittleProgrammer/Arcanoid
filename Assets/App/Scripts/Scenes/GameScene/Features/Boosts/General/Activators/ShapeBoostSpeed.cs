@@ -1,35 +1,30 @@
-﻿using App.Scripts.Scenes.GameScene.Features.Boosts.General.Interfaces;
+﻿using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer;
 using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.Move;
-using App.Scripts.Scenes.GameScene.Features.Settings;
 
 namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
 {
     public sealed class ShapeBoostSpeed : IConcreteBoostActivator
     {
         private readonly IPlayerShapeMover _playerShapeMover;
-        private readonly BoostsSettings _boostsSettings;
+        private const float DefaultSpeedMultiplier = 1f; 
 
-        public ShapeBoostSpeed(IPlayerShapeMover playerShapeMover, BoostsSettings boostsSettings)
+        public ShapeBoostSpeed(IPlayerShapeMover playerShapeMover)
         {
             _playerShapeMover = playerShapeMover;
-            _boostsSettings = boostsSettings;
         }
+        
+        public bool IsTimeableBoost => true;
 
-        public void Activate(BoostTypeId boostTypeId)
+        public void Activate(IBoostDataProvider boostDataProvider)
         {
-            if (boostTypeId is BoostTypeId.PlayerShapeAddSpeed)
-            {
-                _playerShapeMover.ChangeSpeed(_boostsSettings.AddPercentSpeed);
-            }
-            else
-            {
-                _playerShapeMover.ChangeSpeed(_boostsSettings.MinusPercentSpeed);
-            }
+            FloatBoostData floatBoostData = (FloatBoostData)boostDataProvider;
+            
+            _playerShapeMover.ChangeSpeed(floatBoostData.Value);
         }
 
         public void Deactivate()
         {
-            _playerShapeMover.ChangeSpeed(1f);
+            _playerShapeMover.ChangeSpeed(DefaultSpeedMultiplier);
         }
     }
 }

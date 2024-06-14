@@ -9,6 +9,7 @@ using App.Scripts.General.RootUI;
 using App.Scripts.General.UserData.Constants;
 using App.Scripts.Scenes.GameScene.EntryPoint.Bootstrap;
 using App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers;
+using App.Scripts.Scenes.GameScene.Features.Boosts;
 using App.Scripts.Scenes.GameScene.Features.Boosts.Autopilot.Strategies;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General.UI;
@@ -21,6 +22,7 @@ using App.Scripts.Scenes.GameScene.Features.Entities.Ball;
 using App.Scripts.Scenes.GameScene.Features.Entities.Ball.Movement.MoveVariants;
 using App.Scripts.Scenes.GameScene.Features.Entities.Ball.Systems;
 using App.Scripts.Scenes.GameScene.Features.Entities.Bird;
+using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer;
 using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape;
 using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.Collisions;
 using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.Move;
@@ -76,6 +78,8 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
         [Inject] private PoolProviders _poolProviders;
         [Inject] private IStateMachine _projectStateMachine;
         [Inject] private EffectsPrefabProvider _effectsPrefabProvider;
+        [Inject] private BoostSettingsContainer _boostSettingsContainer;
+        [Inject] private EntityDestroySettings _entityDestroySettings;
 
         public override void InstallBindings()
         {
@@ -86,24 +90,26 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             FactoriesInstaller.Install(Container, _boostItemViewPrefab);
             InputInstaller.Install(Container);
             LevelServicesInstaller.Install(Container);
-            EntityDestroyableInstaller.Install(Container);
+            EntityDestroyableInstaller.Install(Container, _entityDestroySettings);
             BehaviourTreeInstaller.Install(Container);
             CommandsInstaller.Install(Container);
             MVVMInstaller.Install(Container, _openMenuPopupButton);
             MiniGunInstaller.Install(Container);
             ConditionsInstaller.Install(Container);
             ShowLevelInstaller.Install(Container);
-            
+            BoostBinder.Install(Container, _boostSettingsContainer);
+            BirdsInstaller.Install(Container);
+
             Container.Bind<ICameraService>().To<CameraService>().AsSingle().WithArguments(_camera);
             Container.BindInterfacesAndSelfTo<ScreenInfoProvider>().AsSingle();
-            
+
             Container.BindInterfacesAndSelfTo<TweenersLocator>().AsSingle();
             Container.Bind<IScoreAnimationService>().To<ScoreAnimationService>().AsSingle();
             Container.Bind<IShakeService>().To<ShakeService>().AsSingle();
             Container.Bind<IRectMousePositionChecker>().To<RectMousePositionChecker>().AsSingle().WithArguments(_rectTransformableViews.ToList());
             Container.Bind<IDataProvider<LevelDataProgress>>().To<DataProvider<LevelDataProgress>>().AsSingle().WithArguments(SavableConstants.CurrentLevelProgressFileName);
 
-            Container.BindInterfacesAndSelfTo<BirdsService>().AsSingle();
+            Container.BindInterfacesAndSelfTo<BirdsSystem>().AsSingle();
             Container.BindInterfacesAndSelfTo<BirdRespawnService>().AsSingle();
             Container.BindInterfacesAndSelfTo<BirdsHealthContainer>().AsSingle();
             Container.BindInterfacesAndSelfTo<MechanicsByLevelActivator>().AsSingle();
@@ -159,19 +165,8 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container
                 .BindInterfacesTo<PlayerShapeMover>()
                 .AsSingle()
-                .WithArguments(_playerShape)
-                .WhenInjectedInto(
-                    typeof(GameLoopState), 
-                    typeof(AutopilotBoostActivator),
-                    typeof(SimpleMovingStrategy),
-                    typeof(BootstrapLoadLevelState),
-                    typeof(ShapeBoostSpeed),
-                    typeof(RestartState),
-                    typeof(LevelProgressSaveService),
-                    typeof(BootstrapContinueLoadLevelState),
-                    typeof(RestartService),
-                    typeof(AutopilotMoveService),
-                    typeof(LoadNextLevelState));
+                .WithArguments(_playerShape).
+                WhenNotInjectedInto<TickableManager>();
         }
     }
 }

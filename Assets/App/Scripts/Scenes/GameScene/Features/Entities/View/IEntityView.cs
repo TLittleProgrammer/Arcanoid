@@ -11,11 +11,12 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.View
     {
         Sprite MainSprite { get; set; }
         Sprite OnTopSprite { get; set; }
-        BoostTypeId BoostTypeId { get; set; }
+        string BoostTypeId { get; set; }
         int EntityId { get; set; }
         public int GridPositionX { get; set; }
         public int GridPositionY { get; set; }
         event Action<IEntityView, Collider2D> Colliderable;
+        event Action<IEntityView, Collider2D> TriggerColliderable;
 
         public class Factory : PlaceholderFactory<string, IEntityView>
         {

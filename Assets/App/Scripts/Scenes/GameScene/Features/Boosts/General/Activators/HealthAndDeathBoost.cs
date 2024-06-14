@@ -1,4 +1,5 @@
-﻿using App.Scripts.Scenes.GameScene.Features.Healthes;
+﻿using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer;
+using App.Scripts.Scenes.GameScene.Features.Healthes;
 using App.Scripts.Scenes.GameScene.Features.Settings;
 
 namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
@@ -7,24 +8,18 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
     {
         private readonly IHealthContainer _healthContainer;
 
-        private readonly BoostsSettings _boostsSettings;
-
-        public HealthAndDeathBoost(IHealthContainer healthContainer, BoostsSettings boostsSettings)
+        public HealthAndDeathBoost(IHealthContainer healthContainer)
         {
             _healthContainer = healthContainer;
-            _boostsSettings = boostsSettings;
         }
-
-        public void Activate(BoostTypeId boostTypeId)
+        
+        public bool IsTimeableBoost => false;
+        
+        public void Activate(IBoostDataProvider boostDataProvider)
         {
-            if (boostTypeId is BoostTypeId.AddHealth)
-            {
-                _healthContainer.UpdateHealth(_boostsSettings.AddHealth, false);
-            }
-            else
-            {
-                _healthContainer.UpdateHealth(-_boostsSettings.MinusHealth, false);
-            }
+            IntBoostData boostData = (IntBoostData)boostDataProvider;
+            
+            _healthContainer.UpdateHealth(boostData.Value, false);
         }
 
         public void Deactivate()

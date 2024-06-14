@@ -2,14 +2,14 @@
 {
     public class BoostData
     {
-        public BoostTypeId BoostTypeId;
+        public string BoostTypeId;
         public float Duration;
 
         public BoostData()
         {
         }
 
-        public BoostData(BoostTypeId boostTypeId, float duration)
+        public BoostData(string boostTypeId, float duration)
         {
             BoostTypeId = boostTypeId;
             Duration = duration;

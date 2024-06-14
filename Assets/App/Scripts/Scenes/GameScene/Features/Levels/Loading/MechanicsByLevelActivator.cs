@@ -9,9 +9,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.Loading
         private readonly BirdView.Factory _birdViewFactory;
         private readonly IBirdsService _birdsService;
 
-        public MechanicsByLevelActivator(
-            BirdView.Factory birdViewFactory,
-            IBirdsService birdsService)
+        public MechanicsByLevelActivator(BirdView.Factory birdViewFactory, IBirdsService birdsService)
         {
             _birdViewFactory = birdViewFactory;
             _birdsService = birdsService;
@@ -28,7 +26,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.Loading
             {
                 BirdView birdView = _birdViewFactory.Create();
                 _birdsService.AddBird(birdView);
-                _birdsService.GoFly(birdView);
+                _birdsService.EnableView(birdView);
             }
             else
             {

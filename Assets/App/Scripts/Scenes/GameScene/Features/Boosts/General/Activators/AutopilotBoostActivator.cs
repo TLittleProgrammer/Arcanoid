@@ -1,43 +1,36 @@
-﻿using App.Scripts.Scenes.GameScene.Features.Boosts.Autopilot;
-using App.Scripts.Scenes.GameScene.Features.Boosts.General.Interfaces;
-using App.Scripts.Scenes.GameScene.Features.Components;
+﻿using App.Scripts.Scenes.GameScene.Features.Boosts.General.Systems;
+using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer;
 using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.Move;
-using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
 {
-    public class AutopilotBoostActivator : IConcreteBoostActivator, ITickable, IActivable
+    public class AutopilotBoostActivator : IConcreteBoostActivator
     {
-        private readonly BehaviourTree _behaviourTree;
+        private readonly IAutopilotSystem _autopilotSystem;
         private readonly IPlayerShapeMover _playerShapeMover;
-        public bool IsActive { get; set; }
         
-        public AutopilotBoostActivator(BehaviourTree behaviourTree, IPlayerShapeMover playerShapeMover)
+        public AutopilotBoostActivator(IAutopilotSystem autopilotSystem, IPlayerShapeMover playerShapeMover)
         {
-            _behaviourTree = behaviourTree;
+            _autopilotSystem = autopilotSystem;
             _playerShapeMover = playerShapeMover;
         }
 
-        public void Activate(BoostTypeId boostTypeId)
-        {
-            IsActive = true;
-            _playerShapeMover.IsActive = false;
-        }
+        public bool IsTimeableBoost => true;
 
-        public void Tick()
+        public void Activate(IBoostDataProvider boostDataProvider)
         {
-            if (IsActive is false)
-            {
-                return;
-            }
-
-            _behaviourTree.Process();
+            SetFlag(true);
         }
 
         public void Deactivate()
         {
-            _playerShapeMover.IsActive = true;
-            IsActive = false;
+            SetFlag(false);
+        }
+
+        private void SetFlag(bool flag)
+        {
+            _autopilotSystem.IsActive = flag;
+            _playerShapeMover.IsActive = !flag;
         }
     }
 }

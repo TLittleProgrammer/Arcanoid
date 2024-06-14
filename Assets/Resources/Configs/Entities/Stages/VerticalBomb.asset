@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e8708079ad64275a5e6a4a88f2c2b6c, type: 3}
   m_Name: VerticalBomb
   m_EditorClassIdentifier: 
-  BoostTypeId: 11
+  BoostTypeId: VerticalBomb
   Damage: 0
   Sprite: {fileID: 21300000, guid: 41aec5716005bbc419a7bb492190209f, type: 3}
   MaxHealthCounter: 1

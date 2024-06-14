@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using App.Scripts.External.Grid;
 using App.Scripts.General.UserData.Levels.Data;
@@ -22,6 +23,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.General.View
         private readonly IEntityViewService _entityViewService;
         private readonly OnTopSprites.Pool _topSpritesPool;
         private readonly ILevelProgressService _levelProgressService;
+        private readonly EntityDestroySettings _entityDestroySettings;
 
         private Grid<int> _levelGrid;
         private Grid<GridItemData> _levelGridItemData = new(Vector2Int.zero);
@@ -31,13 +33,15 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.General.View
             IEntityDestroyable entityDestroyable,
             IEntityViewService entityViewService,
             OnTopSprites.Pool topSpritesPool,
-            ILevelProgressService levelProgressService)
+            ILevelProgressService levelProgressService,
+            EntityDestroySettings entityDestroySettings)
         {
             _entityProvider = entityProvider;
             _entityDestroyable = entityDestroyable;
             _entityViewService = entityViewService;
             _topSpritesPool = topSpritesPool;
             _levelProgressService = levelProgressService;
+            _entityDestroySettings = entityDestroySettings;
         }
 
         public Grid<GridItemData> LevelGridItemData => _levelGridItemData;
@@ -72,22 +76,12 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.General.View
 
                     IEntityView entityView = entityViews.First(x => x.GridPositionX == i && x.GridPositionY == j);
                     
-                    if (IsActiveBoost(entityView, entityStage))
+                    if (!_entityDestroySettings.ActiveBoosts.Contains(entityView.BoostTypeId))
                     {
                         _entityViewService.AddBoostSprite(entityView, _levelGridItemData[i, j], entityView.BoostTypeId);
                     }
                 }
             }
-        }
-
-        private static bool IsActiveBoost(IEntityView entityView, EntityStage entityStage)
-        {
-            return entityView.BoostTypeId is not BoostTypeId.Bomb &&
-                   entityView.BoostTypeId is not  BoostTypeId.None &&
-                   entityView.BoostTypeId is not  BoostTypeId.HorizontalBomb &&
-                   entityView.BoostTypeId is not  BoostTypeId.VerticalBomb &&
-                   entityView.BoostTypeId is not  BoostTypeId.CaptiveBall &&
-                   entityStage.BoostTypeId is not BoostTypeId.ChainBomb;
         }
 
         public void UpdateVisual(IEntityView entityView, int damage)
@@ -168,7 +162,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.General.View
                     if (gridItemData is null)
                     {
                         gridItemData = new GridItemData();
-                        gridItemData.BoostTypeId = BoostTypeId.None;
+                        gridItemData.BoostTypeId = String.Empty;
                         gridItemData.CurrentHealth = -1;
                     }
                     

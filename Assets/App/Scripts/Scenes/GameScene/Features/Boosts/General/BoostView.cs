@@ -11,14 +11,14 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General
         public Transform Transform => transform;
         public SpriteRenderer SpriteRenderer => _spriteRenderer;
 
-        public BoostTypeId BoostTypeId { get; set; }
+        public string BoostTypeId { get; set; }
 
         public class Pool : MonoMemoryPool<BoostView>
         {
             
         }
 
-        public class Factory : PlaceholderFactory<BoostTypeId, BoostView>
+        public class Factory : PlaceholderFactory<string, BoostView>
         {
         }
     }

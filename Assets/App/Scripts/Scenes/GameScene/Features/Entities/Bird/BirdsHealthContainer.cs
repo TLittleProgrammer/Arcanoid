@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using App.Scripts.Scenes.GameScene.Features.Entities.Ball;
 using App.Scripts.Scenes.GameScene.Features.Entities.Bird.Interfaces;
 using App.Scripts.Scenes.GameScene.Features.Settings;
+using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Entities.Bird
 {
@@ -38,15 +40,18 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Bird
             }
         }
 
-        public void GetDamage(BirdView birdView)
+        public void GetDamage(BirdView birdView, Collision2D collision2D)
         {
-            _birdHealthes[birdView]--;
-
-            if (_birdHealthes[birdView] <= 0)
+            if (collision2D.collider.TryGetComponent(out BallView ballView))
             {
-                birdView.Collidered -= GetDamage;
-                BirdDied?.Invoke(birdView);
-                _birdRespawnService.AddBirdToRespawn(birdView);
+                _birdHealthes[birdView]--;
+
+                if (_birdHealthes[birdView] <= 0)
+                {
+                    birdView.Collidered -= GetDamage;
+                    BirdDied?.Invoke(birdView);
+                    _birdRespawnService.AddBirdToRespawn(birdView);
+                }
             }
         }
     }

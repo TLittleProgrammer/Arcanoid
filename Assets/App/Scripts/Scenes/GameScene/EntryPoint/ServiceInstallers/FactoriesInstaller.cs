@@ -6,6 +6,7 @@ using App.Scripts.Scenes.GameScene.Features.Effects;
 using App.Scripts.Scenes.GameScene.Features.Entities.Ball;
 using App.Scripts.Scenes.GameScene.Features.Entities.Ball.Movement;
 using App.Scripts.Scenes.GameScene.Features.Entities.Bird;
+using App.Scripts.Scenes.GameScene.Features.Entities.Bird.Factory;
 using App.Scripts.Scenes.GameScene.Features.Entities.TopSprites;
 using App.Scripts.Scenes.GameScene.Features.Entities.View;
 using App.Scripts.Scenes.GameScene.Features.Factories;
@@ -33,12 +34,13 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
             Container.BindFactory<string, IEntityView, IEntityView.Factory>().FromFactory<EntityFactory>();
             Container.BindFactory<ITransformable, IHealthPointView, IHealthPointView.Factory>().FromFactory<HealthFactory>();
             Container.BindFactory<IEntityView, OnTopSprites, OnTopSprites.Factory>().FromFactory<OnTopSpriteFactory>();
-            Container.BindFactory<BoostTypeId, BoostView, BoostView.Factory>().FromFactory<BoostViewFactory>();
+            Container.BindFactory<string, BoostView, BoostView.Factory>().FromFactory<BoostViewFactory>();
             Container.BindFactory<BallView, IBallMovementService, BallMovementFactory>().FromFactory<BallMovementServiceFactory>();
             Container.BindFactory<BirdView, BirdView.Factory>().FromFactory<BirdViewFactory>();
 
+            Container.BindInterfacesAndSelfTo<BirdMovementSystemFactory>().AsSingle();
             Container.Bind<BoostItemView>().FromInstance(_prefab).WhenInjectedInto<BoostItemViewFactory>();
-            Container.BindFactory<BoostTypeId, BoostItemView, BoostItemView.Factory>().FromFactory<BoostItemViewFactory>();
+            Container.BindFactory<string, BoostItemView, BoostItemView.Factory>().FromFactory<BoostItemViewFactory>();
         }
     }
 }

@@ -1,8 +1,8 @@
-﻿using App.Scripts.Scenes.GameScene.Features.Boosts.Autopilot.Nodes;
-using App.Scripts.Scenes.GameScene.Features.Boosts.General;
-using App.Scripts.Scenes.GameScene.Features.Boosts.General.Interfaces;
+﻿
+
+using System;
+using App.Scripts.Scenes.GameScene.Features.Boosts.Autopilot.Nodes;
 using App.Scripts.Scenes.GameScene.Features.Entities.Ball;
-using App.Scripts.Scenes.GameScene.Features.Entities.Ball.Movement;
 using App.Scripts.Scenes.GameScene.Features.Entities.Ball.Systems;
 using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape;
 using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.PositionChecker;
@@ -138,7 +138,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.Autopilot.Strategies
                         continue;
                     }
 
-                    if (choosedEntity.BoostTypeId is BoostTypeId.None && entity.BoostTypeId is not BoostTypeId.None)
+                    if (choosedEntity.BoostTypeId == String.Empty && entity.BoostTypeId != String.Empty)
                     {
                         choosedEntity = entity;
                     }

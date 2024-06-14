@@ -6,7 +6,7 @@ using App.Scripts.Scenes.GameScene.Features.Grid;
 
 namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer
 {
-    public interface IEntityDestroyable : IAsyncInitializable<List<DestroyServiceData>>
+    public interface IEntityDestroyable : IAsyncInitializable<Dictionary<string, IBlockDestroyService>>
     {
         void Destroy(GridItemData gridItemData, IEntityView entityView);
     }
