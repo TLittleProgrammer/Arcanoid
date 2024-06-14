@@ -14,6 +14,10 @@ namespace App.Scripts.General.ProjectInitialization.Installers
         {
             Container.Bind<ISaveLoadService>().To<SaveLoadService>().AsSingle();
             
+            Container.Bind<GlobalData>().AsSingle().WhenInjectedInto<IDataProvider<GlobalData>>();
+            Container.Bind<EnergyData>().AsSingle().WhenInjectedInto<IDataProvider<EnergyData>>();
+            Container.Bind<LevelPackProgressDictionary>().AsSingle().WhenInjectedInto<IDataProvider<LevelPackProgressDictionary>>();;
+            
             Container.Bind<IDataProvider<GlobalData>>().To<DataProvider<GlobalData>>().AsSingle().WithArguments(SavableConstants.GlobalFileName);
             Container.Bind<IDataProvider<EnergyData>>().To<DataProvider<EnergyData>>().AsSingle().WithArguments(SavableConstants.EnergyFileName);
             Container.Bind<IDataProvider<LevelPackProgressDictionary>>().To<DataProvider<LevelPackProgressDictionary>>().AsSingle().WithArguments(SavableConstants.LevelProgressFileName);

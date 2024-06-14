@@ -107,6 +107,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.Bind<IScoreAnimationService>().To<ScoreAnimationService>().AsSingle();
             Container.Bind<IShakeService>().To<ShakeService>().AsSingle();
             Container.Bind<IRectMousePositionChecker>().To<RectMousePositionChecker>().AsSingle().WithArguments(_rectTransformableViews.ToList());
+            Container.Bind<LevelDataProgress>().AsSingle().WhenInjectedInto<IDataProvider<LevelDataProgress>>();;
             Container.Bind<IDataProvider<LevelDataProgress>>().To<DataProvider<LevelDataProgress>>().AsSingle().WithArguments(SavableConstants.CurrentLevelProgressFileName);
 
             Container.BindInterfacesAndSelfTo<BirdsSystem>().AsSingle();
