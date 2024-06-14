@@ -1,6 +1,7 @@
 ﻿using App.Scripts.External.UserData;
 using App.Scripts.External.UserData.SaveLoad;
 using App.Scripts.General.InfoBetweenScenes;
+using App.Scripts.General.UserData.Global;
 using App.Scripts.General.UserData.Levels.Data;
 using App.Scripts.Scenes.MainMenuScene.Command;
 using App.Scripts.Scenes.MainMenuScene.MVVM.LevelPacks;
@@ -20,9 +21,10 @@ namespace App.Scripts.Scenes.MainMenuScene.Features.ActivateScreens
         private readonly GameObject _initialScreen;
         private readonly GameObject _levelPacks;
         private readonly Image _screenTransitionImage;
+        private readonly IDataProvider<GlobalData> _globalDataProvider;
+        private readonly GlobalData _globalData;
         private readonly ILoadLevelCommand _loadLevelCommand;
         private readonly LevelPackModel _levelPackModel;
-        private readonly LevelPackProgressDictionary _levelPacksProgress;
 
         public ActivateScreensService(
             InfoBetweenScenes infoBetweenScenes,
@@ -31,7 +33,7 @@ namespace App.Scripts.Scenes.MainMenuScene.Features.ActivateScreens
             GameObject initialScreen,
             GameObject levelPacks,
             Image screenTransitionImage,
-            IDataProvider<LevelPackProgressDictionary> levelPacksProgress,
+            IDataProvider<GlobalData> globalDataProvider,
             ILoadLevelCommand loadLevelCommand,
             LevelPackModel levelPackModel)
         {
@@ -41,9 +43,10 @@ namespace App.Scripts.Scenes.MainMenuScene.Features.ActivateScreens
             _initialScreen = initialScreen;
             _levelPacks = levelPacks;
             _screenTransitionImage = screenTransitionImage;
+            _globalDataProvider = globalDataProvider;
+            _globalData = globalDataProvider.GetData();
             _loadLevelCommand = loadLevelCommand;
             _levelPackModel = levelPackModel;
-            _levelPacksProgress = levelPacksProgress.GetData();
         }
 
         public void Initialize()
@@ -59,8 +62,11 @@ namespace App.Scripts.Scenes.MainMenuScene.Features.ActivateScreens
             
             _playButton.onClick.AddListener(() =>
             {
-                if (_levelPacksProgress.GetPassedLevelCount(0) == 0)
+                if (_globalData.IsFirstClickPlay)
                 {
+                    _globalData.IsFirstClickPlay = false;
+                    _globalDataProvider.SaveData(_globalData);
+                    
                     _loadLevelCommand.Execute(_levelPackModel.GetFirstLevelItemData(), 0);
                 }
                 else

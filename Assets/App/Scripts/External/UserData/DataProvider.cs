@@ -10,16 +10,18 @@ namespace App.Scripts.External.UserData
         
         private TClassSavable _savable;
 
-        public DataProvider(ISaveLoadService saveLoadService, TClassSavable savable, string fileName)
+        public DataProvider(ISaveLoadService saveLoadService, string fileName)
         {
             _saveLoadService = saveLoadService;
             _fileName = fileName;
-            _savable = savable;
         }
 
         public TClassSavable GetData()
         {
-            _saveLoadService.Load(ref _savable, _fileName);
+            if (_savable is null)
+            {
+                _saveLoadService.Load(ref _savable, _fileName);
+            }
 
             return _savable;
         }
