@@ -275,7 +275,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7038307695405581418, guid: 47e573d43d2df6846b43223a3844087e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -33.96
+      value: -33.95999
       objectReference: {fileID: 0}
     - target: {fileID: 7038307695405581418, guid: 47e573d43d2df6846b43223a3844087e, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -902,22 +902,34 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!1 &1370615430 stripped
+--- !u!1 &1307400221 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 584670609892401749, guid: 47e573d43d2df6846b43223a3844087e, type: 3}
+  m_CorrespondingSourceObject: {fileID: 8198484576713479690, guid: 47e573d43d2df6846b43223a3844087e, type: 3}
   m_PrefabInstance: {fileID: 333490952}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1393945888 stripped
+--- !u!224 &1307400222 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 926818349665187088, guid: 47e573d43d2df6846b43223a3844087e, type: 3}
+  m_PrefabInstance: {fileID: 333490952}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1307400225
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4033875923095850297, guid: 47e573d43d2df6846b43223a3844087e, type: 3}
-  m_PrefabInstance: {fileID: 333490952}
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1370615430}
+  m_GameObject: {fileID: 1307400221}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e318ebc7dd2e4a43a2d0ef0575124228, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rectTransform: {fileID: 1307400222}
+--- !u!1 &1370615430 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 584670609892401749, guid: 47e573d43d2df6846b43223a3844087e, type: 3}
+  m_PrefabInstance: {fileID: 333490952}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1393945891 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7142877869063162921, guid: 47e573d43d2df6846b43223a3844087e, type: 3}
@@ -1046,7 +1058,7 @@ MonoBehaviour:
   _levelPackBackground: {fileID: 333490956}
   _healthParent: {fileID: 333490957}
   _rectTransformableViews:
-  - {fileID: 1393945888}
+  - {fileID: 1307400225}
   _wallPrefab: {fileID: 1968418909492920053, guid: f024fab09ac13594ab2eec836479ce53, type: 3}
   _boostItemViewPrefab: {fileID: 5042898095734243459, guid: 46281c87ff569f34ea883aaa8a268c42, type: 3}
   _boostsViewContainer: {fileID: 961067312}

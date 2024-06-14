@@ -110,6 +110,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.Bind<LevelDataProgress>().AsSingle().WhenInjectedInto<IDataProvider<LevelDataProgress>>();;
             Container.Bind<IDataProvider<LevelDataProgress>>().To<DataProvider<LevelDataProgress>>().AsSingle().WithArguments(SavableConstants.CurrentLevelProgressFileName);
 
+            Container.BindInterfacesAndSelfTo<MouseService>().AsSingle();
             Container.BindInterfacesAndSelfTo<BirdsSystem>().AsSingle();
             Container.BindInterfacesAndSelfTo<BirdRespawnService>().AsSingle();
             Container.BindInterfacesAndSelfTo<BirdsHealthContainer>().AsSingle();

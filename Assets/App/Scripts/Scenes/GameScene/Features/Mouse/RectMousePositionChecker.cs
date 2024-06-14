@@ -18,20 +18,13 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape
         {
             foreach (IRectTransformable rect in _rects)
             {
-                RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                    rect.RectTransform, 
-                    mousePosition, 
-                    null, 
-                    out Vector2 localPoint
-                );
-
-                if (rect.RectTransform.rect.Contains(localPoint))
+                if (rect.RectTransform.RectContainsPosition(mousePosition))
                 {
-                    return false;
+                    return true;
                 }
             }
 
-            return true;
+            return false;
         }
     }
 }
