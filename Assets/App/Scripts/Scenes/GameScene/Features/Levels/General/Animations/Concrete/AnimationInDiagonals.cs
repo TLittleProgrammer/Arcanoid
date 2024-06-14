@@ -18,17 +18,20 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.General.Animations
         private readonly IGridPositionResolver _gridPositionResolver;
         private readonly ILevelViewUpdater _levelViewUpdater;
         private readonly Image _menuButton;
+        private readonly IGridDataService _gridDataService;
 
         public AnimationInDiagonals(
             ILevelLoader levelLoader,
             IGridPositionResolver gridPositionResolver,
             ILevelViewUpdater levelViewUpdater,
-            Image menuButton)
+            Image menuButton,
+            IGridDataService gridDataService)
         {
             _levelLoader = levelLoader;
             _gridPositionResolver = gridPositionResolver;
             _levelViewUpdater = levelViewUpdater;
             _menuButton = menuButton;
+            _gridDataService = gridDataService;
         }
         
         public UniTask Show()
@@ -45,7 +48,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.General.Animations
                 view
                     .GameObject
                     .transform
-                    .DOScale(_gridPositionResolver.GetCellSize(), timeOffset)
+                    .DOScale(_gridDataService.CellSize, timeOffset)
                     .SetDelay(timeOffset * index - timeOffset * 0.65f)
                     .SetEase(Ease.OutBack)
                     .ToUniTask()

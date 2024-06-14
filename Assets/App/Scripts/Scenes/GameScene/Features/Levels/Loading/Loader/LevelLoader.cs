@@ -19,6 +19,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.Loading.Loader
         private readonly ILevelViewUpdater _levelViewUpdater;
         private readonly EntityView.Pool _entityViewPool;
         private readonly ILevelDataChooser _levelDataChooser;
+        private readonly IGridDataService _gridDataService;
 
         private LevelData _previousLevelData;
         private List<IEntityView> _entityViews;
@@ -29,13 +30,15 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.Loading.Loader
             IEntityView.Factory entityFactory,
             ILevelViewUpdater levelViewUpdater,
             EntityView.Pool entityViewPool,
-            ILevelDataChooser levelDataChooser)
+            ILevelDataChooser levelDataChooser,
+            IGridDataService gridDataService)
         {
             _gridPositionResolver = gridPositionResolver;
             _entityFactory = entityFactory;
             _levelViewUpdater = levelViewUpdater;
             _entityViewPool = entityViewPool;
             _levelDataChooser = levelDataChooser;
+            _gridDataService = gridDataService;
             _entityViews = new();
         }
 
@@ -50,7 +53,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.Loading.Loader
             {
                 for (int j = 0; j < levelData.Grid.GetLength(0); j++)
                 {
-                    Vector2 targetPosition = _gridPositionResolver.GetCurrentGridPosition();
+                    Vector2 targetPosition = _gridPositionResolver.GetPositionByCoordinates(j, i);
 
                     int index = levelData.Grid[j, i];
 
@@ -122,7 +125,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.Loading.Loader
                 Vector2 targetPosition = _gridPositionResolver.GetPositionByCoordinates(entityData.GridPositionX, entityData.GridPositionY);
 
                 levelGrid[entityData.GridPositionX, entityData.GridPositionY] = entityData.EntityId;
-                SpawnBlock(targetPosition, entityData.GridPositionX, entityData.GridPositionY, entityData.EntityId, _gridPositionResolver.GetCellSize());
+                SpawnBlock(targetPosition, entityData.GridPositionX, entityData.GridPositionY, entityData.EntityId, _gridDataService.CellSize);
             }
             
             _levelViewUpdater.SetGrid(levelGrid, _entityViews);
