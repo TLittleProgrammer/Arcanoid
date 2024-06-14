@@ -34,7 +34,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.General.Animations
             _gridDataService = gridDataService;
         }
         
-        public UniTask Show()
+        public async UniTask Show()
         {
             _menuButton.raycastTarget = false;
             
@@ -57,8 +57,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.General.Animations
                 index++;
             }
 
+            await UniTask.WaitForSeconds(GameConstants.ShowLevelDuration);
             _menuButton.raycastTarget = true;
-            return UniTask.CompletedTask;
         }
         
         private List<IEntityView> TraverseDiagonals()

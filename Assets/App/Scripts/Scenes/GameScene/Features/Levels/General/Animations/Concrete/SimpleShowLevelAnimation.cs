@@ -52,8 +52,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.General.Animations
                 index++;
             }
 
+            await UniTask.WaitForSeconds(GameConstants.ShowLevelDuration);
             _menuButton.raycastTarget = true;
-            await UniTask.CompletedTask;
         }
     }
 }
