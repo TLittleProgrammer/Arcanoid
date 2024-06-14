@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a5a33fa5950470594cc9f85a1e1e5ed, type: 3}
   m_Name: BallFlying
   m_EditorClassIdentifier: 
-  MaxAngle: 75
-  MinAngle: 45
+  MinAngle: 25
   Speed: 5
