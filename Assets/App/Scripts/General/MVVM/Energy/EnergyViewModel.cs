@@ -38,5 +38,10 @@ namespace App.Scripts.General.MVVM.Energy
         {
             SecondsToAddEnergy.Value = remainingSeconds;
         }
+
+        public bool TimerIsEnabled()
+        {
+            return CurrentEnergy.Value < MaxEnergy;
+        }
     }
 }

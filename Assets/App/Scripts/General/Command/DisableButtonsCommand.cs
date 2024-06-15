@@ -10,7 +10,6 @@ namespace App.Scripts.General.Command
         {
             foreach (Button button in buttons)
             {
-                button.interactable = false;
                 button.enabled = false;
 
                 TryAnimationScriptDisable(button);

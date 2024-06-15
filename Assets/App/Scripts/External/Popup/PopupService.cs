@@ -64,11 +64,15 @@ namespace App.Scripts.General.Popup
             await UniTask.CompletedTask;
         }
 
-        public async UniTask CloseAll()
+        public async UniTask CloseAll(bool fastClose = false)
         {
             foreach (IPopupView view in _popupsList)
             {
-                await view.Close();
+                if (!fastClose)
+                {
+                    await view.Close();
+                }
+
                 Object.Destroy(view.GameObject);
             }
             

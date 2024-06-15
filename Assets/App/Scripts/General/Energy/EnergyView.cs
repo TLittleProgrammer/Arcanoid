@@ -1,4 +1,5 @@
-﻿using App.Scripts.General.MVVM.Energy;
+﻿using System;
+using App.Scripts.General.MVVM.Energy;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,7 +20,13 @@ namespace App.Scripts.General.Energy
         public Scrollbar Scrollbar => _scrollbar;
 
         private const string _energyValueFormat = "{0}/{1}";
-        
+
+        private void OnDestroy()
+        {
+            _viewModel.SecondsToAddEnergy.OnChanged -= OnViewModelRemainingSecondsChanged;
+            _viewModel.CurrentEnergy.OnChanged -= OnViewModelCurrentEnergyChanged;
+        }
+
         public void Initialize(EnergyViewModel viewModel)
         {
             _viewModel = viewModel;
@@ -27,7 +34,7 @@ namespace App.Scripts.General.Energy
             EnergyText.text = string.Format(_energyValueFormat, viewModel.CurrentEnergy.Value.ToString(), viewModel.MaxEnergy.ToString());
             Scrollbar.size = (float)viewModel.CurrentEnergy.Value / viewModel.MaxEnergy;
 
-            ShowOrHideTimer(viewModel);
+            ShowOrHideTimer();
             
             viewModel.SecondsToAddEnergy.OnChanged += OnViewModelRemainingSecondsChanged;
             viewModel.CurrentEnergy.OnChanged += OnViewModelCurrentEnergyChanged;
@@ -41,11 +48,12 @@ namespace App.Scripts.General.Energy
             
             EnergyText.text = string.Format(_energyValueFormat, energy.ToString(), _viewModel.MaxEnergy.ToString());
             Scrollbar.size = scrollValue;
+            ShowOrHideTimer();
         }
 
-        private void ShowOrHideTimer(EnergyViewModel viewModel)
+        private void ShowOrHideTimer()
         {
-            Timer.SetActive(viewModel.CurrentEnergy.Value < viewModel.MaxEnergy);
+            Timer.SetActive(_viewModel.TimerIsEnabled());
         }
 
         private void OnViewModelRemainingSecondsChanged(int remainingSeconds)

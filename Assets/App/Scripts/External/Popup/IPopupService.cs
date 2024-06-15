@@ -7,6 +7,6 @@ namespace App.Scripts.General.Popup
     {
         TPopupView GetPopup<TPopupView>(ITransformable parent = null) where TPopupView : IPopupView;
         UniTask Close<TPopup>() where TPopup : IPopupView;
-        UniTask CloseAll();
+        UniTask CloseAll(bool fastClose = false);
     }
 }

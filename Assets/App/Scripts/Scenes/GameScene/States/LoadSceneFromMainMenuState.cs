@@ -34,7 +34,7 @@ namespace App.Scripts.Scenes.GameScene.States
             await _projectStateMachine.Enter<LoadingSceneState, string>(sceneName);
             
             _tweenersLocator.RemoveAll();
-            _popupService.CloseAll().Forget();
+            _popupService.CloseAll(true).Forget();
         }
 
         public async UniTask Exit()

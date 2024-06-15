@@ -42,6 +42,7 @@ namespace App.Scripts.General.MVVM.Energy
             _energyDataService.ValueChanged += OnEnergyValueChanged;
             CurrentEnergy.Value = _energyDataService.CurrentValue;
             SecondsToAddEnergy.Value = _energySettings.SecondsToRecoveryEnergy;
+            UpdateTimer();
         }
 
         public void SetRemainingSeconds(int seconds)
@@ -68,6 +69,7 @@ namespace App.Scripts.General.MVVM.Energy
             
             if (newValue >= _energySettings.MaxEnergyCount)
             {
+                _isTickes = false;
                 _timeTicker.SecondsTicked -= OnSecondsTicked;
             }
             else

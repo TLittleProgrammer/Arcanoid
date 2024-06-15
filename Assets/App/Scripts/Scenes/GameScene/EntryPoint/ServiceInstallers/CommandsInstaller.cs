@@ -11,7 +11,6 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
         public override void InstallBindings()
         {
             Container.BindInterfacesAndSelfTo<DisableButtonsCommand>().AsSingle();
-            Container.BindInterfacesAndSelfTo<BackCommand>().AsSingle();
             Container.BindInterfacesAndSelfTo<RestartCommand>().AsSingle();
             Container.BindInterfacesAndSelfTo<SkipLevelCommand>().AsSingle();
         }

@@ -15,7 +15,7 @@ MonoBehaviour:
   LocaleKey: Galactic_Sigara
   GalacticIconKey: sigara_icon
   GalacticBackgroundKey: sigara_background
-  EnergyPrice: 3
+  EnergyPrice: 25
   EnergyAddForWin: 5
   Levels:
   - {fileID: 4900000, guid: 47cd837f452f75f47a6c24454c967444, type: 3}
