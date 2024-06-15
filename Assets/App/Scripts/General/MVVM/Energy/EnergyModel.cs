@@ -58,6 +58,7 @@ namespace App.Scripts.General.MVVM.Energy
                 _isTickes = false;
                 _timeTicker.SecondsTicked -= OnSecondsTicked;
                 _energyDataService.Add(1);
+                UpdateTimer();
             }
         }
 
@@ -75,10 +76,13 @@ namespace App.Scripts.General.MVVM.Energy
                 {
                     _isTickes = true;
                     _timeTicker.SecondsTicked += OnSecondsTicked;
-                } 
-                
-                SecondsToAddEnergy.Value = _energySettings.SecondsToRecoveryEnergy;
+                }
             }
+        }
+
+        private void UpdateTimer()
+        {
+            SecondsToAddEnergy.Value = _energySettings.SecondsToRecoveryEnergy;
         }
     }
 }
