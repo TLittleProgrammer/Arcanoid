@@ -5,7 +5,10 @@
         "Unity.Mathematics",
         "Game",
         "Converters",
-        "MathExtensions"
+        "MathExtensions",
+        "Zenject",
+        "GeneralBetweenScenes",
+        "Initialization"
     ],
     "includePlatforms": [
         "Editor"
