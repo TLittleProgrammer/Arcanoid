@@ -20,10 +20,4 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts
         public IConcreteBoostActivator ConcreteBoostActivator;
         public IBoostDataProvider BoostDataProvider;
     }
-
-    [CreateAssetMenu(menuName = "Configs/AvailableBoostList", fileName = "AvailableBoostList")]
-    public class AvailableBoostList : ScriptableObject
-    {
-        public List<string> AvailableBoosts;
-    }
 }

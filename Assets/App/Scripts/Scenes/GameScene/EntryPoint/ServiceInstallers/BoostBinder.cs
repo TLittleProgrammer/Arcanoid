@@ -24,9 +24,6 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
 
             foreach (BoostSettingsData data in _boostSettingsContainer.BoostSettingsDatas)
             {
-                //var activator = DependencyInjector.CreateInstanceWithDependencies(data.ConcreteBoostActivator, Container);
-                //data.ConcreteBoostActivator = activator;
-                
                 result.Add(data.Key, data);
             }
             

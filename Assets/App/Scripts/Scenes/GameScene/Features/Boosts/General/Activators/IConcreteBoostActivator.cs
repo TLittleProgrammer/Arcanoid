@@ -1,11 +1,12 @@
-﻿using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer;
+﻿using System;
+using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer;
 
 namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
 {
     public interface IConcreteBoostActivator
     {
         bool IsTimeableBoost { get; }
-        void Activate(IBoostDataProvider boostDataProvider);
+        void Activate();
         void Deactivate();
     }
 }

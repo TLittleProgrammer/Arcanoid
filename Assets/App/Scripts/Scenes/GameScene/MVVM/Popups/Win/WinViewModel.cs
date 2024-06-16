@@ -23,10 +23,12 @@ namespace App.Scripts.Scenes.GameScene.MVVM.Popups.Win
         {
             LevelPack currentPack = _levelPackInfoService.LevelPackTransferData.LevelPack;
             LevelPack nextPack = _levelPackInfoService.GetDataForNextPack();
+
+            Sprite nextPackSprite = nextPack is null ? null : _spriteProvider.Sprites[nextPack.GalacticIconKey];
             
             return new(
                 _spriteProvider.Sprites[currentPack.GalacticIconKey],
-                _spriteProvider.Sprites[nextPack.GalacticIconKey],
+                nextPackSprite,
                 currentPack.LocaleKey,
                 _levelPackInfoService.LevelPackTransferData.LevelIndex + 1,
                 currentPack.Levels.Count

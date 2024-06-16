@@ -12,31 +12,30 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
         private readonly PlayerView _playerView;
         private readonly IShapePositionChecker _shapePositionChecker;
         private readonly IBulletMovement _bulletMovement;
-        private readonly float _defaultShapeSize;
+        private readonly ShapeSizeBoostData _boostDataProvider;
 
         public PlayerShapeBoostSize(
             PlayerView playerView,
             IShapePositionChecker shapePositionChecker,
-            IBulletMovement bulletMovement)
+            IBulletMovement bulletMovement,
+            ShapeSizeBoostData boostDataProvider)
         {
             _playerView = playerView;
             _shapePositionChecker = shapePositionChecker;
             _bulletMovement = bulletMovement;
-
-            _defaultShapeSize = _playerView.BoxCollider2D.size.x;
+            _boostDataProvider = boostDataProvider;
         }
         
         public bool IsTimeableBoost => true;
         
-        public void Activate(IBoostDataProvider boostDataProvider)
+        public void Activate()
         {
-            FloatBoostData floatBoostData = (FloatBoostData)boostDataProvider;
-            UpdateWidth(floatBoostData.Value).Forget();
+            UpdateWidth(_boostDataProvider.NewSize).Forget();
         }
 
         public void Deactivate()
         {
-            UpdateWidth(_defaultShapeSize).Forget();
+            UpdateWidth(_boostDataProvider.DefaultSize).Forget();
         }
 
         private async UniTask UpdateWidth(float to)

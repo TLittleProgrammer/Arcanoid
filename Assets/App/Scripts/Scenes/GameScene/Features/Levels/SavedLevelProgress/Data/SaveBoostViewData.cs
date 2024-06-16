@@ -14,6 +14,11 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress.Data
         public float PositionX;
         [JsonProperty("PositionY")]
         public float PositionY;
+        [JsonProperty("ScaleX")]
+        public float ScaleX;
+        [JsonProperty("ScaleY")]
+        public float ScaleY;
+
 
         public SaveBoostViewData()
         {
@@ -30,8 +35,14 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress.Data
         public SaveBoostViewData(BoostView boostView)
         {
             BoostTypeId = boostView.BoostTypeId;
-            PositionX = boostView.transform.position.x;
-            PositionY = boostView.transform.position.y;
+            
+            var transform = boostView.transform;
+            
+            PositionX = transform.position.x;
+            PositionY = transform.position.y;
+
+            ScaleX = transform.localScale.x;
+            ScaleY = transform.localScale.y;
         }
     }
 }

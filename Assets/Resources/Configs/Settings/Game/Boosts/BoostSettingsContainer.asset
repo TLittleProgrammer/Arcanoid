@@ -56,9 +56,6 @@ MonoBehaviour:
       Entry: 7
       Data: 3|App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators.BallMoverBoostActivator,
         Game
-    - Name: SpeedMultiplier
-      Entry: 4
-      Data: 1.5
     - Name: 
       Entry: 8
       Data: 
@@ -103,9 +100,6 @@ MonoBehaviour:
       Entry: 7
       Data: 7|App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators.BallMoverBoostActivator,
         Game
-    - Name: SpeedMultiplier
-      Entry: 4
-      Data: 0.5
     - Name: 
       Entry: 8
       Data: 
@@ -150,19 +144,19 @@ MonoBehaviour:
       Entry: 7
       Data: 11|App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators.PlayerShapeBoostSize,
         Game
-    - Name: NewSize
-      Entry: 4
-      Data: 2
     - Name: 
       Entry: 8
       Data: 
     - Name: BoostDataProvider
       Entry: 7
-      Data: 12|App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.FloatBoostData,
+      Data: 12|App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.ShapeSizeBoostData,
         Game
-    - Name: Value
+    - Name: NewSize
       Entry: 4
       Data: 2
+    - Name: DefaultSize
+      Entry: 4
+      Data: 1.5
     - Name: 
       Entry: 8
       Data: 
@@ -197,19 +191,19 @@ MonoBehaviour:
       Entry: 7
       Data: 15|App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators.PlayerShapeBoostSize,
         Game
-    - Name: NewSize
-      Entry: 4
-      Data: 1
     - Name: 
       Entry: 8
       Data: 
     - Name: BoostDataProvider
       Entry: 7
-      Data: 16|App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.FloatBoostData,
+      Data: 16|App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.ShapeSizeBoostData,
         Game
-    - Name: Value
+    - Name: NewSize
       Entry: 4
       Data: 1
+    - Name: DefaultSize
+      Entry: 4
+      Data: 1.5
     - Name: 
       Entry: 8
       Data: 
@@ -244,9 +238,6 @@ MonoBehaviour:
       Entry: 7
       Data: 19|App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators.ShapeBoostSpeed,
         Game
-    - Name: NewSpeed
-      Entry: 4
-      Data: 1.5
     - Name: 
       Entry: 8
       Data: 
@@ -291,9 +282,6 @@ MonoBehaviour:
       Entry: 7
       Data: 23|App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators.ShapeBoostSpeed,
         Game
-    - Name: NewSpeed
-      Entry: 4
-      Data: 0.5
     - Name: 
       Entry: 8
       Data: 
@@ -335,9 +323,6 @@ MonoBehaviour:
       Entry: 7
       Data: 27|App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators.HealthAndDeathBoost,
         Game
-    - Name: AddHealthCount
-      Entry: 3
-      Data: 1
     - Name: 
       Entry: 8
       Data: 
@@ -379,9 +364,6 @@ MonoBehaviour:
       Entry: 7
       Data: 31|App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators.HealthAndDeathBoost,
         Game
-    - Name: AddHealthCount
-      Entry: 3
-      Data: -1
     - Name: 
       Entry: 8
       Data: 

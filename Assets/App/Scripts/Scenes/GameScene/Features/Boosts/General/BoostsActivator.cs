@@ -5,6 +5,7 @@ using App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General.Interfaces;
 using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress;
 using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress.Data;
+using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.Features.Boosts.General
 {
@@ -12,33 +13,35 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General
     {
         private readonly IBoostContainer _boostContainer;
         private readonly Dictionary<string, BoostSettingsData> _concreteBoostActivatorsSettings;
+        private readonly DiContainer _diContainer;
 
         private float _initialBallSpeed;
-        private readonly Dictionary<Type,IConcreteBoostActivator> _concreteBoostActivators;
+        private readonly Dictionary<Type,IConcreteBoostActivator> _concreteBoostActivators = new();
+        
 
         public BoostsActivator(
             IBoostContainer boostContainer,
             Dictionary<string, BoostSettingsData> concreteBoostActivatorsSettingsSettings,
-            List<IConcreteBoostActivator> concreteBoostActivators)
+            DiContainer diContainer)
         {
             _boostContainer = boostContainer;
             _concreteBoostActivatorsSettings = concreteBoostActivatorsSettingsSettings;
-            _concreteBoostActivators = concreteBoostActivators
-                .ToDictionary(x => x.GetType(), x => x);
+            _diContainer = diContainer;
 
             _boostContainer.BoostEnded += OnBoostEnded;
+            _boostContainer.DeactivateBoost += DeactivateBoostById;
         }
 
         public void Activate(BoostView view)
         {
             string boostId = view.BoostTypeId;
-
-            bool activated = ActivateBoostById(view.BoostTypeId);
-
-            if (activated && _concreteBoostActivatorsSettings[boostId].ConcreteBoostActivator.IsTimeableBoost)
+            
+            if (_concreteBoostActivatorsSettings[boostId].ConcreteBoostActivator.IsTimeableBoost)
             {
                 _boostContainer.AddBoost(boostId);
             }
+            
+            ActivateBoostById(view.BoostTypeId);
         }
 
         private void OnBoostEnded(string boostId)
@@ -54,21 +57,41 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General
             }
         }
 
-        private bool ActivateBoostById(string id)
+        private void ActivateBoostById(string id)
         {
             BoostSettingsData boostSettingsData = _concreteBoostActivatorsSettings[id];
             Type activatorType = boostSettingsData.ConcreteBoostActivator.GetType();
 
-            if (_concreteBoostActivators.ContainsKey(activatorType))
+            if (!_concreteBoostActivators.ContainsKey(activatorType))
             {
-                _concreteBoostActivators[activatorType].Activate(boostSettingsData.BoostDataProvider);
-                return true;
+                var activator = InitializeActivator(boostSettingsData, activatorType);
+                activator.Activate();
+
+                if (boostSettingsData.ConcreteBoostActivator.IsTimeableBoost)
+                {
+                    _concreteBoostActivators.Add(activatorType, activator);
+                }
+            }
+        }
+
+        private IConcreteBoostActivator InitializeActivator(BoostSettingsData boostSettingsData, Type activatorType)
+        {
+            IConcreteBoostActivator activator;
+
+            if (boostSettingsData.BoostDataProvider is not null)
+            {
+                activator = (IConcreteBoostActivator)_diContainer.Instantiate(activatorType,
+                    new[] { boostSettingsData.BoostDataProvider });
+            }
+            else
+            {
+                activator = (IConcreteBoostActivator)_diContainer.Instantiate(activatorType);
             }
 
-            return false;
+            return activator;
         }
-        
-        private bool DeactivateBoostById(string id)
+
+        private void DeactivateBoostById(string id)
         {
             BoostSettingsData boostSettingsData = _concreteBoostActivatorsSettings[id];
             Type activatorType = boostSettingsData.ConcreteBoostActivator.GetType();
@@ -76,10 +99,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General
             if (_concreteBoostActivators.ContainsKey(activatorType))
             {
                 _concreteBoostActivators[activatorType].Deactivate();
-                return true;
+                _concreteBoostActivators.Remove(activatorType);
             }
-
-            return false;
         }
     }
 }
