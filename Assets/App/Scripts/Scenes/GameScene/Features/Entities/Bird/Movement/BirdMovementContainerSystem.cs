@@ -86,7 +86,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Bird
         {
             Direction currentDirection = _birds[birdView].Direction;
 
-            Debug.Log(currentDirection);
             if (currentDirection == Direction.Left)
             {
                 InitializeBird(birdView, Direction.Right, true);

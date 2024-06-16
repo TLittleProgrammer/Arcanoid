@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 2:10
+  m_text: 00:05
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2ec0afdf33740084bb9027b76b95b9aa, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 6649001a8c1f8d9469d2c3bcc09089dc, type: 2}
@@ -496,8 +496,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 5, y: 0.038399696}
-  m_SizeDelta: {x: 10, y: 18.827}
+  m_AnchoredPosition: {x: 4.2352, y: 0.02120018}
+  m_SizeDelta: {x: 8.4703, y: 18.2195}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8992640202423976497
 CanvasRenderer:
@@ -657,12 +657,12 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
-  m_TargetGraphic: {fileID: 8992640202423976496}
+  m_Interactable: 0
+  m_TargetGraphic: {fileID: 8992640202488373765}
   m_HandleRect: {fileID: 8992640202423976495}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.25
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

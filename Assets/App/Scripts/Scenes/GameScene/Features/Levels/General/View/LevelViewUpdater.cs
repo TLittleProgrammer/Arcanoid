@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using App.Scripts.External.Grid;
-using App.Scripts.General.UserData.Levels.Data;
-using App.Scripts.Scenes.GameScene.Features.Boosts.General;
 using App.Scripts.Scenes.GameScene.Features.Entities.AssetManagement;
 using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer;
 using App.Scripts.Scenes.GameScene.Features.Entities.TopSprites;
@@ -76,7 +74,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.General.View
 
                     IEntityView entityView = entityViews.First(x => x.GridPositionX == i && x.GridPositionY == j);
                     
-                    if (!_entityDestroySettings.ActiveBoosts.Contains(entityView.BoostTypeId))
+                    if (entityView.BoostTypeId is not null && !_entityDestroySettings.ActiveBoosts.Contains(entityView.BoostTypeId))
                     {
                         _entityViewService.AddBoostSprite(entityView, _levelGridItemData[i, j], entityView.BoostTypeId);
                     }

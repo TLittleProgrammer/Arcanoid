@@ -17,31 +17,22 @@ namespace App.Scripts.General.ProjectInitialization.Installers
     {
         private readonly ApplicationSettings _applicationSettings;
         private readonly ILocaleService _localeService;
-        private readonly EnergyModel _energyModel;
-        private readonly IEnergyDataService _energyDataService;
         private readonly IDataProvider<GlobalData> _globalDataProvider;
-        private readonly EnergySettings _energySettings;
-        private readonly IDateTimeService _dateTimeService;
         private readonly IGlobalDataService _globalDataService;
+        private readonly IEnergyInitializer _energyInitializer;
 
         public ProjectInitializer(
             ApplicationSettings applicationSettings,
             ILocaleService localeService,
-            EnergyModel energyModel,
-            IEnergyDataService energyDataService,
             IDataProvider<GlobalData> globalDataProvider,
-            EnergySettings energySettings,
-            IDateTimeService dateTimeService,
-            IGlobalDataService globalDataService)
+            IGlobalDataService globalDataService,
+            IEnergyInitializer energyInitializer)
         {
             _applicationSettings = applicationSettings;
             _localeService = localeService;
-            _energyModel = energyModel;
-            _energyDataService = energyDataService;
             _globalDataProvider = globalDataProvider;
-            _energySettings = energySettings;
-            _dateTimeService = dateTimeService;
             _globalDataService = globalDataService;
+            _energyInitializer = energyInitializer;
         }
         
         public async void Initialize()
@@ -53,7 +44,7 @@ namespace App.Scripts.General.ProjectInitialization.Installers
             
             GlobalData globalData = _globalDataProvider.GetData();
             
-            InitializeEnergyData(globalData);
+            _energyInitializer.Initialize();
             CheckFirstEnter(globalData);
 
             await _globalDataService.AsyncInitialize();
@@ -64,33 +55,7 @@ namespace App.Scripts.General.ProjectInitialization.Installers
             if (globalData.IsFirstEnter)
             {
                 globalData.IsFirstEnter = false;
-                _globalDataProvider.SaveData(globalData);
-            }
-        }
-
-        private void InitializeEnergyData(GlobalData globalData)
-        {
-            if (!globalData.IsFirstEnter)
-            {
-                int needAddEnergy = (int)(_dateTimeService.GetCurrentTimestamp() - globalData.LastTimestampEnter) / _energySettings.SecondsToRecoveryEnergy;
-
-                if (needAddEnergy + _energyDataService.CurrentValue >= _energySettings.MaxEnergyCount)
-                {
-                    if (_energyDataService.CurrentValue < _energySettings.MaxEnergyCount)
-                    {
-                        _energyDataService.Add(_energySettings.MaxEnergyCount - _energyDataService.CurrentValue);
-                    }
-                }
-                else
-                {
-                    _energyDataService.Add(needAddEnergy);
-                }
-                
-                _energyModel.SetRemainingSeconds(needAddEnergy % _energySettings.SecondsToRecoveryEnergy);
-            }
-            else
-            {
-                _energyDataService.Add(_energySettings.InitialEnergyCount);
+                _globalDataProvider.SaveData();
             }
         }
     }

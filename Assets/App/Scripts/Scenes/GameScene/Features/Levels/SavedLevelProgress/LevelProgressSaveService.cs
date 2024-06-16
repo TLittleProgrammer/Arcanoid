@@ -23,7 +23,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress
                 progressSavable.SaveProgress(levelDataProgress);
             }
 
-            _levelDataProgressProvider.SaveData(levelDataProgress);
+            _levelDataProgressProvider.SaveData();
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using App.Scripts.Scenes.GameScene.Features.Boosts.General;
 using App.Scripts.Scenes.GameScene.Features.Entities.TopSprites;
 
 namespace App.Scripts.Scenes.GameScene.Features.Grid

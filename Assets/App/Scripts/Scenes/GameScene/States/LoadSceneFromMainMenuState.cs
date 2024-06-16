@@ -4,7 +4,6 @@ using App.Scripts.General.Popup;
 using App.Scripts.General.States;
 using App.Scripts.Scenes.GameScene.Features.Dotween;
 using Cysharp.Threading.Tasks;
-using Action = System.Action;
 
 namespace App.Scripts.Scenes.GameScene.States
 {
@@ -34,7 +33,7 @@ namespace App.Scripts.Scenes.GameScene.States
             await _projectStateMachine.Enter<LoadingSceneState, string>(sceneName);
             
             _tweenersLocator.RemoveAll();
-            _popupService.CloseAll().Forget();
+            _popupService.CloseAll(true).Forget();
         }
 
         public async UniTask Exit()

@@ -2,7 +2,6 @@
 using App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators;
 using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer;
 using Sirenix.OdinInspector;
-using UnityEditor;
 using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Boosts

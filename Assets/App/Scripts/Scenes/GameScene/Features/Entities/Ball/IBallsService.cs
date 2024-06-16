@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using App.Scripts.General.Infrastructure;
-using App.Scripts.Scenes.GameScene.Features.Entities.Ball.Movement;
 using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball

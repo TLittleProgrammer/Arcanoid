@@ -18,7 +18,8 @@
         "Localisation",
         "Unity.PlasticSCM.Editor",
         "CustomData",
-        "ObjectPool"
+        "ObjectPool",
+        "Popups"
     ],
     "includePlatforms": [
         "Android",

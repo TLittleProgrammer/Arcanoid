@@ -15,9 +15,9 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.Move
         private readonly ITimeProvider _timeProvider;
         private readonly IInputService _inputService;
         private readonly IShapePositionChecker _positionChecker;
+        private readonly IRectMousePositionChecker _rectMousePositionChecker;
 
         private ShapeMoverSettings _shapeMoverSettings;
-        private readonly IRectMousePositionChecker _rectMousePositionChecker;
         private Vector3 _initialPosition;
         private float _speed;
 
@@ -48,7 +48,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.Move
             if (!IsActive)
                 return;
 
-            if (_inputService.UserClickDown && _rectMousePositionChecker.MouseOnRect(_inputService.CurrentMousePosition))
+            if (_inputService.UserClickDown && !_rectMousePositionChecker.MouseOnRect(_inputService.CurrentMouseWorldPosition))
             {
                 Vector2 targetPosition = CalculateTargetPosition();
 
@@ -79,7 +79,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.Move
             return Vector2.MoveTowards
             (
                 _playerPositionable.Position,
-                new(_inputService.CurrentMousePosition.x, _playerPositionable.Position.y),
+                new(_inputService.CurrentMouseWorldPosition.x, _playerPositionable.Position.y),
                 _timeProvider.DeltaTime * _speed
             );
         }

@@ -7,6 +7,7 @@ using App.Scripts.Scenes.GameScene.Features.Damage;
 using App.Scripts.Scenes.GameScene.Features.Entities.Ball.Movement;
 using App.Scripts.Scenes.GameScene.Features.Entities.Ball.PositionChecker;
 using App.Scripts.Scenes.GameScene.Features.Entities.Ball.Systems;
+using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape;
 using App.Scripts.Scenes.GameScene.Features.Input;
 using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress;
 using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress.Data;
@@ -21,6 +22,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
         private readonly float _minBallYPosition;
         private readonly BallView.Pool _ballViewPool;
         private readonly IBallsMovementSystem _ballsMovementSystem;
+        private readonly IMouseService _mouseService;
         private readonly IGetDamageService _getDamageService;
 
         private float _levelProgress;
@@ -35,11 +37,13 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
             IGetDamageService getDamageService,
             IClickDetector clickDetector,
             BallView.Pool ballViewPool,
-            IBallsMovementSystem ballsMovementSystem)
+            IBallsMovementSystem ballsMovementSystem,
+            IMouseService mouseService)
         {
             _getDamageService = getDamageService;
             _ballViewPool = ballViewPool;
             _ballsMovementSystem = ballsMovementSystem;
+            _mouseService = mouseService;
             _minBallYPosition = -screenInfoProvider.HeightInWorld / 2f;
 
             Balls = new();
@@ -195,6 +199,11 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
 
         private void OnMouseUp()
         {
+            if (!IsActive || _mouseService.IsMouseOnRect())
+            {
+                return;
+            }
+            
             foreach (BallView view in Balls)
             {
                 Fly(view);

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using App.Scripts.External.ObjectPool;
-using App.Scripts.Scenes.GameScene.Features.Boosts.General;
 using App.Scripts.Scenes.GameScene.Features.Effects;
 using App.Scripts.Scenes.GameScene.Features.Entities.AssetManagement;
 using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Helpers;

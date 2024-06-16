@@ -1,6 +1,5 @@
 ﻿using System;
 using App.Scripts.External.Components;
-using App.Scripts.Scenes.GameScene.Features.Boosts.General;
 using App.Scripts.Scenes.GameScene.Features.Components;
 using UnityEngine;
 using Zenject;

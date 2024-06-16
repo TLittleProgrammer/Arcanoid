@@ -2,11 +2,9 @@
 using System.Linq;
 using App.Scripts.External.Extensions.ListExtensions;
 using App.Scripts.General.Providers;
-using App.Scripts.Scenes.GameScene.Features.Boosts.General;
 using App.Scripts.Scenes.GameScene.Features.Entities.AssetManagement;
 using App.Scripts.Scenes.GameScene.Features.Entities.TopSprites;
 using App.Scripts.Scenes.GameScene.Features.Grid;
-using App.Scripts.Scenes.GameScene.Features.Settings;
 using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Entities.View

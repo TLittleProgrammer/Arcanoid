@@ -42,6 +42,7 @@ namespace App.Scripts.General.MVVM.Energy
             _energyDataService.ValueChanged += OnEnergyValueChanged;
             CurrentEnergy.Value = _energyDataService.CurrentValue;
             SecondsToAddEnergy.Value = _energySettings.SecondsToRecoveryEnergy;
+            UpdateTimer();
         }
 
         public void SetRemainingSeconds(int seconds)
@@ -58,15 +59,18 @@ namespace App.Scripts.General.MVVM.Energy
                 _isTickes = false;
                 _timeTicker.SecondsTicked -= OnSecondsTicked;
                 _energyDataService.Add(1);
+                UpdateTimer();
             }
         }
 
         private void OnEnergyValueChanged(int newValue)
         {
+            SetSecondsIfNeed(newValue);
             CurrentEnergy.Value = newValue;
             
             if (newValue >= _energySettings.MaxEnergyCount)
             {
+                _isTickes = false;
                 _timeTicker.SecondsTicked -= OnSecondsTicked;
             }
             else
@@ -75,10 +79,21 @@ namespace App.Scripts.General.MVVM.Energy
                 {
                     _isTickes = true;
                     _timeTicker.SecondsTicked += OnSecondsTicked;
-                } 
-                
-                SecondsToAddEnergy.Value = _energySettings.SecondsToRecoveryEnergy;
+                }
             }
+        }
+
+        private void SetSecondsIfNeed(int newEnergyValue)
+        {
+            if (CurrentEnergy.Value >= _energySettings.MaxEnergyCount && newEnergyValue < _energySettings.MaxEnergyCount)
+            {
+                SetRemainingSeconds(_energySettings.SecondsToRecoveryEnergy);
+            }
+        }
+
+        private void UpdateTimer()
+        {
+            SecondsToAddEnergy.Value = _energySettings.SecondsToRecoveryEnergy;
         }
     }
 }

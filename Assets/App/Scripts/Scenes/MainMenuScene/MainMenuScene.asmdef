@@ -11,7 +11,8 @@
         "UserData",
         "Initialization",
         "UniTask",
-        "UniTask.DOTween"
+        "UniTask.DOTween",
+        "Popups"
     ],
     "includePlatforms": [
         "Android",

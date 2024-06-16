@@ -1,51 +1,43 @@
 ﻿using App.Scripts.External.UserData;
 using App.Scripts.General.DateTime;
-using App.Scripts.General.ProjectInitialization.Settings;
-using App.Scripts.General.Time;
+using App.Scripts.General.MVVM.Energy;
 using Cysharp.Threading.Tasks;
 
 namespace App.Scripts.General.UserData.Global
 {
     public sealed class GlobalDataService : IGlobalDataService
     {
-        private readonly ApplicationSettings _applicationSettings;
-        private readonly ITimeTicker _ticker;
         private readonly IDataProvider<GlobalData> _globalDataProvider;
         private readonly IDateTimeService _dateTimeService;
-        
-        private int _passedSeconds = 0;
+        private readonly EnergyModel _energyModel;
+
         private GlobalData _globalData;
         
         public GlobalDataService(
-            ApplicationSettings applicationSettings,
-            ITimeTicker ticker,
             IDataProvider<GlobalData> globalDataProvider,
-            IDateTimeService dateTimeService)
+            IDateTimeService dateTimeService,
+            EnergyModel energyModel)
         {
-            _applicationSettings = applicationSettings;
-            _ticker = ticker;
             _globalDataProvider = globalDataProvider;
             _dateTimeService = dateTimeService;
+            _energyModel = energyModel;
         }
 
         public async UniTask AsyncInitialize()
         {
             _globalData = _globalDataProvider.GetData();
-            _ticker.SecondsTicked += OnSecondsTicked;
+
+            _energyModel.SecondsToAddEnergy.OnChanged += OnSecondsToAddEnergyWasChanged;
             
             await UniTask.CompletedTask;
         }
 
-        private void OnSecondsTicked()
+        private void OnSecondsToAddEnergyWasChanged(int seconds)
         {
-            _passedSeconds++;
-
-            if (_passedSeconds >= _applicationSettings.SaveGlobalDataEnterFromSeconds)
+            if (seconds <= 0)
             {
-                _globalData.LastTimestampEnter = _dateTimeService.GetCurrentTimestamp();
-                _passedSeconds = 0;
-                
-                _globalDataProvider.SaveData(_globalData);
+                _globalData.LastTimestampEnergyWasAdded = _dateTimeService.GetCurrentTimestamp();
+                _globalDataProvider.SaveData();
             }
         }
     }

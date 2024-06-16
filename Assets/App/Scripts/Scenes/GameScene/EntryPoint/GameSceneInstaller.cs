@@ -3,17 +3,12 @@ using System.Linq;
 using App.Scripts.External.Components;
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.External.UserData;
-using App.Scripts.General.Infrastructure;
-using App.Scripts.General.Providers;
-using App.Scripts.General.RootUI;
+using App.Scripts.General.Game;
 using App.Scripts.General.UserData.Constants;
 using App.Scripts.Scenes.GameScene.EntryPoint.Bootstrap;
 using App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers;
 using App.Scripts.Scenes.GameScene.Features.Boosts;
-using App.Scripts.Scenes.GameScene.Features.Boosts.Autopilot.Strategies;
-using App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General.UI;
-using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun;
 using App.Scripts.Scenes.GameScene.Features.Camera;
 using App.Scripts.Scenes.GameScene.Features.Damage;
 using App.Scripts.Scenes.GameScene.Features.Dotween;
@@ -30,11 +25,9 @@ using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.PositionChecker
 using App.Scripts.Scenes.GameScene.Features.Entities.View;
 using App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions;
 using App.Scripts.Scenes.GameScene.Features.Entities.Walls;
-using App.Scripts.Scenes.GameScene.Features.Game;
 using App.Scripts.Scenes.GameScene.Features.Grid;
 using App.Scripts.Scenes.GameScene.Features.Healthes;
 using App.Scripts.Scenes.GameScene.Features.Healthes.View;
-using App.Scripts.Scenes.GameScene.Features.Levels.General.Animations;
 using App.Scripts.Scenes.GameScene.Features.Levels.LevelProgress;
 using App.Scripts.Scenes.GameScene.Features.Levels.LevelView;
 using App.Scripts.Scenes.GameScene.Features.Levels.Loading;
@@ -48,8 +41,6 @@ using App.Scripts.Scenes.GameScene.Features.ServiceActivator;
 using App.Scripts.Scenes.GameScene.Features.Settings;
 using App.Scripts.Scenes.GameScene.Features.Shake;
 using App.Scripts.Scenes.GameScene.MVVM.Header;
-using App.Scripts.Scenes.GameScene.States;
-using App.Scripts.Scenes.GameScene.States.Bootstrap;
 using App.Scripts.Scenes.GameScene.States.Gameloop;
 using UnityEngine;
 using UnityEngine.UI;
@@ -73,7 +64,6 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
         [SerializeField] private BoostsViewContainer _boostsViewContainer;
         [SerializeField] private Image _menuButton;
         [SerializeField] private OpenMenuPopupButton _openMenuPopupButton;
-        [SerializeField] private GameStatements _gameStatements;
 
         [Inject] private PoolProviders _poolProviders;
         [Inject] private IStateMachine _projectStateMachine;
@@ -109,6 +99,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.Bind<IRectMousePositionChecker>().To<RectMousePositionChecker>().AsSingle().WithArguments(_rectTransformableViews.ToList());
             Container.Bind<IDataProvider<LevelDataProgress>>().To<DataProvider<LevelDataProgress>>().AsSingle().WithArguments(SavableConstants.CurrentLevelProgressFileName);
 
+            Container.BindInterfacesAndSelfTo<MouseService>().AsSingle();
             Container.BindInterfacesAndSelfTo<BirdsSystem>().AsSingle();
             Container.BindInterfacesAndSelfTo<BirdRespawnService>().AsSingle();
             Container.BindInterfacesAndSelfTo<BirdsHealthContainer>().AsSingle();
@@ -139,7 +130,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
 
             Container.BindInterfacesAndSelfTo<SkipLevelService>().AsSingle();
             Container.BindInterfacesAndSelfTo<LevelProgressSaveService>().AsSingle().NonLazy();
-            Container.BindInterfacesAndSelfTo<LevelProgressSaveHandler>().AsSingle().WithArguments(_gameStatements).NonLazy();
+            Container.BindInterfacesAndSelfTo<LevelProgressSaveHandler>().AsSingle().NonLazy();
 
             StateMachineInstaller.Install(Container, _projectStateMachine);
             

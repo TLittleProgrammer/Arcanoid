@@ -10,7 +10,9 @@ namespace App.Scripts.General.UserData.Global
     {
         [JsonProperty("IsFirstEnter")]
         public bool IsFirstEnter = true;
+        [JsonProperty("IsFirstClickPlay")]
+        public bool IsFirstClickPlay = true;
         [JsonProperty("LastTimestampEnter")]
-        public long LastTimestampEnter;
+        public long LastTimestampEnergyWasAdded;
     }
 }

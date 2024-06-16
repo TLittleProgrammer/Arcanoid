@@ -1,6 +1,4 @@
-﻿using Zenject;
-
-namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Systems
+﻿namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Systems
 {
     public interface IFireballSystem
     {

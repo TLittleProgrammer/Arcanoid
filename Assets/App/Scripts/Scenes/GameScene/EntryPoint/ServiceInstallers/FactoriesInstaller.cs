@@ -1,8 +1,6 @@
 ﻿using App.Scripts.External.Components;
-using App.Scripts.General.RootUI;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General.UI;
-using App.Scripts.Scenes.GameScene.Features.Effects;
 using App.Scripts.Scenes.GameScene.Features.Entities.Ball;
 using App.Scripts.Scenes.GameScene.Features.Entities.Ball.Movement;
 using App.Scripts.Scenes.GameScene.Features.Entities.Bird;

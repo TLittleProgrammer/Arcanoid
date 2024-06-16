@@ -26,13 +26,13 @@ namespace App.Scripts.Scenes.GameScene.Features.Input
                 if (!_currentMousePosition.Equals(mousePosition))
                 {
                     _currentMousePosition = mousePosition;
-                    CurrentMousePosition = _cameraService.ScreenToWorldPoint(_currentMousePosition);
+                    CurrentMouseWorldPosition = _cameraService.ScreenToWorldPoint(_currentMousePosition);
                 }
             }
         }
 
         public bool UserClickDown => _userClickOnScreenDown;
-        public Vector2 CurrentMousePosition { get; private set; }
+        public Vector2 CurrentMouseWorldPosition { get; private set; }
 
         private void OnMouseUp()
         {

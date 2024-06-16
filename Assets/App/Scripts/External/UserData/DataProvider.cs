@@ -14,19 +14,21 @@ namespace App.Scripts.External.UserData
         {
             _saveLoadService = saveLoadService;
             _fileName = fileName;
-            _savable = (TClassSavable)Activator.CreateInstance(typeof(TClassSavable));
         }
 
         public TClassSavable GetData()
         {
-            _saveLoadService.Load(ref _savable, _fileName);
+            if (_savable is null)
+            {
+                _saveLoadService.Load(ref _savable, _fileName);
+            }
 
             return _savable;
         }
 
-        public void SaveData(TClassSavable savable)
+        public void SaveData()
         {
-            _saveLoadService.Save(savable, _fileName);
+            _saveLoadService.Save(_savable, _fileName);
         }
 
         public void Delete()

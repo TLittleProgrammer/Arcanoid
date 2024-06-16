@@ -1,6 +1,4 @@
 ﻿using App.Scripts.Scenes.GameScene.Features.Boosts.Autopilot.Nodes;
-using App.Scripts.Scenes.GameScene.Features.Components;
-using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape;
 using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Boosts.Autopilot.Strategies

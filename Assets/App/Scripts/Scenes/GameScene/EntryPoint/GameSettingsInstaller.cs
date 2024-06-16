@@ -2,7 +2,6 @@
 using App.Scripts.Scenes.GameScene.Features.Effects;
 using App.Scripts.Scenes.GameScene.Features.Entities.AssetManagement;
 using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer;
-using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape;
 using App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions;
 using App.Scripts.Scenes.GameScene.Features.Settings;
 using UnityEngine;

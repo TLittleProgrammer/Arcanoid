@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using App.Scripts.Scenes.GameScene.Features.Boosts.General;
 using App.Scripts.Scenes.GameScene.Features.Entities.View;
 using App.Scripts.Scenes.GameScene.Features.Grid;
 using App.Scripts.Scenes.GameScene.Features.Levels.General.View;

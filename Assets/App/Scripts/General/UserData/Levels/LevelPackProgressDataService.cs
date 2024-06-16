@@ -26,7 +26,7 @@ namespace App.Scripts.General.UserData.Levels
 
             levelPackDictionary[packIndex].PassedLevels++;
             
-            _levelPackProgressProvider.SaveData(levelPackDictionary);
+            _levelPackProgressProvider.SaveData();
         }
 
         public int GetPassedLevelsForPackIndex(int packIndex)

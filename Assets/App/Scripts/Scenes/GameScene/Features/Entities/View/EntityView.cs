@@ -1,7 +1,4 @@
 ﻿using System;
-using App.Scripts.Scenes.GameScene.Features.Boosts.General;
-using App.Scripts.Scenes.GameScene.Features.Components;
-using App.Scripts.Scenes.GameScene.Features.Entities.Ball;
 using UnityEngine;
 using Zenject;
 

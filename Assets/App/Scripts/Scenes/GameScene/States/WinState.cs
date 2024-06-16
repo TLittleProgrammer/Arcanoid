@@ -1,6 +1,4 @@
 ﻿using App.Scripts.External.GameStateMachine;
-using App.Scripts.General.Constants;
-using App.Scripts.General.Energy;
 using App.Scripts.General.MVVM.Energy;
 using App.Scripts.General.Popup;
 using App.Scripts.General.UserData.Energy;

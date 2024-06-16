@@ -1,5 +1,4 @@
-﻿using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun;
-using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.Collision;
+﻿using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.Collision;
 using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.Movement;
 using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.PositionChecker;
 using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.Spawn;

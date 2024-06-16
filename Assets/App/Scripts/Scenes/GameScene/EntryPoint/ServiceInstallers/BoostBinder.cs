@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using App.Scripts.Scenes.GameScene.Features.Boosts;
-using App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators;
 using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers

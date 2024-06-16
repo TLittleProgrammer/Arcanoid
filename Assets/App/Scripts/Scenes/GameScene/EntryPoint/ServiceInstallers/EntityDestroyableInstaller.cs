@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using App.Scripts.Scenes.GameScene.Features.Boosts;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General.Systems;
@@ -10,7 +8,6 @@ using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.DestroyServ
 using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.DestroyServices.BombDestroyers;
 using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Helpers;
 using App.Scripts.Scenes.GameScene.Features.ServiceActivator;
-using UnityEngine;
 using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
