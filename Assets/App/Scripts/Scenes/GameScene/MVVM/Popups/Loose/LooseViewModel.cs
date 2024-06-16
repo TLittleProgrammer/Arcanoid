@@ -7,8 +7,6 @@ namespace App.Scripts.Scenes.GameScene.MVVM.Popups.Loose
     public class LooseViewModel
     {
         private readonly ILevelPackInfoService _levelPackInfoService;
-
-        private ILoosePopupView _loosePopupView;
         
         public LooseViewModel(ILevelPackInfoService levelPackInfoService)
         {

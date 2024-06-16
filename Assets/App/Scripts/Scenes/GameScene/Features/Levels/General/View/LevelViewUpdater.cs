@@ -76,7 +76,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.General.View
 
                     IEntityView entityView = entityViews.First(x => x.GridPositionX == i && x.GridPositionY == j);
                     
-                    if (!_entityDestroySettings.ActiveBoosts.Contains(entityView.BoostTypeId))
+                    if (entityView.BoostTypeId is not null && !_entityDestroySettings.ActiveBoosts.Contains(entityView.BoostTypeId))
                     {
                         _entityViewService.AddBoostSprite(entityView, _levelGridItemData[i, j], entityView.BoostTypeId);
                     }
