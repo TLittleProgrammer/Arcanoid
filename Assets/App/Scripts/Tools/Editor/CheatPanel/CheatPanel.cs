@@ -12,8 +12,8 @@ namespace App.Scripts.Tools.Editor.LevelEditor
         private SceneContext _sceneContext;
         private ProjectContext _projectContext;
 
-        public int EnergyCounter;
-        public int HealthCounter;
+        public int EnergyCounter = 5;
+        public int HealthCounter = -1;
         
         private static void OpenWindow()
         {

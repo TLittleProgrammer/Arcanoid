@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Timers;
 using App.Scripts.External.UserData;
 using App.Scripts.General.DateTime;
 using App.Scripts.General.MVVM.Energy;
 using App.Scripts.General.UserData.Energy;
 using App.Scripts.General.UserData.Global;
-using UnityEngine;
 
 namespace App.Scripts.General.Energy
 {
@@ -40,8 +38,6 @@ namespace App.Scripts.General.Energy
             {
                 int timeDifferences = (int)(_dateTimeService.GetCurrentTimestamp() - _globalData.LastTimestampEnergyWasAdded);
 
-                Debug.Log($"CurrentTime: {_dateTimeService.GetCurrentTimestamp()}; lastTime: {_globalData.LastTimestampEnergyWasAdded}");
-                
                 UpdateEnergyTimer(timeDifferences);
 
                 if (timeDifferences >= _energySettings.SecondsToRecoveryEnergy)

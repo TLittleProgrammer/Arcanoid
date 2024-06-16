@@ -1,11 +1,7 @@
 ﻿using App.Scripts.External.UserData;
 using App.Scripts.General.DateTime;
 using App.Scripts.General.MVVM.Energy;
-using App.Scripts.General.ProjectInitialization.Settings;
-using App.Scripts.General.Time;
-using App.Scripts.General.UserData.Energy;
 using Cysharp.Threading.Tasks;
-using UnityEngine;
 
 namespace App.Scripts.General.UserData.Global
 {
@@ -41,7 +37,6 @@ namespace App.Scripts.General.UserData.Global
             if (seconds <= 0)
             {
                 _globalData.LastTimestampEnergyWasAdded = _dateTimeService.GetCurrentTimestamp();
-                Debug.Log($"SavedTime: {_globalData.LastTimestampEnergyWasAdded}");
                 _globalDataProvider.SaveData();
             }
         }

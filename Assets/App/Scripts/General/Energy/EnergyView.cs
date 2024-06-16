@@ -54,6 +54,7 @@ namespace App.Scripts.General.Energy
         private void ShowOrHideTimer()
         {
             Timer.SetActive(_viewModel.TimerIsEnabled());
+            OnViewModelRemainingSecondsChanged(_viewModel.SecondsToAddEnergy.Value);
         }
 
         private void OnViewModelRemainingSecondsChanged(int remainingSeconds)

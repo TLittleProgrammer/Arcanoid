@@ -65,6 +65,7 @@ namespace App.Scripts.General.MVVM.Energy
 
         private void OnEnergyValueChanged(int newValue)
         {
+            SetSecondsIfNeed(newValue);
             CurrentEnergy.Value = newValue;
             
             if (newValue >= _energySettings.MaxEnergyCount)
@@ -79,6 +80,14 @@ namespace App.Scripts.General.MVVM.Energy
                     _isTickes = true;
                     _timeTicker.SecondsTicked += OnSecondsTicked;
                 }
+            }
+        }
+
+        private void SetSecondsIfNeed(int newEnergyValue)
+        {
+            if (CurrentEnergy.Value >= _energySettings.MaxEnergyCount && newEnergyValue < _energySettings.MaxEnergyCount)
+            {
+                SetRemainingSeconds(_energySettings.SecondsToRecoveryEnergy);
             }
         }
 
