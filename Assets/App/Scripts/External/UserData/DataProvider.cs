@@ -26,9 +26,9 @@ namespace App.Scripts.External.UserData
             return _savable;
         }
 
-        public void SaveData(TClassSavable savable)
+        public void SaveData()
         {
-            _saveLoadService.Save(savable, _fileName);
+            _saveLoadService.Save(_savable, _fileName);
         }
 
         public void Delete()

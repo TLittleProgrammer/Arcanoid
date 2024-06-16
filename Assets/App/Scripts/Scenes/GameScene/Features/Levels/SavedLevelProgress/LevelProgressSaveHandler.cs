@@ -1,9 +1,10 @@
-﻿using App.Scripts.General.Game;
+﻿using App.Scripts.External.Initialization;
+using App.Scripts.General.Game;
 using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress
 {
-    public class LevelProgressSaveHandler : IInitializable
+    public class LevelProgressSaveHandler : IInitializable, IDisposable
     {
         private readonly IGameStatements _gameStatements;
         private readonly ILevelProgressSaveService _levelProgressSaveService;
@@ -22,6 +23,11 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress
         private void OnApplicationQuit()
         {
             _levelProgressSaveService.SaveProgress();
+        }
+
+        public void Dispose()
+        {
+            _gameStatements.ApplicationQuit -= OnApplicationQuit;
         }
     }
 }

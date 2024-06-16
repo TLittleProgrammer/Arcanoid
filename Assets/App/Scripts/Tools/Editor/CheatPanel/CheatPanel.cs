@@ -1,4 +1,5 @@
 ﻿using App.Scripts.General.UserData.Energy;
+using App.Scripts.Scenes.GameScene.Command.Interfaces;
 using App.Scripts.Scenes.GameScene.Features.Healthes;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor;
@@ -43,6 +44,16 @@ namespace App.Scripts.Tools.Editor.LevelEditor
             var energyDataService = _sceneContext.Container.Resolve<IHealthContainer>();
             
             energyDataService.UpdateHealth(HealthCounter, false);
+        }
+
+        [Button]
+        private void SkipLevel()
+        {
+            InitSceneContext();
+
+            var skipLevelCommand = _sceneContext.Container.Resolve<ISkipLevelCommand>();
+            
+            skipLevelCommand.Execute();
         }
 
         private void InitSceneContext()

@@ -40,7 +40,7 @@ namespace App.Scripts.General.UserData.Energy
             }
             
             ValueChanged?.Invoke(_energyData.Value);
-            _energyDataProvider.SaveData(_energyData);
+            _energyDataProvider.SaveData();
         }
 
         public void AddEnergyByPassedLevel()

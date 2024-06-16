@@ -6,6 +6,9 @@ using App.Scripts.External.Localisation.AssetManagment;
 using App.Scripts.External.Localisation.Converters;
 using App.Scripts.External.SceneManagment;
 using App.Scripts.General.DateTime;
+using App.Scripts.General.Energy;
+using App.Scripts.General.Energy.Handlers;
+using App.Scripts.General.Game;
 using App.Scripts.General.Levels.LevelPackInfoService;
 using App.Scripts.General.MVVM.Energy;
 using App.Scripts.General.Popup;
@@ -16,6 +19,7 @@ using App.Scripts.General.UserData.Energy;
 using App.Scripts.General.UserData.Global;
 using App.Scripts.General.UserData.Levels;
 using Sirenix.OdinInspector;
+using UnityEngine;
 using Zenject;
 using EnergyViewModel = App.Scripts.General.MVVM.Energy.EnergyViewModel;
 
@@ -26,9 +30,13 @@ namespace App.Scripts.General.ProjectInitialization.Installers
         [FolderPath]
         public string PathToLocaleResources;
         
+        [SerializeField] private GameStatements _gameStatements;
+        
         public override void InstallBindings()
         {
             Container.BindInterfacesAndSelfTo<TimeTicker>().AsSingle();
+
+            Container.BindInterfacesAndSelfTo<IGameStatements>().FromInstance(_gameStatements).AsSingle();
             
             Container.Bind<ISceneManagementService>().To<SceneManagementService>().AsSingle();
             Container.Bind<IDotweenContainerService>().To<DotweenContainerService>().AsSingle();
@@ -41,6 +49,8 @@ namespace App.Scripts.General.ProjectInitialization.Installers
             Container.Bind<IPopupFactory>().To<PopupFactory>().AsSingle();
             Container.Bind<IPopupService>().To<PopupService>().AsSingle();
 
+            Container.BindInterfacesAndSelfTo<EnergyInitializer>().AsSingle();
+            Container.BindInterfacesAndSelfTo<EnergySaveHandler>().AsSingle();
             Container.BindInterfacesAndSelfTo<EnergyDataService>().AsSingle();
             Container.BindInterfacesAndSelfTo<LoadingSceneState>().AsSingle();
             Container.BindInterfacesAndSelfTo<EnergyModel>().AsSingle();

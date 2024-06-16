@@ -64,7 +64,6 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
         [SerializeField] private BoostsViewContainer _boostsViewContainer;
         [SerializeField] private Image _menuButton;
         [SerializeField] private OpenMenuPopupButton _openMenuPopupButton;
-        [SerializeField] private GameStatements _gameStatements;
 
         [Inject] private PoolProviders _poolProviders;
         [Inject] private IStateMachine _projectStateMachine;
@@ -131,7 +130,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
 
             Container.BindInterfacesAndSelfTo<SkipLevelService>().AsSingle();
             Container.BindInterfacesAndSelfTo<LevelProgressSaveService>().AsSingle().NonLazy();
-            Container.BindInterfacesAndSelfTo<LevelProgressSaveHandler>().AsSingle().WithArguments(_gameStatements).NonLazy();
+            Container.BindInterfacesAndSelfTo<LevelProgressSaveHandler>().AsSingle().NonLazy();
 
             StateMachineInstaller.Install(Container, _projectStateMachine);
             

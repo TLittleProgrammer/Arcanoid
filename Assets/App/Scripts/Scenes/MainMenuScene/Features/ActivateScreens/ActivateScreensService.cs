@@ -65,7 +65,7 @@ namespace App.Scripts.Scenes.MainMenuScene.Features.ActivateScreens
                 if (_globalData.IsFirstClickPlay)
                 {
                     _globalData.IsFirstClickPlay = false;
-                    _globalDataProvider.SaveData(_globalData);
+                    _globalDataProvider.SaveData();
                     
                     _loadLevelCommand.Execute(_levelPackModel.GetFirstLevelItemData(), 0);
                 }
