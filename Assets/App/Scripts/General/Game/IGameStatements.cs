@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace App.Scripts.Scenes.GameScene.Features.Game
+namespace App.Scripts.General.Game
 {
     public interface IGameStatements
     {

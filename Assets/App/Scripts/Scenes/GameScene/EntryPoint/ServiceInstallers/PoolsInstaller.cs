@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using App.Scripts.External.Extensions.ZenjectExtensions;
 using App.Scripts.External.ObjectPool;
-using App.Scripts.General.Infrastructure;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General;
-using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun;
 using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.Bullets;
 using App.Scripts.Scenes.GameScene.Features.Effects;
 using App.Scripts.Scenes.GameScene.Features.Effects.Bombs;

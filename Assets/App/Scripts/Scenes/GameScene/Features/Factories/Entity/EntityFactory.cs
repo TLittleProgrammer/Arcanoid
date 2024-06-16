@@ -1,7 +1,6 @@
 ﻿using App.Scripts.Scenes.GameScene.Features.Entities.AssetManagement;
 using App.Scripts.Scenes.GameScene.Features.Entities.View;
 using App.Scripts.Scenes.GameScene.Features.Entities.View.Collisions;
-using App.Scripts.Scenes.GameScene.Features.Pools;
 using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.Features.Factories.Entity

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using App.Scripts.General.Animator;
 using App.Scripts.General.Command;
 using App.Scripts.General.Components;

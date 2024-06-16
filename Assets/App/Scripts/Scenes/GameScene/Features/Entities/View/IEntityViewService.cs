@@ -1,5 +1,4 @@
-﻿using App.Scripts.Scenes.GameScene.Features.Boosts.General;
-using App.Scripts.Scenes.GameScene.Features.Entities.AssetManagement;
+﻿using App.Scripts.Scenes.GameScene.Features.Entities.AssetManagement;
 using App.Scripts.Scenes.GameScene.Features.Grid;
 
 namespace App.Scripts.Scenes.GameScene.Features.Entities.View

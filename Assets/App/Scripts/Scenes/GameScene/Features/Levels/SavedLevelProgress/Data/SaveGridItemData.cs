@@ -1,5 +1,4 @@
 ﻿using System;
-using App.Scripts.Scenes.GameScene.Features.Boosts.General;
 using App.Scripts.Scenes.GameScene.Features.Grid;
 using Newtonsoft.Json;
 

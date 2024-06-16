@@ -1,5 +1,4 @@
-﻿using App.Scripts.Scenes.GameScene.Features.Game;
-using UnityEngine;
+﻿using App.Scripts.General.Game;
 using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress

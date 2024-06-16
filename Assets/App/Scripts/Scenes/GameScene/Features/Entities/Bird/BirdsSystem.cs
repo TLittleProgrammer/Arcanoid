@@ -1,6 +1,5 @@
 ﻿using App.Scripts.Scenes.GameScene.Features.Entities.Bird.Interfaces;
 using App.Scripts.Scenes.GameScene.Features.Entities.Bird.PositionSystems;
-using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 

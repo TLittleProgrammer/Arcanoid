@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using App.Scripts.External.GameStateMachine;
-using App.Scripts.Scenes.GameScene.Command;
 using App.Scripts.Scenes.GameScene.Command.Loose;
 using App.Scripts.Scenes.GameScene.Command.Menu;
 using App.Scripts.Scenes.GameScene.Command.Win;
-using App.Scripts.Scenes.GameScene.Features.Levels.LevelView;
 using App.Scripts.Scenes.GameScene.Features.Restart;
 using App.Scripts.Scenes.GameScene.States;
 using App.Scripts.Scenes.GameScene.States.Bootstrap;

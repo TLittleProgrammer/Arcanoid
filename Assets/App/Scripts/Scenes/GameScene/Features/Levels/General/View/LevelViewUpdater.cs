@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using App.Scripts.External.Grid;
-using App.Scripts.General.UserData.Levels.Data;
-using App.Scripts.Scenes.GameScene.Features.Boosts.General;
 using App.Scripts.Scenes.GameScene.Features.Entities.AssetManagement;
 using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer;
 using App.Scripts.Scenes.GameScene.Features.Entities.TopSprites;

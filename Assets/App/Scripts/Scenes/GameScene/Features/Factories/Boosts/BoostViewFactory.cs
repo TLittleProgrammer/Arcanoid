@@ -1,7 +1,5 @@
 ﻿using App.Scripts.General.Providers;
 using App.Scripts.Scenes.GameScene.Features.Boosts.General;
-using App.Scripts.Scenes.GameScene.Features.Pools;
-using App.Scripts.Scenes.GameScene.Features.Settings;
 using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.Features.Factories.Boosts

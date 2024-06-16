@@ -1,7 +1,5 @@
-﻿using App.Scripts.General.Infrastructure;
-using App.Scripts.Scenes.GameScene.Features.Levels.General.View;
+﻿using App.Scripts.Scenes.GameScene.Features.Levels.General.View;
 using App.Scripts.Scenes.GameScene.Features.Levels.Loading.Loader;
-using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress;
 using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers

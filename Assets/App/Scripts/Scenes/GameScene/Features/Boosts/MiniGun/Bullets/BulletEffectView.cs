@@ -1,6 +1,5 @@
 ﻿using App.Scripts.Scenes.GameScene.Features.Effects;
 using UnityEngine;
-using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.Bullets
 {

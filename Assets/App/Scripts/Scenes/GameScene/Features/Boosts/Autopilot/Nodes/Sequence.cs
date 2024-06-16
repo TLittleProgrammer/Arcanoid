@@ -1,6 +1,4 @@
-﻿using App.Scripts.Scenes.GameScene.Features.Restart;
-
-namespace App.Scripts.Scenes.GameScene.Features.Boosts.Autopilot.Nodes
+﻿namespace App.Scripts.Scenes.GameScene.Features.Boosts.Autopilot.Nodes
 {
     public class Sequence : Node
     {

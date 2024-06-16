@@ -1,5 +1,4 @@
-﻿using App.Scripts.Scenes.GameScene.Features.Effects.ObjectPool;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Effects
 {

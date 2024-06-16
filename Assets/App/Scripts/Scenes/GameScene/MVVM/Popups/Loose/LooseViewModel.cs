@@ -1,6 +1,5 @@
 ﻿using App.Scripts.General.Levels;
 using App.Scripts.General.Levels.LevelPackInfoService;
-using App.Scripts.Scenes.GameScene.Features.Popups;
 
 namespace App.Scripts.Scenes.GameScene.MVVM.Popups.Loose
 {

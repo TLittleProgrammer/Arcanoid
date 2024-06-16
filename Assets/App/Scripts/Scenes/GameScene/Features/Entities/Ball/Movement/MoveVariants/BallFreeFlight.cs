@@ -1,9 +1,7 @@
-﻿using System;
-using App.Scripts.Scenes.GameScene.Features.Components;
+﻿using App.Scripts.Scenes.GameScene.Features.Components;
 using App.Scripts.Scenes.GameScene.Features.Settings;
 using App.Scripts.Scenes.GameScene.Features.Time;
 using Cysharp.Threading.Tasks;
-using Unity.Mathematics;
 using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball.Movement.MoveVariants

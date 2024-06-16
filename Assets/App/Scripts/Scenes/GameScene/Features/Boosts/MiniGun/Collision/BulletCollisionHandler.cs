@@ -4,7 +4,6 @@ using App.Scripts.Scenes.GameScene.Features.Constants;
 using App.Scripts.Scenes.GameScene.Features.Effects;
 using App.Scripts.Scenes.GameScene.Features.Entities.View;
 using App.Scripts.Scenes.GameScene.Features.Shake;
-using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.Collision
 {

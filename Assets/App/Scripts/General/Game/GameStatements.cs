@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace App.Scripts.Scenes.GameScene.Features.Game
+namespace App.Scripts.General.Game
 {
     public class GameStatements : MonoBehaviour, IGameStatements
     {

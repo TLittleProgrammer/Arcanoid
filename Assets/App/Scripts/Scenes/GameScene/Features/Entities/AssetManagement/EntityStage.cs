@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using App.Scripts.Scenes.GameScene.Features.Boosts.General;
 using Sirenix.OdinInspector;
 using UnityEngine;
 

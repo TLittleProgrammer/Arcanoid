@@ -1,6 +1,5 @@
 ﻿using App.Scripts.Scenes.GameScene.Features.Levels.General;
 using Cysharp.Threading.Tasks;
-using Unity.Mathematics;
 using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Grid
