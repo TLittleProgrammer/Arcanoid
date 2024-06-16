@@ -27,6 +27,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Healthes
             await UniTask.CompletedTask;
         }
 
+        public int CurrentHealthPoints => _currentHealthCounter;
+
         public void UpdateHealth(int healthCount, bool needRestart = true)
         {
             if (_currentHealthCounter + healthCount > _maxHealthCounter)

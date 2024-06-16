@@ -36,18 +36,24 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.Collision
         public void AddBullet(BulletView bulletView)
         {
             bulletView.Collided += OnBulletCollided;
+            bulletView.Triggered += OnBulletCollided;
+        }
+
+        private void OnBulletCollided(BulletView view, Collider2D collider)
+        {
+            if (collider.transform.TryGetComponent(out EntityView entity))
+            {
+                RemoveFromAll(view);
+
+                BulletWasCollidired?.Invoke(view, entity);
+                
+                _levelViewUpdater.UpdateVisual(entity, _boostsSettings.BulletDamage);
+            }
         }
 
         public void OnBulletCollided(BulletView bulletView, Collision2D collider)
         {
-            if (collider.transform.TryGetComponent(out EntityView entity))
-            {
-                RemoveFromAll(bulletView);
-
-                BulletWasCollidired?.Invoke(bulletView, entity);
-                
-                _levelViewUpdater.UpdateVisual(entity, _boostsSettings.BulletDamage);
-            }
+            OnBulletCollided(bulletView, collider.collider);
         }
 
         private void RemoveFromAll(BulletView bulletView)
