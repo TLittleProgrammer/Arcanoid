@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using App.Scripts.Scenes.GameScene.Features.Components;
 using UnityEngine;
 
@@ -7,6 +8,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape
     [RequireComponent(typeof(SpriteRenderer), typeof(BoxCollider2D))]
     public sealed class PlayerView : MonoBehaviour, IPositionable, ISpriteRenderable, IBoxColliderable2D
     {
+        public List<Transform> BulletsInitialPositions;
+        
         private SpriteRenderer _spriteRenderer;
         private BoxCollider2D _collider2D;
 
