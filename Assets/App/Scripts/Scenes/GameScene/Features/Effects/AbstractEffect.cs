@@ -14,8 +14,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Effects
         }
 
         public float Scale { get; set; }
-        public GameObject GameObject => gameObject;
-
+        
         public override void PlayEffect(Transform initialEntityTransform, Transform colliderEntityTransform) { }
     }
 }

@@ -34,7 +34,6 @@ using App.Scripts.Scenes.GameScene.Features.Levels.Loading;
 using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress;
 using App.Scripts.Scenes.GameScene.Features.Levels.SkipLevel;
 using App.Scripts.Scenes.GameScene.Features.Popups.Buttons;
-using App.Scripts.Scenes.GameScene.Features.PositionCheckers;
 using App.Scripts.Scenes.GameScene.Features.Restart;
 using App.Scripts.Scenes.GameScene.Features.ScoreAnimation;
 using App.Scripts.Scenes.GameScene.Features.ScreenInfo;
@@ -112,7 +111,6 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.BindInterfacesAndSelfTo<BallsMovementSystem>().AsSingle();
             Container.BindInterfacesAndSelfTo<GridDataService>().AsSingle().WithArguments(_header);
             Container.BindInterfacesAndSelfTo<AngleCorrector>().AsSingle();
-            Container.BindInterfacesAndSelfTo<PositionCheckerSystem>().AsSingle();
             Container.BindInterfacesTo<GridPositionResolver>().AsSingle();
             
             Container.Bind<IShapePositionChecker>().To<PlayerShapePositionChecker>().AsSingle().WithArguments(_playerShape);

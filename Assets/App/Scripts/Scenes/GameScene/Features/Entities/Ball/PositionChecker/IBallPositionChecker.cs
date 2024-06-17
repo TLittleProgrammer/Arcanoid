@@ -4,9 +4,9 @@ using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball.PositionChecker
 {
-    public interface IPositionChecker : ITickable
+    public interface IBallPositionChecker : ITickable
     {
-        IPositionable Positionable { get; }
-        event Action<IPositionable, IPositionChecker> WentAbroad;
+        IPositionable BallPositionable { get; }
+        event Action<IPositionable> BallFallen;
     }
 }
