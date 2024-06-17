@@ -56,7 +56,7 @@ namespace App.Scripts.Scenes.GameScene.States
             
             LoosePopupView loosePopupView = _popupService.GetPopup<LoosePopupView>();
             
-            loosePopupView.SetUp(
+            loosePopupView.Initialize(
                 _looseViewModel,
                 _energyViewModel,
                 _energyDataService,

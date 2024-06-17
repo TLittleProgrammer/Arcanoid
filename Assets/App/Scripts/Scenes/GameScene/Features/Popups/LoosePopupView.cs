@@ -35,7 +35,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Popups
 
         public Button RestartButton => _restartButton;
         
-        public void SetUp(
+        public void Initialize(
             LooseViewModel viewModel,
             EnergyViewModel energyViewModel,
             IEnergyDataService energyDataService,

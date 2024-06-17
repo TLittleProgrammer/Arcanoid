@@ -12,7 +12,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Popups
     {
         Button RestartButton { get; }
 
-        void SetUp(LooseViewModel viewModel,
+        void Initialize(LooseViewModel viewModel,
             EnergyViewModel energyViewModel,
             IEnergyDataService energyDataService, 
             IRestartCommand restartCommand,
