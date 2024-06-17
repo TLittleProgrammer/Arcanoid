@@ -5,7 +5,7 @@ using Zenject;
 
 namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
 {
-    public interface IBallsService : ITickable, IGeneralRestartable
+    public interface IBallsService : IGeneralRestartable, ITickable
     {
         List<BallView> Balls { get; }
         event Action<BallView> BallAdded;

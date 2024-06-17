@@ -20,6 +20,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape
 
         public SpriteRenderer SpriteRenderer => _spriteRenderer ??= GetComponent<SpriteRenderer>();
         public BoxCollider2D BoxCollider2D => _collider2D ??= GetComponent<BoxCollider2D>();
+        public GameObject GameObject => gameObject;
+
 
         private void OnCollisionEnter2D(Collision2D col)
         {

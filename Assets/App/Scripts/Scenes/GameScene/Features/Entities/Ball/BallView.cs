@@ -26,6 +26,8 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
         public SpriteRenderer SpriteRenderer => _spriteRenderer ??= GetComponent<SpriteRenderer>();
         public Rigidbody2D Rigidbody2D => _rigidbody2D ??= GetComponent<Rigidbody2D>();
 
+        public GameObject GameObject => gameObject;
+
         private void OnCollisionEnter2D(Collision2D collision)
         {
             Collidered?.Invoke(this, collision.collider);

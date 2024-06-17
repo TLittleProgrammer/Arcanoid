@@ -11,6 +11,7 @@ using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape;
 using App.Scripts.Scenes.GameScene.Features.Input;
 using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress;
 using App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress.Data;
+using App.Scripts.Scenes.GameScene.Features.PositionCheckers;
 using App.Scripts.Scenes.GameScene.Features.ScreenInfo;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -24,13 +25,14 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
         private readonly IBallsMovementSystem _ballsMovementSystem;
         private readonly IMouseService _mouseService;
         private readonly IGetDamageService _getDamageService;
+        private readonly List<IPositionChecker> _positionCheckers = new();
+        
 
         private float _levelProgress;
         private float _speedMultiplier = 1f;
         private float _lastSpeedMultiplier = 1f;
         private bool _isActive = true;
         private bool _redBallActivated;
-        private readonly List<IBallPositionChecker> _ballsPositionCheckers = new();
 
         public BallsService(
             IScreenInfoProvider screenInfoProvider,
@@ -51,6 +53,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
         }
 
         public List<BallView> Balls { get; }
+
         public event Action<BallView> BallAdded;
 
         public bool IsActive
@@ -77,9 +80,9 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
             if (!IsActive)
                 return;
 
-            foreach (IBallPositionChecker ballPositionChecker in _ballsPositionCheckers)
+            for (int i = 0; i < _positionCheckers.Count; i++)
             {
-                ballPositionChecker.Tick();
+                _positionCheckers[i].Tick();
             }
         }
 
@@ -104,19 +107,17 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
             }
         }
 
-        private async void OnBallFallen(IPositionable ball)
+        private void OnWentAbroad(IPositionable ball, IPositionChecker positionChecker)
         {
-            await UniTask.Yield(PlayerLoopTiming.LastUpdate);
-            
-            _ballsPositionCheckers.Remove(_ballsPositionCheckers.First(x => x.BallPositionable.Equals(ball)));
+            _positionCheckers.Remove(positionChecker);
             BallView ballView = Balls.First(x => x.Position.Equals(ball.Position));
 
             if (!_ballViewPool.InactiveItems.Contains(ballView))
             {
                 _ballViewPool.Despawn(ballView);
             }
-            
-            if (_ballsPositionCheckers.Count == 0)
+
+            if (_positionCheckers.Count <= 0)
             {
                 _getDamageService.GetDamage(1);
                 
@@ -172,6 +173,9 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
                 if (view.gameObject.activeSelf)
                 {
                     _ballViewPool.Despawn(view);
+
+                    var result = _positionCheckers.First(x => x.Positionable.Equals(view));
+                    _positionCheckers.Remove(result);
                 }
             }
             
@@ -212,10 +216,17 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
 
         private void AddBallPositionCheckerForBall(BallView ballView)
         {
-            var ballPositionChecker = new BallPositionChecker(ballView, _minBallYPosition);
-            ballPositionChecker.BallFallen += OnBallFallen;
+            Func<IPositionable, float, bool> condition = CreateCondition();
+            
+            var ballPositionChecker = new VerticalPositionChecker(condition, ballView, _minBallYPosition);
+            ballPositionChecker.WentAbroad += OnWentAbroad;
 
-            _ballsPositionCheckers.Add(ballPositionChecker);
+            _positionCheckers.Add(ballPositionChecker);
+        }
+
+        private Func<IPositionable,float,bool> CreateCondition()
+        {
+            return (positionable, bottomBorderPosition) => positionable.Position.y <= bottomBorderPosition;
         }
 
         public void Restart()
@@ -236,7 +247,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
             firstBall.TrailRenderer.enabled = false;
             firstBall.gameObject.SetActive(true);
             movementService.Restart();
-            _ballsPositionCheckers.Clear();
+            _positionCheckers.Clear();
             
             AddBallPositionCheckerForBall(firstBall);
         }
