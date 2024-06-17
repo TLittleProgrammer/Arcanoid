@@ -83,7 +83,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Healthes
                         break;
                     }
                     
-                    await DOVirtual.Float(from, to, 0.25f, UpdateCurrentHealthImage).ToUniTask();
+                    await DOVirtual.Float(from, to, 0.25f, UpdateCurrentHealthImage).SetUpdate(true).ToUniTask();
 
                     _currentHealthCount += step;
                 }

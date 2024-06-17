@@ -12,7 +12,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Time
             TimeScale = 1f;
         }
 
-        public float DeltaTime => UnityEngine.Time.deltaTime * TimeScale;
+        public float DeltaTime => UnityEngine.Time.unscaledDeltaTime * TimeScale;
         
         public float TimeScale
         {

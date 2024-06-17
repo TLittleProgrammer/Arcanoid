@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using App.Scripts.External.Localisation.MonoBehaviours;
+using App.Scripts.External.Popup;
 using App.Scripts.General.Animator;
 using App.Scripts.General.Command;
 using App.Scripts.General.Components;

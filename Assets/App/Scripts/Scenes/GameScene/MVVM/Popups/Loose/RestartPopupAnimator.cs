@@ -32,7 +32,10 @@ namespace App.Scripts.Scenes.GameScene.MVVM.Popups.Loose
                 AnimateButton(button, Vector3.one, 0.5f).SetEase(Ease.InOutBounce).ToUniTask().Forget();
             }
 
-            await sequence.Play().ToUniTask();
+            await sequence
+                .SetUpdate(true)
+                .Play()
+                .ToUniTask();
         }
 
         public override async UniTask UndoAnimate()
@@ -41,7 +44,10 @@ namespace App.Scripts.Scenes.GameScene.MVVM.Popups.Loose
 
             sequence.Append(AnimatePopupTransform(Vector3.zero, Vector3.one)).ToUniTask().Forget();
 
-            await sequence.Play().ToUniTask();
+            await sequence
+                .SetUpdate(true)
+                .Play()
+                .ToUniTask();
         }
 
         private TweenerCore<Vector3, Vector3, VectorOptions> AnimateButton(Button button, Vector3 targetScale, float delay)
@@ -49,6 +55,7 @@ namespace App.Scripts.Scenes.GameScene.MVVM.Popups.Loose
             return button
                 .transform
                 .DOScale(targetScale, 0.35f)
+                .SetUpdate(true)
                 .SetDelay(delay);
         }
 
@@ -56,6 +63,7 @@ namespace App.Scripts.Scenes.GameScene.MVVM.Popups.Loose
         {
             return _popupTransform
                 .DOScale(to, 0.35f)
+                .SetUpdate(true)
                 .From(from);
         }
     }

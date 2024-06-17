@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using App.Scripts.External.ObjectPool;
 using App.Scripts.Scenes.GameScene.Features.Effects;
 using App.Scripts.Scenes.GameScene.Features.Entities.AssetManagement;
@@ -11,6 +12,7 @@ using App.Scripts.Scenes.GameScene.Features.Grid;
 using App.Scripts.Scenes.GameScene.Features.Levels.General.View;
 using App.Scripts.Scenes.GameScene.Features.Levels.Loading.Loader;
 using App.Scripts.Scenes.GameScene.Features.Settings;
+using App.Scripts.Scenes.GameScene.Features.Time;
 using Cysharp.Threading.Tasks;
 using Unity.Mathematics;
 

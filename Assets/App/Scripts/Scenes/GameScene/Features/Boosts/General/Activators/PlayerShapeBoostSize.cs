@@ -1,4 +1,5 @@
 ﻿using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.Movement;
+using App.Scripts.Scenes.GameScene.Features.Entities.Ball;
 using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer;
 using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape;
 using App.Scripts.Scenes.GameScene.Features.Entities.PlayerShape.PositionChecker;
@@ -11,19 +12,19 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
     {
         private readonly PlayerView _playerView;
         private readonly IShapePositionChecker _shapePositionChecker;
-        private readonly IBulletMovement _bulletMovement;
         private readonly ShapeSizeBoostData _boostDataProvider;
+        private readonly IBulletSpawnPointsPositionChanger _bulletSpawnPointsPositionChanger;
 
         public PlayerShapeBoostSize(
             PlayerView playerView,
             IShapePositionChecker shapePositionChecker,
-            IBulletMovement bulletMovement,
-            ShapeSizeBoostData boostDataProvider)
+            ShapeSizeBoostData boostDataProvider,
+            IBulletSpawnPointsPositionChanger bulletSpawnPointsPositionChanger)
         {
             _playerView = playerView;
             _shapePositionChecker = shapePositionChecker;
-            _bulletMovement = bulletMovement;
             _boostDataProvider = boostDataProvider;
+            _bulletSpawnPointsPositionChanger = bulletSpawnPointsPositionChanger;
         }
         
         public bool IsTimeableBoost => true;
@@ -44,7 +45,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
             await DOVirtual.Float(currentWidth, to, 0.5f, UpdateSpriteWidth);
             
             _shapePositionChecker.ChangeShapeScale();
-            _bulletMovement.RecalculateSpawnPositions();
+            _bulletSpawnPointsPositionChanger.UpdateSpawnPositions();
         }
 
         private void UpdateSpriteWidth(float value)
@@ -56,6 +57,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
             _playerView.BoxCollider2D.size = spriteRendererSize;
             
             _shapePositionChecker.ChangeShapeScale();
+            _bulletSpawnPointsPositionChanger.UpdateSpawnPositions();
         }
     }
 }

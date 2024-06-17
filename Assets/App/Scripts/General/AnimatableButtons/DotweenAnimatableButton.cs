@@ -35,7 +35,9 @@ namespace App.Scripts.General.AnimatableButtons
         public void Play(Vector3 targetScale)
         {
             _sequence = DOTween.Sequence();
-            _sequence.Append(
+            _sequence
+                .SetUpdate(true)
+                .Append(
                 _animatedTransform
                     .DOScale(targetScale, _animationSettings.Duration)
                     .SetEase(_animationSettings.Ease)

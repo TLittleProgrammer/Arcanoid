@@ -13,15 +13,26 @@ namespace App.Scripts.Scenes.GameScene.MVVM.Popups.Loose
         }
 
         private LevelPack LevelPack => _levelPackInfoService.LevelPackTransferData.LevelPack;
+        private int EnergyPrice => LevelPack.EnergyPrice;
 
         public int GetPriceToRestart()
         {
-            return LevelPack.EnergyPrice * 2;
+            return EnergyPrice;
+        }
+
+        public int GetPriceToContinue()
+        {
+            return EnergyPrice * 2;
         }
 
         public bool CanRestart(int energyValue)
         {
-            return LevelPack.EnergyPrice * 2 <= energyValue;
+            return EnergyPrice <= energyValue;
+        }
+
+        public bool CanContinue(int energyValue)
+        {
+            return EnergyPrice * 2 <= energyValue;
         }
     }
 }

@@ -111,6 +111,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.BindInterfacesAndSelfTo<BallsMovementSystem>().AsSingle();
             Container.BindInterfacesAndSelfTo<GridDataService>().AsSingle().WithArguments(_header);
             Container.BindInterfacesAndSelfTo<AngleCorrector>().AsSingle();
+            Container.BindInterfacesAndSelfTo<BulletSpawnPointsPositionChanger>().AsSingle();
             Container.BindInterfacesTo<GridPositionResolver>().AsSingle();
             
             Container.Bind<IShapePositionChecker>().To<PlayerShapePositionChecker>().AsSingle().WithArguments(_playerShape);

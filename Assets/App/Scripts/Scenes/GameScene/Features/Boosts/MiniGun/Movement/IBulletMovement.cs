@@ -7,7 +7,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.Movement
     {
         void UpdateVelocityForAll(Vector2 velocity);
         void InitializeBullet(BulletView bulletView);
-        void RecalculateSpawnPositions();
         void RemoveBullet(BulletView bulletView);
     }
 }
