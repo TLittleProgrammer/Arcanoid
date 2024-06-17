@@ -8,6 +8,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Healthes
     {
         event Action LivesAreWasted;
         event Action<int> GetDamage;
+        int CurrentHealthPoints { get; }
         void UpdateHealth(int healthCount, bool needRestart = true);
     }
 }

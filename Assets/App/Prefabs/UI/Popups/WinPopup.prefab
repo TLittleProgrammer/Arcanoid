@@ -577,6 +577,11 @@ GameObject:
   - component: {fileID: 5105319381343407516}
   - component: {fileID: 5105319381343407517}
   - component: {fileID: 9062256675419602016}
+  - component: {fileID: 9076338182385786027}
+  - component: {fileID: 1517266698376765653}
+  - component: {fileID: 7828506674559034336}
+  - component: {fileID: 5256379835871395047}
+  - component: {fileID: 1247297833607083403}
   m_Layer: 5
   m_Name: WinPopup
   m_TagString: Untagged
@@ -636,6 +641,82 @@ MonoBehaviour:
   _energyView: {fileID: 3887072496364365534}
   _circleEffect: {fileID: 560952518480931045}
   _packViewTransform: {fileID: 8124541780771183994}
+  _changeIconPositions: {fileID: 7828506674559034336}
+  _showWinAnimator: {fileID: 1517266698376765653}
+  _circleAnimator: {fileID: 9076338182385786027}
+  _changePackNamingAnimator: {fileID: 5256379835871395047}
+  _changeLevelTextAnimator: {fileID: 1247297833607083403}
+--- !u!114 &9076338182385786027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5105319381343407519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cbc5ddc44fa49bb9ad3c1ae4b822576, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _circleImage: {fileID: 8124541781474600578}
+--- !u!114 &1517266698376765653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5105319381343407519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d33bdbba156d4955b73464e688c69214, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _energyView: {fileID: 868188856744573006}
+  _continueButton: {fileID: 5105319381787347624}
+  _packView: {fileID: 8124541780771183994}
+  _winPopup: {fileID: 5105319381343407516}
+  _targetPositionForTextFalling: {fileID: 7901662209234281130}
+  _textFalling: {fileID: 8124541780601856468}
+--- !u!114 &7828506674559034336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5105319381343407519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 684b38c8e5db4da99ca5d6488880e84a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _topGalcticIcon: {fileID: 8124541781241154107}
+  _bottomGalcticIcon: {fileID: 8307404281289439293}
+--- !u!114 &5256379835871395047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5105319381343407519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0ff4f9335d644eca4fe543e759f083f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _galacticName: {fileID: 3190747868696532078}
+--- !u!114 &1247297833607083403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5105319381343407519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 423c859f057b46b1aa598f8d2ed27499, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _passedLevels: {fileID: 8124541780413028716}
 --- !u!1 &5105319381366885646
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,21 +5,22 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators
 {
     public sealed class BallMoverBoostActivator : IConcreteBoostActivator
     {
-        private IBallsService _ballsService;
+        private readonly IBallsService _ballsService;
+        private readonly FloatBoostData _boostDataProvider;
+        
         private float _initialBallSpeed;
         
-        public BallMoverBoostActivator(IBallsService ballsService)
+        public BallMoverBoostActivator(IBallsService ballsService, FloatBoostData boostDataProvider)
         {
             _ballsService = ballsService;
+            _boostDataProvider = boostDataProvider;
         }
 
         public bool IsTimeableBoost => true;
 
-        public void Activate(IBoostDataProvider boostDataProvider)
+        public void Activate()
         {
-            FloatBoostData floatBoostData = (FloatBoostData)boostDataProvider;
-            
-            _ballsService.SetSpeedMultiplier(floatBoostData.Value);
+            _ballsService.SetSpeedMultiplier(_boostDataProvider.Value);
         }
 
         public void Deactivate()

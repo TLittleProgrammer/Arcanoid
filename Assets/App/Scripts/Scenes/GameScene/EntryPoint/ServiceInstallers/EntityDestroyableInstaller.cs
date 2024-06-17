@@ -49,15 +49,6 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
             Container.BindInterfacesAndSelfTo<FireballSystem>().AsSingle().WhenNotInjectedInto<ServiceActivator>();
             Container.BindInterfacesAndSelfTo<AutopilotSystem>().AsSingle().WhenNotInjectedInto<ServiceActivator>();
 
-            Container.Bind<IConcreteBoostActivator>().To<AutopilotBoostActivator>().AsSingle();
-            Container.Bind<IConcreteBoostActivator>().To<BallMoverBoostActivator>().AsSingle();
-            Container.Bind<IConcreteBoostActivator>().To<FireballBoostActivator>().AsSingle();
-            Container.Bind<IConcreteBoostActivator>().To<HealthAndDeathBoost>().AsSingle();
-            Container.Bind<IConcreteBoostActivator>().To<MiniGunBoostActivator>().AsSingle();
-            Container.Bind<IConcreteBoostActivator>().To<PlayerShapeBoostSize>().AsSingle();
-            Container.Bind<IConcreteBoostActivator>().To<ShapeBoostSpeed>().AsSingle();
-            Container.Bind<IConcreteBoostActivator>().To<StickyBoostActivator>().AsSingle();
-
             Container.BindInterfacesAndSelfTo<BoostsActivator>().AsSingle();
         }
 
