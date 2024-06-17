@@ -1,4 +1,5 @@
-﻿using App.Scripts.General.Popup;
+﻿using App.Scripts.External.Popup;
+using App.Scripts.General.Popup;
 using UnityEngine;
 using UnityEngine.UI;
 

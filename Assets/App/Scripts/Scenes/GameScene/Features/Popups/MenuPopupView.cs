@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using App.Scripts.General.Animator;
 using App.Scripts.General.Command;
-using App.Scripts.General.Components;
 using App.Scripts.General.Energy;
 using App.Scripts.General.MVVM.Energy;
-using App.Scripts.General.Popup;
 using App.Scripts.General.UserData.Energy;
 using App.Scripts.Scenes.GameScene.Command.Interfaces;
 using App.Scripts.Scenes.GameScene.Features.Dotween;
@@ -19,7 +16,7 @@ using UnityEngine.UI;
 
 namespace App.Scripts.Scenes.GameScene.Features.Popups
 {
-    public class MenuPopupView : PopupView, IMenuPopupView
+    public class MenuPopupView : GamePopup, IMenuPopupView
     {
         [SerializeField] private Button _restartButton;
         [SerializeField] private Button _backButton;
@@ -34,10 +31,10 @@ namespace App.Scripts.Scenes.GameScene.Features.Popups
         private IRestartCommand _restartCommand;
         private IBackCommand _backCommand;
         private IContinueCommand _continueCommand;
-        private IDisableButtonsCommand _disableButtonsCommand;
         private MenuViewModel _menuViewModel;
         private IEnergyDataService _energyDataService;
         private ITweenersLocator _tweenersLocator;
+        private List<Button> _buttons;
 
         public Button RestartButton => _restartButton;
         public Button BackButton => _backButton;
@@ -54,10 +51,11 @@ namespace App.Scripts.Scenes.GameScene.Features.Popups
             IEnergyDataService energyDataService,
             ITweenersLocator tweenersLocator)
         {
+            base.Initialize(disableButtonsCommand);
+            
             _tweenersLocator = tweenersLocator;
             _energyDataService = energyDataService;
             _menuViewModel = menuViewModel;
-            _disableButtonsCommand = disableButtonsCommand;
             _continueCommand = continueCommand;
             _backCommand = backCommand;
             _restartCommand = restartCommand;
@@ -67,6 +65,13 @@ namespace App.Scripts.Scenes.GameScene.Features.Popups
             _energyView.Initialize(energyViewModel);
             SubscribeOnCommands();
             SubsribeOnEnergyDataService();
+            
+            _buttons = new List<Button>
+            {
+                _backButton,
+                _continueButton,
+                _restartButton,
+            };
         }
 
         private void OnDestroy()
@@ -109,36 +114,17 @@ namespace App.Scripts.Scenes.GameScene.Features.Popups
 
         private void Restart()
         {
-            ExecuteCommand(_restartCommand);
+            ExecuteCommand(_restartCommand, _buttons);
         }
 
         private void Continue()
         {
-            ExecuteCommand(_continueCommand);
+            ExecuteCommand(_continueCommand, _buttons);
         }
 
         private void Back()
         {
-            ExecuteCommand(_backCommand);
-        }
-
-        private void ExecuteCommand(ICommand command)
-        {
-            DisableButtons();
-            
-            command.Execute();
-        }
-        
-        private void DisableButtons()
-        {
-            List<Button> buttons = new List<Button>
-            {
-                _backButton,
-                _continueButton,
-                _restartButton,
-            };
-            
-            _disableButtonsCommand.Execute(buttons);
+            ExecuteCommand(_backCommand, _buttons);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using App.Scripts.External.Popup;
 using App.Scripts.General.Animator;
 using App.Scripts.General.Command;
 using App.Scripts.General.Components;
@@ -15,7 +16,7 @@ using UnityEngine.UI;
 
 namespace App.Scripts.Scenes.GameScene.Features.Popups
 {
-    public class LoosePopupView : PopupView, ILoosePopupView
+    public class LoosePopupView : GamePopup, ILoosePopupView
     {
         [SerializeField] private GameObject _hideClicksPanel;
         [SerializeField] private Button _restartButton;
@@ -29,9 +30,9 @@ namespace App.Scripts.Scenes.GameScene.Features.Popups
         private LooseViewModel _viewModel;
         private IRestartCommand _restartCommand;
         private IBackCommand _backCommand;
-        private IDisableButtonsCommand _disableButtonsCommand;
         private IBuyHealthCommand _buyHealthCommand;
         private IEnergyDataService _energyDataService;
+        private List<Button> _buttons;
 
         public Button RestartButton => _restartButton;
         
@@ -44,11 +45,12 @@ namespace App.Scripts.Scenes.GameScene.Features.Popups
             IDisableButtonsCommand disableButtonsCommand,
             IBuyHealthCommand buyHealthCommand)
         {
+            base.Initialize(disableButtonsCommand);
+            
             _energyDataService = energyDataService;
             _viewModel = viewModel;
             _restartCommand = restartCommand;
             _backCommand = backCommand;
-            _disableButtonsCommand = disableButtonsCommand;
             _buyHealthCommand = buyHealthCommand;
             
             _restartButton.onClick.AddListener(Restart);
@@ -60,7 +62,14 @@ namespace App.Scripts.Scenes.GameScene.Features.Popups
             _priceToRestart.text = viewModel.GetPriceToRestart().ToString();
             
             _energyDataService.ValueChanged += OnEnergyValueChanged;
-            RedrawContinueButton(_energyDataService.CurrentValue);
+            OnEnergyValueChanged(_energyDataService.CurrentValue);
+            
+            _buttons = new()
+            {
+                _continueButton,
+                _restartButton,
+                _backButton,
+            };
         }
 
         private void OnDisable()
@@ -88,31 +97,17 @@ namespace App.Scripts.Scenes.GameScene.Features.Popups
 
         private void Back()
         {
-            ExecuteCommand(_backCommand);
+            ExecuteCommand(_backCommand, _buttons);
         }
 
         private void Continue()
         {
-            ExecuteCommand(_buyHealthCommand);
+            ExecuteCommand(_buyHealthCommand, _buttons);
         }
 
         private void Restart()
         {
-            ExecuteCommand(_restartCommand);
-        }
-
-        private void ExecuteCommand(ICommand command)
-        {
-            List<Button> buttons = new()
-            {
-                _continueButton,
-                _restartButton,
-                _backButton,
-            };
-            
-            _disableButtonsCommand.Execute(buttons);
-            
-            command.Execute();
+            ExecuteCommand(_restartCommand, _buttons);
         }
 
         private void OnEnergyValueChanged(int energyValue)

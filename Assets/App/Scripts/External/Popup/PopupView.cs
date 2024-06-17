@@ -1,8 +1,8 @@
-﻿using Cysharp.Threading.Tasks;
-using DG.Tweening;
+﻿using App.Scripts.General.Popup;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace App.Scripts.General.Popup
+namespace App.Scripts.External.Popup
 {
     public abstract class PopupView : MonoBehaviour, IPopupView
     {
@@ -15,7 +15,7 @@ namespace App.Scripts.General.Popup
         {
             return UniTask.CompletedTask;
         }
-        
+
         public GameObject GameObject => gameObject;
     }
 }
