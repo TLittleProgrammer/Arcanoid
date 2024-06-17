@@ -8,6 +8,7 @@ using App.Scripts.Scenes.GameScene.Features.Popups;
 using App.Scripts.Scenes.GameScene.Features.Time;
 using App.Scripts.Scenes.GameScene.MVVM.Popups.Loose;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.States
 {
@@ -51,6 +52,7 @@ namespace App.Scripts.Scenes.GameScene.States
         {
             _previousTimeScale = _timeProvider.TimeScale;
             _timeProvider.TimeScale = 0f;
+            Time.timeScale = 0f;
             
             LoosePopupView loosePopupView = _popupService.GetPopup<LoosePopupView>();
             
@@ -68,6 +70,7 @@ namespace App.Scripts.Scenes.GameScene.States
 
         public async UniTask Exit()
         {
+            Time.timeScale = 1f;
             _timeProvider.TimeScale = _previousTimeScale;
             await UniTask.CompletedTask;
         }

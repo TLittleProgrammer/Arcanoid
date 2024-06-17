@@ -47,6 +47,7 @@ namespace App.Scripts.Scenes.GameScene.MVVM.Popups.Menu
         {
             Sequence sequence = DOTween.Sequence();
             sequence
+                .SetUpdate(true)
                 .Append(_menuPopupView.Transform.DOScale(Vector3.one, 1f).From(Vector3.zero))
                 .Append(_menuPopupView.RestartButton.transform.DOScale(Vector3.one, 0.25f).From(Vector3.zero).SetEase(Ease.OutBounce))
                 .Append(_menuPopupView.BackButton.transform.DOScale(Vector3.one, 0.25f).From(Vector3.zero).SetEase(Ease.OutBounce))
@@ -68,6 +69,7 @@ namespace App.Scripts.Scenes.GameScene.MVVM.Popups.Menu
 
         private async void Continue()
         {
+            Debug.Log("Clicked");
             DisableButtons();
 
             await CloseView();
@@ -87,6 +89,7 @@ namespace App.Scripts.Scenes.GameScene.MVVM.Popups.Menu
             Sequence sequence = DOTween.Sequence();
 
             sequence
+                .SetUpdate(true)
                 .Append(AnimateScale(_menuPopupView.ContinueButton.transform, Vector3.zero, 0.25f, Ease.OutBounce))
                 .Append(AnimateScale(_menuPopupView.BackButton.transform, Vector3.zero, 0.25f, Ease.OutBounce))
                 .Append(AnimateScale(_menuPopupView.RestartButton.transform, Vector3.zero, 0.25f, Ease.OutBounce))

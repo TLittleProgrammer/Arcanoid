@@ -17,7 +17,7 @@ namespace App.Scripts.General.Time
                 SecondsTicked?.Invoke();
             }
 
-            _currentSeconds += UnityEngine.Time.deltaTime;
+            _currentSeconds += UnityEngine.Time.unscaledDeltaTime;
         }
     }
 }
