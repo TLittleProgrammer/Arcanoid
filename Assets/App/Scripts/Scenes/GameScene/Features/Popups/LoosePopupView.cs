@@ -23,6 +23,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Popups
         [SerializeField] private Button _backButton;
         [SerializeField] private EnergyView _energyView;
         [SerializeField] private TMP_Text _priceToRestart;
+        [SerializeField] private TMP_Text _priceToContinue;
         [SerializeField] private MonoAnimator[] _showAnimators;
         
         private LooseViewModel _viewModel;
@@ -55,6 +56,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Popups
             _continueButton.onClick.AddListener(Continue);
             
             _energyView.Initialize(energyViewModel);
+            _priceToContinue.text = viewModel.GetPriceToContinue().ToString();
             _priceToRestart.text = viewModel.GetPriceToRestart().ToString();
             
             _energyDataService.ValueChanged += OnEnergyValueChanged;
@@ -115,12 +117,18 @@ namespace App.Scripts.Scenes.GameScene.Features.Popups
 
         private void OnEnergyValueChanged(int energyValue)
         {
+            RedrawRestartButton(energyValue);
             RedrawContinueButton(energyValue);
+        }
+
+        private void RedrawRestartButton(int energyValue)
+        {
+            _restartButton.interactable = _viewModel.CanRestart(energyValue);
         }
 
         private void RedrawContinueButton(int energyValue)
         {
-            _continueButton.interactable = _viewModel.CanRestart(energyValue);
+            _continueButton.interactable = _viewModel.CanContinue(energyValue);
         }
     }
 }

@@ -900,7 +900,8 @@ MonoBehaviour:
   _continueButton: {fileID: 2268973032935221034}
   _backButton: {fileID: 2596899988257049239}
   _energyView: {fileID: 4382211332322225841}
-  _priceToRestart: {fileID: 5776064096019158998}
+  _priceToRestart: {fileID: 8375044568373403246}
+  _priceToContinue: {fileID: 5776064096019158998}
   _showAnimators:
   - {fileID: 3490502251711155987}
 --- !u!114 &3490502251711155987
@@ -1727,6 +1728,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7211221270426530338, guid: 9ee2013b2b427284b8ba77d3489bf041, type: 3}
   m_PrefabInstance: {fileID: 4949064666342786531}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8375044568373403246 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3500632536918956941, guid: 9ee2013b2b427284b8ba77d3489bf041, type: 3}
+  m_PrefabInstance: {fileID: 4949064666342786531}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6282152991645221724
 PrefabInstance:
   m_ObjectHideFlags: 0
