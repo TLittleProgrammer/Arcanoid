@@ -15,7 +15,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.PositionChecker
         public BulletPositionChecker(IScreenInfoProvider screenInfoProvider, BulletView.Pool bulletsPool)
         {
             _bulletsPool = bulletsPool;
-            _maxHeight = screenInfoProvider.HeightInWorld / 2f + 1f;
+            _maxHeight = screenInfoProvider.HeightInWorld / 2f;
         }
 
         public void Tick()

@@ -15,6 +15,17 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.Movement
         private float _shapeWidth;
         private float _shapeHeight;
         private int _bulletCounter;
+
+        private int _currentSide = 1;
+        
+        private int CurrentSide
+        {
+            get
+            {
+                _currentSide *= -1;
+                return _currentSide;
+            }
+        }
         
         public BulletMovement(PlayerView playerView, BoostsSettings boostsSettings)
         {
@@ -28,17 +39,9 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.Movement
         public void InitializeBullet(BulletView bulletView)
         {
             bulletView.Rigidbody2D.velocity = Vector2.up * _boostsSettings.BulletSpeed;
-            bulletView.transform.position = GetBulletPosition(_shapeWidth * ChooseSpawnSide());
+            bulletView.transform.position = GetBulletPosition(_shapeWidth * CurrentSide);
             
             _bullets.Add(bulletView);
-        }
-
-        private float ChooseSpawnSide()
-        {
-            _bulletCounter++;
-            _bulletCounter %= 2;
-
-            return _bulletCounter == 0 ? 1f : -1f;
         }
 
         public void UpdateVelocityForAll(Vector2 velocity)
