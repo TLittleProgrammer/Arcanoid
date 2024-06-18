@@ -18,7 +18,6 @@ namespace App.Scripts.General.ProjectInitialization.Installers
         public LevelPackProvider LevelPackProvider;
         public EnergySettings EnergySettings;
         public SpriteProvider SpriteProvider;
-        public LocaleProvider LocaleProvider;
         public ViewPopupMapping ViewPopupMapping;
 
         public override void InstallBindings()
@@ -28,7 +27,6 @@ namespace App.Scripts.General.ProjectInitialization.Installers
             Container.Bind<LevelPackProvider>().FromInstance(LevelPackProvider).IfNotBound();
             Container.Bind<EnergySettings>().FromInstance(EnergySettings).IfNotBound();
             Container.Bind<SpriteProvider>().FromInstance(SpriteProvider).IfNotBound();
-            Container.Bind<LocaleProvider>().FromInstance(LocaleProvider).IfNotBound();
             Container.Bind<ViewPopupMapping>().FromInstance(ViewPopupMapping).IfNotBound();
         }
     }

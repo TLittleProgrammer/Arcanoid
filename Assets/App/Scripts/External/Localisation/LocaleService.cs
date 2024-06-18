@@ -20,14 +20,25 @@ namespace App.Scripts.External.Localisation
 
         public void SetLocaleKey(string localeKey)
         {
-            LocaleData localeData = _localeMappingFromTextAsset.GetLocaleMapping(localeKey);
-            
-            if (!localeData.Key.Equals(_currentLanguageKey, StringComparison.CurrentCultureIgnoreCase))
+            var localeData = LoadLocaleData(localeKey);
+
+            if (!ChoosenLocaleEqualsCurrentLocale(localeData))
             {
                 _localeStorage = localeData.Translates;
                 _currentLanguageKey = localeData.Key;
                 LocaleWasChanged?.Invoke();
             }
+        }
+
+        private bool ChoosenLocaleEqualsCurrentLocale(LocaleData localeData)
+        {
+            return localeData.Key.Equals(_currentLanguageKey, StringComparison.CurrentCultureIgnoreCase);
+        }
+
+        private LocaleData LoadLocaleData(string localeKey)
+        {
+            return _localeMappingFromTextAsset.GetLocaleMapping(localeKey) ??
+                   _localeMappingFromTextAsset.GetLocaleMapping(LocaleConstants.DefaultLocaleKey);
         }
 
         public string GetTextByToken(string token)
