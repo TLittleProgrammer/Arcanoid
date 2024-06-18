@@ -21,6 +21,7 @@ namespace App.Scripts.Scenes.MainMenuScene.MVVM.LevelPacks
         private readonly ILoadLevelCommand _loadLevelCommand;
         private readonly SpriteProvider _spriteProvider;
         private readonly LevelPackProgressDictionary _levelPackProgressDictionary;
+        private List<LevelItemData> _levelItemDatas;
 
         public LevelPackViewModel(
             LevelPackModel levelPackModel,
@@ -38,9 +39,9 @@ namespace App.Scripts.Scenes.MainMenuScene.MVVM.LevelPacks
 
         public void CreateAllLeveViewPacks(ITransformable levelPackContainerView)
         {
-            List<LevelItemData> levelItemDatas = _levelPackModel.GetLevelItemDatas();
-
-            foreach (LevelItemData levelItemData in levelItemDatas)
+            _levelItemDatas = _levelPackModel.GetLevelItemDatas(); 
+            
+            foreach (LevelItemData levelItemData in _levelItemDatas)
             {
                 levelItemData.LevelItemView.GameObject.transform.SetParent(levelPackContainerView.Transform, false);
                 
@@ -137,7 +138,7 @@ namespace App.Scripts.Scenes.MainMenuScene.MVVM.LevelPacks
 
             if (packIndex == lastOpenedPack.Key + 1)
             {
-                int lastPassedLevels = _levelPackModel.GetLevelItemDatas().First(x => x.PackIndex == lastOpenedPack.Key).LevelPack.Levels.Count;
+                int lastPassedLevels = _levelItemDatas.First(x => x.PackIndex == lastOpenedPack.Key).LevelPack.Levels.Count;
 
                 if (_levelPackProgressDictionary[lastOpenedPack.Key].PassedLevels >= lastPassedLevels)
                 {
