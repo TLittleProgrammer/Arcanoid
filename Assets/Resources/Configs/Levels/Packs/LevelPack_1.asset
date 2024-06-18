@@ -12,12 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601d17035434f3e912a3343b33240ab, type: 3}
   m_Name: LevelPack_1
   m_EditorClassIdentifier: 
-  LocaleKey: Galactic_Sombrero
-  GalacticIconKey: sombrero_icon
-  GalacticBackgroundKey: sombrero_background
-  EnergyPrice: 5
-  EnergyAddForWin: 7
+  LocaleKey: Galactic_Sigara
+  GalacticIconKey: sigara_icon
+  GalacticBackgroundKey: sigara_background
+  EnergyPrice: 25
+  EnergyAddForWin: 5
   Levels:
-  - {fileID: 4900000, guid: 373a435cf99688543beae145057b7952, type: 3}
-  - {fileID: 4900000, guid: e6c1b6bad2fe44748ae9218cd74d4901, type: 3}
-  - {fileID: 4900000, guid: 373a435cf99688543beae145057b7952, type: 3}
+  - {fileID: 4900000, guid: 47cd837f452f75f47a6c24454c967444, type: 3}
+  - {fileID: 4900000, guid: 562174237c9646143ab418a796ab20aa, type: 3}
+  - {fileID: 4900000, guid: d049f68c01d5aaa4ba1819fdcfaf49ed, type: 3}
+  - {fileID: 4900000, guid: 4d7e465e5a324fb41af019f30ea380ef, type: 3}
+  - {fileID: 4900000, guid: 502fb8d8a1f1f384b978189e5b26c549, type: 3}
+  - {fileID: 4900000, guid: 07d404e454d65f24091a9d8f723eb304, type: 3}
+  - {fileID: 4900000, guid: 3600ef352697b044ab589b3e3a3264d1, type: 3}
+  - {fileID: 4900000, guid: e0a2a6237681a7b409658cb799f680db, type: 3}
+  - {fileID: 4900000, guid: a1b3ee94663432048ac2798cdd0c8790, type: 3}
+  - {fileID: 4900000, guid: 50d936abb811c904bb9d05c338750152, type: 3}
+  - {fileID: 4900000, guid: 562174237c9646143ab418a796ab20aa, type: 3}
+  - {fileID: 4900000, guid: f7236c81382aa4d4db7eda8b1a573189, type: 3}

@@ -15,18 +15,15 @@ MonoBehaviour:
   LocaleKey: Galactic_Sigara
   GalacticIconKey: sigara_icon
   GalacticBackgroundKey: sigara_background
-  EnergyPrice: 25
+  EnergyPrice: 10
   EnergyAddForWin: 5
   Levels:
-  - {fileID: 4900000, guid: 47cd837f452f75f47a6c24454c967444, type: 3}
-  - {fileID: 4900000, guid: 562174237c9646143ab418a796ab20aa, type: 3}
-  - {fileID: 4900000, guid: d049f68c01d5aaa4ba1819fdcfaf49ed, type: 3}
-  - {fileID: 4900000, guid: 4d7e465e5a324fb41af019f30ea380ef, type: 3}
-  - {fileID: 4900000, guid: 502fb8d8a1f1f384b978189e5b26c549, type: 3}
-  - {fileID: 4900000, guid: 07d404e454d65f24091a9d8f723eb304, type: 3}
-  - {fileID: 4900000, guid: 3600ef352697b044ab589b3e3a3264d1, type: 3}
-  - {fileID: 4900000, guid: e0a2a6237681a7b409658cb799f680db, type: 3}
-  - {fileID: 4900000, guid: a1b3ee94663432048ac2798cdd0c8790, type: 3}
-  - {fileID: 4900000, guid: 50d936abb811c904bb9d05c338750152, type: 3}
-  - {fileID: 4900000, guid: 562174237c9646143ab418a796ab20aa, type: 3}
-  - {fileID: 4900000, guid: f7236c81382aa4d4db7eda8b1a573189, type: 3}
+  - {fileID: 4900000, guid: 94b2f9a97d2cbfb4e8f9b7b429cafa8a, type: 3}
+  - {fileID: 4900000, guid: dcfbc63509aa82f40ad5fbb610f1690e, type: 3}
+  - {fileID: 4900000, guid: 413e930e5e4347b449982a70a8d5a1eb, type: 3}
+  - {fileID: 4900000, guid: 3612a71f74d8205438aa94ee8a8cdb85, type: 3}
+  - {fileID: 4900000, guid: 46e41649360917e479f0b26636dc82ec, type: 3}
+  - {fileID: 4900000, guid: 2931262f11605ce4abc91e2faf36d63a, type: 3}
+  - {fileID: 4900000, guid: ad09658b4a26d5341aa1a55da238057d, type: 3}
+  - {fileID: 4900000, guid: fd775afe6e18ed04bb09f20dfdda5bbc, type: 3}
+  - {fileID: 4900000, guid: a1f290c6ae7bc1440b3da017de848e50, type: 3}

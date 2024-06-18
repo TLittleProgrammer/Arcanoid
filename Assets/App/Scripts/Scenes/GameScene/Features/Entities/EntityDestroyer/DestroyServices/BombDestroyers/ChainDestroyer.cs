@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using App.Scripts.External.ObjectPool;
 using App.Scripts.Scenes.GameScene.Features.Effects;
 using App.Scripts.Scenes.GameScene.Features.Entities.AssetManagement;
@@ -12,9 +11,9 @@ using App.Scripts.Scenes.GameScene.Features.Grid;
 using App.Scripts.Scenes.GameScene.Features.Levels.General.View;
 using App.Scripts.Scenes.GameScene.Features.Levels.Loading.Loader;
 using App.Scripts.Scenes.GameScene.Features.Settings;
-using App.Scripts.Scenes.GameScene.Features.Time;
 using Cysharp.Threading.Tasks;
 using Unity.Mathematics;
+using UnityEngine;
 
 namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.DestroyServices.BombDestroyers
 {
@@ -114,7 +113,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Destroy
                     pointsQueue.Enqueue(subPointsQueue.Dequeue());
                 }
 
-                await UniTask.Delay(350);
+                await UniTask.Delay(150);
             }
 
             return false;
@@ -175,7 +174,9 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Destroy
                 IEntityView entity = _levelLoader.Entities.First(x => x.GridPositionX == currentPoint.Key.x && x.GridPositionY == currentPoint.Key.y);
                 EntityStage entityStage = LevelViewUpdater.GetEntityStage(entity);
 
-                if (ThisBlockIsNotSimple(entityStage, entity) || PreviousEntityNotEqualsCurrent(currentPoint, entity) || usablePoints.Contains(currentPoint.Key))
+                if (ThisBlockIsNotSimple(entityStage, entity) ||
+                    PreviousEntityNotEqualsCurrent(currentPoint, entity) ||
+                    usablePoints.Contains(currentPoint.Key))
                 {
                     continue;
                 }
@@ -241,7 +242,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Destroy
 
         private bool ThisBlockIsNotSimple(EntityStage entityStage, IEntityView entity)
         {
-            return entityStage.ICanGetDamage is false || entityStage.BoostTypeId != String.Empty || entity.BoxCollider2D.enabled == false;
+            return entityStage.ICanGetDamage is false || entity.BoxCollider2D.enabled == false || (entityStage.BoostTypeId != String.Empty && entityStage.BoostTypeId != "0");
         }
 
         private async UniTask DestroyOnlyCurrentBlock(GridItemData gridItemData, IEntityView entityView)

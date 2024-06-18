@@ -101,23 +101,26 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Destroy
             foreach (int2 position in simpleCorrectGridPosition)
             {
                 GridItemData gridItemData = _levelViewUpdater.LevelGridItemData[new Vector2Int(position.x, position.y)];
-                IEntityView entityView = _levelLoader.Entities.First(x => x.GridPositionX == position.x && x.GridPositionY == position.y);
+                IEntityView entityView = _levelLoader.Entities.FirstOrDefault(x => x.GridPositionX == position.x && x.GridPositionY == position.y);
 
-                SetExplosionsEffect(entityView);
-                
-                if (gridItemData.CurrentHealth - damage <= 0 && entityView.BoxCollider2D.enabled)
+                if (entityView is not null)
                 {
-                    entityView.BoxCollider2D.enabled = false;
-                    gridItemData.CurrentHealth -= damage;
-                    result.Add(new()
+                    SetExplosionsEffect(entityView);
+                
+                    if (gridItemData.CurrentHealth - damage <= 0 && entityView.BoxCollider2D.enabled)
                     {
-                        GridItemData = gridItemData,
-                        EntityView = entityView
-                    });
-                    continue;
-                }
+                        entityView.BoxCollider2D.enabled = false;
+                        gridItemData.CurrentHealth -= damage;
+                        result.Add(new()
+                        {
+                            GridItemData = gridItemData,
+                            EntityView = entityView
+                        });
+                        continue;
+                    }
 
-                _addVisualDamage.AddVisualDamage(damage, gridItemData, entityView);
+                    _addVisualDamage.AddVisualDamage(damage, gridItemData, entityView);
+                }
             }
 
             return result;

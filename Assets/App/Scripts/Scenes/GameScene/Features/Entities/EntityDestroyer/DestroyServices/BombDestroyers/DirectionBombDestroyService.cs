@@ -86,7 +86,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Destroy
             firstLaser.Laser.Play();
             secondLaser.Laser.Play();
                 
-            await UniTask.Delay(1000);
+            await UniTask.Delay(500);
                 
             firstLaser.Laser.Stop();
             secondLaser.Laser.Stop();
@@ -210,10 +210,13 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Destroy
             {
                 if (i < firstEntityDatas.Count)
                 {
-                    firstEntityDatas[i].GridItemData.CurrentHealth = -1;
-                    _entityDestroyable.Destroy(firstEntityDatas[i].GridItemData, firstEntityDatas[i].EntityView);
+                    if (firstEntityDatas[i].GridItemData.CurrentHealth != -1)
+                    {
+                        firstEntityDatas[i].GridItemData.CurrentHealth = -1;
+                        _entityDestroyable.Destroy(firstEntityDatas[i].GridItemData, firstEntityDatas[i].EntityView);
 
-                    SetExplosionsEffect(firstEntityDatas[i].EntityView);
+                        SetExplosionsEffect(firstEntityDatas[i].EntityView);
+                    }
                 }
                 
                 if (i < secondEntityDatas.Count)
@@ -224,7 +227,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Destroy
                     SetExplosionsEffect(secondEntityDatas[i].EntityView);
                 }
 
-                await UniTask.Delay(350);
+                await UniTask.Delay(150);
             }
         }
 
@@ -242,7 +245,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Destroy
                     continue;
                 }
                 
-                entityView.BoxCollider2D.enabled = false;
                 result.Add(new()
                 {
                     GridItemData = gridItemData,
