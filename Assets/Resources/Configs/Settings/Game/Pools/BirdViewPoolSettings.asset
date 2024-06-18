@@ -23,4 +23,4 @@ MonoBehaviour:
     SerializationNodes: []
   View: {fileID: 1579647700, guid: 838483c6d0ebe0c4f806f7deed33b6da, type: 3}
   InitialSize: 2
-  ParentName: Bird
+  ParentName: Birds

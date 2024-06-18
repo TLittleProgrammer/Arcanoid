@@ -25,3 +25,4 @@ MonoBehaviour:
     VerticalSize: 0.18
     HorizontalCenter: 0.5
     VerticalCenter: 1
+  ParentName: Walls

@@ -61,7 +61,8 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
                 .Bind<IKeyableObjectPool<IEffect>>()
                 .To<MonoObjectPool<TEffectPool>>()
                 .AsSingle()
-                .WithArguments(EffectSpawner<TEffectPool>(effectData), effectData.InitialSize, effectData.PoolParentName, effectData.PoolKey);
+                .WithArguments(EffectSpawner<TEffectPool>(effectData), effectData.InitialSize, effectData.PoolParentName, effectData.PoolKey)
+                .NonLazy();
         }
 
         private void BindZenjectPool<TInstance, TPool>(PoolTypeId poolType) where TPool : IMemoryPool where TInstance : MonoBehaviour 
