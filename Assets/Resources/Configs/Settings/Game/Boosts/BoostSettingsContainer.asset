@@ -36,7 +36,7 @@ MonoBehaviour:
       Data: BallAcceleration
     - Name: Duration
       Entry: 4
-      Data: 6
+      Data: 9
     - Name: KeysThatCanBlockThisBoost
       Entry: 7
       Data: 2|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
@@ -80,7 +80,7 @@ MonoBehaviour:
       Data: BallSlowdown
     - Name: Duration
       Entry: 4
-      Data: 6
+      Data: 9
     - Name: KeysThatCanBlockThisBoost
       Entry: 7
       Data: 6|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
@@ -124,7 +124,7 @@ MonoBehaviour:
       Data: PlayerShapeAddSize
     - Name: Duration
       Entry: 4
-      Data: 6
+      Data: 9
     - Name: KeysThatCanBlockThisBoost
       Entry: 7
       Data: 10|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
@@ -171,7 +171,7 @@ MonoBehaviour:
       Data: PlayerShapeMinusSize
     - Name: Duration
       Entry: 4
-      Data: 6
+      Data: 9
     - Name: KeysThatCanBlockThisBoost
       Entry: 7
       Data: 14|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
@@ -218,7 +218,7 @@ MonoBehaviour:
       Data: PlayerShapeAddSpeed
     - Name: Duration
       Entry: 4
-      Data: 6
+      Data: 9
     - Name: KeysThatCanBlockThisBoost
       Entry: 7
       Data: 18|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
@@ -262,7 +262,7 @@ MonoBehaviour:
       Data: PlayerShapeMinusSpeed
     - Name: Duration
       Entry: 4
-      Data: 6
+      Data: 9
     - Name: KeysThatCanBlockThisBoost
       Entry: 7
       Data: 22|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
@@ -388,7 +388,7 @@ MonoBehaviour:
       Data: Fireball
     - Name: Duration
       Entry: 4
-      Data: 6
+      Data: 12
     - Name: KeysThatCanBlockThisBoost
       Entry: 7
       Data: 34|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
@@ -422,7 +422,7 @@ MonoBehaviour:
       Data: StickyPlatform
     - Name: Duration
       Entry: 4
-      Data: 6
+      Data: 15
     - Name: KeysThatCanBlockThisBoost
       Entry: 7
       Data: 37|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
@@ -456,7 +456,7 @@ MonoBehaviour:
       Data: MiniGun
     - Name: Duration
       Entry: 4
-      Data: 6
+      Data: 12
     - Name: KeysThatCanBlockThisBoost
       Entry: 7
       Data: 40|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
@@ -490,7 +490,7 @@ MonoBehaviour:
       Data: Autopilot
     - Name: Duration
       Entry: 4
-      Data: 6
+      Data: 60
     - Name: KeysThatCanBlockThisBoost
       Entry: 7
       Data: 43|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib

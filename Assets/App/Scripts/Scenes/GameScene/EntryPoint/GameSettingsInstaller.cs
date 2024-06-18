@@ -28,6 +28,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
         public DestroyEntityEffectMapping DestroyEntityEffectMapping;
         public BoostSettingsContainer BoostSettingsContainer;
         public EntityDestroySettings EntityDestroySettings;
+        public MiniSettingsParticleMapping MiniSettingsParticleMapping;
 
         public override void InstallBindings()
         {
@@ -47,6 +48,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint
             Container.Bind<DestroyEntityEffectMapping>().FromInstance(DestroyEntityEffectMapping).IfNotBound();
             Container.Bind<BoostSettingsContainer>().FromInstance(BoostSettingsContainer).IfNotBound();
             Container.Bind<EntityDestroySettings>().FromInstance(EntityDestroySettings).IfNotBound();
+            Container.Bind<MiniSettingsParticleMapping>().FromInstance(MiniSettingsParticleMapping).IfNotBound();
         }
     }
 }
