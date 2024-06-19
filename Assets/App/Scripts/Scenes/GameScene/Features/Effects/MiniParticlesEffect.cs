@@ -1,6 +1,5 @@
 ﻿using App.Scripts.Scenes.GameScene.Features.Entities.View;
 using App.Scripts.Scenes.GameScene.Features.Settings;
-using Codice.CM.SEIDInfo;
 using UnityEngine;
 using Zenject;
 
