@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.Bullets;
 using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.Movement;
 using App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.PositionChecker;
@@ -58,9 +59,12 @@ namespace App.Scripts.Scenes.GameScene.Features.Boosts.MiniGun.Collision
 
         private void RemoveFromAll(BulletView bulletView)
         {
-            _bulletPositionChecker.RemoveBullet(bulletView);
-            _bulletMovement.RemoveBullet(bulletView);
-            _bulletViewPool.Despawn(bulletView);
+            if (!_bulletViewPool.InactiveItems.Contains(bulletView))
+            {
+                _bulletPositionChecker.RemoveBullet(bulletView);
+                _bulletMovement.RemoveBullet(bulletView);
+                _bulletViewPool.Despawn(bulletView);       
+            }
         }
     }
 }

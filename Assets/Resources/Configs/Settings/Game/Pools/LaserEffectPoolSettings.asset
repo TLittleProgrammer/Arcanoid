@@ -22,5 +22,5 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   View: {fileID: 4967063440282914036, guid: ab4f465da0b41194f8c112c1f64ab410, type: 3}
-  InitialSize: 4
+  InitialSize: 15
   ParentName: Effects
