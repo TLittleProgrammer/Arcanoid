@@ -27,7 +27,7 @@ MonoBehaviour:
         Game]], mscorlib
     - Name: 
       Entry: 12
-      Data: 12
+      Data: 13
     - Name: 
       Entry: 7
       Data: 1|App.Scripts.Scenes.GameScene.Features.Boosts.BoostSettingsData, Game
@@ -506,6 +506,40 @@ MonoBehaviour:
     - Name: ConcreteBoostActivator
       Entry: 7
       Data: 44|App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators.AutopilotBoostActivator,
+        Game
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: BoostDataProvider
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 45|App.Scripts.Scenes.GameScene.Features.Boosts.BoostSettingsData, Game
+    - Name: Key
+      Entry: 1
+      Data: Bird
+    - Name: Duration
+      Entry: 4
+      Data: 10
+    - Name: KeysThatCanBlockThisBoost
+      Entry: 7
+      Data: 46|System.Collections.Generic.List`1[[System.String, mscorlib]], mscorlib
+    - Name: 
+      Entry: 12
+      Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: ConcreteBoostActivator
+      Entry: 7
+      Data: 47|App.Scripts.Scenes.GameScene.Features.Boosts.General.Activators.BirdBoostActivator,
         Game
     - Name: 
       Entry: 8

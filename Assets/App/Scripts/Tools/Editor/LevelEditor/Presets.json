@@ -83,6 +83,10 @@
     "CaptiveBlock":
     {
       "blockKey": "21"
+    },
+    "BirdBoost":
+    {
+      "blockKey": "22"
     }
   }
 }

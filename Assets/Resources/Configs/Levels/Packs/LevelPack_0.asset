@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601d17035434f3e912a3343b33240ab, type: 3}
   m_Name: LevelPack_0
   m_EditorClassIdentifier: 
-  LocaleKey: Galactic_Sigara
-  GalacticIconKey: sigara_icon
-  GalacticBackgroundKey: sigara_background
+  LocaleKey: Galactic_Sunflower
+  GalacticIconKey: sunflower_icon
+  GalacticBackgroundKey: sunflower_background
   EnergyPrice: 10
   EnergyAddForWin: 5
   Levels:
@@ -28,3 +28,4 @@ MonoBehaviour:
   - {fileID: 4900000, guid: fd775afe6e18ed04bb09f20dfdda5bbc, type: 3}
   - {fileID: 4900000, guid: a1f290c6ae7bc1440b3da017de848e50, type: 3}
   - {fileID: 4900000, guid: a45c980038f005948b6ab845df2e731b, type: 3}
+  - {fileID: 4900000, guid: 6d80e5b2f25817647993ffa9d0676e10, type: 3}

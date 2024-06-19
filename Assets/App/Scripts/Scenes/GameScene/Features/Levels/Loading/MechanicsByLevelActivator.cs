@@ -8,6 +8,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.Loading
     {
         private readonly BirdView.Factory _birdViewFactory;
         private readonly IBirdsService _birdsService;
+        private LevelData _previousLevelData;
 
         public MechanicsByLevelActivator(BirdView.Factory birdViewFactory, IBirdsService birdsService)
         {

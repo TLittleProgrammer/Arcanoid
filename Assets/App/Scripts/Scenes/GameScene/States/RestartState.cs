@@ -1,13 +1,18 @@
 ﻿using System.Collections.Generic;
 using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Infrastructure;
+using App.Scripts.General.Levels.LevelPackInfoService;
 using App.Scripts.General.LoadingScreen;
 using App.Scripts.General.Popup;
 using App.Scripts.Scenes.GameScene.Features.Dotween;
 using App.Scripts.Scenes.GameScene.Features.Entities.Ball;
+using App.Scripts.Scenes.GameScene.Features.Entities.Bird.Interfaces;
+using App.Scripts.Scenes.GameScene.Features.Levels.General;
 using App.Scripts.Scenes.GameScene.Features.Levels.General.Animations;
+using App.Scripts.Scenes.GameScene.Features.Levels.Loading;
 using App.Scripts.Scenes.GameScene.States.Gameloop;
 using Cysharp.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace App.Scripts.Scenes.GameScene.States
 {
@@ -21,6 +26,9 @@ namespace App.Scripts.Scenes.GameScene.States
         private readonly IBallsService _ballsService;
         private readonly List<IGeneralRestartable> _generalRestartables;
         private readonly IPopupService _popupService;
+        private readonly IBirdsService _birdsService;
+        private readonly ILevelDataChooser _levelDataChooser;
+        private readonly ILevelPackInfoService _levelPackInfoService;
 
         public RestartState(
             ILoadingScreen loadingScreen,
@@ -30,7 +38,9 @@ namespace App.Scripts.Scenes.GameScene.States
             IShowLevelService showLevelAnimation,
             IBallsService ballsService,
             List<IGeneralRestartable> generalRestartables,
-            IPopupService popupService
+            IPopupService popupService,
+            IBirdsService birdsService,
+            ILevelDataChooser levelDataChooser
         )
         {
             _loadingScreen = loadingScreen;
@@ -41,6 +51,8 @@ namespace App.Scripts.Scenes.GameScene.States
             _ballsService = ballsService;
             _generalRestartables = generalRestartables;
             _popupService = popupService;
+            _birdsService = birdsService;
+            _levelDataChooser = levelDataChooser;
         }
         
         public async UniTask Enter()
@@ -61,6 +73,12 @@ namespace App.Scripts.Scenes.GameScene.States
             }
 
             _ballsService.DespawnAll();
+
+            LevelData levelData = _levelDataChooser.GetLevelData();
+            if (!levelData.NeedBird)
+            {
+                _birdsService.StopAll();
+            }
 
             await _loadingScreen.Hide();
             await _showLevelAnimation.Show();

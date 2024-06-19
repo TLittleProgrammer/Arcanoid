@@ -50,6 +50,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Bird
                 AddBirdToDictionary(birdView);
             }
 
+            _birds[birdView].Direction = Random.Range(0, 2) == 0 ? Direction.Right : Direction.Left;
             SetInitialSettings(birdView);
         }
 
