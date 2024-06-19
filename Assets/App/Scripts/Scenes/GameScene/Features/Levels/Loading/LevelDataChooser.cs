@@ -82,7 +82,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.Loading
             ILevelPackTransferData levelPackTransferData = new LevelPackTransferData();
             LevelTransferPackData savedData = levelDataProgress.LevelTransferPackData;
 
-            levelPackTransferData.NeedContinue = savedData.NeedContinue;
+            levelPackTransferData.NeedContinue = false;
             levelPackTransferData.NeedLoadLevel = savedData.NeedLoadLevel;
             levelPackTransferData.LevelIndex = savedData.LevelIndex;
             levelPackTransferData.PackIndex = savedData.PackIndex;

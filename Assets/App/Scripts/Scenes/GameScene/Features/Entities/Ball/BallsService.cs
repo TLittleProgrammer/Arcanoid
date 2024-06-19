@@ -280,7 +280,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
         {
             UpdateSpeedByProgress(levelDataProgress.ProgressedLevelData.Progress);
             _lastSpeedMultiplier = levelDataProgress.BallsData.SpeedMultiplier;
-            
+            List<(BallData, IBallMovementService, BallView)> movementServices = new();
             foreach (BallData ballData in levelDataProgress.BallsData.BallDatas)
             {
                 BallView ballView = _ballViewPool.Spawn();
@@ -294,6 +294,11 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
                     ballData.Position.Z
                 );
                 
+                movementServices.Add((ballData, ballMovement, ballView));
+            }
+
+            foreach ((BallData ballData, IBallMovementService ballMovement, BallView ballView)in movementServices)
+            {
                 if (ballData.IsFreeFlight)
                 {
                     ballMovement.GoFly();

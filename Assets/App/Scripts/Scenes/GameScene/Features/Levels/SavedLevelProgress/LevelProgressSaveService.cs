@@ -16,7 +16,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Levels.SavedLevelProgress
 
         public void SaveProgress()
         {
-            LevelDataProgress levelDataProgress = new LevelDataProgress();
+            LevelDataProgress levelDataProgress = _levelDataProgressProvider.GetData();
 
             foreach (ILevelProgressSavable progressSavable in _levelProgressSavable)
             {
