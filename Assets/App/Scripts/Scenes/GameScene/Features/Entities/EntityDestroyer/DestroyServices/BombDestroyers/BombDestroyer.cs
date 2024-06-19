@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using App.Scripts.External.ObjectPool;
 using App.Scripts.Scenes.GameScene.Features.Effects;
 using App.Scripts.Scenes.GameScene.Features.Entities.View;
@@ -12,7 +13,9 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Destroy
     {
         private readonly DestroyEntityEffectMapping _destroyEntityEffectMapping;
         private readonly IKeyObjectPool<IEffect> _keyObjectPool;
-
+        
+        public bool NeedDestroy = true;
+        
         protected BombDestroyer(
             ILevelViewUpdater levelViewUpdater,
             DestroyEntityEffectMapping destroyEntityEffectMapping,

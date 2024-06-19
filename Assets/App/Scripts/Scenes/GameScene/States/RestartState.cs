@@ -7,6 +7,7 @@ using App.Scripts.General.Popup;
 using App.Scripts.Scenes.GameScene.Features.Dotween;
 using App.Scripts.Scenes.GameScene.Features.Entities.Ball;
 using App.Scripts.Scenes.GameScene.Features.Entities.Bird.Interfaces;
+using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.DestroyServices.BombDestroyers;
 using App.Scripts.Scenes.GameScene.Features.Levels.General;
 using App.Scripts.Scenes.GameScene.Features.Levels.General.Animations;
 using App.Scripts.Scenes.GameScene.Features.Levels.Loading;
@@ -28,6 +29,9 @@ namespace App.Scripts.Scenes.GameScene.States
         private readonly IPopupService _popupService;
         private readonly IBirdsService _birdsService;
         private readonly ILevelDataChooser _levelDataChooser;
+        private readonly ChainDestroyer _chainDestroyer;
+        private readonly BombDestroyService _bombDestroyService;
+        private readonly DirectionBombDestroyService _directionBombDestroyService;
         private readonly ILevelPackInfoService _levelPackInfoService;
 
         public RestartState(
@@ -40,7 +44,10 @@ namespace App.Scripts.Scenes.GameScene.States
             List<IGeneralRestartable> generalRestartables,
             IPopupService popupService,
             IBirdsService birdsService,
-            ILevelDataChooser levelDataChooser
+            ILevelDataChooser levelDataChooser,
+            ChainDestroyer chainDestroyer,
+            BombDestroyService bombDestroyService,
+            DirectionBombDestroyService directionBombDestroyService
         )
         {
             _loadingScreen = loadingScreen;
@@ -53,10 +60,17 @@ namespace App.Scripts.Scenes.GameScene.States
             _popupService = popupService;
             _birdsService = birdsService;
             _levelDataChooser = levelDataChooser;
+            _chainDestroyer = chainDestroyer;
+            _bombDestroyService = bombDestroyService;
+            _directionBombDestroyService = directionBombDestroyService;
         }
         
         public async UniTask Enter()
         {
+            _chainDestroyer.NeedDestroy = false;
+            _directionBombDestroyService.NeedDestroy = false;
+            _bombDestroyService.NeedDestroy = false;
+            
             await _loadingScreen.Show(false);
             await _popupService.CloseAll();
             

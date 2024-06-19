@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using App.Scripts.External.ObjectPool;
 using App.Scripts.Scenes.GameScene.Features.Effects;
 using App.Scripts.Scenes.GameScene.Features.Effects.Bombs;
@@ -49,6 +50,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Destroy
 
         public override async void Destroy(GridItemData gridItemData, IEntityView entityView)
         {
+            NeedDestroy = true;
             GetDirection(entityView, out Direction firstDirection, out Direction secondDirection);
 
             int2 initialPoint = new int2(entityView.GridPositionX, entityView.GridPositionY);
@@ -58,8 +60,12 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Destroy
             List<EntityData> firstEntityDatas = GetEntityDatas(firstDirectionPoints);
             List<EntityData> secondEntityDatas = GetEntityDatas(secondDirectionPoints);
 
-            await PlayLasers(entityView);
             
+            if (NeedDestroy == false)
+                return;
+            await PlayLasers(entityView);
+            if (NeedDestroy == false)
+                return;
             DestroyAll(new(gridItemData, entityView), firstEntityDatas, secondEntityDatas);
         }
 
@@ -85,7 +91,11 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Destroy
             
             firstLaser.Laser.Play();
             secondLaser.Laser.Play();
-                
+
+            if (NeedDestroy == false)
+            {
+                return;
+            }
             await UniTask.Delay(500);
                 
             firstLaser.Laser.Stop();
@@ -227,7 +237,12 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Destroy
                     SetExplosionsEffect(secondEntityDatas[i].EntityView);
                 }
 
+                if (NeedDestroy == false)
+                    return;
+
                 await UniTask.Delay(150);
+                if (NeedDestroy == false)
+                    return;
             }
         }
 

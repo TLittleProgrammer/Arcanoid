@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using App.Scripts.External.ObjectPool;
 using App.Scripts.Scenes.GameScene.Features.Effects;
 using App.Scripts.Scenes.GameScene.Features.Entities.AssetManagement;
@@ -38,6 +39,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Destroy
 
         public override void Destroy(GridItemData gridItemData, IEntityView entityView)
         {
+            NeedDestroy = true;
             int2 initialPoint = new(entityView.GridPositionX, entityView.GridPositionY);
 
             Dictionary<int, List<EntityData>> allPoints = GetPoints(initialPoint);
@@ -113,6 +115,10 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Destroy
                     pointsQueue.Enqueue(subPointsQueue.Dequeue());
                 }
 
+                if (NeedDestroy == false)
+                {
+                    return true;
+                }
                 await UniTask.Delay(150);
             }
 

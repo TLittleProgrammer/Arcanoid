@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using App.Scripts.External.ObjectPool;
 using App.Scripts.Scenes.GameScene.Features.Effects;
 using App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Helpers;
@@ -23,6 +24,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Destroy
         private readonly IEntityDestroyable _entityDestroyable;
         private readonly SimpleDestroyService _simpleDestroyService;
 
+
         public BombDestroyService(
             ILevelViewUpdater levelViewUpdater,
             ILevelLoader levelLoader,
@@ -43,6 +45,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Destroy
 
         public override async void Destroy(GridItemData gridItemData, IEntityView iEntityView)
         {
+            NeedDestroy = true;
             EntityView entityView = iEntityView as EntityView;
 
             int2 initialPosition = new int2(entityView.GridPositionX, entityView.GridPositionY);
@@ -90,7 +93,11 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.EntityDestroyer.Destroy
             {
                 _entityDestroyable.Destroy(data.GridItemData, data.EntityView);
             }
-            
+
+            if (NeedDestroy == false)
+            {
+                return;
+            }
             await UniTask.Delay(350);
         }
 
