@@ -24,7 +24,7 @@ namespace App.Scripts.External.ObjectPool
                 _parent = parentGameObject.transform;
                 return;
             }
-
+            
             GameObject gameObject = new GameObject(parentName);
             _parent = gameObject.transform;
         }

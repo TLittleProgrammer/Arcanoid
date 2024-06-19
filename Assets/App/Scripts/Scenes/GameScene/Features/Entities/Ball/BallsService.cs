@@ -178,6 +178,11 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
             Reset();
         }
 
+        public bool BallIsSticked(BallView ballView)
+        {
+            return _ballsMovementSystem.GetMovementService(ballView).IsFreeFlight == false;
+        }
+
         public void SetSpeedMultiplier(float multiplier)
         {
             _speedMultiplier = multiplier;

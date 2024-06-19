@@ -45,6 +45,10 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 5a4ea25f1adb18f4d97b8c4436aa378c, type: 3}
     - {fileID: 21300000, guid: 8c479c6c8d9f3964f9606abde33b3c30, type: 3}
     - {fileID: 21300000, guid: 8cc9b43d8041b2c40b12d4653f1f41a9, type: 3}
+    - {fileID: 21300000, guid: 2354627e44c03e142a867652fda7b864, type: 3}
+    - {fileID: 21300000, guid: a14218bf567828e4c894b28b9289084c, type: 3}
+    - {fileID: 21300000, guid: 53507ba9141750e4285ec3223e6ad0fb, type: 3}
+    - {fileID: 21300000, guid: 1cfc3158c659e8a4d9508aa1687ca762, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -63,7 +67,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 30
+      Data: 34
     - Name: 
       Entry: 7
       Data: 
@@ -421,6 +425,54 @@ MonoBehaviour:
     - Name: $v
       Entry: 10
       Data: 21
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: ru_flag
+    - Name: $v
+      Entry: 10
+      Data: 29
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: en_flag
+    - Name: $v
+      Entry: 10
+      Data: 30
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Bird_block
+    - Name: $v
+      Entry: 10
+      Data: 31
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 1
+      Data: Bird_icon
+    - Name: $v
+      Entry: 10
+      Data: 32
     - Name: 
       Entry: 8
       Data: 

@@ -8,6 +8,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Settings
     public class BoxCollidersAroundScreenSettings : ScriptableObject
     {
         public List<BoxColliderData> BoxColliderDatas;
+        public string ParentName;
     }
 
     [Serializable]

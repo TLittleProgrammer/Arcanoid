@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c601d17035434f3e912a3343b33240ab, type: 3}
   m_Name: LevelPack_2
   m_EditorClassIdentifier: 
-  LocaleKey: Galactic_Sunflower
-  GalacticIconKey: sunflower_icon
-  GalacticBackgroundKey: sunflower_background
-  EnergyPrice: 3
-  EnergyAddForWin: 5
+  LocaleKey: Galactic_Sombrero
+  GalacticIconKey: sombrero_icon
+  GalacticBackgroundKey: sombrero_background
+  EnergyPrice: 5
+  EnergyAddForWin: 7
   Levels:
-  - {fileID: 4900000, guid: 01d2859bd4e4e8543bbb2e6cfd7bc1f0, type: 3}
-  - {fileID: 4900000, guid: 67dc282b21fd89545857016009a3a652, type: 3}
+  - {fileID: 4900000, guid: 373a435cf99688543beae145057b7952, type: 3}
+  - {fileID: 4900000, guid: e6c1b6bad2fe44748ae9218cd74d4901, type: 3}
+  - {fileID: 4900000, guid: 373a435cf99688543beae145057b7952, type: 3}

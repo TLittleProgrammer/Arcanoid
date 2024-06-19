@@ -23,4 +23,4 @@ MonoBehaviour:
     SerializationNodes: []
   View: {fileID: 7817871088878114702, guid: da9f09be41c91414ba6532d0675dd16e, type: 3}
   InitialSize: 3
-  ParentName: BallsView
+  ParentName: Balls

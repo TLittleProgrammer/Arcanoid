@@ -22,6 +22,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Factories.Health
             
             Transform healthTransform = healthView.transform;
             healthTransform.SetParent(boostId.Transform, false);
+            healthTransform.SetAsLastSibling();
             healthTransform.localScale = Vector3.one;
 
             return healthView;

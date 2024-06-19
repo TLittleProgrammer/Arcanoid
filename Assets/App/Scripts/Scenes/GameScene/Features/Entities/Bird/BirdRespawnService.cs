@@ -42,6 +42,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Bird
             foreach (BirdView birdView in _needRespawn)
             {
                 BirdRespawned?.Invoke(birdView);
+                birdView.CircleCollider2D.enabled = true;
             }
             _needRespawn.Clear();
         }
@@ -66,7 +67,18 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Bird
 
         public void AddBirdToRespawn(BirdView birdView)
         {
+            birdView.CircleCollider2D.enabled = false;
             _timeDictionary.Add((birdView, _birdSettings.RespawnTime));
+        }
+
+        public void StopAll()
+        {
+            foreach ((BirdView view, float time) in _timeDictionary)
+            {
+                view.CircleCollider2D.enabled = true;
+            }
+
+            _timeDictionary.Clear();
         }
     }
 }

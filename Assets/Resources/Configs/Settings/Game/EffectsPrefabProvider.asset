@@ -20,6 +20,7 @@ MonoBehaviour:
     - {fileID: 3123562649251334629, guid: d2e43e720584388498a15751b0507a76, type: 3}
     - {fileID: 4012334311179545399, guid: d8a2216d67968424ab4de5564823df95, type: 3}
     - {fileID: 6846817570176300731, guid: f540104585cd8a84b88c69d063e7750f, type: 3}
+    - {fileID: 8910909405961740457, guid: d051f066f7e50d643b018c6b6c1aa805, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -38,7 +39,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 4
+      Data: 5
     - Name: 
       Entry: 7
       Data: 
@@ -59,7 +60,7 @@ MonoBehaviour:
       Data: 0
     - Name: InitialSize
       Entry: 3
-      Data: 10
+      Data: 25
     - Name: PoolKey
       Entry: 1
       Data: circleEffects
@@ -92,7 +93,7 @@ MonoBehaviour:
       Data: 1
     - Name: InitialSize
       Entry: 3
-      Data: 60
+      Data: 120
     - Name: PoolKey
       Entry: 1
       Data: explosionEffect
@@ -126,7 +127,7 @@ MonoBehaviour:
       Data: 2
     - Name: InitialSize
       Entry: 3
-      Data: 6
+      Data: 25
     - Name: PoolKey
       Entry: 1
       Data: bulletEffect
@@ -159,13 +160,46 @@ MonoBehaviour:
       Data: 3
     - Name: InitialSize
       Entry: 3
-      Data: 5
+      Data: 25
     - Name: PoolKey
       Entry: 1
       Data: plazmaEffect
     - Name: PoolParentName
       Entry: 1
       Data: PlazmaEffect
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 7
+      Data: 10|System.RuntimeType, mscorlib
+    - Name: 
+      Entry: 1
+      Data: App.Scripts.Scenes.GameScene.Features.Effects.MiniParticlesEffect, Game
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: $v
+      Entry: 7
+      Data: 11|App.Scripts.Scenes.GameScene.Features.Effects.EffectData, Game
+    - Name: Prefab
+      Entry: 10
+      Data: 4
+    - Name: InitialSize
+      Entry: 3
+      Data: 25
+    - Name: PoolKey
+      Entry: 1
+      Data: miniParticles
+    - Name: PoolParentName
+      Entry: 1
+      Data: MiniParticles
     - Name: 
       Entry: 8
       Data: 

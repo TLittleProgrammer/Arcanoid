@@ -17,5 +17,6 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Ball
         void SetSticky(BallView view);
         void Fly(BallView view);
         void DespawnAll();
+        bool BallIsSticked(BallView ballView);
     }
 }

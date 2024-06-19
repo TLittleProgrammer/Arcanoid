@@ -1,5 +1,6 @@
 ﻿using App.Scripts.General.Levels.LevelPackInfoService;
 using App.Scripts.General.Providers;
+using App.Scripts.Scenes.GameScene.Features.Entities.Bird.Interfaces;
 using App.Scripts.Scenes.GameScene.Features.Levels.General;
 using App.Scripts.Scenes.GameScene.Features.Levels.LevelProgress;
 using App.Scripts.Scenes.GameScene.Features.Levels.Loading;
@@ -8,11 +9,6 @@ using Cysharp.Threading.Tasks;
 
 namespace App.Scripts.Scenes.GameScene.Features.Restart
 {
-    public interface IUpdateServiceForNewLevel
-    {
-        UniTask Update();
-    }
-    
     public class UpdateServiceForNewLevel : IUpdateServiceForNewLevel
     {
         private readonly ILevelLoadService _levelLoadService;
@@ -21,19 +17,22 @@ namespace App.Scripts.Scenes.GameScene.Features.Restart
         private readonly LevelPackInfoViewModel _levelPackInfoViewModel;
         private readonly ILevelPackInfoService _levelPackInfoService;
         private readonly ILevelProgressService _levelProgressService;
+        private readonly IBirdsService _birdsService;
 
         public UpdateServiceForNewLevel(
             ILevelLoadService levelLoadService,
             SpriteProvider spriteProvider,
             LevelPackInfoViewModel levelPackInfoViewModel,
             ILevelPackInfoService levelPackInfoService,
-            ILevelProgressService levelProgressService)
+            ILevelProgressService levelProgressService,
+            IBirdsService birdsService)
         {
             _levelLoadService = levelLoadService;
             _spriteProvider = spriteProvider;
             _levelPackInfoViewModel = levelPackInfoViewModel;
             _levelPackInfoService = levelPackInfoService;
             _levelProgressService = levelProgressService;
+            _birdsService = birdsService;
         }
         
         public async UniTask Update()

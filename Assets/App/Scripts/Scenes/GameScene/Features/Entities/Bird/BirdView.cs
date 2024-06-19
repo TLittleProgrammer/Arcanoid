@@ -9,6 +9,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Bird
     {
         public SpriteRenderer SpriteRenderer;
         public Transform Transform => transform;
+        public CircleCollider2D CircleCollider2D;
 
         public event Action<BirdView, Collision2D> Collidered; 
 

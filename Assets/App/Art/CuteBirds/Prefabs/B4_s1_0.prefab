@@ -137,3 +137,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpriteRenderer: {fileID: 3879102880394167930}
+  CircleCollider2D: {fileID: 3879102880394167932}

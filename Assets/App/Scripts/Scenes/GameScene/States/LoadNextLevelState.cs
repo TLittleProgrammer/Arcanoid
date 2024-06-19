@@ -3,8 +3,12 @@ using App.Scripts.External.GameStateMachine;
 using App.Scripts.General.Infrastructure;
 using App.Scripts.General.LoadingScreen;
 using App.Scripts.General.Popup;
+using App.Scripts.Scenes.GameScene.Features.Entities.Bird.Interfaces;
+using App.Scripts.Scenes.GameScene.Features.Levels.General;
 using App.Scripts.Scenes.GameScene.Features.Levels.General.Animations;
 using App.Scripts.Scenes.GameScene.Features.Levels.General.View;
+using App.Scripts.Scenes.GameScene.Features.Levels.Loading;
+using App.Scripts.Scenes.GameScene.Features.Levels.Loading.Loader;
 using App.Scripts.Scenes.GameScene.Features.Restart;
 using App.Scripts.Scenes.GameScene.Features.Time;
 using App.Scripts.Scenes.GameScene.States.Gameloop;
@@ -22,6 +26,7 @@ namespace App.Scripts.Scenes.GameScene.States
         private readonly ILevelViewUpdater _levelViewUpdater;
         private readonly List<IRestartable> _generalRestartables;
         private readonly IUpdateServiceForNewLevel _updateServiceForNewLevel;
+        private readonly IBirdsService _birdsService;
 
         public LoadNextLevelState(
             ILoadingScreen loadingScreen,
@@ -30,7 +35,8 @@ namespace App.Scripts.Scenes.GameScene.States
             ITimeProvider timeProvider,
             IShowLevelService showLevelService,
             List<IRestartable> generalRestartables,
-            IUpdateServiceForNewLevel updateServiceForNewLevel)
+            IUpdateServiceForNewLevel updateServiceForNewLevel,
+            IBirdsService birdsService)
         {
             _loadingScreen = loadingScreen;
             _gameStateMachine = gameStateMachine;
@@ -39,6 +45,7 @@ namespace App.Scripts.Scenes.GameScene.States
             _showLevelService = showLevelService;
             _generalRestartables = generalRestartables;
             _updateServiceForNewLevel = updateServiceForNewLevel;
+            _birdsService = birdsService;
         }
 
         public async UniTask Enter()
@@ -46,7 +53,8 @@ namespace App.Scripts.Scenes.GameScene.States
             await _loadingScreen.Show(false);
             
             RestartAll();
-            
+            _birdsService.StopAll();
+
             await ClosePopups();
             await _updateServiceForNewLevel.Update();
             await _loadingScreen.Hide();

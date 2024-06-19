@@ -1,4 +1,5 @@
-﻿using App.Scripts.Scenes.GameScene.Features.Entities.Bird.Interfaces;
+﻿using App.Scripts.General.Infrastructure;
+using App.Scripts.Scenes.GameScene.Features.Entities.Bird.Interfaces;
 using App.Scripts.Scenes.GameScene.Features.Entities.Bird.PositionSystems;
 using DG.Tweening;
 using UnityEngine;
@@ -57,6 +58,7 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Bird
         public void StopAll()
         {
             _birdMovementContainerSystem.StopAll();
+            _birdRespawnService.StopAll();
         }
 
         private void OnBirdFlewAway(BirdView view)

@@ -9,28 +9,23 @@ namespace App.Scripts.External.Localisation
 {
     public sealed class LocaleMappingFromTextAsset : ILocaleMappingFromTextAsset
     {
-        private readonly LocaleProvider _localeProvider;
         private readonly ILocaleAssetProvider _localeAssetProvider;
         private List<string> _availableKeys;
 
-        public LocaleMappingFromTextAsset(LocaleProvider localeProvider, ILocaleAssetProvider localeAssetProvider)
+        public LocaleMappingFromTextAsset(ILocaleAssetProvider localeAssetProvider)
         {
-            _localeProvider = localeProvider;
             _localeAssetProvider = localeAssetProvider;
-
-            Initialize();
         }
-
-        private void Initialize()
-        {
-            _availableKeys = _localeProvider.Configs.Select(x => x.Key).ToList();
-        }
-
+        
         public LocaleData GetLocaleMapping(string localeKey)
         {
-            localeKey = _availableKeys.Contains(localeKey) ? localeKey : LocaleConstants.DefaultLocaleKey;
-
             TextAsset localeMapping = _localeAssetProvider.LoadTextByKey(localeKey);
+
+            if (localeMapping is null)
+            {
+                return null;
+            }
+            
             Dictionary<string, string> translates = GetTranslatesFromFile(localeMapping);
 
             return new LocaleData

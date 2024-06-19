@@ -19,7 +19,6 @@ namespace App.Scripts.External.ObjectPool
         protected ObjectPool(Func<TType> spawner)
         {
             _spawner = spawner;
-            Resize(DefaultPoolSize);
         }
 
         public string Key { get; set; }

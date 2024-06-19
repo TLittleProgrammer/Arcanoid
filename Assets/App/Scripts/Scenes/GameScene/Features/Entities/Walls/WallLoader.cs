@@ -15,7 +15,10 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Walls
         private float _halfWidth;
         private float _halfHeight;
         
-        public WallLoader(BoxCollidersAroundScreenSettings settings, IBoxColliderable2D prefab, IScreenInfoProvider screenInfoProvider)
+        public WallLoader(
+            BoxCollidersAroundScreenSettings settings,
+            IBoxColliderable2D prefab,
+            IScreenInfoProvider screenInfoProvider)
         {
             _settings = settings;
             _prefab = prefab;
@@ -27,9 +30,10 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Walls
         
         public async UniTask AsyncInitialize()
         {
+            Transform wallsParent = GetParentTransform();
             foreach (BoxColliderData data in _settings.BoxColliderDatas)
             {
-                BoxCollider2D collider = Object.Instantiate(_prefab.BoxCollider2D);
+                BoxCollider2D collider = Object.Instantiate(_prefab.BoxCollider2D, wallsParent, true);
 
                 UpdateSize(data, collider);
                 UpdatePosition(collider, data);
@@ -78,6 +82,18 @@ namespace App.Scripts.Scenes.GameScene.Features.Entities.Walls
             float width = _screenInfoProvider.WidthInWorld * data.HorizontalSize;
 
             collider.size = new(width, height);
+        }
+
+        private Transform GetParentTransform()
+        {
+            GameObject parent = GameObject.Find(_settings.ParentName);
+
+            if (parent == null)
+            {
+                parent = new GameObject(_settings.ParentName);
+            }
+
+            return parent.transform;
         }
     }
 }

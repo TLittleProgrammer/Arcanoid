@@ -41,6 +41,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
             BindZenjectPool<LaserEffect, LaserEffect.Pool>(PoolTypeId.Laser);
             BindZenjectPool<BirdView, BirdView.Pool>(PoolTypeId.BirdView);
 
+            BindOwnPool<MiniParticlesEffect>();
             BindOwnPool<CircleEffects>();
             BindOwnPool<ExplosionEffect>();
             BindOwnPool<BulletEffectView>();
@@ -61,7 +62,8 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
                 .Bind<IKeyableObjectPool<IEffect>>()
                 .To<MonoObjectPool<TEffectPool>>()
                 .AsSingle()
-                .WithArguments(EffectSpawner<TEffectPool>(effectData), effectData.InitialSize, effectData.PoolParentName, effectData.PoolKey);
+                .WithArguments(EffectSpawner<TEffectPool>(effectData), effectData.InitialSize, effectData.PoolParentName, effectData.PoolKey)
+                .NonLazy();
         }
 
         private void BindZenjectPool<TInstance, TPool>(PoolTypeId poolType) where TPool : IMemoryPool where TInstance : MonoBehaviour 
@@ -71,7 +73,7 @@ namespace App.Scripts.Scenes.GameScene.EntryPoint.ServiceInstallers
 
         private Func<TEffect> EffectSpawner<TEffect>(EffectData effectData)
         {
-            return () => Object.Instantiate(effectData.Prefab).GetComponent<TEffect>();
+            return () => Container.InstantiatePrefab(effectData.Prefab).GetComponent<TEffect>();
         }
     }
 }
