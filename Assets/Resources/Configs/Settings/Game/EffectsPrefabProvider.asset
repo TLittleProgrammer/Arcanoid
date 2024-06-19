@@ -60,7 +60,7 @@ MonoBehaviour:
       Data: 0
     - Name: InitialSize
       Entry: 3
-      Data: 10
+      Data: 25
     - Name: PoolKey
       Entry: 1
       Data: circleEffects
@@ -127,7 +127,7 @@ MonoBehaviour:
       Data: 2
     - Name: InitialSize
       Entry: 3
-      Data: 6
+      Data: 25
     - Name: PoolKey
       Entry: 1
       Data: bulletEffect
@@ -160,7 +160,7 @@ MonoBehaviour:
       Data: 3
     - Name: InitialSize
       Entry: 3
-      Data: 5
+      Data: 25
     - Name: PoolKey
       Entry: 1
       Data: plazmaEffect
@@ -193,7 +193,7 @@ MonoBehaviour:
       Data: 4
     - Name: InitialSize
       Entry: 3
-      Data: 5
+      Data: 25
     - Name: PoolKey
       Entry: 1
       Data: miniParticles
